@@ -1,4 +1,4 @@
-package artcode;
+package artcode.shop;
 
 
 public class Bill {
@@ -58,12 +58,21 @@ public class Bill {
     }
 
     public void addProduct (Product product) {
-        if (product != null && !isClosed()){
-            for (int i = 0; i < this.products.length; i++) {
-                if (this.products[i] == null) {
-                    this.products[i] = product;
-                    return;
-                }
+        if (getProducts() == null || getProducts().equals(null)){
+            setProducts();
+            if (product != null && !isClosed()) {
+                addProductToArr(product);
+            }
+        }   else {
+            addProductToArr(product);
+        }
+    }
+
+    private void addProductToArr (Product product) {
+        for (int i = 0; i < this.products.length; i++) {
+            if (this.products[i] == null) {
+                this.products[i] = product;
+                return;
             }
         }
     }

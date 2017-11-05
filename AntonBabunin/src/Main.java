@@ -1,14 +1,14 @@
-import artcode.Bill;
-import artcode.Product;
+import artcode.shop.Bill;
+import artcode.shop.Product;
 
 public class Main {
     public static void main(String[] args) {
 
-        Product notebook = new Product("Notebook", 10000.99,1);
-        Product smartfone = new Product("Smartphone", 5000.99,2);
+        Product notebook = new Product("Notebook", 10000.99123,1);
+        Product smartfone = new Product("Smartphone", 5000.99123,2);
 
         Bill firstBill = new Bill();
-        firstBill.setProducts();
+//        firstBill.setProducts();
         firstBill.addProduct(notebook);
         firstBill.addProduct(smartfone);
 

@@ -1,4 +1,4 @@
-package artcode;
+package artcode.shop;
 
 public class Product {
     private String name;
@@ -6,9 +6,9 @@ public class Product {
     private int id;
 
     public Product(String name, double price, int id) {
-        this.name = name;
-        this.price = price;
-        this.id = id;
+        this.name = nameProductTester(name);
+        this.price = priceProductTester(price);
+        this.id = idProductTester(id);
     }
 
     public String getName() {
@@ -34,4 +34,18 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
+
+    private static String nameProductTester (String name) {
+         return (name != null || !name.equals(null)) ? name : "";
+    }
+
+    private static double priceProductTester (double price) {
+        return (price > 0.0) ? price : 0.0;
+    }
+
+    private static int idProductTester (int id) {
+        return (id > 0) ? id : 0;
+    }
+
+
 }
