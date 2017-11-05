@@ -14,13 +14,19 @@ public class RunTests {
         Assert.assertEquals(expected, actual, 0);
     }
     @Test
-    public void testAddProduct(){
+    public void testAddProduct1(){
         Bill bill = new Bill();
         Product expected = new Product("asd", 123.22, 123);
         bill.addProduct(expected);
-//        Product product = new Product("asd", 1.11, 1);
         Product actual = bill.getProducts()[0];
         Assert.assertSame(expected, actual);
     }
-
+    @Test
+    public void testAddProduct2(){
+        Bill bill = new Bill();
+        Product expected = new Product(null, 123.22, 123);
+        bill.addProduct(expected);
+        Product actual = bill.getProducts()[0];
+        Assert.assertSame(expected, actual);
+    }
 }

@@ -58,7 +58,7 @@ public class Bill {
     }
 
     public void addProduct (Product product) {
-        if (getProducts() == null || getProducts().equals(null)){
+        if (this.getProducts() == null || this.getProducts().equals(null)){
             setProducts();
             if (product != null && !isClosed()) {
                 addProductToArr(product);

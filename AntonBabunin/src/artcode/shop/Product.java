@@ -36,7 +36,7 @@ public class Product {
     }
 
     private static String nameProductTester (String name) {
-         return (name != null || !name.equals(null)) ? name : "";
+        return  (name == null) ? "" : name;
     }
 
     private static double priceProductTester (double price) {
