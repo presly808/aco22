@@ -58,20 +58,24 @@ public class Bill {
     }
 
     public void addProduct (Product product) {
-        if (this.getProducts() == null || this.getProducts().equals(null)){
-            setProducts();
-            if (product != null && !isClosed()) {
+        if (!this.isClosed()) {
+            if (this.getProducts() == null || this.getProducts().equals(null)) {
+                setProducts();
+            }
+            if (product != null) {
+                addProductToArr(product);
+            } else {
+                product = Product.setProductNull(product);
                 addProductToArr(product);
             }
-        }   else {
-            addProductToArr(product);
         }
+        else return;
     }
 
     private void addProductToArr (Product product) {
         for (int i = 0; i < this.products.length; i++) {
-            if (this.products[i] == null) {
-                this.products[i] = product;
+            if (this.getProducts()[i] == null) {
+                this.getProducts()[i] = product;
                 return;
             }
         }
@@ -98,3 +102,16 @@ public class Bill {
         }
     }
 }
+
+/*
+    public void addProduct (Product product) {
+        if (this.getProducts() == null || this.getProducts().equals(null)){
+            setProducts();
+            if (product != null && !isClosed()) {
+                addProductToArr(product);
+            }
+        }   else {
+            addProductToArr(product);
+        }
+    }
+ */

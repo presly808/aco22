@@ -1,5 +1,7 @@
 package artcode.shop;
 
+import javax.swing.*;
+
 public class Product {
     private String name;
     private double price;
@@ -47,5 +49,11 @@ public class Product {
         return (id > 0) ? id : 0;
     }
 
+    public static Product setProductNull(Product product) {
+        product.setName("");
+        product.setPrice(0.0);
+        product.setId(0);
+        return product;
+    }
 
 }
