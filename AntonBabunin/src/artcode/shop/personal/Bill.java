@@ -1,12 +1,15 @@
-package artcode.shop;
+package artcode.shop.personal;
 
+
+import artcode.shop.product.Product;
 
 public class Bill {
     private Product[] products;
     private double amountPrice;
     private String seller;
-    private String time;
+    private String closeTime;
     private boolean isClosed = false;
+    private int id;
 
 
     private int firstFreePositionAtProducts;
@@ -56,11 +59,11 @@ public class Bill {
     }
 
     public String getTime() {
-        return time;
+        return closeTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 
     public void addProduct (Product product) {
@@ -88,12 +91,6 @@ public class Bill {
         else return;
     }
 
-
-    public void closeBill () {
-        this.setIsClosed();
-        this.calculate();
-    }
-
     private void setIsClosed() {
         this.isClosed = true;
     }
@@ -114,6 +111,11 @@ public class Bill {
                 break;
             }
         }
+    }
+
+    public void closeBill () {
+        this.setIsClosed();
+        this.calculate();
     }
 }
 
