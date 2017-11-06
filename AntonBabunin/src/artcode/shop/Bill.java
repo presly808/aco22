@@ -80,6 +80,7 @@ public class Bill {
                 for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
                     if (this.getProducts()[i] == null) {
                         this.nextFreePositionAtProducts = i;
+                        break;
                     }
                 }
             }
