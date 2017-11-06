@@ -2,8 +2,10 @@ package week1.data;
 
 public class Bill {
 
+    private static final int DEFAULT_SIZE_OF_LIST = 20;
+
     private Product[] billList;
-    private int productListSize = 0;
+    private int actualSizeOfList = 0;
 
     private double billCost = 0;
     private Time time;
@@ -11,8 +13,11 @@ public class Bill {
 
     private boolean isClosed = false;
 
-    public Bill(Product[] billList, Seller seller, Time time) {
-        this.billList = billList;
+    public Bill() {
+    }
+
+    public Bill(Seller seller, Time time) {
+        this.billList = new Product[DEFAULT_SIZE_OF_LIST];
         this.time = time;
         this.seller = seller;
     }
@@ -20,7 +25,7 @@ public class Bill {
     public void calculateBill() {
 
 
-        if (billList != null && productListSize > 0) {
+        if (billList != null && actualSizeOfList > 0) {
 
             for (int i = 0; i < billList.length; i++) {
                 billCost += billList[i].getPrice();
@@ -68,8 +73,8 @@ public class Bill {
             if (product == null) {
                 System.out.println("ENTER REAL PRODUCT!");
             } else {
-                billList[productListSize] = product;
-                productListSize++;
+                billList[actualSizeOfList] = product;
+                actualSizeOfList++;
             }
         } else System.out.println("Sorry, bill is closed!");
     }
@@ -78,13 +83,13 @@ public class Bill {
 
         String resultString = "***BILL***\n";
 
-        for (int i = 0; i < billList.length; i++) {
+        for (int i = 0; i < actualSizeOfList; i++) {
             resultString += billList[i].showInfo() + "\n";
         }
 
         resultString += time.toString() + "\n" + seller.toString();
 
-        return   (isClosed) ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
+        return   isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
     }
 
     public void closeBill() {
