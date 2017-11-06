@@ -69,11 +69,8 @@ public class BillTest {
     @Test
     public void testCloseBill() {
 
-        boolean expected = true;
-
         testBill.closeBill();
-        boolean actual = testBill.isClosed();
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(true, testBill.isClosed());
     }
 }
