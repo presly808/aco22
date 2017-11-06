@@ -8,6 +8,9 @@ public class Bill {
     private String time;
     private boolean isClosed = false;
 
+
+    private int firstFreePositionAtProducts;
+    private int nextFreePositionAtProducts;
     public Bill(){
 
     }
@@ -24,7 +27,10 @@ public class Bill {
     }
 
     public void setProducts() {
-        this.products = new Product[20];
+        int size = 20;
+        this.products = new Product[size];
+        this.firstFreePositionAtProducts = 0;
+        this.nextFreePositionAtProducts = 1;
     }
 
     public double getAmountPrice() {
@@ -59,27 +65,27 @@ public class Bill {
 
     public void addProduct (Product product) {
         if (!this.isClosed()) {
+            if (product == null) {
+//                product = Product.setProductNull(product);
+                return;
+            }
+
             if (this.getProducts() == null || this.getProducts().equals(null)) {
                 setProducts();
             }
-            if (product != null) {
-                addProductToArr(product);
-            } else {
-                product = Product.setProductNull(product);
-                addProductToArr(product);
+
+            this.getProducts()[this.firstFreePositionAtProducts] = product;
+            this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
+
+            for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
+                if (this.getProducts()[i] == null) {
+                    this.nextFreePositionAtProducts = i;
+                }
             }
         }
         else return;
     }
 
-    private void addProductToArr (Product product) {
-        for (int i = 0; i < this.products.length; i++) {
-            if (this.getProducts()[i] == null) {
-                this.getProducts()[i] = product;
-                return;
-            }
-        }
-    }
 
     public void closeBill () {
         this.setIsClosed();
@@ -97,21 +103,20 @@ public class Bill {
         for (int i = 0; i < this.products.length; i++) {
             if (product.equals(this.products[i])) {
                 this.products[i] = null;
+                if (i < this.firstFreePositionAtProducts) {
+                    this.nextFreePositionAtProducts = this.firstFreePositionAtProducts;
+                    firstFreePositionAtProducts = i;
+                } else {
+                    this.nextFreePositionAtProducts = i;
+                }
                 break;
             }
         }
     }
+
+    private int[] freePosition () {
+
+        return new int[2];
+    }
 }
 
-/*
-    public void addProduct (Product product) {
-        if (this.getProducts() == null || this.getProducts().equals(null)){
-            setProducts();
-            if (product != null && !isClosed()) {
-                addProductToArr(product);
-            }
-        }   else {
-            addProductToArr(product);
-        }
-    }
- */

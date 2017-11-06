@@ -1,6 +1,5 @@
 package artcode.shop;
 
-import javax.swing.*;
 
 public class Product {
     private String name;
@@ -8,9 +7,9 @@ public class Product {
     private int id;
 
     public Product(String name, double price, int id) {
-        this.name = nameProductTester(name);
-        this.price = priceProductTester(price);
-        this.id = idProductTester(id);
+        this.name = name;
+        this.price = price;
+        this.id = id;
     }
 
     public String getName() {
@@ -37,23 +36,12 @@ public class Product {
         this.id = id;
     }
 
-    private static String nameProductTester (String name) {
-        return  (name == null) ? "" : name;
-    }
 
-    private static double priceProductTester (double price) {
-        return (price > 0.0) ? price : 0.0;
-    }
-
-    private static int idProductTester (int id) {
-        return (id > 0) ? id : 0;
-    }
-
-    public static Product setProductNull(Product product) {
-        product.setName("");
-        product.setPrice(0.0);
-        product.setId(0);
-        return product;
-    }
+//    public static Product setProductNull(Product product) {
+//        product.setName("");
+//        product.setPrice(0.0);
+//        product.setId(0);
+//        return product;
+//    }
 
 }
