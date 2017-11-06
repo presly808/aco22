@@ -113,10 +113,5 @@ public class Bill {
             }
         }
     }
-
-    private int[] freePosition () {
-
-        return new int[2];
-    }
 }
 
