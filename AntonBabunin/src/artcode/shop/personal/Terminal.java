@@ -1,11 +1,17 @@
 package artcode.shop.personal;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Terminal {
 
     private static Terminal instance;
 
-    private Bill[] bills;
-    private SalesMan[] sales;
+    private List<Bill> bills;
+    private List<SalesMan> sales;
+
+    private int billCount = 0;
 
     private Terminal(){
     }
@@ -18,12 +24,35 @@ public class Terminal {
     }
 
     public void login (SalesMan salesMan) {
+        if (salesMan != null && salesMan.getFullName() != null && salesMan.getFullName().length() > 0){
 
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Enter your login");
+            String enterLogin = scanner.nextLine();
+            //           String enterLogin = "Anton";
+            System.out.println(enterLogin);
+            System.out.println("Enter your password");
+//             String enterPassword = "Anton";
+
+            String enterPassword = scanner.nextLine();
+            System.out.println(enterPassword);
+
+            if (enterLogin.equals((salesMan.getLogin()))
+                    && enterPassword.equals(salesMan.getPassword())) {
+
+                if (sales == null) {
+                sales = new ArrayList();
+                }
+                sales.add(salesMan);
+            }
+        }
     }
 
     public Bill createBill(){
-        return new Bill();
+        return new Bill(++billCount);
     }
+
     public void addProduct(){
 
     }
@@ -33,7 +62,7 @@ public class Terminal {
     }
 
     public Bill findBillById (int id){
-        return new Bill();
+        return new Bill(billCount);
     }
 
     public SalesMan findSalesmanByLoginOrFullname (String loginOrFullName) {
@@ -62,4 +91,9 @@ public class Terminal {
     private int countSoldProducts () {
         return 0;
     }
+
+    public List<SalesMan> getSales() {
+        return sales;
+    }
+
 }
