@@ -1,5 +1,7 @@
 package artcode.shop.personal;
 
+import artcode.shop.product.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,20 +55,47 @@ public class Terminal {
         return new Bill(++billCount);
     }
 
-    public void addProduct(){
-
+    public void addProduct(SalesMan salesMan, Product product, Bill bill){
+        if (salesMan != null && product != null && bill != null) {
+            salesMan.addProduct(product, bill);
+        }
     }
 
     public void closeAndSaveBill (Bill bill) {
-
+        if (bill != null) {
+            bill.closeBill();
+            if (bills == null) {
+                bills = new ArrayList<Bill>();
+            }
+            bills.add(bill);
+        }
     }
 
     public Bill findBillById (int id){
-        return new Bill(billCount);
+        Bill returnBill = null;
+        if (bills != null) {
+            for (Bill bill : bills) {
+                if (bill.getId() == id) {
+                    returnBill = bill;
+                    break;
+                }
+            }
+        }
+        return returnBill;
     }
 
     public SalesMan findSalesmanByLoginOrFullname (String loginOrFullName) {
-        return new SalesMan("");
+        SalesMan salesMan = null;
+        if (loginOrFullName != null || !loginOrFullName.equals("")) {
+            if (sales != null) {
+                for (SalesMan salesMan1 : sales) {
+                    if (loginOrFullName.equals(salesMan1.getFullName()) || loginOrFullName.equals(salesMan1.getLogin())) {
+                        salesMan = salesMan1;
+                    }
+                }
+            }
+        }
+        return salesMan;
     }
 
     public SalesMan getTopNofSalesMan () {

@@ -1,5 +1,7 @@
 package artcode.shop.personal;
 
+import artcode.shop.product.Product;
+
 public class SalesMan {
     private String fullName;
     private String login;
@@ -21,7 +23,7 @@ public class SalesMan {
         this.login = login;
     }
 
-    private String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -29,9 +31,14 @@ public class SalesMan {
         this.password = password;
     }
 
-    public void   printFullInfo () {
-        System.out.printf("Fullname is %s, login is %s, password is encrypted - *****, but at extra fee admin told %s", getFullName(), getLogin(), getPassword());
+    public void printFullInfo () {
+        System.out.printf("Fullname is %s, login is %s, password is encrypted - *****, but at extra fee admin told it - %s", getFullName(), getLogin(), getPassword());
     }
 
+    public void addProduct(Product product, Bill bill) {
+        if (product != null && bill != null) {
+            bill.addProduct(product);
+        }
+    }
 
 }

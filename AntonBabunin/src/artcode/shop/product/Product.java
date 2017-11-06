@@ -1,10 +1,11 @@
-package artcode.shop;
+package artcode.shop.product;
 
 
 public class Product {
+    private int id;
     private String name;
     private double price;
-    private int id;
+
 
     public Product(String name, double price, int id) {
         this.name = name;
@@ -35,13 +36,4 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
-
-
-//    public static Product setProductNull(Product product) {
-//        product.setName("");
-//        product.setPrice(0.0);
-//        product.setId(0);
-//        return product;
-//    }
-
 }

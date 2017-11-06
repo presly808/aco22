@@ -4,66 +4,18 @@ package artcode.shop.personal;
 import artcode.shop.product.Product;
 
 public class Bill {
-    private Product[] products;
-    private double amountPrice;
-    private String seller;
-    private String closeTime;
-    private boolean isClosed = false;
     private int id;
+    private Product[] products;
+    private String salesMan;
+    private double amountPrice;
+    private String closeTime;
 
-
+    private boolean isClosed = false;
     private int firstFreePositionAtProducts;
     private int nextFreePositionAtProducts;
-    public Bill(){
 
-    }
+    public Bill(int id){
 
-//    public Bill(Product[] products, double amountPrice, String seller, String time) {
-//        this.products = products;
-//        this.amountPrice = amountPrice;
-//        this.seller = seller;
-//        this.time = time;
-//    }
-
-    public Product[] getProducts() {
-        return products;
-    }
-
-    public void setProducts() {
-        int size = 20;
-        this.products = new Product[size];
-        this.firstFreePositionAtProducts = 0;
-        this.nextFreePositionAtProducts = 1;
-    }
-
-    public double getAmountPrice() {
-        return amountPrice;
-    }
-
-    private void calculate() {
-        double amountPrice = 0.0;
-        for (Product prod : products) {
-            if (prod != null) {
-                amountPrice += prod.getPrice();
-            }
-        }
-        this.amountPrice = amountPrice;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
-    public String getTime() {
-        return closeTime;
-    }
-
-    public void setTime(String closeTime) {
-        this.closeTime = closeTime;
     }
 
     public void addProduct (Product product) {
@@ -91,11 +43,70 @@ public class Bill {
         else return;
     }
 
+    public void closeBill () {
+        this.setIsClosed();
+        this.calculateAmountPrice();
+    }
+
     private void setIsClosed() {
         this.isClosed = true;
     }
-    private boolean isClosed() {
+    public boolean isClosed() {
         return this.isClosed;
+    }
+
+    private void calculateAmountPrice() {
+        double amountPrice = 0.0;
+        for (Product prod : products) {
+            if (prod != null) {
+                amountPrice += prod.getPrice();
+            }
+        }
+        this.amountPrice = amountPrice;
+    }
+
+    public void printBill() {
+
+    }
+
+    public int getId () {
+        return this.id;
+    }
+
+
+
+
+
+
+    public Product[] getProducts() {
+        return products;
+    }
+
+    private void setProducts() {
+        int size = 20;
+        this.products = new Product[size];
+        this.firstFreePositionAtProducts = 0;
+        this.nextFreePositionAtProducts = 1;
+    }
+
+    private double getAmountPrice() {
+        return amountPrice;
+    }
+
+    private String getSeller() {
+        return salesMan;
+    }
+
+    private void setSeller(String seller) {
+        this.salesMan = seller;
+    }
+
+    private String getTime() {
+        return closeTime;
+    }
+
+    private void setTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 
     public void delFromBill (Product product) {
@@ -113,9 +124,6 @@ public class Bill {
         }
     }
 
-    public void closeBill () {
-        this.setIsClosed();
-        this.calculate();
-    }
+
 }
 
