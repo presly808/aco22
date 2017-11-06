@@ -63,9 +63,7 @@ public class BillTest {
 
         String actual = testBill.showInfo();
 
-        boolean isSame = expected.equals(actual);
-
-        Assert.assertTrue(isSame);
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
