@@ -7,7 +7,7 @@ import week1.data.Product;
 import week1.data.Seller;
 import week1.data.Time;
 
-public class testBill {
+public class BillTest {
 
     Product testProduct1 = new Product("Milk", 11.20, "#03242341");
     Product testProduct2 = new Product("Cheese", 2.05, "#0341");

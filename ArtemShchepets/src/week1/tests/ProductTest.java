@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import week1.data.Product;
 
-public class testProduct {
+public class ProductTest {
 
     Product testProduct1 = new Product("Milk", 11.20, "#03242341");
     Product testProduct2 = new Product("Cheese", 2.05, "#0341");
