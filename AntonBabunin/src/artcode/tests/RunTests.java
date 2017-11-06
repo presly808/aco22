@@ -26,8 +26,13 @@ public class RunTests {
         Bill bill = new Bill();
         Product expected = new Product(null, 123.22, 123);
         bill.addProduct(expected);
-        Product actual = bill.getProducts()[0];
-        Assert.assertSame(expected, actual);
+        Product actual;
+        if (bill != null && expected.getName() != null) {
+            actual = bill.getProducts()[0];
+        } else {
+            actual = null;
+        }
+        Assert.assertNull(actual);
     }
 //    @Test
 //    public void testAddProduct3(){

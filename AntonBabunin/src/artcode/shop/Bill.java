@@ -65,21 +65,22 @@ public class Bill {
 
     public void addProduct (Product product) {
         if (!this.isClosed()) {
-            if (product == null) {
+            if (product == null || product.getName() == null || product.getName().equals(null)) {
 //                product = Product.setProductNull(product);
                 return;
-            }
+            } else {
 
-            if (this.getProducts() == null || this.getProducts().equals(null)) {
-                setProducts();
-            }
+                if (this.getProducts() == null || this.getProducts().equals(null)) {
+                    setProducts();
+                }
 
-            this.getProducts()[this.firstFreePositionAtProducts] = product;
-            this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
+                this.getProducts()[this.firstFreePositionAtProducts] = product;
+                this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
 
-            for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
-                if (this.getProducts()[i] == null) {
-                    this.nextFreePositionAtProducts = i;
+                for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
+                    if (this.getProducts()[i] == null) {
+                        this.nextFreePositionAtProducts = i;
+                    }
                 }
             }
         }
