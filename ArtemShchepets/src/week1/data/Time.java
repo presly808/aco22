@@ -24,6 +24,18 @@ public class Time {
         return seconds;
     }
 
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
     @Override
     public String toString() {
         return hours + ":" + minutes + ":" + seconds;

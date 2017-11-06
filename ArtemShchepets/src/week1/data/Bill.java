@@ -7,6 +7,8 @@ public class Bill {
     private Product[] billList;
     private int actualSizeOfList = 0;
 
+    private int id;
+
     private double billCost = 0;
     private Time time;
     private Seller seller;
@@ -19,6 +21,12 @@ public class Bill {
     public Bill(Seller seller, Time time) {
         this.billList = new Product[DEFAULT_SIZE_OF_LIST];
         this.time = time;
+        this.seller = seller;
+    }
+
+    public Bill(Seller seller) {
+        this.billList = new Product[DEFAULT_SIZE_OF_LIST];
+        this.time = new Time(00,00,00);
         this.seller = seller;
     }
 
@@ -51,6 +59,22 @@ public class Bill {
         return seller;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public int getActualSizeOfList() {
+        return actualSizeOfList;
+    }
+
+    public void setActualSizeOfList(int actualSizeOfList) {
+        this.actualSizeOfList = actualSizeOfList;
+    }
+
     public void setClosed(boolean closed) {
         isClosed = closed;
     }
@@ -59,6 +83,10 @@ public class Bill {
         if (!isClosed) {
             this.time = time;
         } else System.out.println("Sorry, bill is closed!");
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setSeller(Seller seller) {

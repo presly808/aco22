@@ -3,6 +3,10 @@ package week1.data;
 public class Seller {
 
     private String name;
+
+    private String login;
+    private String password;
+
     private int age;
 
     public Seller(String name, int age) {
@@ -16,6 +20,14 @@ public class Seller {
 
     public int getAge() {
         return age;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
