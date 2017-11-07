@@ -2,6 +2,8 @@ package week1.data;
 
 public class Product {
 
+    private int id;
+
     private String name;
     private double price;
     private String code;
@@ -24,6 +26,13 @@ public class Product {
         return code;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String showInfo() {
         return toString();

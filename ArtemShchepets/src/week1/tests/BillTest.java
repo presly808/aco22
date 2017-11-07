@@ -19,7 +19,7 @@ public class BillTest {
     Seller testSeller = new Seller("Valya", 22);
     Time testTime = new Time(12, 33, 50);
 
-    Bill testBill = new Bill(testProductList, testSeller, testTime);
+    Bill testBill = new Bill( testSeller, testTime);
 
     @Test
     public void testAddProducts() {
@@ -69,11 +69,8 @@ public class BillTest {
     @Test
     public void testCloseBill() {
 
-        boolean expected = true;
-
         testBill.closeBill();
-        boolean actual = testBill.isClosed();
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(true, testBill.isClosed());
     }
 }
