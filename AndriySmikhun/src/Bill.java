@@ -20,8 +20,29 @@ public class Bill {
     public void addProduct(Product[] product){
 
     }
-    public void closeBill(){}
-    public void calculateAmountPrice(){}
-    public void printBill(){}
+    public String closeBill(Bill bill){
+        if (closeTime == null){
+            closeTime = "12:30";
+        }else {
+            System.out.printf("This bill was closed");
+        }
+        return closeTime;
+    }
+    public double calculateAmountPrice(Product[] product ){
+        double amountPrice = 0.0d;
+        for (int i = 0; i < product.length; i++){
+            amountPrice = product[i].getPrice();
+        }
+        return amountPrice;
+    }
+    public void printBill(Bill bill){
+        System.out.println("Bill's number" + id);
+        for (int i = 0; i < products.length; i++){
+            System.out.print("Name " + products[i].getName() + " --------- ");
+            System.out.println("Price " + products[i].getPrice());
+        }
+        System.out.println("Amount price " + calculateAmountPrice(bill.products));
+        System.out.println("Time: " + closeBill(bill));
+    }
 
 }
