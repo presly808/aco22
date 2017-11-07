@@ -1,73 +1,47 @@
 package artcode.tests;
 
-import badcode.SalesMan;
-import badcode.Terminal;
+import artcode.shop.Bill;
+import artcode.shop.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RunTests {
-/*    @Test
-    public void testTerminalCreated1() {
-        Terminal terminal1 = Terminal.getInstance();
-        Assert.assertNotNull(terminal1);
-    }
-
     @Test
-    public void testTerminalCreated() {
-        Terminal terminal1 = Terminal.getInstance();
-        Terminal terminal2 = Terminal.getInstance();
-        Assert.assertEquals(terminal1, terminal2);
-    }
-*/
+    public void testCalculateAmountPrice() {
+        Bill bill12 = new Bill();
+        bill12.setId(1);
+        Product product1 = new Product(1);
+        product1.setPrice(1.1);
+        product1.setName("asd");
+        product1.setId(1);
 
-    @Test
-    public void testLogin() {
-//        Test that salesMan Not added to List
+        Product product2 = new Product(2);
+        product2.setPrice(2.2);
+        product2.setName("as45d");
+        product1.setId(2);
 
-    Terminal terminal1 = Terminal.getInstance();
-    SalesMan salesMan1 = new SalesMan("Anton");
-    salesMan1.setLogin("Anton");
-    salesMan1.setPassword("Anton1");
-    terminal1.login(salesMan1);
-    List actual = terminal1.getSales();
-    List expected = new ArrayList();
-    expected.add(salesMan1);
-    Assert.assertNull(actual);
-}
+        Product product3 = new Product(3);
+        product3.setPrice(2.5);
+        product3.setName("as12d");
+        product1.setId(3);
 
-    @Test
-    public void testLogin1() {
-//        Test that salesMan added to List
-
-        Terminal terminal1 = Terminal.getInstance();
-        SalesMan salesMan1 = new SalesMan("Anton");
-        salesMan1.setLogin("Anton");
-        salesMan1.setPassword("Anton");
-        terminal1.login(salesMan1);
-        List actual = terminal1.getSales();
-        List expected = new ArrayList();
-        expected.add(salesMan1);
-        Assert.assertNotNull(actual.toArray());
-    }
-
-
-
-    @Test
-    public void testLogin2() {
-//        Test that salesMan added to List correct
-        Terminal terminal1 = Terminal.getInstance();
-        terminal1.getSales().clear();
-        SalesMan salesMan1 = new SalesMan("Anton");
-        salesMan1.setLogin("Anton");
-        salesMan1.setPassword("Anton");
-        terminal1.login(salesMan1);
-        List actual = terminal1.getSales();
-        List expected = new ArrayList();
-        expected.add(salesMan1);
-        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
+        bill12.addProduct(product1);
+        bill12.addProduct(product2);
+        bill12.addProduct(product3);
+        double y = 0.0;
+        for (Product x : bill12.getProducts()) {
+            if (x != null) {
+                System.out.println(x.getPrice());
+                y = y + x.getPrice();
+            } else {
+                y = y;
+            }
+        }
+        double expected = 5.8;
+        double actual = bill12.calculateAmountPrice();
+        System.out.println(actual);
+        Assert.assertEquals(expected,actual,0.001);
     }
 
 }
