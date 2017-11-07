@@ -22,6 +22,7 @@ public class Bill {
         this.billList = new Product[DEFAULT_SIZE_OF_LIST];
         this.time = time;
         this.seller = seller;
+        isClosed = true;
     }
 
     public Bill(Seller seller) {

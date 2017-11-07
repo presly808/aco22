@@ -1,6 +1,7 @@
 package week1.tests;
 
-import org.junit.Assert;
+
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import week1.data.*;
 
@@ -26,6 +27,13 @@ public class TerminalTest {
     Time testTime = new Time(12, 33, 50);
     Bill testBill = new Bill( testSeller, testTime);
 
+    /*
+    @Before
+    public void beforeTests() {
+        testTerminal.setActualSizeOfBills(27);
+    }
+    */
+
     @Test
     public void testSignInValidation1() {
 
@@ -33,6 +41,7 @@ public class TerminalTest {
         testTerminal.signIn("login", "pass");
 
         Assert.assertFalse(testTerminal.isSignIn());
+
     }
 
     @Test
@@ -51,6 +60,11 @@ public class TerminalTest {
         testTerminal.signIn("null", "");
 
         Assert.assertFalse(testTerminal.isSignIn());
+
+        //instead of annotation @After, which doesn't work
+        for (int i = 0; i < testSellerArray.length; i++) {
+            testSellerArray[i] = null;
+        }
     }
 
     @Test
@@ -71,9 +85,39 @@ public class TerminalTest {
         Assert.assertTrue(testTerminal.isSignIn());
         Assert.assertEquals(2,testTerminal.getCurrentSellerIndex());
 
+        // instead of annotation @After, which doesn't work
+        testTerminal.setSellers(null);
+        testTerminal.setActualSizeOfSellers(0);
         testTerminal.setCurrentSellerIndex(-1);
         testTerminal.setSignIn(false);
+
+        for (int i = 0; i < testSellerArray.length; i++) {
+            testSellerArray[i] = null;
+        }
     }
 
+    /*
+
+    @Test
+    public void testCloseAndSaveBillValidation() {
+        //trying to close bill without signing in
+
+        Bill testBill = new Bill(testSeller2);
+
+        Bill[] testBillList = new Bill[1];
+        testBillList[0] = testBill;
+
+        testTerminal.setBills(testBillList);
+        testTerminal.closeAndSaveBill();
+
+        Assert.assertFalse(testTerminal.getBills()[testTerminal.getCurrentBillIndex()].isClosed());
+
+        //instead of @After annotation, which doesnt work
+        testTerminal.setBills(null);
+        testTerminal.setCurrentBillIndex(-1);
+        testTerminal.setActualSizeOfBills(0);
+    }
+
+    */
 
 }

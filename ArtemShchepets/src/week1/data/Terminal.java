@@ -79,7 +79,10 @@ public class Terminal {
     }
 
     public void setBills(Bill[] bills) {
-        this.bills = bills;
+
+        this.bills = makeAnActualBillArray(bills);
+        this.actualSizeOfBills = bills.length;
+        this.currentBillIndex = actualSizeOfBills - 1;
     }
 
     public Seller[] getSellers() {
@@ -96,16 +99,32 @@ public class Terminal {
         return actualSizeOfBills;
     }
 
+    public void setActualSizeOfBills(int actualSizeOfBills) {
+        this.actualSizeOfBills = actualSizeOfBills;
+    }
+
     public int getActualSizeOfSellers() {
         return actualSizeOfSellers;
+    }
+
+    public void setActualSizeOfSellers(int actualSizeOfSellers) {
+        this.actualSizeOfSellers = actualSizeOfSellers;
     }
 
     public int getCurrentSellerIndex() {
         return currentSellerIndex;
     }
 
+    public int getCurrentBillIndex() {
+        return currentBillIndex;
+    }
+
     public void setCurrentSellerIndex(int currentSellerIndex) {
         this.currentSellerIndex = currentSellerIndex;
+    }
+
+    public void setCurrentBillIndex(int currentBillIndex) {
+        this.currentBillIndex = currentBillIndex;
     }
 
     public boolean isSignIn() {
@@ -279,7 +298,6 @@ public class Terminal {
                 bills[currentBillIndex].closeBill();
             }
         }
-
     }
 
     public Bill findBillById(int searchingId) {
