@@ -5,10 +5,19 @@ public class Product {
 
     private long id;
     private String name;
+    private double price;
 
-    public Product(long id, String name) {
+    public Product(long id, String name, double price) {
         this.id = id;
         this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public void printFullInfo(){
