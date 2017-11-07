@@ -20,7 +20,11 @@ public class Terminal {
             }
         }
     }                               //enter login and password
-    public void createBill(){}                          //create and open bill
+    public void createBill(Bill bill,Salesman salesman){
+        if(salesman.isStatus()){
+
+        }
+    }                          //create and open bill
     public void addProduct(){}                          //
     public void closeAndSaveBill(){}                    //close and save bill in toarray
     public void findBillById(){}                        //search bill
