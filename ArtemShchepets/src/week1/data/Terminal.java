@@ -1,5 +1,6 @@
 package week1.data;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Terminal {
@@ -18,9 +19,32 @@ public class Terminal {
     public Terminal() {
     }
 
+    // TODO actual bills array
     public Terminal(Bill[] bills, Seller[] sellers) {
         this.bills = bills;
-        this.sellers = sellers;
+
+        // sellers should already be in terminal,
+        // so I created a method to make an actual array of sellers(without nulls)
+        // with an actual size of sellers
+        this.sellers = makeAnActualArray(sellers);
+        this.actualSizeOfSellers = this.sellers.length;
+    }
+
+    private Seller[] makeAnActualArray(Seller[] inputSellerArray) {
+
+        if (inputSellerArray == null) return null;
+
+        Seller[] additionalArray = new Seller[inputSellerArray.length];
+        int additionalArrayCounter = 0;
+
+        for (int i = 0; i < inputSellerArray.length; i++) {
+            if (inputSellerArray[i] != null) {
+                additionalArray[additionalArrayCounter] = inputSellerArray[i];
+                additionalArrayCounter++;
+            }
+        }
+
+        return Arrays.copyOf(additionalArray, additionalArrayCounter);
     }
 
     public Bill[] getBills() {
@@ -53,18 +77,25 @@ public class Terminal {
             System.out.println("Enter login\\pass correctly!");
         } else {
 
-            for (int i = 0; i < actualSizeOfSellers; i++) {
-                if (sellers[i].getLogin().equals(login) && sellers[i].getPassword().equals(password)) {
-                    isSignIn = true;
-                    currentSellerIndex = i;
+            if (sellers == null) {
+                System.out.println("Sorry, there aren't any sellers in terminal!");
+            } else {
+
+                for (int i = 0; i < actualSizeOfSellers; i++) {
+                    if (sellers[i].getLogin().equals(login) && sellers[i].getPassword().equals(password)) {
+                        isSignIn = true;
+                        currentSellerIndex = i;
+                    }
                 }
+
+                if (!isSignIn) {
+                    System.out.println("We can't find user with such login\\pass. Try again!");
+                } else {
+                    System.out.println("Greeting, " + sellers[currentSellerIndex].getName());
+                }
+
             }
 
-            if (!isSignIn) {
-                System.out.println("We can't find user with such login\\pass. Try again!");
-            } else {
-                System.out.println("Greeting, " + sellers[currentSellerIndex].getName());
-            }
         }
     }
 
@@ -125,6 +156,8 @@ public class Terminal {
 
     public void addProductToBill() {
 
+        // TODO check null bills
+
         if (!isSignIn) {
 
             System.out.println("Firstly, you should sign in!");
@@ -166,11 +199,22 @@ public class Terminal {
 
     public void closeAndSaveBill() {
 
-        bills[currentBillIndex].closeBill();
+        if (!isSignIn) {
+            System.out.println("Firstly, you should sign in!");
+        } else {
+
+            if (bills == null) {
+                System.out.println("Sorry, there aren't any bills in the terminal!");
+            } else {
+                bills[currentBillIndex].closeBill();
+            }
+        }
 
     }
 
     public Bill findBillById(int searchingId) {
+
+        if (searchingId <= -1 || !isSignIn) return null;
 
         for (int i = 0; i < actualSizeOfBills; i++) {
 
@@ -178,6 +222,61 @@ public class Terminal {
         }
 
         return null;
+    }
+
+    public Seller findSalesmanByLoginOrFullname(String loginOrNameOfSalesMan) {
+
+        if (loginOrNameOfSalesMan == null || "".equals(loginOrNameOfSalesMan)) return null;
+
+        for (int i = 0; i < actualSizeOfSellers; i++) {
+            if (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan))
+                return sellers[i];
+        }
+
+        return null;
+    }
+
+    public Seller[] getTopNofSalesMan(int quantityOfTopSellers) {
+
+        if (quantityOfTopSellers <= 0 || sellers == null || quantityOfTopSellers > sellers.length) return null;
+
+        Seller[] topSellers = new Seller[quantityOfTopSellers];
+
+        // calculate sold products
+        for (int i = 0; i < sellers.length; i++) {
+            for (int j = 0; j < bills.length; j++) {
+                if (sellers[i].getName().equals(bills[j].getSeller().getName())) {
+                    sellers[i].setSoldProducts(sellers[i].getSoldProducts() + bills[j].getActualSizeOfList());
+                }
+            }
+        }
+
+        // sort
+        int lastUnsortedIndex = sellers.length - 1;
+
+        Seller tmp = new Seller();
+        boolean swapped;
+
+        do {
+            swapped = false;
+
+            for (int i = 0; i < lastUnsortedIndex; i++) {
+                if (sellers[i].getSoldProducts() < sellers[i+1].getSoldProducts()) {
+
+                    tmp = sellers[i];
+                    sellers[i] = sellers[i+1];
+                    sellers[i+1] = tmp;
+
+                    swapped = true;
+                }
+
+
+            }
+            lastUnsortedIndex--;
+        } while (swapped);
+
+        return Arrays.copyOfRange(sellers,0,quantityOfTopSellers);
+
     }
 
 }
