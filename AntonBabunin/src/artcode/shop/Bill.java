@@ -1,5 +1,7 @@
 package artcode.shop;
 
+import artcode.shop.terminal.Terminal;
+
 public class Bill {
 
     private int id;
@@ -12,29 +14,27 @@ public class Bill {
     private int firstFreePositionAtProducts;
     private int nextFreePositionAtProducts;
 
+
+
     public void addProduct (Product product) {
         if (!this.isClosed()) {
-            if (product == null || product.getName() == null || product.getName().equals(null)) {
-//                product = Product.setProductNull(product);
-                return;
-            } else {
+                if (product != null && product.getName() != null) {
 
-                if (this.getProducts() == null || this.getProducts().equals(null)) {
-                    setProducts();
-                }
+                    if (this.getProducts() == null || this.getProducts().equals(null)) {
+                        setProducts();
+                    }
 
-                this.getProducts()[this.firstFreePositionAtProducts] = product;
-                this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
+                    this.getProducts()[this.firstFreePositionAtProducts] = product;
+                    this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
 
-                for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
-                    if (this.getProducts()[i] == null) {
-                        this.nextFreePositionAtProducts = i;
-                        break;
+                    for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
+                        if (this.getProducts()[i] == null) {
+                            this.nextFreePositionAtProducts = i;
+                            break;
+                        }
                     }
                 }
-            }
         }
-        else return;
     }
 
     private void setProducts() {
@@ -73,14 +73,11 @@ public class Bill {
     }
 
     public Bill() {
+        this.id = Terminal.getCountCreatedBill();
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Product[] getProducts() {

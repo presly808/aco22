@@ -13,7 +13,6 @@ public class RunTests {
     @Test
     public void testCalculateAmountPrice() {
         Bill bill12 = new Bill();
-        bill12.setId(1);
         Product product1 = new Product(1);
         product1.setPrice(1.1);
         product1.setName("asd");

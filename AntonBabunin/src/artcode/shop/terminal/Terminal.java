@@ -4,18 +4,36 @@ import artcode.shop.Bill;
 import artcode.shop.Product;
 import artcode.shop.Salesman;
 
+import java.util.Scanner;
+
 public class Terminal {
     private Bill[] bills;
     private Salesman[] sales;
 
-    private int countBill;
+    private static int countClosedBill;
+    private static int countCreatedBill;
+
+    private static int countSalesman;
+
+
 
     public void login(Salesman salesman) {
-
+        if (salesman != null)
+            getSales()[countSalesman++] = salesman;
     }
 
-    public Bill createBill() {
-        return new Bill();
+    public Bill createBill(Salesman salesman) {
+        if (getCountClosedBill() != getCountCreatedBill()) return null;
+
+        if ((salesman == null)) return null;
+        else {
+            for (Salesman seller : sales) {
+                if (seller.equals(salesman)) {
+                    setCountCreatedBill(getCountCreatedBill() + 1);
+                    return new Bill();
+                }
+            } return null;
+        }
     }
 
     public void addProduct(Salesman salesman, Product product, Bill bill) {
@@ -30,7 +48,7 @@ public class Terminal {
             }
             if (!bill.isClosed()) {
                 bill.closeBill();
-                bills[countBill++] = new Bill();
+                bills[countClosedBill++] = new Bill();
             }
         }
      }
@@ -51,9 +69,20 @@ public class Terminal {
 
     }
 
+    public static void setCountClosedBill(int countClosedBill) {
+        Terminal.countClosedBill = countClosedBill;
+    }
 
+    public static int getCountCreatedBill() {
+        return Terminal.countCreatedBill;
+    }
+    public static int getCountClosedBill() {
+        return Terminal.countClosedBill;
+    }
 
-
+    public static void setCountCreatedBill(int countCreatedBill) {
+        Terminal.countCreatedBill = countCreatedBill;
+    }
 
     public Terminal() {
     }
