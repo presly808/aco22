@@ -16,26 +16,26 @@ public class Bill {
 
 
 
-//    public Bill addProduct (Product product) {
-//        if (!this.isClosed()) {
-//                if (product != null && product.getName() != null) {
-//
-//                    if (this.getProducts() == null || this.getProducts().equals(null)) {
-//                        setProducts();
-//                    }
-//
-//                    this.getProducts()[this.firstFreePositionAtProducts] = product;
-//                    this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
-//
-//                    for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
-//                        if (this.getProducts()[i] == null) {
-//                            this.nextFreePositionAtProducts = i;
-//                            break;
-//                        }
-//                    }
-//                }
-//        } return this;
-//    }
+    public void addProduct (Product product) {
+        if (!this.isClosed()) {
+                if (product != null && product.getName() != null) {
+
+                    if (this.getProducts() == null || this.getProducts().equals(null)) {
+                        setProducts();
+                    }
+
+                    this.getProducts()[this.firstFreePositionAtProducts] = product;
+                    this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
+
+                    for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
+                        if (this.getProducts()[i] == null) {
+                            this.nextFreePositionAtProducts = i;
+                            break;
+                        }
+                    }
+                }
+        }
+    }
 
     private void setProducts() {
         int size = 20;

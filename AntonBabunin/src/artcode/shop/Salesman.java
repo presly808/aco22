@@ -13,7 +13,10 @@ public class Salesman {
 //        return createBill(terminal);
 //    }
 
-
+    public void addProduct (Terminal terminal, Product product) {
+        Bill bill = terminal.addProduct();
+        bill.addProduct(product);
+    }
 
     public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
         return  (terminal != null) ? terminal.createBill(this) : null;

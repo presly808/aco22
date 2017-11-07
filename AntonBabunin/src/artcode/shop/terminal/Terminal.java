@@ -43,9 +43,12 @@ public class Terminal {
         }
     }
 
-//    public Bill addProduct(Salesman salesman, Product product) {
-//
-//    }
+    public Bill addProduct() {
+        for (Bill bill : getBills()) {
+            if (!bill.isClosed()) return bill;
+        }
+        return null;
+    }
 
     public void closeAndSaveBill (Bill bill) {
         if (bill != null) {
