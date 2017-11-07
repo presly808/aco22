@@ -1,5 +1,6 @@
 package week1.data;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Terminal {
@@ -20,7 +21,27 @@ public class Terminal {
 
     public Terminal(Bill[] bills, Seller[] sellers) {
         this.bills = bills;
-        this.sellers = sellers;
+
+        // sellers should already be in terminal,
+        // so I created a method to make an actual array of sellers(without nulls)
+        // with an actual size of sellers
+        this.sellers = makeAnActualArray(sellers);
+        this.actualSizeOfSellers = this.sellers.length;
+    }
+
+    private Seller[] makeAnActualArray(Seller[] inputSellerArray) {
+
+        Seller[] additionalArray = new Seller[inputSellerArray.length];
+        int additionalArrayCounter = 0;
+
+        for (int i = 0; i < inputSellerArray.length; i++) {
+            if (inputSellerArray[i] != null) {
+                additionalArray[additionalArrayCounter] = inputSellerArray[i];
+                additionalArrayCounter++;
+            }
+        }
+
+        return Arrays.copyOf(additionalArray,additionalArrayCounter);
     }
 
     public Bill[] getBills() {
@@ -175,6 +196,16 @@ public class Terminal {
         for (int i = 0; i < actualSizeOfBills; i++) {
 
             if (bills[i].getId() == searchingId) return bills[i];
+        }
+
+        return null;
+    }
+
+    public Seller findSalesmanByLoginOrFullname(String loginOrNameOfSalesMan) {
+
+        for (int i = 0; i < actualSizeOfSellers; i++) {
+            if (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan))
+                return sellers[i];
         }
 
         return null;
