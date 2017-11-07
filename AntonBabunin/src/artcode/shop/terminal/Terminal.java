@@ -4,7 +4,6 @@ import artcode.shop.Bill;
 import artcode.shop.Product;
 import artcode.shop.Salesman;
 
-import java.util.Scanner;
 
 public class Terminal {
     private Bill[] bills;
@@ -19,26 +18,34 @@ public class Terminal {
 
     public void login(Salesman salesman) {
         if (salesman != null)
-            getSales()[countSalesman++] = salesman;
+            if (getSales() == null) {
+            int size = 20;
+            sales = new Salesman[size];
+        }
+
+        getSales()[countSalesman++] = salesman;
     }
 
     public Bill createBill(Salesman salesman) {
-        if (getCountClosedBill() != getCountCreatedBill()) return null;
+        if (getCountClosedBill() < getCountCreatedBill()) return bills[countCreatedBill];
 
         if ((salesman == null)) return null;
         else {
-            for (Salesman seller : sales) {
-                if (seller.equals(salesman)) {
-                    setCountCreatedBill(getCountCreatedBill() + 1);
-                    return new Bill();
+            for (Salesman seller : this.getSales()) {
+                if (seller != null) {
+
+                    if (seller.equals(salesman)) {
+                        setCountCreatedBill(getCountCreatedBill() + 1);
+                        return new Bill();
+                    }
                 }
             } return null;
         }
     }
 
-    public void addProduct(Salesman salesman, Product product, Bill bill) {
-
-    }
+//    public Bill addProduct(Salesman salesman, Product product) {
+//
+//    }
 
     public void closeAndSaveBill (Bill bill) {
         if (bill != null) {

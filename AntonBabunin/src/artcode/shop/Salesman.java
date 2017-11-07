@@ -9,6 +9,9 @@ public class Salesman {
     private String login;
     private String password;
 
+//    public Bill addProduct (Terminal terminal, Product product) {
+//        return createBill(terminal);
+//    }
 
 
 
