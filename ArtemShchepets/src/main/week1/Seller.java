@@ -1,4 +1,4 @@
-package week1.data;
+package week1;
 
 public class Seller {
 

@@ -1,11 +1,7 @@
-package week1.tests;
+package week1;
 
 import org.junit.Assert;
 import org.testng.annotations.Test;
-import week1.data.Bill;
-import week1.data.Product;
-import week1.data.Seller;
-import week1.data.Time;
 
 public class BillTest {
 

@@ -1,9 +1,9 @@
-package week1.tests;
+package week1;
 
 
+import org.junit.Before;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import week1.data.*;
 
 public class TerminalTest {
 
@@ -27,12 +27,13 @@ public class TerminalTest {
     Time testTime = new Time(12, 33, 50);
     Bill testBill = new Bill( testSeller, testTime);
 
-    /*
+
     @Before
     public void beforeTests() {
-        testTerminal.setActualSizeOfBills(27);
+        //testTerminal.setActualSizeOfBills(27);
+
+        System.out.println("Test method before!");
     }
-    */
 
     @Test
     public void testSignInValidation1() {
@@ -67,6 +68,7 @@ public class TerminalTest {
         }
     }
 
+    /*
     @Test
     public void testSignIn() {
 

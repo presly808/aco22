@@ -1,9 +1,8 @@
-package week1.tests;
+package week1;
 
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import week1.data.Product;
 
 public class ProductTest {
 
