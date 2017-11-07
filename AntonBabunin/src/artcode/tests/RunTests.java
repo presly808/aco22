@@ -1,11 +1,9 @@
 package artcode.tests;
 
-import artcode.shop.personal.SalesMan;
-import artcode.shop.personal.Terminal;
+import badcode.SalesMan;
+import badcode.Terminal;
 import org.junit.Assert;
 import org.junit.Test;
-import artcode.shop.personal.Bill;
-import artcode.shop.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
