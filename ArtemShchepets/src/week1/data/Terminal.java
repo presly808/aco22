@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Terminal {
 
+    private static final int DEFAULT_SIZE_OF_BILL_ARRAY = 10;
+
     private Bill[] bills;
     private Seller[] sellers;
 
@@ -12,25 +14,50 @@ public class Terminal {
     private int actualSizeOfSellers;
 
     private int currentSellerIndex = -1;
-    private int currentBillIndex = 1;
+    private int currentBillIndex = -1;
 
     boolean isSignIn = false;
 
     public Terminal() {
     }
 
-    // TODO actual bills array
+    public Terminal(Seller[] sellers) {
+        this.sellers = makeAnActualSellersArray(sellers);
+        this.actualSizeOfSellers = this.sellers.length;
+    }
+
     public Terminal(Bill[] bills, Seller[] sellers) {
-        this.bills = bills;
+
+        // make an actual array of bills (without nulls)
+        this.bills = makeAnActualBillArray(bills);
+        this.actualSizeOfBills = this.bills.length;
+        currentBillIndex = actualSizeOfBills - 1;
 
         // sellers should already be in terminal,
         // so I created a method to make an actual array of sellers(without nulls)
         // with an actual size of sellers
-        this.sellers = makeAnActualArray(sellers);
+        this.sellers = makeAnActualSellersArray(sellers);
         this.actualSizeOfSellers = this.sellers.length;
     }
 
-    private Seller[] makeAnActualArray(Seller[] inputSellerArray) {
+    private Bill[] makeAnActualBillArray(Bill[] inputBillArray) {
+
+        if (inputBillArray == null) return null;
+
+        Bill[] additionalArray = new Bill[inputBillArray.length];
+        int additionalArrayCounter = 0;
+
+        for (int i = 0; i < inputBillArray.length; i++) {
+            if (inputBillArray[i] != null) {
+                additionalArray[additionalArrayCounter] = inputBillArray[i];
+                additionalArrayCounter++;
+            }
+        }
+
+        return Arrays.copyOf(additionalArray, additionalArrayCounter);
+    }
+
+    private Seller[] makeAnActualSellersArray(Seller[] inputSellerArray) {
 
         if (inputSellerArray == null) return null;
 
@@ -134,6 +161,7 @@ public class Terminal {
                 toContinue = ("y".equals(scanner.next()));
 
             } while (toContinue);
+
             // TODO check valid input
             // set close time for the bill
             System.out.println("Set close time. Like this --> 12:12:12");
@@ -146,17 +174,41 @@ public class Terminal {
             newBill.getTime().setSeconds(Integer.decode(parsedTime[2]));
 
             //add new bill to the terminal
-            bills[actualSizeOfBills] = newBill;
-            actualSizeOfBills++;
-            currentBillIndex = actualSizeOfBills - 1;
+            if (currentBillIndex == -1) {
+
+                bills = new Bill[DEFAULT_SIZE_OF_BILL_ARRAY];
+
+                bills[actualSizeOfBills] = newBill;
+                actualSizeOfBills++;
+                currentBillIndex = actualSizeOfBills - 1;
+
+            } else {
+
+                if (actualSizeOfBills == bills.length) {
+
+                    Bill[] newBillsList;
+                    newBillsList = Arrays.copyOf(bills, bills.length * 3 / 2);
+                    newBillsList[actualSizeOfBills] = newBill;
+                    this.bills = newBillsList;
+
+                    actualSizeOfBills++;
+                    currentBillIndex = actualSizeOfBills - 1;
+
+                } else {
+
+                    bills[actualSizeOfBills] = newBill;
+
+                    actualSizeOfBills++;
+                    currentBillIndex = actualSizeOfBills - 1;
+
+                }
+            }
 
             System.out.println("***BILL IS CREATED***");
         }
     }
 
     public void addProductToBill() {
-
-        // TODO check null bills
 
         if (!isSignIn) {
 
@@ -203,7 +255,7 @@ public class Terminal {
             System.out.println("Firstly, you should sign in!");
         } else {
 
-            if (bills == null) {
+            if (currentBillIndex == -1) {
                 System.out.println("Sorry, there aren't any bills in the terminal!");
             } else {
                 bills[currentBillIndex].closeBill();
@@ -214,7 +266,7 @@ public class Terminal {
 
     public Bill findBillById(int searchingId) {
 
-        if (searchingId <= -1 || !isSignIn) return null;
+        if (searchingId <= -1 || !isSignIn || currentBillIndex == -1) return null;
 
         for (int i = 0; i < actualSizeOfBills; i++) {
 
@@ -226,7 +278,7 @@ public class Terminal {
 
     public Seller findSalesmanByLoginOrFullname(String loginOrNameOfSalesMan) {
 
-        if (loginOrNameOfSalesMan == null || "".equals(loginOrNameOfSalesMan)) return null;
+        if (loginOrNameOfSalesMan == null || "".equals(loginOrNameOfSalesMan) || sellers == null) return null;
 
         for (int i = 0; i < actualSizeOfSellers; i++) {
             if (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan))
@@ -261,11 +313,11 @@ public class Terminal {
             swapped = false;
 
             for (int i = 0; i < lastUnsortedIndex; i++) {
-                if (sellers[i].getSoldProducts() < sellers[i+1].getSoldProducts()) {
+                if (sellers[i].getSoldProducts() < sellers[i + 1].getSoldProducts()) {
 
                     tmp = sellers[i];
-                    sellers[i] = sellers[i+1];
-                    sellers[i+1] = tmp;
+                    sellers[i] = sellers[i + 1];
+                    sellers[i + 1] = tmp;
 
                     swapped = true;
                 }
@@ -276,7 +328,7 @@ public class Terminal {
         } while (swapped);
 
         //return an array with N top-sellers
-        return Arrays.copyOfRange(sellers,0,quantityOfTopSellers);
+        return Arrays.copyOfRange(sellers, 0, quantityOfTopSellers);
 
     }
 
@@ -290,31 +342,39 @@ public class Terminal {
         Seller[] bestSalesMan = getTopNofSalesMan(1);
 
         // find maxPriceBill
-        for (int i = 0; i <= bills.length - 1; i++) {
-            if (bills[i] != null && bills[i].getBillCost() > bills[i+1].getBillCost() &&
-                    bills[i].getBillCost() > maxPriceBill) {
-                maxPriceBill = bills[i].getBillCost();
+        if (currentBillIndex > -1) {
+            for (int i = 0; i <= bills.length - 1; i++) {
+                if (bills[i] != null && bills[i].getBillCost() > bills[i + 1].getBillCost() &&
+                        bills[i].getBillCost() > maxPriceBill) {
+                    maxPriceBill = bills[i].getBillCost();
+                }
             }
         }
+
 
         //find minPriceBill
-        for (int i = 0; i <= bills.length - 1; i++) {
-            if (bills[i] != null && bills[i].getBillCost() < bills[i+1].getBillCost() &&
-                    bills[i].getBillCost() < minPriceBill) {
-                minPriceBill = bills[i].getBillCost();
+        if (currentBillIndex > -1) {
+            for (int i = 0; i <= bills.length - 1; i++) {
+                if (bills[i] != null && bills[i].getBillCost() < bills[i + 1].getBillCost() &&
+                        bills[i].getBillCost() < minPriceBill) {
+                    minPriceBill = bills[i].getBillCost();
+                }
             }
         }
 
+
         // calculate the sum of sold products
-        for (int i = 0; i < bills.length; i++) {
-            soldProducts += bills[i].getActualSizeOfList();
+        if (currentBillIndex > -1) {
+            for (int i = 0; i < bills.length; i++) {
+                soldProducts += bills[i].getActualSizeOfList();
+            }
         }
 
         System.out.println(String.format("***Statistic***\n " +
                 "The highest price of bill: %d\n " +
                 "The lowest price of bill: %d\n " +
                 "There are %d sold products now!\n " +
-                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan ));
+                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan));
 
     }
 
