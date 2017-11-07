@@ -170,4 +170,14 @@ public class Terminal {
 
     }
 
+    public Bill findBillById(int searchingId) {
+
+        for (int i = 0; i < actualSizeOfBills; i++) {
+
+            if (bills[i].getId() == searchingId) return bills[i];
+        }
+
+        return null;
+    }
+
 }
