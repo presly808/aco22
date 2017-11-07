@@ -1,11 +1,11 @@
-package artcode.shop.personal;
-
-import artcode.shop.product.Product;
+package badcode;
 
 public class SalesMan {
     private String fullName;
     private String login;
     private String password;
+
+    private Bill[] bills;
 
     public SalesMan(String fullName) {
         this.fullName = fullName;
@@ -41,4 +41,19 @@ public class SalesMan {
         }
     }
 
+    public Bill[] getBills() {
+        return bills;
+    }
+
+    public Bill createBill(){
+        Bill bill = null;
+        int count = 0;
+        if (bills == null) {
+            int size = 20;
+            bills = new Bill[size];
+            count++;
+            bill = new Bill(count);
+        }
+        return bill;
+    }
 }

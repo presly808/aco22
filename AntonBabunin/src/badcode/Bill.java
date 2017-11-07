@@ -1,7 +1,5 @@
-package artcode.shop.personal;
+package badcode;
 
-
-import artcode.shop.product.Product;
 
 public class Bill {
     private int id;
@@ -93,11 +91,11 @@ public class Bill {
         return amountPrice;
     }
 
-    private String getSeller() {
+    public String getSeller() {
         return salesMan;
     }
 
-    private void setSeller(String seller) {
+    public void setSeller(String seller) {
         this.salesMan = seller;
     }
 
