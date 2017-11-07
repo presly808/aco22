@@ -1,16 +1,24 @@
-package artcode.shop.product;
-
+package artcode.shop;
 
 public class Product {
+
     private int id;
     private String name;
     private double price;
 
 
-    public Product(String name, double price, int id) {
-        this.name = name;
-        this.price = price;
-        this.id = id;
+    public void printFullInfo(){
+        System.out.printf("Product: \n id: %d \n name: %s \n price: %.2f", this.getId(), this.getName(), this.getPrice());
+    }
+
+
+
+
+    public Product(int id) {
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -27,10 +35,6 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public void setId(int id) {

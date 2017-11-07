@@ -1,6 +1,4 @@
-package artcode.shop.personal;
-
-import artcode.shop.product.Product;
+package badcode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +49,16 @@ public class Terminal {
         }
     }
 
-    public Bill createBill(){
-        return new Bill(++billCount);
+    public Bill createBill(SalesMan salesMan){
+        return salesMan.createBill();
     }
 
     public void addProduct(SalesMan salesMan, Product product, Bill bill){
         if (salesMan != null && product != null && bill != null) {
             salesMan.addProduct(product, bill);
+            if (salesMan.getBills() == null) {
+
+            }
         }
     }
 
