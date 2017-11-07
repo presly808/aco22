@@ -64,11 +64,29 @@ public class Terminal {
      }
 
     public Bill findBillById(int id) {
-        return new Bill();
+        if (id > 0) {
+            if (getBills() != null) {
+                for (Bill bill : getBills()) {
+                    if (id == bill.getId()) {
+                        return bill;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public Salesman findSalesmanByLoginOrFullname (String nameOrLogin) {
-        return new Salesman("new");
+        if (nameOrLogin != null) {
+            if (getSales() != null) {
+                for (Salesman salesman : getSales()) {
+                    if (nameOrLogin.equals(salesman.getFullName()) || nameOrLogin.equals(salesman.getLogin())) {
+                        return salesman;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public Salesman getTopNofSalesMan () {
