@@ -14,9 +14,11 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(String name, int age) {
+    public Seller(String name, int age, String login, String password) {
         this.name = name;
         this.age = age;
+        this.login = login;
+        this.password = password;
     }
 
     public String getName() {

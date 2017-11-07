@@ -87,7 +87,9 @@ public class Terminal {
     }
 
     public void setSellers(Seller[] sellers) {
-        this.sellers = sellers;
+
+        this.sellers = makeAnActualSellersArray(sellers);
+        this.actualSizeOfSellers = sellers.length;
     }
 
     public int getActualSizeOfBills() {
@@ -96,6 +98,22 @@ public class Terminal {
 
     public int getActualSizeOfSellers() {
         return actualSizeOfSellers;
+    }
+
+    public int getCurrentSellerIndex() {
+        return currentSellerIndex;
+    }
+
+    public void setCurrentSellerIndex(int currentSellerIndex) {
+        this.currentSellerIndex = currentSellerIndex;
+    }
+
+    public boolean isSignIn() {
+        return isSignIn;
+    }
+
+    public void setSignIn(boolean signIn) {
+        isSignIn = signIn;
     }
 
     public void signIn(String login, String password) {
@@ -109,7 +127,8 @@ public class Terminal {
             } else {
 
                 for (int i = 0; i < actualSizeOfSellers; i++) {
-                    if (sellers[i].getLogin().equals(login) && sellers[i].getPassword().equals(password)) {
+                    if (sellers[i].getLogin().equals(login) && sellers[i].getPassword().equals(password)
+                            && sellers[i].getName() != null) {
                         isSignIn = true;
                         currentSellerIndex = i;
                     }
@@ -140,7 +159,7 @@ public class Terminal {
 
             Scanner scanner = new Scanner(System.in);
 
-            boolean toContinue; // always false?
+            boolean toContinue;
 
             // fill the list of products in new bill
             do {
@@ -247,8 +266,7 @@ public class Terminal {
         }
     }
 
-    // why do we need such method in Terminal if we already had one in Bill?
-
+    // why do we need such method in Terminal if we already had one in class Bill?
     public void closeAndSaveBill() {
 
         if (!isSignIn) {
@@ -351,7 +369,6 @@ public class Terminal {
             }
         }
 
-
         //find minPriceBill
         if (currentBillIndex > -1) {
             for (int i = 0; i <= bills.length - 1; i++) {
@@ -361,7 +378,6 @@ public class Terminal {
                 }
             }
         }
-
 
         // calculate the sum of sold products
         if (currentBillIndex > -1) {

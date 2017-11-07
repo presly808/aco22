@@ -16,7 +16,7 @@ public class BillTest {
 
     Product[] testProductList = new Product[4];
 
-    Seller testSeller = new Seller("Valya", 22);
+    Seller testSeller = new Seller("Valya", 22, "test", "test");
     Time testTime = new Time(12, 33, 50);
 
     Bill testBill = new Bill( testSeller, testTime);
