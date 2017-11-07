@@ -8,6 +8,8 @@ public class Terminal {
     private Bill[] bills;
     private Salesman[] sales;
 
+    private int countBill;
+
     public void login(Salesman salesman) {
 
     }
@@ -21,8 +23,17 @@ public class Terminal {
     }
 
     public void closeAndSaveBill (Bill bill) {
-
-    }
+        if (bill != null) {
+            if (bills == null) {
+                int size = 20;
+                bills = new Bill[size];
+            }
+            if (!bill.isClosed()) {
+                bill.closeBill();
+                bills[countBill++] = new Bill();
+            }
+        }
+     }
 
     public Bill findBillById(int id) {
         return new Bill();

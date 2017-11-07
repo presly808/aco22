@@ -7,6 +7,9 @@ import org.junit.Test;
 
 
 public class RunTests {
+
+//    Tests CalculateAmountPrice()
+
     @Test
     public void testCalculateAmountPrice() {
         Bill bill12 = new Bill();
@@ -32,17 +35,17 @@ public class RunTests {
         double y = 0.0;
         for (Product x : bill12.getProducts()) {
             if (x != null) {
-                System.out.println(x.getPrice());
                 y = y + x.getPrice();
             } else {
                 y = y;
             }
         }
         double expected = 5.8;
-        double actual = bill12.calculateAmountPrice();
-        System.out.println(actual);
+        double actual = bill12.closeBill();
         Assert.assertEquals(expected,actual,0.001);
     }
+
+    //    Tests CalculateAmountPrice()
 
 }
 

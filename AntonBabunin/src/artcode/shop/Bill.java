@@ -44,9 +44,9 @@ public class Bill {
         this.nextFreePositionAtProducts = 1;
     }
 
-    public void closeBill () {
+    public double closeBill () { //It can be void, but for test it set as double;
         this.setIsClosed();
-        this.calculateAmountPrice();
+        return this.calculateAmountPrice();
     }
 
     private void setIsClosed() {
@@ -56,13 +56,12 @@ public class Bill {
         return this.isClosed;
     }
 
-    public double calculateAmountPrice(){
+    private double calculateAmountPrice(){
         double amountPrice = 0.0;
         if (products != null) {
             for (Product product : products) {
                 if (product != null) {
                     amountPrice += product.getPrice();
-                    System.out.println("price " + product.getPrice() + "\n" + "amountPrice " + amountPrice);
                 }
             }
         }
