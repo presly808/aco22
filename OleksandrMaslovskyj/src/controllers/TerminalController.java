@@ -1,7 +1,23 @@
 package controllers;
 
-/**
- * Created by ubuntu on 07.11.17.
- */
-public class TermnalController {
+import implementation.Bill;
+import models.Product;
+import models.Salesman;
+
+public interface TerminalController {
+
+    boolean login();
+
+    Bill createBill();
+
+    Product addProduct();
+
+    Bill closeAndSaveBill(Bill bill);
+
+    Bill findBillById(long id);
+
+    Salesman findSalesmanByLoginOrFullname(String fullname);
+
+    Salesman getTopNofSalesMan();
+
 }

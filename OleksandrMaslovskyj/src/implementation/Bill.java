@@ -1,7 +1,8 @@
-package models;
-
+package implementation;
 
 import controllers.BillController;
+import models.Product;
+import models.Salesman;
 
 import java.util.Date;
 import java.util.*;

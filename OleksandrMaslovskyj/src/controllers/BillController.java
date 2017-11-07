@@ -1,7 +1,16 @@
 package controllers;
 
-/**
- * Created by ubuntu on 07.11.17.
- */
+
+import models.Product;
+
 public interface BillController {
+
+    Product addProduct(String name);
+
+    void closeBill();
+
+    double calculateAmountPrice();
+
+    void printBill();
+
 }
