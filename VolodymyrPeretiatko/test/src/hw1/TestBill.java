@@ -2,6 +2,8 @@ package hw1;
 
 import org.junit.*;
 
+import java.security.PublicKey;
+
 public class TestBill {
 
     private Bill bill;
@@ -16,6 +18,16 @@ public class TestBill {
         testDataProduct = new Product(1, "Laptop HP 750B", 500.0);
         testDataBill = new Bill(1, testDataSalesman);
         testDataBill.addProduct(testDataProduct);
+    }
+
+    @Before
+    public void init(){
+        bill = new Bill(1, testDataSalesman);
+    }
+
+    @Test
+    public void testEqals(){
+        Assert.assertTrue(bill.equals(testDataBill));
     }
 
 }
