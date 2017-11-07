@@ -1,38 +1,89 @@
 package week1;
 
 
-import org.junit.Before;
 import org.testng.Assert;
+import org.testng.annotations.*;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 
 public class TerminalTest {
 
-    Terminal testTerminal = new Terminal();
+    Terminal testTerminal;
 
-    Seller testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1");
-    Seller testSeller2 = new Seller("AntonVorobey", 17, "worker2", "password2");
-    Seller testSeller3 = new Seller("VasyaPupkin", 59, "worker3", "password3");
-    Seller testSeller4 = new Seller("AnyaTupova", 14, "worker4", "password4");
-    Seller testSeller5 = new Seller(null, 20, "worker5", "password5");
+    Seller testSeller1;
+    Seller testSeller2;
+    Seller testSeller3;
+    Seller testSeller4;
+    Seller testSeller5;
 
-    Seller[] testSellerArray = new Seller[5];
+    Seller[] testSellerArray;
 
-    Product testProduct1 = new Product("Milk", 11.20, "#03242341");
-    Product testProduct2 = new Product("Cheese", 2.05, "#0341");
-    Product testProduct3 = new Product("Water", 33.5, "#01");
-    Product testProduct4 = new Product(null, 7.55, "#222");
-
-
-    Seller testSeller = new Seller("Valya", 22, "test", "test");
-    Time testTime = new Time(12, 33, 50);
-    Bill testBill = new Bill( testSeller, testTime);
+    Product testProduct1;
+    Product testProduct2;
+    Product testProduct3;
+    Product testProduct4;
 
 
-    @Before
-    public void beforeTests() {
-        //testTerminal.setActualSizeOfBills(27);
+    Time testTime;
+    Bill testBill1;
+    Bill testBill2;
+    Bill testBill3;
 
-        System.out.println("Test method before!");
+
+    @BeforeTest
+    public void setUp() {
+        testTerminal = new Terminal();
+
+        testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1");
+        testSeller2 = new Seller("AntonVorobey", 17, "worker2", "password2");
+        testSeller3 = new Seller("VasyaPupkin", 59, "worker3", "password3");
+        testSeller4 = new Seller("AnyaTupova", 14, "worker4", "password4");
+        testSeller5 = new Seller(null, 20, "worker5", "password5");
+
+        testSellerArray = new Seller[5];
+
+        testProduct1 = new Product("Milk", 11.20, "#03242341");
+        testProduct2 = new Product("Cheese", 2.05, "#0341");
+        testProduct3 = new Product("Water", 33.5, "#01");
+        testProduct4 = new Product(null, 7.55, "#222");
+
+        testBill1 = new Bill(testSeller1, testTime);
+        testBill2 = new Bill(testSeller4);
+        testBill3 = new Bill(testSeller5);
+
+        testTime = new Time(12, 33, 50);
+    }
+
+    @AfterTest
+    public void tearDown() {
+        Terminal testTerminal = null;
+
+        Seller testSeller1 = null;
+        Seller testSeller2 = null;
+        Seller testSeller3 = null;
+        Seller testSeller4 = null;
+        Seller testSeller5 = null;
+
+        Seller[] testSellerArray = null;
+
+        testSellerArray[0] = null;
+        testSellerArray[1] = null;
+        testSellerArray[2] = null;
+        testSellerArray[3] = null;
+        testSellerArray[4] = null;
+
+        Product testProduct1 = null;
+        Product testProduct2 = null;
+        Product testProduct3 = null;
+        Product testProduct4 = null;
+
+
+        Time testTime = null;
+        Bill testBill1 = null;
+        Bill testBill2 = null;
+        Bill testBill3 = null;
+
     }
 
     @Test
@@ -63,12 +114,9 @@ public class TerminalTest {
         Assert.assertFalse(testTerminal.isSignIn());
 
         //instead of annotation @After, which doesn't work
-        for (int i = 0; i < testSellerArray.length; i++) {
-            testSellerArray[i] = null;
-        }
     }
 
-    /*
+
     @Test
     public void testSignIn() {
 
@@ -88,14 +136,9 @@ public class TerminalTest {
         Assert.assertEquals(2,testTerminal.getCurrentSellerIndex());
 
         // instead of annotation @After, which doesn't work
-        testTerminal.setSellers(null);
-        testTerminal.setActualSizeOfSellers(0);
-        testTerminal.setCurrentSellerIndex(-1);
-        testTerminal.setSignIn(false);
 
-        for (int i = 0; i < testSellerArray.length; i++) {
-            testSellerArray[i] = null;
-        }
+
+
     }
 
     /*

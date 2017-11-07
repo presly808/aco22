@@ -81,7 +81,9 @@ public class Terminal {
     public void setBills(Bill[] bills) {
 
         this.bills = makeAnActualBillArray(bills);
-        this.actualSizeOfBills = bills.length;
+        if (bills != null) {
+            this.actualSizeOfBills = bills.length;
+        }
         this.currentBillIndex = actualSizeOfBills - 1;
     }
 
@@ -92,7 +94,9 @@ public class Terminal {
     public void setSellers(Seller[] sellers) {
 
         this.sellers = makeAnActualSellersArray(sellers);
-        this.actualSizeOfSellers = sellers.length;
+        if (sellers != null) {
+            this.actualSizeOfSellers = sellers.length;
+        }
     }
 
     public int getActualSizeOfBills() {
