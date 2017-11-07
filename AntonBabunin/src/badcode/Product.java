@@ -1,4 +1,4 @@
-package artcode.shop.product;
+package badcode;
 
 
 public class Product {
