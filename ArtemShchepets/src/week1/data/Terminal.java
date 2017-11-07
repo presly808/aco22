@@ -251,10 +251,10 @@ public class Terminal {
             }
         }
 
-        // sort
+        // sort sellers by sold products
         int lastUnsortedIndex = sellers.length - 1;
 
-        Seller tmp = new Seller();
+        Seller tmp;
         boolean swapped;
 
         do {
@@ -275,7 +275,46 @@ public class Terminal {
             lastUnsortedIndex--;
         } while (swapped);
 
+        //return an array with N top-sellers
         return Arrays.copyOfRange(sellers,0,quantityOfTopSellers);
+
+    }
+
+    public void doSomeStatisticStuff() {
+
+        double maxPriceBill = 0;
+        double minPriceBill = 0;
+
+        int soldProducts = 0;
+
+        Seller[] bestSalesMan = getTopNofSalesMan(1);
+
+        // find maxPriceBill
+        for (int i = 0; i <= bills.length - 1; i++) {
+            if (bills[i] != null && bills[i].getBillCost() > bills[i+1].getBillCost() &&
+                    bills[i].getBillCost() > maxPriceBill) {
+                maxPriceBill = bills[i].getBillCost();
+            }
+        }
+
+        //find minPriceBill
+        for (int i = 0; i <= bills.length - 1; i++) {
+            if (bills[i] != null && bills[i].getBillCost() < bills[i+1].getBillCost() &&
+                    bills[i].getBillCost() < minPriceBill) {
+                minPriceBill = bills[i].getBillCost();
+            }
+        }
+
+        // calculate the sum of sold products
+        for (int i = 0; i < bills.length; i++) {
+            soldProducts += bills[i].getActualSizeOfList();
+        }
+
+        System.out.println(String.format("***Statistic***\n " +
+                "The highest price of bill: %d\n " +
+                "The lowest price of bill: %d\n " +
+                "There are %d sold products now!\n " +
+                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan ));
 
     }
 

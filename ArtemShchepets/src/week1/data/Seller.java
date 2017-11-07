@@ -45,6 +45,6 @@ public class Seller {
 
     @Override
     public String toString() {
-        return "Seller: " + name +", age: " + age;
+        return "Seller: " + name + ", age: " + age + ", sold: " + soldProducts;
     }
 }
