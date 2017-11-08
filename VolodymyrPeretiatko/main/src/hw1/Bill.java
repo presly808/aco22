@@ -13,17 +13,24 @@ public class Bill {
     private Date closeTime;
 
     public static Bill openBill(int id, Salesman salesman){
-        Bill bill = new Bill(id, salesman);
-        bill.products = new ArrayList<>();
-        return bill;
+        return new Bill(id, salesman);
     }
 
-    public static Bill closeBill(Bill bill){
-        bill.setCloseTime(new Date(System.currentTimeMillis()));
-        bill.calculateAmountPrice();
-        return bill;
+    public static Bill findBillById(ArrayList<Bill> bills, int id){
+
+        for (Bill b : bills){
+            if(b.getId() == id){
+                return b;
+            }
+        }
+        return null;
     }
 
+    public Bill closeBill(){
+        setCloseTime(new Date(System.currentTimeMillis()));
+        calculateAmountPrice();
+        return this;
+    }
 
     public boolean addProduct(Product p){
         this.amountPrice += p.getPrice();
@@ -43,6 +50,7 @@ public class Bill {
     public Bill(int id, Salesman salesman) {
         this.id = id;
         this.salesman = salesman;
+        this.products = new ArrayList<>(10);
     }
 
     public void setSalesman(Salesman salesman) {

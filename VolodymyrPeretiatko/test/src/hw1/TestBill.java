@@ -2,7 +2,6 @@ package hw1;
 
 import org.junit.*;
 
-import java.security.PublicKey;
 
 public class TestBill {
 
@@ -25,9 +24,6 @@ public class TestBill {
         bill = new Bill(1, testDataSalesman);
     }
 
-    @Test
-    public void testEqals(){
-        Assert.assertTrue(bill.equals(testDataBill));
-    }
+
 
 }
