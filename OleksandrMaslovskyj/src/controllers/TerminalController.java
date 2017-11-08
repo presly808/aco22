@@ -10,14 +10,14 @@ public interface TerminalController {
 
     Bill createBill();
 
-    Product addProduct();
+    Product addProduct(String productName);
 
-    Bill closeAndSaveBill(Bill bill);
+    void closeAndSaveBill(Bill bill);
 
     Bill findBillById(long id);
 
-    Salesman findSalesmanByLoginOrFullname(String fullname);
+    Salesman findSalesmanByLoginOrFullName(String fullname);
 
-    Salesman getTopNofSalesMan();
+    Salesman getTopOnSalesMan();
 
 }

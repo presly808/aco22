@@ -21,13 +21,13 @@ public class Bill implements BillController{
     private String closeTime;
 
     public Bill() {
-        this.id = Utils.longIdGenerator();
+        this.id = TerminalUtils.longIdGenerator();
         this.products = new ArrayList();
         this.salesman = new Salesman(StringGenerator.generateName(), StringGenerator.generateName());
     }
 
     public Product addProduct(String name){
-        Product product = new Product(Utils.longIdGenerator(), name, new Random().nextDouble());
+        Product product = new Product(TerminalUtils.longIdGenerator(), name, new Random().nextDouble());
         products.add(product);
         return product;
     }
@@ -39,6 +39,10 @@ public class Bill implements BillController{
 
     public double calculateAmountPrice() {
         amountPrice = 0;
+
+        if (products.isEmpty()) {
+            throw new IllegalStateException("Empty product list");
+        }
 
         for (Product product : products) {
             amountPrice += product.getPrice();
@@ -55,6 +59,46 @@ public class Bill implements BillController{
                 ", amountPrice=" + amountPrice +
                 ", closeTime='" + closeTime + '\'' +
                 '}');
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Salesman getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
+
+    public double getAmountPrice() {
+        return amountPrice;
+    }
+
+    public void setAmountPrice(double amountPrice) {
+        this.amountPrice = amountPrice;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 }
 
