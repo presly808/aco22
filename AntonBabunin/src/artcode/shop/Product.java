@@ -11,9 +11,6 @@ public class Product {
         System.out.printf("Product: \n id: %d \n name: %s \n price: %.2f", this.getId(), this.getName(), this.getPrice());
     }
 
-
-
-
     public Product(int id) {
     }
 

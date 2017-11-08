@@ -10,39 +10,39 @@ public class RunTests {
 
 //    Tests CalculateAmountPrice()
 
-    @Test
-    public void testCalculateAmountPrice() {
-        Bill bill12 = new Bill();
-        Product product1 = new Product(1);
-        product1.setPrice(1.1);
-        product1.setName("asd");
-        product1.setId(1);
-
-        Product product2 = new Product(2);
-        product2.setPrice(2.2);
-        product2.setName("as45d");
-        product1.setId(2);
-
-        Product product3 = new Product(3);
-        product3.setPrice(2.5);
-        product3.setName("as12d");
-        product1.setId(3);
-
-        bill12.addProduct(product1);
-        bill12.addProduct(product2);
-        bill12.addProduct(product3);
-        double y = 0.0;
-        for (Product x : bill12.getProducts()) {
-            if (x != null) {
-                y = y + x.getPrice();
-            } else {
-                y = y;
-            }
-        }
-        double expected = 5.8;
-        double actual = bill12.closeBill();
-        Assert.assertEquals(expected,actual,0.001);
-    }
+//    @Test
+//    public void testCalculateAmountPrice() {
+//        Bill bill12 = new Bill();
+//        Product product1 = new Product(1);
+//        product1.setPrice(1.1);
+//        product1.setName("asd");
+//        product1.setId(1);
+//
+//        Product product2 = new Product(2);
+//        product2.setPrice(2.2);
+//        product2.setName("as45d");
+//        product1.setId(2);
+//
+//        Product product3 = new Product(3);
+//        product3.setPrice(2.5);
+//        product3.setName("as12d");
+//        product1.setId(3);
+//
+//        bill12.addProduct(product1);
+//        bill12.addProduct(product2);
+//        bill12.addProduct(product3);
+//        double y = 0.0;
+//        for (Product x : bill12.getProducts()) {
+//            if (x != null) {
+//                y = y + x.getPrice();
+//            } else {
+//                y = y;
+//            }
+//        }
+//        double expected = 5.8;
+//        double actual = bill12.closeBill();
+//        Assert.assertEquals(expected,actual,0.001);
+//    }
 
     //    Tests CalculateAmountPrice()
 

@@ -1,11 +1,7 @@
-package week1.tests;
+package week1;
 
 import org.junit.Assert;
 import org.testng.annotations.Test;
-import week1.data.Bill;
-import week1.data.Product;
-import week1.data.Seller;
-import week1.data.Time;
 
 public class BillTest {
 
@@ -16,7 +12,7 @@ public class BillTest {
 
     Product[] testProductList = new Product[4];
 
-    Seller testSeller = new Seller("Valya", 22);
+    Seller testSeller = new Seller("Valya", 22, "test", "test");
     Time testTime = new Time(12, 33, 50);
 
     Bill testBill = new Bill( testSeller, testTime);
