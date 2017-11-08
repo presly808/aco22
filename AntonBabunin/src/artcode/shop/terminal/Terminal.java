@@ -15,7 +15,6 @@ public class Terminal {
     private static int countSalesman;
 
 
-
     public void login(Salesman salesman) {
         if (salesman != null)
             if (getSales() == null) {
@@ -90,8 +89,37 @@ public class Terminal {
     }
 
     public Salesman getTopNofSalesMan () {
-        return new Salesman("new");
+        Salesman bestSeller = null;
+        if (getSales() != null && getSales().length > 0) {
+            int[] countSales = new int[getSales().length];
+            for (int i = 0; i < getSales().length; i++) {
+                int count = 0;
+                for (Bill bill : getBills()) {
+                    if (getSales()[i].equals(bill.getSalesman())) {
+                        count++;
+                    }
+                }
+                countSales[i] = count;
+            }
+             bestSeller = getSales()[maxIndex(countSales)];
+        }
+        return bestSeller;
     }
+
+    private int maxIndex(int[] arr) {
+        int ind = 0;
+        if (arr != null) {
+            int max = arr[0];
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] > max) {
+                    max = arr[i];
+                    ind = i;
+                }
+            }
+        }
+        return ind;
+    }
+
 
     public void doSomeStatisticStuff () {
 
