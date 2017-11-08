@@ -120,14 +120,85 @@ public class Terminal {
         return ind;
     }
 
-
     public void doSomeStatisticStuff () {
 
     }
 
-    public static void setCountClosedBill(int countClosedBill) {
-        Terminal.countClosedBill = countClosedBill;
+    private double getMaxAmountPrice () {
+        double max = 0.0;
+        if (getBills() != null && getBills().length > 0) {
+            for (Bill bill : getBills()) {
+                if (bill.getAmountPrice() > max)
+                    max = bill.getAmountPrice();
+            }
+        }
+        return max;
     }
+
+    private double getMinAmountPrice () {
+        double min = 0.0;
+        if (getBills() != null && getBills().length > 0) {
+            min = getBills()[0].getAmountPrice();
+            for (Bill bill : getBills()) {
+                if (bill.getAmountPrice() < min)
+                    min = bill.getAmountPrice();
+            }
+        }
+        return min;
+    }
+
+    private double getAverageAmountPrice () {
+        double average = 0.0;
+        if (getBills() != null && getBills().length > 0) {
+            for (Bill bill : getBills()) {
+                average += bill.getAmountPrice();
+            }
+        }
+        return average/getBills().length;
+    }
+
+    private int getMaxProduct() {
+        int max = 0;
+        if (getBills() != null && getBills().length > 0) {
+            max = ( getBills()[0].getProducts() != null) ? getBills()[0].getProducts().length : max;
+            for (Bill bill : getBills()) {
+                if (bill.getProducts() != null && bill.getProducts().length > max)
+                    max = bill.getProducts().length;
+            }
+        }
+        return max;
+    }
+
+    private int getMinProduct() {
+        return 0;
+    }
+
+    private int getAverageProduct() {
+        return 0;
+    }
+
+    private int getMaxProductSales() {
+        return 0;
+    }
+
+    private int getMinProductSales() {
+        return 0;
+    }
+
+    private int getAverageProductSales() {
+        return 0;
+    }
+
+    private int getAverageAmountPriceSales() {
+        return 0;
+    }
+
+    private int getMaxAmountPriceSales() {
+        return 0;
+    }
+
+
+    public static void setCountClosedBill(int countClosedBill) { Terminal.countClosedBill = countClosedBill;    }
 
     public static int getCountCreatedBill() {
         return Terminal.countCreatedBill;
