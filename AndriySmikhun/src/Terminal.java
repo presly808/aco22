@@ -1,7 +1,7 @@
 public class Terminal {
 
-    Bill [] bills;
-    Salesman[] sales;
+    Bill[] bills = new Bill[20];
+    Salesman[] sales = new Salesman[10];
 
     public Terminal(Bill[] bills, Salesman[] sales) {
         this.bills = bills;
@@ -22,14 +22,66 @@ public class Terminal {
     }                               //enter login and password
     public void createBill(Bill bill,Salesman salesman){
         if(salesman.isStatus()){
-
+            for (int i = 0; i < bills.length; i++){
+                if (bills[i] == null){
+                    bills[i] = bill;
+                }
+            }
         }
-    }                          //create and open bill
-    public void addProduct(){}                          //
-    public void closeAndSaveBill(){}                    //close and save bill in toarray
-    public void findBillById(){}                        //search bill
-    public void findSalesmanByLoginOrFullname(){}       //search SAleman whith data
-    public void getTopNofSalesMan(){}                   //
-    public void doSomeStatisticStuff(){}                //statistic about products and bill
+    }                          //open bill
+    public void addProduct(Bill bill, Product product){
+        if (bill.getCloseTime() == null){
+            for (int i = 0; i < bill.getProducts().length; i++){
+                if (bill.getProducts()[i] == null) {
+                    bill.getProducts()[i] = product;
+                }
+            }
+        }
+
+    }                          //
+    public void closeAndSaveBill(Bill bill){
+        if (bill.getCloseTime() == null) {
+            bill.setCloseTime("15:20");
+        }
+    }                    //close and save bill in array
+    public void findBillById(int id){
+        for (int i = 0; i < bills.length; i++ ){
+            if(bills[i].getId() == id){
+                bills[i].printBill();
+            }
+        }
+    }                        //search bill
+
+    public void findSalesmanByLoginOrFullname(String salesman){
+        for (int i = 0; i < salesman.length(); i++){
+            if (sales[i].getLogin().equals(salesman) || sales[i].getFullname().equals(salesman)){
+                sales[i].printSalesman();
+            }
+        }
+    }       //search SAleman whith data
+    public void getTopNofSalesMan(){
+        int id = 0;
+        int[] count = new int[sales.length];
+        for (int i = 0; i < sales.length; i++){
+            count[i] = 0;
+            for (int y = 0; y < bills.length; i++){
+                if (bills[y].getSalesman().equals(sales[i])){
+                    count[i]++;
+                }
+            }
+        }
+        int max = 0;
+        for (int i = 0; i < count.length; i++){
+            if (max < count[i]){
+                id = i;
+                max = count[i];
+            }
+        }
+
+        System.out.println("Top Salesman " + sales[id].getFullname() + " Summ Bill = " + max);
+    }                   //
+    public void doSomeStatisticStuff(String type){
+
+    }                //statistic about products and bill
 
 }

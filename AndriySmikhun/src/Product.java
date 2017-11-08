@@ -14,7 +14,7 @@ public class Product {
     }
 
     public void printFullInfo(){
-        System.out.println(" ID " + id + " Name " + name + "Price" + price);
+        System.out.println(" ID " + id + " Name " + name + "Price " + price);
     }
 
     public int getId() {
