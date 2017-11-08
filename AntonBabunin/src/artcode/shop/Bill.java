@@ -1,8 +1,11 @@
 package artcode.shop;
 
+import artcode.shop.product.Product;
 import artcode.shop.terminal.Terminal;
 
 public class Bill {
+
+    private static final int DEFAULT_SIZE = 20;
 
     private int id;
     private Product[] products;
@@ -23,7 +26,6 @@ public class Bill {
                     if (this.getProducts() == null || this.getProducts().equals(null)) {
                         setProducts();
                     }
-
                     this.getProducts()[this.firstFreePositionAtProducts] = product;
                     this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
 
@@ -38,8 +40,7 @@ public class Bill {
     }
 
     private void setProducts() {
-        int size = 20;
-        this.products = new Product[size];
+        this.products = new Product[DEFAULT_SIZE];
         this.firstFreePositionAtProducts = 0;
         this.nextFreePositionAtProducts = 1;
     }
@@ -68,8 +69,8 @@ public class Bill {
         return amountPrice;
     }
 
-    private void printBill(){
-
+    private boolean printBill(){
+        return true;
     }
 
     public Bill() {

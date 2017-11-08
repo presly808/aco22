@@ -1,11 +1,12 @@
 package artcode.shop.terminal;
 
 import artcode.shop.Bill;
-import artcode.shop.Product;
 import artcode.shop.Salesman;
 
 
 public class Terminal {
+    private static final int DEFAULT_SIZE = 0;
+
     private Bill[] bills;
     private Salesman[] sales;
 
@@ -18,8 +19,7 @@ public class Terminal {
     public void login(Salesman salesman) {
         if (salesman != null)
             if (getSales() == null) {
-            int size = 20;
-            sales = new Salesman[size];
+            sales = new Salesman[DEFAULT_SIZE];
         }
 
         getSales()[countSalesman++] = salesman;
@@ -52,8 +52,7 @@ public class Terminal {
     public void closeAndSaveBill (Bill bill) {
         if (bill != null) {
             if (bills == null) {
-                int size = 20;
-                bills = new Bill[size];
+                bills = new Bill[DEFAULT_SIZE];
             }
             if (!bill.isClosed()) {
                 bill.closeBill();

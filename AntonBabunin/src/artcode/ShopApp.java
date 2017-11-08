@@ -1,12 +1,12 @@
 package artcode;
 
-import artcode.shop.Product;
+import artcode.shop.product.Product;
 import artcode.shop.Salesman;
 
 
 public class ShopApp {
     public static void main(String[] args) {
-
+/*
         Salesman salesman1 = new Salesman("Anton");
         salesman1.setLogin("Anton");
         salesman1.setPassword("password");
@@ -31,10 +31,10 @@ public class ShopApp {
         product4.setName("4");
         product4.setPrice(4.43);
 
+    }*/
     }
+
 }
-
-
 /*
         Scanner scanner = new Scanner(System.in);
         String sCase = null;

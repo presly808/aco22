@@ -1,5 +1,6 @@
 package artcode.shop;
 
+import artcode.shop.product.Product;
 import artcode.shop.terminal.Terminal;
 
 import java.util.Scanner;
