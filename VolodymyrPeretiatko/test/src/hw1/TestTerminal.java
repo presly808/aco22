@@ -44,16 +44,19 @@ public class TestTerminal {
         Terminal terminal2 = Terminal.getInstance();
 
         Assert.assertEquals(terminal1, terminal2);
-
     }
 
     @Test
     public void testLogin(){
-
         Assert.assertTrue(terminal.login("Jhon", "qwerty") == s1 );
         Assert.assertTrue(terminal.login("Frank", "qwerty") == s2 );
         Assert.assertTrue(terminal.login("Hui", "qwerty") == null );
+    }
 
+    @Test
+    public void testFindBillById(){
+        Assert.assertTrue(terminal.findBillById(9) == b1);
+        Assert.assertTrue(terminal.findBillById(7) == null);
     }
 
 }
