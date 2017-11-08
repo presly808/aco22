@@ -1,7 +1,7 @@
 package week1;
 
 import org.junit.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 public class BillTest {
 
@@ -70,3 +70,4 @@ public class BillTest {
         Assert.assertEquals(true, testBill.isClosed());
     }
 }
+

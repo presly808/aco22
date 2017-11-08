@@ -141,6 +141,9 @@ public class Terminal {
 
     public void signIn(String login, String password) {
 
+        isSignIn = false;
+        currentSellerIndex = -1;
+
         if ((login == null || password == null) || (login.equals("") || password.equals(""))) {
             System.out.println("Enter login\\pass correctly!");
         } else {
@@ -289,7 +292,6 @@ public class Terminal {
         }
     }
 
-    // why do we need such method in Terminal if we already had one in class Bill?
     public void closeAndSaveBill() {
 
         if (!isSignIn) {
@@ -299,7 +301,24 @@ public class Terminal {
             if (currentBillIndex == -1) {
                 System.out.println("Sorry, there aren't any bills in the terminal!");
             } else {
-                bills[currentBillIndex].closeBill();
+
+                if (bills[currentBillIndex].isClosed()) {
+                    System.out.println("Sorry, this bill is already closed!");
+                } else {
+
+                    Scanner scanner = new Scanner(System.in);
+
+                    System.out.println("Enter a close time. Like this --> 12:12:12");
+                    String parsingTime = scanner.next();
+
+                    String[] parsedTime = parsingTime.split(":");
+
+                    bills[currentBillIndex].getTime().setHours(Integer.decode(parsedTime[0]));
+                    bills[currentBillIndex].getTime().setMinutes(Integer.decode(parsedTime[1]));
+                    bills[currentBillIndex].getTime().setSeconds(Integer.decode(parsedTime[2]));
+
+                    bills[currentBillIndex].closeBill();
+                }
             }
         }
     }
