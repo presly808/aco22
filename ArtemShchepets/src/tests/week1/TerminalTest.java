@@ -1,11 +1,10 @@
 package week1;
 
 
-import org.testng.Assert;
-import org.testng.annotations.*;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TerminalTest {
 
@@ -31,8 +30,10 @@ public class TerminalTest {
     Bill testBill3;
 
 
-    @BeforeTest
+    @Before
     public void setUp() {
+        System.out.println("Before called");
+
         testTerminal = new Terminal();
 
         testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1");
@@ -55,8 +56,11 @@ public class TerminalTest {
         testTime = new Time(12, 33, 50);
     }
 
-    @AfterTest
+    @After
     public void tearDown() {
+
+        System.out.println("After called");
+
         Terminal testTerminal = null;
 
         Seller testSeller1 = null;
@@ -133,10 +137,9 @@ public class TerminalTest {
         testTerminal.signIn("worker3", "password3");
 
         Assert.assertTrue(testTerminal.isSignIn());
-        Assert.assertEquals(2,testTerminal.getCurrentSellerIndex());
+        Assert.assertEquals(2, testTerminal.getCurrentSellerIndex());
 
         // instead of annotation @After, which doesn't work
-
 
 
     }
@@ -166,3 +169,4 @@ public class TerminalTest {
     */
 
 }
+

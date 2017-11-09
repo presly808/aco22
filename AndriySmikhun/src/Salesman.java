@@ -28,6 +28,10 @@ public class Salesman {
         return password;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -42,5 +46,11 @@ public class Salesman {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public void printSalesman(){
+        System.out.println("Full name " + fullname);
+        System.out.println("Login" + login);
+        System.out.println("Is working " + status);
     }
 }

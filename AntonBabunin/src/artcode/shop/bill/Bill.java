@@ -1,8 +1,12 @@
-package artcode.shop;
+package artcode.shop.bill;
 
-import artcode.shop.terminal.Terminal;
+import artcode.shop.salesman.Salesman;
+import artcode.shop.product.Product;
+import artcode.shop.creator.BillCreator;
 
 public class Bill {
+
+    private static final int DEFAULT_SIZE = 20;
 
     private int id;
     private Product[] products;
@@ -14,6 +18,62 @@ public class Bill {
     private int firstFreePositionAtProducts;
     private int nextFreePositionAtProducts;
 
+    public Bill(Salesman salesman) {
+        BillCreator.createBill(salesman);
+    }
+
+
+//    This constructor created for test, isn't used in app
+    public Bill(int id, Salesman salesman) {
+        this.id = id;
+        this.salesman = salesman;
+        this.products = new Product[20];
+        this.amountPrice = 0.0;
+        this.closeTime = "";
+        this.isClosed = false;
+        this.firstFreePositionAtProducts = 0;
+        this.nextFreePositionAtProducts = 1;
+    }
+
+    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String closeTime,
+                boolean isClosed, int firstFreePositionAtProducts, int nextFreePositionAtProducts) {
+
+        this.id = id;
+        this.products = products;
+        this.salesman = salesman;
+        this.amountPrice = amountPrice;
+        this.closeTime = closeTime;
+        this.isClosed = isClosed;
+        this.firstFreePositionAtProducts = firstFreePositionAtProducts;
+        this.nextFreePositionAtProducts = nextFreePositionAtProducts;
+
+    }
+    public static boolean equals (Product[] products1, Product[] products2) {
+        for (Product product1 : products1) {
+            for (Product product2 : products2) {
+                if (product1 != null && !product1.equals(product2)) return false;
+            }
+        }
+        return true;
+    }
+
+
+    public boolean equals (Bill bill) {
+        return this.id == bill.id && this.salesman.equals(bill.salesman) && equals(this.getProducts(), bill.getProducts()) &&
+                this.amountPrice == bill.amountPrice && this.closeTime.equals(bill.closeTime) &&
+                this.isClosed == bill.isClosed && this.firstFreePositionAtProducts == bill.firstFreePositionAtProducts &&
+                this.nextFreePositionAtProducts == bill.nextFreePositionAtProducts;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     public void addProduct (Product product) {
@@ -23,7 +83,6 @@ public class Bill {
                     if (this.getProducts() == null || this.getProducts().equals(null)) {
                         setProducts();
                     }
-
                     this.getProducts()[this.firstFreePositionAtProducts] = product;
                     this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
 
@@ -38,8 +97,7 @@ public class Bill {
     }
 
     private void setProducts() {
-        int size = 20;
-        this.products = new Product[size];
+        this.products = new Product[DEFAULT_SIZE];
         this.firstFreePositionAtProducts = 0;
         this.nextFreePositionAtProducts = 1;
     }
@@ -68,13 +126,11 @@ public class Bill {
         return amountPrice;
     }
 
-    private void printBill(){
-
+    private boolean printBill(){
+        return true;
     }
 
-    public Bill() {
-        this.id = Terminal.getCountCreatedBill();
-    }
+
 
     public int getId() {
         return id;
@@ -112,8 +168,4 @@ public class Bill {
         this.closeTime = closeTime;
     }
 
-
-    public void setClosed(boolean closed) {
-        isClosed = closed;
-    }
 }

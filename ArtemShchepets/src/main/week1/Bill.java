@@ -68,6 +68,7 @@ public class Bill {
         return time;
     }
 
+
     public int getActualSizeOfList() {
         return actualSizeOfList;
     }
@@ -83,6 +84,7 @@ public class Bill {
     public void setTime(Time time) {
         if (!isClosed) {
             this.time = time;
+            this.isClosed = true;
         } else System.out.println("Sorry, bill is closed!");
     }
 

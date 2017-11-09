@@ -1,10 +1,5 @@
 package artcode.tests;
 
-import artcode.shop.Bill;
-import artcode.shop.Product;
-import org.junit.Assert;
-import org.junit.Test;
-
 
 public class RunTests {
 
