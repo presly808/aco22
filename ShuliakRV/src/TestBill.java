@@ -6,7 +6,7 @@ public class TestBill {
 
         Salesman s1 = new Salesman("111","222","333");
 
-        Bill b = new Bill(1,s1,10);
+        Bill b = new Bill(s1,10);
 
         p1.name = "Хлеб";
         p1.price = 10.50;
@@ -29,6 +29,14 @@ public class TestBill {
         b.closeBill();
 
         System.out.println(b.printBill());
+
+        b = new Bill(s1,10);
+        b.addProduct(p3);
+
+        b.closeBill();
+
+        System.out.println(b.printBill());
+
 
     }
 }

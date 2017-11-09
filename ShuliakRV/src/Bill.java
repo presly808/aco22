@@ -2,7 +2,7 @@ import java.util.Date;
 
 public class Bill {
 
-    private int id;
+    private static int id;
     private Product[] arr;
     private Salesman salesMan;
     private double amountPrice;
@@ -10,8 +10,8 @@ public class Bill {
     private boolean isOpen = true;
     private int numProd;
 
-    public Bill(int id, Salesman salesMan, int countProd) {
-        this.id = id;
+    public Bill(Salesman salesMan, int countProd) {
+        this.id++;
         this.salesMan = salesMan;
         arr = new Product[countProd];
     }
@@ -30,7 +30,7 @@ public class Bill {
             str += arr[i].printFullInfo();
         }
 
-        str += String.format("Saler: %s; Time: %s; Sum: %s .", salesMan.getFullname(), closeTime.toString(), amountPrice);
+        str += String.format("ID: %s; Saler: %s; Time: %s; Sum: %s .",id,salesMan.getFullname(), closeTime.toString(), amountPrice);
         return str;
     }
 
