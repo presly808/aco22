@@ -1,23 +1,60 @@
 package controllers;
 
-import implementation.Bill;
+import interfaces.ITerminal;
 import models.Product;
 import models.Salesman;
 
-public interface TerminalController {
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-    boolean login();
+public class TerminalController implements ITerminal {
 
-    Bill createBill();
+    private BillController currentBill;
+    private Set<BillController> billSet;
 
-    Product addProduct(String productName);
+    public TerminalController() {
+        this.billSet = new HashSet<>();
+    }
 
-    void closeAndSaveBill(Bill bill);
+    //TODO should be implemented
+    public boolean login() {
+        return false;
+    }
 
-    Bill findBillById(long id);
+    public BillController createBill() {
+        this.currentBill = new BillController();
+        billSet.add(currentBill);
+        return currentBill;
+    }
 
-    Salesman findSalesmanByLoginOrFullName(String fullname);
+    public Product addProduct(String productName) {
+        if (currentBill == null) {
+            throw new IllegalStateException("BillController not created");
+        }
+        return currentBill.addProduct(productName);
+    }
 
-    Salesman getTopOnSalesMan();
+    public void closeAndSaveBill(BillController bill) {
+        this.currentBill = null;
+        bill.closeBill();
+    }
 
+    //TODO add validation
+    public BillController findBillById(long id) {
+        return billSet.stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
+    }
+
+    public Salesman findSalesmanByLoginOrFullName(String fullName) {
+        return billSet.stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
+                                                    || bill.getSalesman().getLogin().equals(fullName)).
+                                                        collect(Collectors.toSet()).iterator().next().getSalesman();
+    }
+
+    //TODO should be implemented
+    public Salesman getTopOnSalesMan() {
+        return null;
+    }
+
+    //TODO UI should be implemented
 }

@@ -1,7 +1,7 @@
 import Utils.StringGenerator;
 import Utils.TerminalUtils;
-import implementation.Bill;
-import implementation.Terminal;
+import controllers.BillController;
+import controllers.TerminalController;
 import models.Product;
 import models.Salesman;
 import org.junit.After;
@@ -11,11 +11,11 @@ import org.junit.Test;
 
 public class TerminalTests {
 
-    private Terminal terminal;
+    private TerminalController terminal;
 
     @Before
     public void prepareData(){
-        this.terminal = new Terminal();
+        this.terminal = new TerminalController();
     }
 
     @After
@@ -25,9 +25,9 @@ public class TerminalTests {
 
     @Test
     public void testCreateBillMethod(){
-        Bill bill = terminal.createBill();
+        BillController bill = terminal.createBill();
 
-        Assert.assertNotNull("Bill created", bill);
+        Assert.assertNotNull("BillController created", bill);
         Assert.assertTrue("Long id generated", bill.getId() != 0);
     }
 
@@ -36,9 +36,9 @@ public class TerminalTests {
         String productName = StringGenerator.generateName();
         Product product = terminal.addProduct(productName);
 
-        Assert.assertNull("Bill no created", product);
+        Assert.assertNull("BillController no created", product);
 
-        Bill bill = terminal.createBill();
+        BillController bill = terminal.createBill();
         product = bill.addProduct(productName);
 
         Assert.assertNotNull("Product created", product);
@@ -55,7 +55,7 @@ public class TerminalTests {
         for (int i = 0; i < salesManQuantity; i++) {
             salesManName = StringGenerator.generateName();
             String salesManPassword = String.valueOf(TerminalUtils.longIdGenerator());
-            Bill bill = terminal.createBill();
+            BillController bill = terminal.createBill();
             bill.setSalesman(new Salesman(salesManName, salesManPassword));
         }
 
