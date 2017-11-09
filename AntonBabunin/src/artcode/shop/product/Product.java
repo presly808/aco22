@@ -1,6 +1,6 @@
 package artcode.shop.product;
 
-import static artcode.shop.otherMethods.Methods.*;
+import static artcode.shop.creator.methods.Methods.*;
 
 public class Product {
 
@@ -30,5 +30,11 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public boolean equals(Product product) {
+        return product != null && this.getId() == product.getId() && this.getName().equals(product.getName()) && this.getPrice() == product.getPrice();
+
+    }
+
 
 }

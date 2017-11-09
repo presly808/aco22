@@ -4,19 +4,30 @@ import artcode.shop.product.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static artcode.shop.product.ProductGeneration.generateProduct;
+import static artcode.shop.creator.ProductGeneration.generateProduct;
 
 public class RunTestProduct {
     @Test
     public void testProductCreation() {
         Product actual = generateProduct();
         Product expected = new Product(actual.getId(), actual.getName(), actual.getPrice());
-        System.out.println(actual.getPrice());
-        Assert.assertTrue(equals(expected,actual));
+        Assert.assertTrue(expected.equals(actual));
     }
 
-    public static boolean equals (Product product1, Product product2) {
-        return product1.getId() == product2.getId() && product1.getName().equals(product2.getName()) &&
-                product1.getPrice() == product2.getPrice();
+    @Test
+    public void testProductCreation1() {
+        Product actual = null;
+        Product expected = new Product(1, "1", 0.1);
+        Assert.assertFalse(expected.equals(actual));
     }
+
+    @Test
+    public void testProductCreation12() {
+        Product actual = generateProduct();
+        Product expected = generateProduct();
+        Assert.assertFalse(expected.equals(actual));
+    }
+
+
+
 }

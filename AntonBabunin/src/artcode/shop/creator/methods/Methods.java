@@ -1,4 +1,4 @@
-package artcode.shop.otherMethods;
+package artcode.shop.creator.methods;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

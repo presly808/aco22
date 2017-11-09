@@ -1,19 +1,43 @@
 package artcode.shop.terminal;
 
-import artcode.shop.Bill;
-import artcode.shop.Salesman;
+import artcode.shop.bill.Bill;
+import artcode.shop.salesman.Salesman;
 
 
 public class Terminal {
-    private static final int DEFAULT_SIZE = 0;
+    private static final int DEFAULT_SIZE = 20;
+
+    private static int countClosedBill = 0;
+    private static int countCreatedBill = 0;
+
+    private static int countSalesman = 0;
 
     private Bill[] bills;
     private Salesman[] sales;
 
-    private static int countClosedBill;
-    private static int countCreatedBill;
+    public Terminal() {
+    }
 
-    private static int countSalesman;
+    public Terminal(Bill[] bills, Salesman[] sales) {
+        this.bills = bills;
+        this.sales = sales;
+    }
+
+
+    public boolean equals(Terminal terminal) {
+        if (terminal == null) return false;
+        if (this.getSales().length != terminal.getSales().length) return  false;
+        if (this.getBills().length != terminal.getBills().length) return  false;
+        for (int i = 0; i < terminal.getSales().length; i++) {
+            if (terminal.getSales()[i] != null && !terminal.getSales()[i].equals(this.getSales()[i])) return false;
+        }
+        for (int i = 0; i < terminal.getBills().length; i++) {
+            if (terminal.getBills()[i] != null && !terminal.getBills()[i].equals(this.getBills()[i])) return false;
+        }
+
+        return true;
+    }
+
 
 
     public void login(Salesman salesman) {
@@ -25,22 +49,22 @@ public class Terminal {
         getSales()[countSalesman++] = salesman;
     }
 
-    public Bill createBill(Salesman salesman) {
-        if (getCountClosedBill() < getCountCreatedBill()) return bills[countCreatedBill];
+/*    public Bill createBill(Salesman salesman) {
+        if (getCountClosedBill() < getCountCreatedBill()) return bills[++countCreatedBill];
 
-        if ((salesman == null)) return null;
-        else {
+        if ((salesman != null)) {
             for (Salesman seller : this.getSales()) {
                 if (seller != null) {
 
                     if (seller.equals(salesman)) {
                         setCountCreatedBill(getCountCreatedBill() + 1);
-                        return new Bill();
+                        return BillCreator.createBill();
                     }
                 }
-            } return null;
+            }
         }
-    }
+        return null;
+    }*/
 
     public Bill addProduct() {
         for (Bill bill : getBills()) {
@@ -56,7 +80,7 @@ public class Terminal {
             }
             if (!bill.isClosed()) {
                 bill.closeBill();
-                bills[countClosedBill++] = new Bill();
+                bills[countClosedBill++] = new Bill(sales[0]);
             }
         }
      }
@@ -210,9 +234,6 @@ public class Terminal {
         Terminal.countCreatedBill = countCreatedBill;
     }
 
-    public Terminal() {
-    }
-
     public Bill[] getBills() {
         return bills;
     }
@@ -221,4 +242,11 @@ public class Terminal {
         return sales;
     }
 
+    public void setSales(Salesman[] sales) {
+        this.sales = sales;
+    }
+
+    public void setBills(Bill[] bills) {
+        this.bills = bills;
+    }
 }

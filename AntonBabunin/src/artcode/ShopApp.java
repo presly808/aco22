@@ -1,8 +1,5 @@
 package artcode;
 
-import artcode.shop.product.Product;
-import artcode.shop.Salesman;
-
 
 public class ShopApp {
     public static void main(String[] args) {

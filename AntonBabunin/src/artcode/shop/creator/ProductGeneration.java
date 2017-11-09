@@ -1,5 +1,7 @@
-package artcode.shop.product;
+package artcode.shop.creator;
 
+
+import artcode.shop.product.Product;
 
 public class ProductGeneration {
     private static final int DEFAULT_PRODUCT_NAME = 30;

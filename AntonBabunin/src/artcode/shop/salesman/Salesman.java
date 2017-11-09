@@ -1,5 +1,6 @@
-package artcode.shop;
+package artcode.shop.salesman;
 
+import artcode.shop.bill.Bill;
 import artcode.shop.product.Product;
 import artcode.shop.terminal.Terminal;
 
@@ -10,15 +11,36 @@ public class Salesman {
     private String login;
     private String password;
 
-    public void addProduct (Terminal terminal, Product product) {
-        Bill bill = terminal.addProduct();
-        bill.addProduct(product);
+        public Salesman() {
+
+    }
+//    public Salesman(String fullName) {
+//        this.fullName = fullName;
+//    }
+
+    public Salesman(String fullName, String login, String password) {
+        this.fullName = fullName;
+        this.login = login;
+        this.password = password;
     }
 
-    public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
-        return  (terminal != null) ? terminal.createBill(this) : null;
+    public boolean equals (Salesman salesman) {
+        if (salesman != null) {
+            return this.fullName.equals(salesman.fullName);
+        }
+        return false;
     }
 
+
+
+//    public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
+//        return  (terminal != null) ? terminal.createBill(this) : null;
+//    }
+
+public void addProduct (Terminal terminal, Product product) {
+    Bill bill = terminal.addProduct();
+    bill.addProduct(product);
+}
     public void login (Terminal terminal) {
         if (terminal != null) {
             Scanner scanner = new Scanner(System.in);
@@ -39,9 +61,7 @@ public class Salesman {
         }
     }
 
-    public Salesman(String fullName) {
-        this.fullName = fullName;
-    }
+
 
     public String getFullName() {
         return fullName;
