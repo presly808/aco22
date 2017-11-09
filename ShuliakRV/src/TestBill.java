@@ -4,7 +4,9 @@ public class TestBill {
         Product p2 = new Product();
         Product p3 = new Product();
 
-        Bill b = new Bill();
+        Salesman s1 = new Salesman("111","222","333");
+
+        Bill b = new Bill(1,s1,10);
 
         p1.name = "Хлеб";
         p1.price = 10.50;
@@ -24,12 +26,9 @@ public class TestBill {
 
         b.addProduct(p3);
 
-        b.time = "05.11.2017";
-        b.saler = "AAAAA";
-
         b.closeBill();
 
-        System.out.println(b.showInfo());
+        System.out.println(b.printBill());
 
     }
 }

@@ -16,14 +16,16 @@ public class Bill {
         this.numprod = numprod;
         arr = new Product[numprod];
         numprod = 0;
+        this.numprod = numprod;
     }
 
     public void addProduct(Product p) {
-        if ((isopen)&&(p!=null))
+        if ((isopen) && (p != null))
             arr[numprod++] = p;
     }
 
-    public String showInfo() {
+
+    public String printBill() {
 
         String str = "";
 
@@ -35,12 +37,17 @@ public class Bill {
         return str;
     }
 
-    public void closeBill() {
-
+    public void calculateAmountPrice() {
+        amountPrice = 0;
         for (int i = 0; i < numprod; i++) {
             amountPrice += arr[i].price;
         }
+    }
 
+    public void closeBill() {
+
+        calculateAmountPrice();
+        closeTime = new Date();
         isopen = false;
 
     }
