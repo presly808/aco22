@@ -120,11 +120,13 @@ public class Terminal {
 
     public double averageBill(){
         double average = 0.0d;
+        int count = 0;
         for (int i = 0; i < bills.length; i++){
             if (bills[i] == null) break;
             average += bills[i].getAmountPrice();
+            count++;
         }
-        average = average / bills.length;
+        average = average / count;
         return average;
     }
 
