@@ -43,6 +43,15 @@ public class Salesman {
     }
 
     @Override
+    public String toString() {
+        return "Salesman{" +
+                "fullName='" + fullName + '\'' +
+                ", name='" + name + '\'' +
+                ", pass='" + pass + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = fullName.hashCode();
         result = 31 * result + name.hashCode();

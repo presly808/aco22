@@ -36,7 +36,6 @@ public class TestProduct {
 
     @Test
     public void testProductHash(){
-        Assert.assertEquals(1944452481, product.hashCode());
         Assert.assertEquals(testData1.hashCode(), product.hashCode());
         Assert.assertNotEquals(testData2.hashCode(), product.hashCode());
     }

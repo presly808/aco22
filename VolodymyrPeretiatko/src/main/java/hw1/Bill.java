@@ -9,12 +9,8 @@ public class Bill {
     private int id;
     private ArrayList<Product> products;
     private Salesman salesman;
-    private double amountPrice;
+    private Double amountPrice;
     private Date closeTime;
-
-    public static Bill openBill(int id, Salesman salesman){
-        return new Bill(id, salesman);
-    }
 
     public static Bill findBillById(ArrayList<Bill> bills, int id){
 
@@ -26,6 +22,13 @@ public class Bill {
         return null;
     }
 
+    public Bill(int id, Salesman salesman) {
+        this.id = id;
+        this.salesman = salesman;
+        this.products = new ArrayList<>(10);
+        this.amountPrice = 0.0;
+    }
+
     public Bill closeBill(){
         setCloseTime(new Date(System.currentTimeMillis()));
         calculateAmountPrice();
@@ -33,11 +36,12 @@ public class Bill {
     }
 
     public boolean addProduct(Product p){
-        this.amountPrice += p.getPrice();
+        this.amountPrice = p.getPrice();
         return this.products.add(p);
     }
 
     private void calculateAmountPrice(){
+        amountPrice = 0.0;
         for (Product p : this.products){
             amountPrice += p.getPrice();
         }
@@ -45,12 +49,6 @@ public class Bill {
 
     public String printBill(){
         return this.toString();
-    }
-
-    public Bill(int id, Salesman salesman) {
-        this.id = id;
-        this.salesman = salesman;
-        this.products = new ArrayList<>(10);
     }
 
     public void setSalesman(Salesman salesman) {
@@ -70,7 +68,7 @@ public class Bill {
     }
 
     public ArrayList<Product> getProducts() {
-        return products;
+        return (ArrayList<Product>) products.clone();
     }
 
     public Salesman getSalesman() {
@@ -96,4 +94,28 @@ public class Bill {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bill)) return false;
+
+        Bill bill = (Bill) o;
+
+        if (id != bill.id) return false;
+        if (!products.equals(bill.products)) return false;
+        if (salesman != null ? !salesman.equals(bill.salesman) : bill.salesman != null) return false;
+        if (amountPrice != null ? !amountPrice.equals(bill.amountPrice) : bill.amountPrice != null) return false;
+        return closeTime != null ? closeTime.equals(bill.closeTime) : bill.closeTime == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + products.hashCode();
+        result = 31 * result + (salesman != null ? salesman.hashCode() : 0);
+        result = 31 * result + (amountPrice != null ? amountPrice.hashCode() : 0);
+        result = 31 * result + (closeTime != null ? closeTime.hashCode() : 0);
+        return result;
+    }
 }

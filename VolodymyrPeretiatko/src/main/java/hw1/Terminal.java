@@ -26,13 +26,14 @@ public class Terminal {
     }
 
     public boolean addSalesman(Salesman salesman){
+        if (salesmen.contains(salesman))
+            return false;
+
         return salesmen.add(salesman);
     }
 
     public Salesman login(String name, String pass){
-
         Salesman salesman = Salesman.getSalesmanByName(salesmen, name);
-
         if (salesman != null && pass.equals(salesman.getPass())){
             return salesman;
         }
@@ -40,15 +41,23 @@ public class Terminal {
     }
 
     public Bill createBill(int id, Salesman salesman){
-        return Bill.openBill(id, salesman);
+        return new Bill(id, salesman);
     }
 
     public boolean closeAndSaveBill(Bill bill){
         return bills.add(bill.closeBill());
     }
 
+    public ArrayList<Bill> getBills() {
+        return (ArrayList<Bill>)bills.clone();
+    }
+
     public boolean addProduct(Product p){
+        if (products.contains(p))
+            return false;
+
         return products.add(p);
+
     }
 
     public Bill findBillById(int id){
@@ -91,7 +100,5 @@ public class Terminal {
         }
         return sales;
     }
-
-
 
 }
