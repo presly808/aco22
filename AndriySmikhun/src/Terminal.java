@@ -80,8 +80,45 @@ public class Terminal {
 
         System.out.println("Top Salesman " + sales[id].getFullname() + " Summ Bill = " + max);
     }                   //
-    public void doSomeStatisticStuff(String type){
+    public void doSomeStatisticStuff(){
+        System.out.println("Max Bill " + maxBill());
+        System.out.println("Min Bill " + minBill());
+        System.out.println("Average bill " + averageBill());
 
     }                //statistic about products and bill
+
+    public int maxBill(){
+        int id = 0;
+        double max = 0;
+        for (int i = 0; i < bills.length; i++){
+            if (max < bills[i].amountPrice){
+                id = i;
+                max = bills[i].getAmountPrice();
+            }
+        }
+        return id;
+    }
+
+    public int minBill(){
+        int id = 0;
+        double min = 0;
+        for (int i = 0; i < bills.length; i++){
+            if (min > bills[i].amountPrice){
+                id = i;
+                min = bills[i].getAmountPrice();
+            }
+        }
+        return id;
+
+    }
+
+    public double averageBill(){
+        double average = 0.0d;
+        for (int i = 0; i < bills.length; i++){
+            average += bills[i].getAmountPrice();
+        }
+        average = average / bills.length;
+        return average;
+    }
 
 }
