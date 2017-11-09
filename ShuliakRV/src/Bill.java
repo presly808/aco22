@@ -4,24 +4,21 @@ public class Bill {
 
     private int id;
     private Product[] arr;
-    private Salesman salesman;
+    private Salesman salesMan;
     private double amountPrice;
     private Date closeTime;
-    private boolean isopen = true;
-    private int numprod;
+    private boolean isOpen = true;
+    private int numProd;
 
-    public Bill(int id, Salesman salesman, int numprod) {
+    public Bill(int id, Salesman salesMan, int countProd) {
         this.id = id;
-        this.salesman = salesman;
-        this.numprod = numprod;
-        arr = new Product[numprod];
-        numprod = 0;
-        this.numprod = numprod;
+        this.salesMan = salesMan;
+        arr = new Product[countProd];
     }
 
     public void addProduct(Product p) {
-        if ((isopen) && (p != null))
-            arr[numprod++] = p;
+        if ((isOpen) && (p != null))
+            arr[numProd++] = p;
     }
 
 
@@ -29,17 +26,17 @@ public class Bill {
 
         String str = "";
 
-        for (int i = 0; i < numprod; i++) {
+        for (int i = 0; i < numProd; i++) {
             str += arr[i].printFullInfo();
         }
 
-        str += "Saler: " + salesman.getFullname() + "; " + "Time: " + closeTime.toString() + "; " + "Sum: " + amountPrice + ".";
+        str += String.format("Saler: %s; Time: %s; Sum: %s .", salesMan.getFullname(), closeTime.toString(), amountPrice);
         return str;
     }
 
     public void calculateAmountPrice() {
         amountPrice = 0;
-        for (int i = 0; i < numprod; i++) {
+        for (int i = 0; i < numProd; i++) {
             amountPrice += arr[i].price;
         }
     }
@@ -48,7 +45,7 @@ public class Bill {
 
         calculateAmountPrice();
         closeTime = new Date();
-        isopen = false;
+        isOpen = false;
 
     }
 }
