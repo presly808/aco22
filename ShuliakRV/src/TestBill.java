@@ -8,24 +8,24 @@ public class TestBill {
 
         p1.name = "Хлеб";
         p1.price = 10.50;
-        p1.code = 111;
+        p1.id = 111;
 
         b.addProduct(p1);
 
         p2.name = "Масло";
         p2.price = 70.30;
-        p2.code = 222;
+        p2.id = 222;
 
         b.addProduct(p2);
 
         p3.name = "Молоко";
         p3.price = 15.50;
-        p3.code = 333;
+        p3.id = 333;
 
         b.addProduct(p3);
 
-        b.time="05.11.2017";
-        b.saler="AAAAA";
+        b.time = "05.11.2017";
+        b.saler = "AAAAA";
 
         b.closeBill();
 
