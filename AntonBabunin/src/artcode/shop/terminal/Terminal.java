@@ -36,10 +36,6 @@ public class Terminal {
         return this.countClosedBill;
     }
 
-    public void setCountCreatedBill(int countCreatedBill) {
-        this.countCreatedBill = countCreatedBill;
-    }
-
     public Bill[] getBills() {
         return bills;
     }
