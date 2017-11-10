@@ -8,7 +8,6 @@ public class Terminal {
     private Salesman[] salesMen;
 
     private int numBill;
-    private int currentSalesman;
 
     public Terminal(Salesman[] s) {
         salesMen = s;
@@ -35,13 +34,11 @@ public class Terminal {
             int i;
 
             for (i = 0; i < salesMen.length; i++) {
-                if ((salesMen[i].getLogin() == login) && (salesMen[i].getPassword() == password))
-                    break;
+                if ((salesMen[i].getLogin().equals(login)) && (salesMen[i].getPassword().equals(password)))
+                    return salesMen[i].getId();
             }
 
-            if (i == salesMen.length) return -1;
-
-            return currentSalesman;
+            return -1;
         }
     }
 
@@ -60,7 +57,7 @@ public class Terminal {
     public void closeAndSaveBill() {
 
         bills[numBill].closeBill();
-        if (bills[numBill].isOpen() == false) {
+        if (!bills[numBill].isOpen()) {
             numBill++;
         } else {
             bills[numBill] = null;
@@ -78,26 +75,26 @@ public class Terminal {
 
     public Salesman findSalesmanByLoginOrFullname(String login, String fullname) {
 
-        if ((login == null & fullname == null) || (salesMen.length == 0)) return null;
+        if ((login == null && fullname == null) || (salesMen.length == 0)) return null;
 
-        if ((login != null) & (fullname == null)) {
+        if ((login != null) && (fullname == null)) {
 
             for (int i = 0; i < salesMen.length; i++) {
                 if (salesMen[i].getLogin().equals(login)) {
                     return salesMen[i];
                 }
             }
-        } else if ((login == null) & (fullname != null)) {
+        } else if ((login == null) && (fullname != null)) {
 
             for (int i = 0; i < salesMen.length; i++) {
                 if (salesMen[i].getFullname().equals(fullname)) {
                     return salesMen[i];
                 }
             }
-        } else if ((login != null) & (fullname != null)) {
+        } else if ((login != null) && (fullname != null)) {
 
             for (int i = 0; i < salesMen.length; i++) {
-                if ((salesMen[i].getLogin().equals(login)) & (salesMen[i].getFullname().equals(fullname))) {
+                if ((salesMen[i].getLogin().equals(login)) && (salesMen[i].getFullname().equals(fullname))) {
                     return salesMen[i];
                 }
             }
