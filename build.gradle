@@ -34,4 +34,5 @@ allprojects {
     check.dependsOn jacocoTestCoverageVerification
     check.dependsOn jacocoTestReport
 
+
 }
