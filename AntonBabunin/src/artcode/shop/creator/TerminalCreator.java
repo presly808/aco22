@@ -6,7 +6,7 @@ import artcode.shop.terminal.Terminal;
 
 public class TerminalCreator {
 
-    private static final int DEFAULT_SIZE = 20;
+    private static final int DEFAULT_SIZE = 5;
 
     public static Terminal terminalCreation () {
         Bill[] bills = new Bill[DEFAULT_SIZE];

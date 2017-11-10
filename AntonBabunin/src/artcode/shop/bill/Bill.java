@@ -3,6 +3,7 @@ package artcode.shop.bill;
 import artcode.shop.salesman.Salesman;
 import artcode.shop.product.Product;
 import artcode.shop.creator.BillCreator;
+import artcode.shop.terminal.Terminal;
 
 public class Bill {
 
@@ -18,7 +19,9 @@ public class Bill {
     private int firstFreePositionAtProducts;
     private int nextFreePositionAtProducts;
 
-    public Bill(Salesman salesman) {
+    private int addedProducts;
+
+    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String closeTime, boolean isClosed, int firstFreePositionAtProducts, int nextFreePositionAtProducts, int addedProduct) {
         BillCreator.createBill(salesman);
     }
 
@@ -59,10 +62,15 @@ public class Bill {
 
 
     public boolean equals (Bill bill) {
-        return this.id == bill.id && this.salesman.equals(bill.salesman) && equals(this.getProducts(), bill.getProducts()) &&
-                this.amountPrice == bill.amountPrice && this.closeTime.equals(bill.closeTime) &&
-                this.isClosed == bill.isClosed && this.firstFreePositionAtProducts == bill.firstFreePositionAtProducts &&
-                this.nextFreePositionAtProducts == bill.nextFreePositionAtProducts;
+        return bill != null && this.id == bill.id && this.salesman.equals(bill.salesman) && equals(this.getProducts(), bill.getProducts()) && this.amountPrice == bill.amountPrice && this.closeTime.equals(bill.closeTime) && this.isClosed == bill.isClosed && this.firstFreePositionAtProducts == bill.firstFreePositionAtProducts && this.nextFreePositionAtProducts == bill.nextFreePositionAtProducts;
+    }
+
+    public int getAddedProducts () {
+        return this.addedProducts;
+    }
+
+    public void setAddedProducts (int number) {
+        this.addedProducts = number;
     }
 
 
@@ -75,25 +83,26 @@ public class Bill {
 
 
 
-
-    public void addProduct (Product product) {
+    public boolean addProduct (Product product) {
         if (!this.isClosed()) {
                 if (product != null && product.getName() != null) {
 
-                    if (this.getProducts() == null || this.getProducts().equals(null)) {
+                    if (this.getProducts() == null) {
                         setProducts();
                     }
                     this.getProducts()[this.firstFreePositionAtProducts] = product;
                     this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
 
-                    for (int i = firstFreePositionAtProducts + 1; i < this.getProducts().length; i++) {
+                    for (int i = firstFreePositionAtProducts; i < this.getProducts().length; i++) {
                         if (this.getProducts()[i] == null) {
                             this.nextFreePositionAtProducts = i;
-                            break;
+                            return true;
                         }
                     }
                 }
+                return true;
         }
+        return false;
     }
 
     private void setProducts() {
@@ -167,5 +176,7 @@ public class Bill {
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
     }
+
+
 
 }

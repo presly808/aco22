@@ -11,17 +11,26 @@ public class Salesman {
     private String login;
     private String password;
 
-        public Salesman() {
+    private Salesman() {
 
     }
-//    public Salesman(String fullName) {
-//        this.fullName = fullName;
-//    }
 
     public Salesman(String fullName, String login, String password) {
         this.fullName = fullName;
         this.login = login;
         this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean equals (Salesman salesman) {
@@ -31,16 +40,17 @@ public class Salesman {
         return false;
     }
 
+    public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
+        if (terminal != null && terminal.login(this))  {
+            return terminal.createBill(this);
+        } else return null;
 
 
-//    public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
-//        return  (terminal != null) ? terminal.createBill(this) : null;
-//    }
 
-public void addProduct (Terminal terminal, Product product) {
-    Bill bill = terminal.addProduct();
-    bill.addProduct(product);
-}
+//        return  (terminal != null && terminal.login(this)) ? terminal.createBill(this)  : null;
+    }
+
+
     public void login (Terminal terminal) {
         if (terminal != null) {
             Scanner scanner = new Scanner(System.in);
@@ -60,24 +70,35 @@ public void addProduct (Terminal terminal, Product product) {
             }
         }
     }
+    public boolean loginAutomatic (Terminal terminal) {
+        String login = this.login;
+        String password = this.password;
 
-
-
-    public String getFullName() {
-        return fullName;
+            if (login.equals(this.getLogin()) && password.equals(this.getPassword())) {
+                boolean bool1 = terminal.login(this);
+                return bool1;
+            }
+        return false;
     }
 
-    public String getLogin() {
-        return login;
+// --------------------------------------------------------------------------------------------
+    public boolean addProduct (Terminal terminal, Product product) {
+        if (terminal != null && product != null) {
+            Bill bill = terminal.addProduct(product);
+            bill.addProduct(product);
+            return true;
+        }
+        return false;
     }
+
+
+
 
     public void setLogin(String login) {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
-    }
+
 
     public void setPassword(String password) {
         this.password = password;
