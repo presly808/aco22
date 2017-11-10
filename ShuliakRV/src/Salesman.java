@@ -1,13 +1,15 @@
 public class Salesman {
 
+    private int id;
     private String fullname;
     private String login;
     private String password;
 
-    public Salesman(String fullname, String login, String password) {
+    public Salesman(int id, String fullname, String login, String password) {
         this.fullname = fullname;
         this.login = login;
         this.password = password;
+        this.id = id;
     }
 
     public String getFullname() {
@@ -32,5 +34,9 @@ public class Salesman {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
     }
 }

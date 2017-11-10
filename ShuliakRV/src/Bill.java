@@ -15,7 +15,7 @@ public class Bill {
 
     public Bill(Salesman salesMan) {
         seqId++;
-        id=seqId;
+        id = seqId;
         this.salesMan = salesMan;
         arr = new Product[DEFAULT_AMOUNT_PRODUCTS];
     }
@@ -32,6 +32,18 @@ public class Bill {
 
     public int getId() {
         return id;
+    }
+
+    public int getNumProd() {
+        return numProd;
+    }
+
+    public Salesman getSalesMan() {
+        return salesMan;
+    }
+
+    public double getAmountPrice() {
+        return amountPrice;
     }
 
     public void addProduct(Product p) {

@@ -4,9 +4,9 @@ public class TestBill {
         Product p2 = new Product();
         Product p3 = new Product();
 
-        Salesman s1 = new Salesman("111","222","333");
+        Salesman s1 = new Salesman(1,"111", "222", "333");
 
-        Bill b = new Bill(s1,10);
+        Bill b = new Bill(s1, 10);
 
         p1.name = "Хлеб";
         p1.price = 10.50;
@@ -30,7 +30,7 @@ public class TestBill {
 
         System.out.println(b.printBill());
 
-        b = new Bill(s1,10);
+        b = new Bill(s1, 10);
         b.addProduct(p3);
 
         b.closeBill();
