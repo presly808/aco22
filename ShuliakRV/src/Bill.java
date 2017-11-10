@@ -67,7 +67,7 @@ public class Bill {
     public void calculateAmountPrice() {
         amountPrice = 0;
         for (int i = 0; i < numProd; i++) {
-            amountPrice += arr[i].price;
+            amountPrice += arr[i].getPrice();
         }
     }
 
