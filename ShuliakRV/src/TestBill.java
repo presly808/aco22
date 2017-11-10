@@ -1,18 +1,21 @@
+import javax.sound.midi.Soundbank;
+
 public class TestBill {
 
-    public static final int DEFAULT_AMOUNT_PRODUCTS = 100;
-    public static final int DEFAULT_AMOUNT_SALESMEN = 20;
+    public static final int DEFAULT_COUNT_PRODUCTS = 10;
+    public static final int DEFAULT_COUNT_SALESMEN = 20;
+    public static final int DEFAULT_COUNT_BILLS = 5;
 
     public static void main(String[] args) {
 
 
-        Product[] p = new Product[DEFAULT_AMOUNT_PRODUCTS];
+        Product[] p = new Product[DEFAULT_COUNT_PRODUCTS];
 
         for (int i=0; i<p.length; i++) {
             p[i] = Utils.generateProduct();
         }
 
-        Salesman[] s = new Salesman[DEFAULT_AMOUNT_SALESMEN];
+        Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
         for (int i=0; i<s.length; i++) {
             s[i] = Utils.generateSalesman();
@@ -20,37 +23,25 @@ public class TestBill {
 
         Terminal t = new Terminal(s);
 
+        int salerId = t.login();
 
-        Bill b = new Bill(s1, 10);
+        if (salerId>0) {
 
-        p1.name = "Хлеб";
-        p1.price = 10.50;
-        p1.id = 111;
+            for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
+                t.createBill(s[salerId]);
+                for (int j = 0; j<DEFAULT_COUNT_PRODUCTS*Math.random(); j++) {
+                    t.addProduct(p[j]);
+                }
+                Bill b;
+                b = t.closeAndSaveBill();
+                if (b!=null) b.printBill();
+            }
 
-        b.addProduct(p1);
-
-        p2.name = "Масло";
-        p2.price = 70.30;
-        p2.id = 222;
-
-        b.addProduct(p2);
-
-        p3.name = "Молоко";
-        p3.price = 15.50;
-        p3.id = 333;
-
-        b.addProduct(p3);
-
-        b.closeBill();
-
-        System.out.println(b.printBill());
-
-        b = new Bill(s1, 10);
-        b.addProduct(p3);
-
-        b.closeBill();
-
-        System.out.println(b.printBill());
+            System.out.println("Минимальная сумма чека: "+t.getMin());
+            System.out.println("Максимальная сумма чека: "+t.getMax());
+            System.out.println("Средняя сумма чека: "+t.getAverage());
+        }
+        else System.out.println("Неверный логин или пароль");
 
 
     }

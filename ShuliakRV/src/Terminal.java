@@ -44,7 +44,7 @@ public class Terminal {
 
     public void createBill(Salesman s) {
 
-        bills[numBill] = new Bill(s);
+        if (s !=null) bills[numBill] = new Bill(s);
 
     }
 
@@ -54,15 +54,16 @@ public class Terminal {
 
     }
 
-    public void closeAndSaveBill() {
+    public Bill closeAndSaveBill() {
 
         bills[numBill].closeBill();
         if (!bills[numBill].isOpen()) {
-            numBill++;
+            return bills[numBill++];
         } else {
             bills[numBill] = null;
         }
 
+        return null;
     }
 
     public Bill findBillById(int id) {
