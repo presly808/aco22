@@ -12,6 +12,32 @@ public class Product {
         this.price = price;
     }
 
+    public void printFullInfo(){
+        System.out.println(toString());
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,29 +68,4 @@ public class Product {
                 '}';
     }
 
-    public void printFullInfo(){
-        System.out.println(toString());
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
-    public int getId() {
-
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }

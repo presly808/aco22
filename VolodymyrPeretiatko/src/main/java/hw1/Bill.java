@@ -12,6 +12,13 @@ public class Bill {
     private Double amountPrice;
     private Date closeTime;
 
+    public Bill(int id, Salesman salesman) {
+        this.id = id;
+        this.salesman = salesman;
+        this.products = new ArrayList<>(10);
+        this.amountPrice = 0.0;
+    }
+
     public static Bill findBillById(ArrayList<Bill> bills, int id){
 
         for (Bill b : bills){
@@ -20,13 +27,6 @@ public class Bill {
             }
         }
         return null;
-    }
-
-    public Bill(int id, Salesman salesman) {
-        this.id = id;
-        this.salesman = salesman;
-        this.products = new ArrayList<>(10);
-        this.amountPrice = 0.0;
     }
 
     public Bill closeBill(){

@@ -29,6 +29,31 @@ public class Salesman {
         return null;
     }
 
+    public String getFullName() {
+
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,30 +82,5 @@ public class Salesman {
         result = 31 * result + name.hashCode();
         result = 31 * result + pass.hashCode();
         return result;
-    }
-
-    public String getFullName() {
-
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 }

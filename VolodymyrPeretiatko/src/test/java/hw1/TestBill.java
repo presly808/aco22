@@ -12,7 +12,6 @@ public class TestBill {
     private static Salesman s1;
     private static Product p1;
 
-
     @BeforeClass
     public static void initTestData(){
         s1 = new Salesman("Jhon Lohan", "Jhon", "qwerty");
