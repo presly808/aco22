@@ -11,10 +11,6 @@ public class Salesman {
     private String login;
     private String password;
 
-    private Salesman() {
-
-    }
-
     public Salesman(String fullName, String login, String password) {
         this.fullName = fullName;
         this.login = login;

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class SalesmanCreator {
-    private static final int DEFAULT_PRODUCT_NAME = 3;
+    private static final int DEFAULT_SALESMAN_NAME = 5;
     public static Salesman salesmanCreate() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String fullName = reader.readLine();
@@ -27,8 +27,8 @@ public class SalesmanCreator {
     }
 
     private static String generateFullName() {
-        char[] nameChar = new char[DEFAULT_PRODUCT_NAME];
-        for (int i = 0; i < DEFAULT_PRODUCT_NAME; i++) {
+        char[] nameChar = new char[DEFAULT_SALESMAN_NAME];
+        for (int i = 0; i < DEFAULT_SALESMAN_NAME; i++) {
             nameChar[i] = (char) ((int)(65+(Math.random()*26)));
         }
         return String.valueOf(nameChar);

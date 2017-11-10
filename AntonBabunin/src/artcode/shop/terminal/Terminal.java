@@ -10,7 +10,7 @@ import artcode.shop.salesman.Salesman;
 
 
 public class Terminal {
-    private static final int DEFAULT_SIZE = 5;
+    private static final int DEFAULT_SIZE = 20;
 
     private int countClosedBill = 0;
     private int countCreatedBill = 0;
@@ -183,14 +183,15 @@ public class Terminal {
         return null;
     }
 
-    public Salesman getTopNofSalesMan () {
+/*    public Salesman getTopNofSalesMan () {
         Salesman bestSeller = null;
-        if (this.getSales() != null && this.getSales().length > 0) {
+        if (this.getSales() != null) {
+
             int[] countSales = new int[getSales().length];
             for (int i = 0; i < this.getSales().length; i++) {
                 int count = 0;
                 for (Bill bill : this.getBills()) {
-                    if (this.getSales()[i].equals(bill.getSalesman())) {
+                    if (bill != null && this.getSales()[i] != null && this.getSales()[i].equals(bill.getSalesman())) {
                         count++;
                     }
                 }
@@ -199,7 +200,24 @@ public class Terminal {
              bestSeller = this.getSales()[maxIndex(countSales)];
         }
         return bestSeller;
+    }*/
+public Salesman getTopNofSalesMan () {
+    int[] arrProductSales = new int[DEFAULT_SIZE];
+    for (int i = 0; i < this.getSales().length; i++) {
+        int countProduct = 0;
+        for (Bill bill : this.getBills()) {
+            if (this.getSales()[i] != null && bill != null && bill.getSalesman() == this.getSales()[i]) {
+                countProduct++;
+            }
+            arrProductSales[i] = countProduct;
+        }
     }
+    return this.getSales()[maxIndex(arrProductSales)];
+}
+
+
+
+
 
     private int maxIndex(int[] arr) {
         int ind = 0;
