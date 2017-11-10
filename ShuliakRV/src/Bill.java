@@ -2,7 +2,10 @@ import java.util.Date;
 
 public class Bill {
 
-    private static int id;
+    private static final int DEFAULT_AMOUNT_PRODUCTS = 100;
+
+    private static int seqId;
+    private int id;
     private Product[] arr;
     private Salesman salesMan;
     private double amountPrice;
@@ -10,10 +13,25 @@ public class Bill {
     private boolean isOpen = true;
     private int numProd;
 
-    public Bill(Salesman salesMan, int countProd) {
+    public Bill(Salesman salesMan) {
+        seqId++;
+        id=seqId;
+        this.salesMan = salesMan;
+        arr = new Product[DEFAULT_AMOUNT_PRODUCTS];
+    }
+
+    public Bill(Salesman salesMan, int amountProd) {
         this.id++;
         this.salesMan = salesMan;
-        arr = new Product[countProd];
+        arr = new Product[amountProd];
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void addProduct(Product p) {
@@ -30,7 +48,7 @@ public class Bill {
             str += arr[i].printFullInfo();
         }
 
-        str += String.format("ID: %s; Saler: %s; Time: %s; Sum: %s .",id,salesMan.getFullname(), closeTime.toString(), amountPrice);
+        str += String.format("ID: %s; Saler: %s; Time: %s; Sum: %s .", id, salesMan.getFullname(), closeTime.toString(), amountPrice);
         return str;
     }
 
@@ -42,10 +60,12 @@ public class Bill {
     }
 
     public void closeBill() {
-
-        calculateAmountPrice();
-        closeTime = new Date();
-        isOpen = false;
-
+        if (numProd > 0) {
+            calculateAmountPrice();
+            closeTime = new Date();
+            isOpen = false;
+        }
     }
 }
+
+

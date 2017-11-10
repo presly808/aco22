@@ -1,18 +1,29 @@
 import java.util.Scanner;
 
 public class Terminal {
+
+    private static final int DEFAULT_AMOUNT_BILLS = 1000;
+
     private Bill[] bills;
     private Salesman[] salesMen;
-    private int numSalesman;
 
-    public Terminal(Salesman[] s, int countBills) {
+    private int numBill;
+    private int currentSalesman;
+
+    public Terminal(Salesman[] s) {
         salesMen = s;
-        bills = new Bill[countBills];
+        bills = new Bill[DEFAULT_AMOUNT_BILLS];
     }
 
-    public Salesman login() {
+    public Terminal(Salesman[] s, int amountBills) {
+        salesMen = s;
+        bills = new Bill[amountBills];
+    }
 
-        if (salesMen != null) {
+    public int login() {
+
+        if (salesMen == null) return -1;
+        else {
 
             Scanner scan = new Scanner(System.in);
 
@@ -28,14 +39,42 @@ public class Terminal {
                     break;
             }
 
-            if (i == salesMen.length) return null;
+            if (i == salesMen.length) return -1;
 
-            return salesMen[i];
+            return currentSalesman;
         }
     }
 
-    public void createBill() {
-        Bill b = new Bill(salesMen[numSalesman], );
+    public void createBill(Salesman s) {
+
+        bills[numBill] = new Bill(s);
+
     }
-}
+
+    public void addProduct(Product p) {
+
+        if (p != null) bills[numBill].addProduct(p);
+
+    }
+
+    public void closeAndSaveBill() {
+
+        bills[numBill].closeBill();
+        if (bills[numBill].isOpen() == false) {
+            numBill++;
+        } else {
+            bills[numBill] = null;
+        }
+
+    }
+
+    public Bill findBillById(int id) {
+        for (int i = 0; i < numBill; i++) {
+            if (bills[i].getId() == id) return bills[i];
+        }
+
+        return null;
+    }
+
+
 }
