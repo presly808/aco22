@@ -10,9 +10,15 @@ public class SalesmanCreator {
     private static final int DEFAULT_SALESMAN_NAME = 5;
     public static Salesman salesmanCreate() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String fullName = reader.readLine();
+        String fullName = "";
+        do {
+            fullName = reader.readLine();
+        } while (fullName.isEmpty());
         String login = fullName;
-        String password = reader.readLine();
+        String password = "";
+        do {
+            password = reader.readLine();
+        } while (password.isEmpty());
 
         return new Salesman(fullName, login, password);
     }
