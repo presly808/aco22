@@ -12,8 +12,8 @@ public class RunTestTerminal {
     public void testTerminalCreation() {
         Terminal actual = TerminalCreator.terminalCreation();
         Terminal exepted = new Terminal();
-        exepted.setSales(new Salesman[20]);
-        exepted.setBills(new Bill[20]);
+        exepted.setSales(new Salesman[5]);
+        exepted.setBills(new Bill[5]);
         Assert.assertTrue(actual.equals(exepted));
     }
 
@@ -21,10 +21,11 @@ public class RunTestTerminal {
     public void testTerminalCreation1() {
         Terminal actual = TerminalCreator.terminalCreation();
         Terminal exepted = new Terminal();
-        exepted.setSales(new Salesman[21]);
-        exepted.setBills(new Bill[20]);
+        exepted.setSales(new Salesman[5]);
+        exepted.setBills(new Bill[4]);
         Assert.assertFalse(actual.equals(exepted));
     }
+
 
 
 }

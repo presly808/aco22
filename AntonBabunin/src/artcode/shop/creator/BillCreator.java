@@ -25,7 +25,7 @@ public class BillCreator {
 
     private static int generateID() {
 
-        return (int) Math.random()*10000;
+        return (int) (Math.random()*10000);
     }
 
 

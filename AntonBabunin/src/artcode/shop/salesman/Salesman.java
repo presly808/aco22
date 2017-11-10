@@ -41,15 +41,8 @@ public class Salesman {
     }
 
     public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
-        if (terminal != null && terminal.login(this))  {
-            return terminal.createBill(this);
-        } else return null;
-
-
-
-//        return  (terminal != null && terminal.login(this)) ? terminal.createBill(this)  : null;
+        return  (terminal != null && terminal.login(this)) ? terminal.createBill(this) : null;
     }
-
 
     public void login (Terminal terminal) {
         if (terminal != null) {
@@ -81,7 +74,6 @@ public class Salesman {
         return false;
     }
 
-// --------------------------------------------------------------------------------------------
     public boolean addProduct (Terminal terminal, Product product) {
         if (terminal != null && product != null) {
             Bill bill = terminal.addProduct(product);
@@ -90,7 +82,20 @@ public class Salesman {
         }
         return false;
     }
+// --------------------------------------------------------------------------------------------
 
+    public boolean closeBill(Bill bill, Terminal terminal) {
+        if (bill !=null && terminal != null) {
+            for (Bill bill1 : terminal.getBills()) {
+                if (bill == bill1) {
+
+                    terminal.closeAndSaveBill(bill);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
 

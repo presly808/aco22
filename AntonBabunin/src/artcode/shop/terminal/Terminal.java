@@ -7,6 +7,8 @@ import artcode.shop.product.Product;
 import artcode.shop.salesman.Salesman;
 
 
+
+
 public class Terminal {
     private static final int DEFAULT_SIZE = 5;
 
@@ -100,12 +102,6 @@ public class Terminal {
 
         if ((salesman != null)) {
             for (Salesman seller : this.getSales()) {
-//                    if (!seller.equals(salesman)) {
-//                        System.out.println("Seller " + seller.getFullName());
-//                        Bill bill = BillCreator.createBill(SalesmanCreator.salesmanCreateAutomatic());
-//                        bills[countCreatedBill++] = bill;
-//                        return bill;
-//            }
                  if (seller.equals(salesman)) {
                         Bill bill = BillCreator.createBill(salesman);
                         bills[bill.getAddedProducts()] = bill;
@@ -117,9 +113,7 @@ public class Terminal {
         return null;
     }
 
-//_________________
-
-    public Bill getBillBySalesman(Salesman salesman, Terminal terminal) {
+    private Bill getBillBySalesman(Salesman salesman, Terminal terminal) {
         if (terminal != null && salesman != null) {
             for (Bill bill : terminal.getBills()) {
                 if (bill.getSalesman().equals(salesman) && !bill.isClosed()) {
@@ -128,8 +122,6 @@ public class Terminal {
             }
         } return null;
     }
-
-
 
     public Bill addProduct(Product product) {
         if (this.getBills() == null) {
@@ -143,18 +135,31 @@ public class Terminal {
         }
         return null;
     }
+//_________________
 
-//    public void closeAndSaveBill (Bill bill) {
-//        if (bill != null) {
-//            if (bills == null) {
-//                bills = new Bill[DEFAULT_SIZE];
-//            }
-//            if (!bill.isClosed()) {
-//                bill.closeBill();
-//                bills[countClosedBill++] = new Bill(sales[0]);
-//            }
-//        }
-//     }
+    public boolean closeAndSaveBill (Bill bill) {
+        if (bill != null) {
+            if (this.bills != null) {
+                if (!bill.isClosed()) {
+                    double amountPrice = bill.closeBill();
+                    bill.setAmountPrice(amountPrice);
+                    this.printBill(bill);
+                    return true;
+
+                }
+            } return false;
+        } return false;
+    }
+
+    private void printBill(Bill bill) {
+        bill.printBill();
+    }
+
+
+
+
+
+
 
     public Bill findBillById(int id) {
         if (id > 0) {
