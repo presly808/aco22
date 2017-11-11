@@ -1,0 +1,8 @@
+
+
+gradlew.bat test --debug
+gradlew.bat check --info
+gradlew.bat test --info
+
+
+
