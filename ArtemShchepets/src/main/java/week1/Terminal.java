@@ -1,4 +1,4 @@
-package java.week1;
+package week1;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -50,6 +50,8 @@ public class Terminal {
         for (int i = 0; i < inputBillArray.length; i++) {
             if (inputBillArray[i] != null) {
                 additionalArray[additionalArrayCounter] = inputBillArray[i];
+                additionalArray[additionalArrayCounter].setId(additionalArrayCounter);
+                additionalArray[additionalArrayCounter].calculateBill();
                 additionalArrayCounter++;
             }
         }
@@ -85,6 +87,7 @@ public class Terminal {
             this.actualSizeOfBills = bills.length;
         }
         this.currentBillIndex = actualSizeOfBills - 1;
+
     }
 
     public Seller[] getSellers() {
@@ -218,6 +221,9 @@ public class Terminal {
             newBill.getTime().setMinutes(Integer.decode(parsedTime[1]));
             newBill.getTime().setSeconds(Integer.decode(parsedTime[2]));
 
+            newBill.setId(actualSizeOfBills);
+            newBill.calculateBill();
+
             //add new bill to the terminal
             if (currentBillIndex == -1) {
 
@@ -340,7 +346,7 @@ public class Terminal {
         if (loginOrNameOfSalesMan == null || "".equals(loginOrNameOfSalesMan) || sellers == null) return null;
 
         for (int i = 0; i < actualSizeOfSellers; i++) {
-            if (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan))
+            if ((sellers[i].getName() != null && sellers[i].getLogin() != null) && (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan)))
                 return sellers[i];
         }
 
@@ -351,12 +357,12 @@ public class Terminal {
 
         if (quantityOfTopSellers <= 0 || sellers == null || quantityOfTopSellers > sellers.length) return null;
 
-        Seller[] topSellers = new Seller[quantityOfTopSellers];
-
         // calculate sold products
-        for (int i = 0; i < sellers.length; i++) {
-            for (int j = 0; j < bills.length; j++) {
-                if (sellers[i].getName().equals(bills[j].getSeller().getName())) {
+
+        // TODO if used second time appears a bug with doubled sold products
+        for (int i = 0; i < actualSizeOfSellers; i++) {
+            for (int j = 0; j < actualSizeOfBills; j++) {
+                if (sellers[i].getName() != null && sellers[i].getName().equals(bills[j].getSeller().getName())) {
                     sellers[i].setSoldProducts(sellers[i].getSoldProducts() + bills[j].getActualSizeOfList());
                 }
             }
@@ -391,10 +397,13 @@ public class Terminal {
 
     }
 
-    public void doSomeStatisticStuff() {
+    public String doSomeStatisticStuff() {
 
-        double maxPriceBill = 0;
-        double minPriceBill = 0;
+        if (bills == null || sellers == null) System.out.println("Sry, we haven't any bills or sellers!");
+
+        double maxPriceBill = bills[0].getBillCost();
+        double minPriceBill = bills[0].getBillCost();
+
 
         int soldProducts = 0;
 
@@ -402,9 +411,8 @@ public class Terminal {
 
         // find maxPriceBill
         if (currentBillIndex > -1) {
-            for (int i = 0; i <= bills.length - 1; i++) {
-                if (bills[i] != null && bills[i].getBillCost() > bills[i + 1].getBillCost() &&
-                        bills[i].getBillCost() > maxPriceBill) {
+            for (int i = 0; i <= currentBillIndex; i++) {
+                if (bills[i] != null && bills[i].getBillCost() > maxPriceBill) {
                     maxPriceBill = bills[i].getBillCost();
                 }
             }
@@ -412,9 +420,8 @@ public class Terminal {
 
         //find minPriceBill
         if (currentBillIndex > -1) {
-            for (int i = 0; i <= bills.length - 1; i++) {
-                if (bills[i] != null && bills[i].getBillCost() < bills[i + 1].getBillCost() &&
-                        bills[i].getBillCost() < minPriceBill) {
+            for (int i = 0; i <= currentBillIndex; i++) {
+                if (bills[i] != null && bills[i].getBillCost() < minPriceBill) {
                     minPriceBill = bills[i].getBillCost();
                 }
             }
@@ -422,16 +429,16 @@ public class Terminal {
 
         // calculate the sum of sold products
         if (currentBillIndex > -1) {
-            for (int i = 0; i < bills.length; i++) {
+            for (int i = 0; i <= currentBillIndex; i++) {
                 soldProducts += bills[i].getActualSizeOfList();
             }
         }
 
-        System.out.println(String.format("***Statistic***\n " +
-                "The highest price of bill: %d\n " +
-                "The lowest price of bill: %d\n " +
+        return (String.format("***Statistic***\n " +
+                "The highest price of bill: %f\n " +
+                "The lowest price of bill: %f\n " +
                 "There are %d sold products now!\n " +
-                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan));
+                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan[0].toString()));
 
     }
 

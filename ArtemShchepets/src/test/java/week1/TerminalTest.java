@@ -1,10 +1,11 @@
-package java.week1;
+package week1;
 
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class TerminalTest {
 
@@ -37,11 +38,11 @@ public class TerminalTest {
 
         testTerminal = new Terminal();
 
-        testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1");
-        testSeller2 = new Seller("AntonVorobey", 17, "worker2", "password2");
-        testSeller3 = new Seller("VasyaPupkin", 59, "worker3", "password3");
-        testSeller4 = new Seller("AnyaTupova", 14, "worker4", "password4");
-        testSeller5 = new Seller(null, 20, "worker5", "password5");
+        testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1"); // 1 pr
+        testSeller2 = new Seller("AntonVorobey", 17, "worker2", "password2"); // 3 pr
+        testSeller3 = new Seller("VasyaPupkin", 59, "worker3", "password3"); // 0
+        testSeller4 = new Seller("AnyaTupova", 14, "worker4", "password4"); // 4 pr
+        testSeller5 = new Seller(null, 20, "worker5", "password5"); // 0
 
         testSellerArray = new Seller[5];
 
@@ -58,9 +59,9 @@ public class TerminalTest {
 
         testTime = new Time(12, 33, 50);
 
-        testBill1 = new Bill(testSeller1, testTime);
+        testBill1 = new Bill(testSeller1);
         testBill2 = new Bill(testSeller4);
-        testBill3 = new Bill(testSeller5);
+        testBill3 = new Bill(testSeller2);
 
         testBill1.addProduct(testProduct1);
         testBill2.addProduct(testProduct2);
@@ -162,5 +163,116 @@ public class TerminalTest {
     }
 
 
+    @Test
+    public void testFindBillByIdValidation() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Bill searchingBill = testTerminal.findBillById(-21435);
+
+        Assert.assertNull(searchingBill);
+    }
+
+    @Test
+    public void testFindBillById() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Bill searchingBill = testTerminal.findBillById(2);
+
+        Assert.assertEquals(2, searchingBill.getId());
+
+    }
+
+    @Test
+    public void testFindSalesmanByLoginOrFullNameValidation() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+
+        Seller searchingSeller = testTerminal.findSalesmanByLoginOrFullname(null);
+
+        Assert.assertNull(searchingSeller);
+    }
+
+    @Test
+    public void testFindSalesmanByLoginOrFullNameValidation2() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+
+        Seller searchingSeller = testTerminal.findSalesmanByLoginOrFullname("testValue");
+
+        Assert.assertNull(searchingSeller);
+    }
+
+    @Test
+    public void testFindSalesmanByLoginOrFullName() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+
+        Seller searchingSeller = testTerminal.findSalesmanByLoginOrFullname("VasyaPupkin");
+
+        Assert.assertEquals(testSellerArray[2].getLogin(), searchingSeller.getLogin());
+    }
+
+    @Test
+    public void testGetTopNofSalesMan() {
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+
+
+
+
+        testBillList[0] = testBill1;
+        testBillList[1] = testBill2;
+        testBillList[2] = testBill3;
+
+        testTerminal.setBills(testBillList);
+
+        Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(1);
+
+        Assert.assertEquals(testSeller4.toString(),searchingSellerArray[0].toString());
+    }
+
+    @Test
+    public void testGetTopNofSalesMan2() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(2);
+
+        Seller[] expectedTopSellers = new Seller[2];
+        expectedTopSellers[0] = testSeller4;
+        expectedTopSellers[1] = testSeller2;
+
+        Assert.assertArrayEquals(expectedTopSellers,searchingSellerArray);
+
+    }
+
+    @Test
+    public void testDoSomeStatisticStuff() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        testSeller4.setSoldProducts(4);
+
+        String statisticOutput = testTerminal.doSomeStatisticStuff();
+
+        Assert.assertEquals("***Statistic***\n " +
+        "The highest price of bill: 80,250000\n " +
+                "The lowest price of bill: 6,150000\n " +
+                "There are 8 sold products now!\n " +
+                "Best salesman: " + testSeller4.toString(), statisticOutput);
+    }
 }
 
