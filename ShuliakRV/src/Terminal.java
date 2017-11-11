@@ -143,12 +143,9 @@ public class Terminal {
 
         double min = 0;
 
-        if (numBill > 0) {
-
             for (int i = 0; i < numBill; i++) {
-                if (min < bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+                if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
             }
-        }
 
         return min;
     }
@@ -171,13 +168,11 @@ public class Terminal {
 
         int result = 0;
 
-        if (numBill > 0) {
 
-            for (int i = 0; i < bills.length; i++) {
+            for (int i = 0; i < numBill; i++) {
                 result += bills[i].getNumProd();
             }
 
-        }
         return result;
     }
 

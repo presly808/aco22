@@ -16,8 +16,8 @@ public class Product {
     }
 
     public String printFullInfo() {
-        return String.format("Name: %s, Price: %.2f, ID: %d; %n",
-                name, price, id);
+        return String.format("Продукт№ %s : Name: %s, Price: %.2f; %n",
+                id, name, price);
 
     }
 }

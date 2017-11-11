@@ -56,13 +56,14 @@ public class Bill {
 
         String str = "";
 
+        System.out.println("Чек№" + id);
+
         for (int i = 0; i < numProd; i++) {
             str += arr[i].printFullInfo();
         }
 
-        str += String.format("ID: %s; Saler: %s; Time: %s; Sum: %s .", id, salesMan.getFullname(), closeTime.toString(), amountPrice);
+        str += String.format("Saler: %s; Time: %s; Sum: %s .",salesMan.getFullname(), closeTime.toString(), amountPrice);
 
-        System.out.println("Чек№"+id);
         System.out.println(str);
     }
 

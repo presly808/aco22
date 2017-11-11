@@ -29,7 +29,7 @@ public class TestBill {
 
             for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
                 t.createBill(saler);
-                for (int j = 0; j < DEFAULT_COUNT_PRODUCTS * Math.random(); j++) {
+                for (int j = 0; j < (int) (DEFAULT_COUNT_PRODUCTS * Math.random()); j++) {
                     t.addProduct(p[j]);
                 }
                 Bill b;
