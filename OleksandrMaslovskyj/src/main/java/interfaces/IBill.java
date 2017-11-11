@@ -1,7 +1,7 @@
-package interfaces;
+package main.java.interfaces;
 
 
-import models.Product;
+import main.java.models.Product;
 
 public interface IBill {
 

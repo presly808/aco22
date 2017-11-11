@@ -1,8 +1,8 @@
-package interfaces;
+package main.java.interfaces;
 
-import controllers.BillController;
-import models.Product;
-import models.Salesman;
+import main.java.controllers.BillController;
+import main.java.models.Product;
+import main.java.models.Salesman;
 
 public interface ITerminal {
 

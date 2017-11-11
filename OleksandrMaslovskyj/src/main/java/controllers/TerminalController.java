@@ -1,8 +1,8 @@
-package controllers;
+package main.java.controllers;
 
-import interfaces.ITerminal;
-import models.Product;
-import models.Salesman;
+import main.java.interfaces.ITerminal;
+import main.java.models.Product;
+import main.java.models.Salesman;
 
 import java.util.HashSet;
 import java.util.Set;
