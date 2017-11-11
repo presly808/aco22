@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market;
+package ua.artcode.market;
 
 public class Product {
 
@@ -41,15 +41,15 @@ public class Product {
             }
         }
 
-        System.out.println("Не возможно идентифицировать товар по коду <<" + productCode + ">>");
+        System.out.println("It is not possible to identify the product by code <<" + productCode + ">>");
 
 
         return new Product(0,"", 0);
     }
 
-    public static void showProductList(Product[] productslist){
+    public static void printFullInfo(Product[] productslist){
 
-        System.out.println("\nПРАЙС\n" + "Code\t\t"+"Goods\t\t"+"Price");
+        System.out.println("\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price");
 
         for (int i = 0; i < productslist.length; i++) {
 

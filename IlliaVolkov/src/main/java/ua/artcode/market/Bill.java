@@ -1,23 +1,25 @@
-package main.java.ua.artcode.market;
+package ua.artcode.market;
 
 import javax.swing.*;
+import java.util.Date;
 
 public class Bill {
 
-   private int code;
-   private int[][] products;
-   private int quantityGoods;
-   private double amountPrice;
-   private Seller seller;
-   public boolean closed;
+    private int code;
+    private int[][] products;
+    private int quantityGoods;
+    private double amountPrice;
+    private SalesMan salesMan;
+    public boolean closed;
+    public Date closeTime;
 
-   final Product[] productList;
+    final Product[] productList;
 
-    Bill(int code, int countProducts, String selerName, Product[] productList){
+    Bill(int code, int countProducts, String salesManName, Product[] productList){
 
         this.code = code;
         this.products = new int[countProducts][2];
-        this.seller = new Seller(selerName);
+        this.salesMan = new SalesMan(salesManName);
 
         this.productList = productList;
 
@@ -43,7 +45,7 @@ public class Bill {
         }
 
         if (!productProcessed) {
-            System.out.println("Достигнут предел количества продуктов в Чеке " + this.products.length + " штук");
+            System.out.println("The limit of the number of products in the Check has been reached " + this.products.length + " pieces");
         }
     }
 
@@ -65,16 +67,16 @@ public class Bill {
                     this.products[i][1] = quantity;
                 }
 
-                this.countAmount();
+                this.calculateAmountPrice();
 
                 productProcessed = true;
             }
         }
     }
 
-    public static void showInfo(Bill currentBill) {
-                
-        System.out.println("Bill №" + currentBill.code + "/ quontity of goods - " + currentBill.quantityGoods + "/ Amount - " + currentBill.amountPrice + "/  Seller - " + currentBill.seller.name + "/ Closed - " + currentBill.closed);
+    public static void printBill(Bill currentBill) {
+
+        System.out.println("Bill №" + currentBill.code + "/ quontity of goods - " + currentBill.quantityGoods + "/ Amount - " + currentBill.amountPrice + "/  SalesMan - " + currentBill.salesMan.fullName + "/ Closed - " + currentBill.closed + "/ CloseTime - " + currentBill.closeTime);
 
         Bill.showProducts(currentBill);
     }
@@ -89,17 +91,11 @@ public class Bill {
 
                 Product currentProduct = Product.findByCode(currentBill.productList, currentBill.products[i][0]);
                 System.out.println("" + currentProduct.code + "\t\t" + currentProduct.name + "\t\t" + currentProduct.price + "\t\t" + currentBill.products[i][1]);
-
-//                JTextArea myTextArea = new JTextArea();
-//                myTextArea.setColumns(20);
-//                myTextArea.setRows(5);
-//                myTextArea.setText("wefqewwewqr");
-
             }
         }
     }
 
-    public void countAmount(){
+    public void calculateAmountPrice(){
 
         this.amountPrice = 0;
 
@@ -114,11 +110,12 @@ public class Bill {
 
     public void closeBill(){
 
-        int key = JOptionPane.showConfirmDialog( null, "Закрыть чек?","Ожидание продолжения подтверждения", JOptionPane.YES_NO_OPTION);
+        int key = JOptionPane.showConfirmDialog( null, "Close check?","Waiting for confirmation to continue", JOptionPane.YES_NO_OPTION);
 
         if (key == JOptionPane.YES_OPTION){
 
             this.closed = true;
+            this.closeTime = new Date();
         }
     }
 
@@ -126,41 +123,41 @@ public class Bill {
 
         int key = JOptionPane.YES_OPTION;
 
-        Product.showProductList(this.productList);
+        Product.printFullInfo(this.productList);
 
         while (key == JOptionPane.YES_OPTION) {
 
-            String stringProductCode = JOptionPane.showInputDialog("Введите код продукта", "Диалог выбора продукта");
-            int productCode = Integer.parseInt(stringProductCode);
+            String stringProductCode = JOptionPane.showInputDialog("Enter the product code", 0);
+            int productCode = Integer.parseInt((stringProductCode == null ? ""+0: stringProductCode));
 
-            String stringProductQuontity = JOptionPane.showInputDialog("Введите количество продукта " + Product.findByCode(this.productList, productCode).name, 0);
+            String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name, 0);
             int productQuontity = Integer.parseInt(stringProductQuontity);
 
             this.addProduct(productCode, productQuontity);
 
-            key = JOptionPane.showConfirmDialog( null, "Продолжим выбор продуктов?","Ожидание продолжения работы", JOptionPane.YES_NO_OPTION);
+            key = JOptionPane.showConfirmDialog( null, "Continue to select products?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
         }
     }
 
     public void allProductsSelected() {
 
-        int key = JOptionPane.showConfirmDialog( null, "Продукты выбраны верно?","Ожидание продолжения работы", JOptionPane.YES_NO_OPTION);
+        int key = JOptionPane.showConfirmDialog( null, "Are the products selected correctly?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
 
         if (key != JOptionPane.YES_OPTION) {
 
             while (key == JOptionPane.NO_OPTION) {
 
-                String stringProductCode = JOptionPane.showInputDialog("Введите код продукта");
+                String stringProductCode = JOptionPane.showInputDialog("Enter the product code");
                 int productCode = Integer.parseInt(stringProductCode);
 
-                String stringProductQuontity = JOptionPane.showInputDialog("Введите количество продукта " + Product.findByCode(this.productList, productCode).name);
+                String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name);
                 int productQuontity = Integer.parseInt(stringProductQuontity);
 
                 this.changeProduct(productCode, productQuontity);
 
-                Bill.showInfo(this);
+                Bill.printBill(this);
 
-                key = JOptionPane.showConfirmDialog(null, "Все позиции откорректированы?", "Ожидание продолжения работы", JOptionPane.YES_NO_OPTION);
+                key = JOptionPane.showConfirmDialog(null, "All positions are corrected?", "Waiting to continue work", JOptionPane.YES_NO_OPTION);
             }
         }
     }
