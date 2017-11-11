@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.week1.model;
+package ua.artcode.market.model;
 
 public class Product {
 

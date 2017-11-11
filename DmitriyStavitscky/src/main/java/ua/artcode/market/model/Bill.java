@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.week1.model;
+package ua.artcode.market.model;
 
 public class Bill {
 
@@ -13,14 +13,14 @@ public class Bill {
 
     private Salesman salesman;
 
-    private CloseTime closeTime;
+    private Time closeTime;
 
     public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
         this.id = idOfBill;
     }
 
-    public void addProduct(String name, int id, double price) {
+    private void addProduct(String name, int id, double price) {
         if (productsCount == MAX_COUNT_OF_PRODUCTS_IN_BILL) {
             System.out.println("sorry, max count of products in bill");
 
@@ -32,7 +32,6 @@ public class Bill {
 
         } else {
             products[productsCount++] = new Product(name, id, price);
-            productsCount++;
             calculateAmountPrice();
         }
     }
@@ -43,7 +42,7 @@ public class Bill {
         }
     }
 
-    public void printBill() {
+    private void printBill() {
         for (int i = 0; i < productsCount; i++) {
             System.out.println(products[i].getName() + ": " + products[i].getPrice());
         }
@@ -55,7 +54,7 @@ public class Bill {
 
     public void closeBill(int hours, int minutes, int seconds) {
         isClosed = true;
-        closeTime = new CloseTime(hours, minutes, seconds);
+        closeTime = new Time(hours, minutes, seconds);
         printBill();
         salesman.setSumOfAllSales(amountPrice);
     }
@@ -86,5 +85,9 @@ public class Bill {
 
     public Product[] getProducts() {
         return products;
+    }
+
+    public Time getCloseTime() {
+        return closeTime;
     }
 }

@@ -1,11 +1,11 @@
-package main.java.ua.artcode.market.week1.model;
+package ua.artcode.market.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static main.java.ua.artcode.market.week1.model.Terminal.MAX_COUNT_OF_BILLS;
-import static main.java.ua.artcode.market.week1.model.Terminal.MAX_COUNT_OF_SALESMANS;
+import static ua.artcode.market.model.Terminal.MAX_COUNT_OF_BILLS;
+import static ua.artcode.market.model.Terminal.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalTest {
 
@@ -52,6 +52,15 @@ public class TerminalTest {
         // if salesman was sign in
         terminal.signIn(true, login2, pass2);
         assertTrue(terminal.getIsLogged());
+    }
+
+    @Test
+    public void closeAndSaveBillAndConvertCloseTime() {
+        terminal.signIn(false, name1, pass1);
+        terminal.createBill(5);
+        terminal.addProduct("Fanta", 15, 9.50);
+        terminal.closeAndSaveBill(10, 20, 30);
+        assertEquals("10:20:30", terminal.getBills()[0].getCloseTime().convertCloseTime());
     }
 
     @Test
