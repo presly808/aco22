@@ -1,3 +1,5 @@
+package ua.artcode.market;
+
 import java.util.Scanner;
 
 public class Terminal {

@@ -1,3 +1,5 @@
+package ua.artcode.market;
+
 public class Utils {
     public static Product generateProduct() {
 

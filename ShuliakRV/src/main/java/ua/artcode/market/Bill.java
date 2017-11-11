@@ -1,3 +1,5 @@
+package ua.artcode.market;
+
 import java.util.Date;
 
 public class Bill {

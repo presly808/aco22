@@ -1,3 +1,5 @@
+package ua.artcode.market;
+
 public class Salesman {
 
     private static int seqId;

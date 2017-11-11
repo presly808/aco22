@@ -1,3 +1,5 @@
+package ua.artcode.market;
+
 public class Product {
     private static int seqId;
     private int id;
