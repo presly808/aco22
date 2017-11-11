@@ -22,8 +22,9 @@ public class RunTestTerminal {
         Terminal actual = TerminalCreator.terminalCreation();
         Terminal exepted = new Terminal();
         exepted.setSales(new Salesman[20]);
-        exepted.setBills(new Bill[20]);
+        exepted.setBills(new Bill[19]);
         Assert.assertFalse(actual.equals(exepted));
+
     }
 
 
