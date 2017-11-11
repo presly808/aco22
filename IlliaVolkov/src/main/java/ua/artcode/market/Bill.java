@@ -1,7 +1,6 @@
-package taskProductBill;
+package main.java.ua.artcode.market;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Bill {
 

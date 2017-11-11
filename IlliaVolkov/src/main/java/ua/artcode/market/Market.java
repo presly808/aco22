@@ -1,4 +1,4 @@
-package taskProductBill;
+package main.java.ua.artcode.market;
 
 import javax.swing.*;
 
