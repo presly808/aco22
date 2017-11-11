@@ -2,7 +2,7 @@ import javax.sound.midi.Soundbank;
 
 public class TestBill {
 
-    public static final int DEFAULT_COUNT_PRODUCTS = 10;
+    public static final int DEFAULT_COUNT_PRODUCTS = 100;
     public static final int DEFAULT_COUNT_SALESMEN = 3;
     public static final int DEFAULT_COUNT_BILLS = 2;
 
