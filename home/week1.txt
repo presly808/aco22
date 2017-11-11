@@ -1,0 +1,60 @@
+1. Theory that you had to watch before the practical part
+    https://www.youtube.com/watch?v=ZZ1-jLeR1KE&index=1&list=PLvmHg49t5OCRWqG58bycrLoAr85e-e9dd
+    https://www.youtube.com/watch?v=2pk_J5eEMf4&list=PLvmHg49t5OCRWqG58bycrLoAr85e-e9dd&index=2
+
+2. Practical Part
+    Create TerminalApp for Salesman
+
+    Classes:
+        Salesman:
+            fields:
+                fullname
+                login
+                pass
+        Product
+            fields:
+                id
+                name
+            methods:
+                printFullInfo
+
+        Bill
+            fields:
+                id
+                products[]
+                salesman
+                amountPrice
+                closeTime
+            methods:
+                addProduct
+                closeBill
+                calculateAmountPrice
+                printBill
+
+        Terminal
+            fields:
+                bills[]
+                sales[]
+            methods:
+                login
+                createBill
+                addProduct
+                closeAndSaveBill
+                findBillById
+                findSalesmanByLoginOrFullname
+                getTopNofSalesMan
+                doSomeStatisticStuff - getMax, getMin, getAverage, countSoldProducts...
+
+
+3. Add libs(junit) to your module via IDEA and see how to work with Junit Tests
+    https://www.youtube.com/watch?v=Bld3644bIAo
+    https://www.youtube.com/watch?v=UqtorhWcjPM
+    Add Test to Salesman application
+
+
+4. Watch and repeat all actions to prepare yourself to next weekend
+    https://www.youtube.com/watch?v=DLF3bgJMmHI&index=3&list=PLvmHg49t5OCRWqG58bycrLoAr85e-e9dd
+    https://www.youtube.com/watch?v=lb0N2Li_Fbk&list=PLvmHg49t5OCRWqG58bycrLoAr85e-e9dd&index=4
+    https://www.youtube.com/watch?v=h1G83mlG3wI&index=5&list=PLvmHg49t5OCRWqG58bycrLoAr85e-e9dd
+
+
