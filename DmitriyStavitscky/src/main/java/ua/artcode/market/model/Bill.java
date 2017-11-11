@@ -13,7 +13,7 @@ public class Bill {
 
     private Salesman salesman;
 
-    private Time closeTime;
+    private Time time;
 
     public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
@@ -54,7 +54,7 @@ public class Bill {
 
     public void closeBill(int hours, int minutes, int seconds) {
         isClosed = true;
-        closeTime = new Time(hours, minutes, seconds);
+        time = new Time(hours, minutes, seconds);
         printBill();
         salesman.setSumOfAllSales(amountPrice);
     }
@@ -87,7 +87,7 @@ public class Bill {
         return products;
     }
 
-    public Time getCloseTime() {
-        return closeTime;
+    public Time getTime() {
+        return time;
     }
 }

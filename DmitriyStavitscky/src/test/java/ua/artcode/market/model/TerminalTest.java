@@ -24,7 +24,6 @@ public class TerminalTest {
     private static int pass3 = 789;
 
     private static Salesman[] salesmans = new Salesman[MAX_COUNT_OF_SALESMANS];
-    private static Bill[] bills = new Bill[MAX_COUNT_OF_BILLS];
 
     @BeforeClass
     public static void beforeClass() {
@@ -36,7 +35,7 @@ public class TerminalTest {
         terminal.addSalesman(name3, login3, pass3);
 
         salesmans = terminal.getSalesmans();
-        bills = terminal.getBills();
+        Bill[] bills = terminal.getBills();
     }
 
     @Test
@@ -60,7 +59,7 @@ public class TerminalTest {
         terminal.createBill(5);
         terminal.addProduct("Fanta", 15, 9.50);
         terminal.closeAndSaveBill(10, 20, 30);
-        assertEquals("10:20:30", terminal.getBills()[0].getCloseTime().convertCloseTime());
+        assertEquals("10:20:30", terminal.getBills()[0].getTime().convertTime());
     }
 
     @Test

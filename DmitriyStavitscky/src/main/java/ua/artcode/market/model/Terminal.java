@@ -19,7 +19,7 @@ public class Terminal {
     public void addSalesman(String fullName, String login, int pass) {
 
         if (countOfSalesman == MAX_COUNT_OF_SALESMANS) {
-            System.out.println("Sorry, you've reached the maximum number of checks");
+            System.out.println("Sorry, maximum number of checks");
         } else if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
             System.out.println("wrong data");
         } else {
