@@ -106,7 +106,7 @@ public class Terminal {
         if (s != null) {
 
             for (int i = 0; i < sales.length; i++) {
-               if (sales[i]==s) return i;
+                if (sales[i] == s) return i;
             }
         }
 
@@ -156,44 +156,55 @@ public class Terminal {
 
     public double getMax() {
 
-        double max = 0;
+        if (numBill > 0) {
 
-        for (int i = 0; i < numBill; i++) {
-            if (max < bills[i].getAmountPrice()) max = bills[i].getAmountPrice();
+            double max = bills[0].getAmountPrice();
+
+            for (int i = 1; i < numBill; i++) {
+                if (max < bills[i].getAmountPrice()) max = bills[i].getAmountPrice();
+            }
+
+            return max;
         }
-
-        return max;
+        return 0;
     }
 
     public double getMin() {
 
-        double min = 0;
+        if (numBill > 0) {
 
-        for (int i = 0; i < numBill; i++) {
-            if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+            double min = bills[0].getAmountPrice();
+
+            for (int i = 1; i < numBill; i++) {
+                if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+            }
+
+            return min;
         }
 
-        return min;
+        return 0;
     }
 
     public double getAverage() {
 
-        double result = 0;
-
         if (numBill > 0) {
 
-            for (int i = 0; i < numBill; i++) {
+            double result = bills[0].getAmountPrice();
+
+            for (int i = 1; i < numBill; i++) {
                 result += bills[i].getAmountPrice();
             }
             result /= numBill;
+
+            return result;
         }
-        return result;
+
+        return 0;
     }
 
     public int countSoldProducts() {
 
         int result = 0;
-
 
         for (int i = 0; i < numBill; i++) {
             result += bills[i].getNumProd();

@@ -34,7 +34,7 @@ public class TestMarket {
 
                 t.createBill(saler);
 
-                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random() + 1); j++) {
+                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random()); j++) {
                     t.addProduct(p[j]);
                 }
                 Bill b;
