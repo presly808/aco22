@@ -1,7 +1,9 @@
 package ua.artcode.market.product;
 
 
-import static ua.artcode.market.creator.methods.Methods.round;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 
 public class Product {
 
@@ -35,6 +37,10 @@ public class Product {
     public boolean equals(Product product) {
         return product != null && this.getId() == product.getId() && this.getName().equals(product.getName()) && this.getPrice() == product.getPrice();
 
+    }
+
+    public static double round(double d, int pricise) {
+        return new BigDecimal(d).setScale(pricise, RoundingMode.HALF_UP).doubleValue();
     }
 
 
