@@ -1,4 +1,4 @@
-package artcode.tests;
+package tests;
 
 import artcode.shop.product.Product;
 import org.junit.Assert;
