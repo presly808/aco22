@@ -1,9 +1,9 @@
-package main.java.market;
+package market;
 
-import main.java.market.Bill;
-import main.java.market.BillTime;
-import main.java.market.Product;
-import main.java.market.Salesman;
+import market.Bill;
+import market.BillTime;
+import market.Product;
+import market.Salesman;
 
 public class CashboxMain {
     public static void main(String[] args) {

@@ -1,4 +1,5 @@
-package test;
+import market.Product;
+import org.junit.Test;
 
 public class RunTest {
 //    public static String[] sortWords(String[] uniqueWords) {
@@ -11,4 +12,9 @@ public class RunTest {
 //            //private static void swap(String[] input
 //        }
 //    }
+
+    @Test
+    public void test(){
+        Product product = new Product("",23,23);
+    }
 }
