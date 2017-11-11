@@ -2,9 +2,14 @@ language: java
 jdk:
   - oraclejdk8
 
-before_install:
-  - sudo apt-get install jq
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+env:
+  - CODACY_PROJECT_TOKEN=f3d92b3d95024c37966daebc1d14934d
+
+cache:
+  directories:
+      - $HOME/.m2/
+      - $HOME/.gradle/
 
 after_success:
-  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+  - java -cp $TRAVIS_BUILD_DIR/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+# todo add KEY for CODACITY, download jar-sender for coverage, run after success jar-sender
