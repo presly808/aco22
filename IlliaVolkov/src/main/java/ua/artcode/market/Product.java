@@ -49,14 +49,22 @@ public class Product {
 
     public static void printFullInfo(Product[] productslist){
 
-        System.out.println("\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price");
+        System.out.println("\n" + fulInfoOfProdukts(productslist));
+    }
+
+    public static String fulInfoOfProdukts(Product[] productslist) {
+
+        String textMessage = "";
+
+        textMessage += "\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price";
 
         for (int i = 0; i < productslist.length; i++) {
 
-            System.out.println("" + productslist[i].code + "\t\t" + productslist[i].name + "\t\t" + productslist[i].price);
+            textMessage += "\n" + productslist[i].code + "\t\t" + productslist[i].name + "\t\t" + productslist[i].price;
 
         }
-        System.out.println("");
+
+        return textMessage+"\n";
     }
 }
 
