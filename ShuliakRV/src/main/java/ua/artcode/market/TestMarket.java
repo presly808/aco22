@@ -1,6 +1,6 @@
 package ua.artcode.market;
 
-public class TestBill {
+public class TestMarket {
 
     public static final int DEFAULT_COUNT_PRODUCTS = 100;
     public static final int DEFAULT_COUNT_SALESMEN = 3;
@@ -28,8 +28,10 @@ public class TestBill {
         if (saler !=null) {
 
             for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
+
                 t.createBill(saler);
-                for (int j = 0; j < (int) (DEFAULT_COUNT_PRODUCTS * Math.random()); j++) {
+
+                for (int j = 0; j < (int) (DEFAULT_COUNT_PRODUCTS * Math.random()+1); j++) {
                     t.addProduct(p[j]);
                 }
                 Bill b;
@@ -37,9 +39,8 @@ public class TestBill {
                 b.printBill();
             }
 
-            System.out.println("Минимальная сумма чека: " + t.getMin());
-            System.out.println("Максимальная сумма чека: " + t.getMax());
-            System.out.println("Средняя сумма чека: " + t.getAverage());
+            t.doSomeStatisticStuff();
+
         } else System.out.println("Неверный логин или пароль");
 
 

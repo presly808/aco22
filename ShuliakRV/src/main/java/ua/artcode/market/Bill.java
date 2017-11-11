@@ -8,7 +8,7 @@ public class Bill {
 
     private static int seqId;
     private int id;
-    private Product[] arr;
+    private Product[] products;
     private Salesman salesMan;
     private double amountPrice;
     private Date closeTime;
@@ -19,17 +19,13 @@ public class Bill {
         seqId++;
         id = seqId;
         this.salesMan = salesMan;
-        arr = new Product[DEFAULT_AMOUNT_PRODUCTS];
+        products = new Product[DEFAULT_AMOUNT_PRODUCTS];
     }
 
     public Bill(Salesman salesMan, int amountProd) {
         this.id++;
         this.salesMan = salesMan;
-        arr = new Product[amountProd];
-    }
-
-    public boolean isOpen() {
-        return isOpen;
+        products = new Product[amountProd];
     }
 
     public int getId() {
@@ -48,40 +44,58 @@ public class Bill {
         return amountPrice;
     }
 
-    public void addProduct(Product p) {
-        if ((isOpen) && (p != null))
-            arr[numProd++] = p;
-    }
 
+    public boolean addProduct(Product p) {
+
+        if ((isOpen) && (p != null) && (numProd < products.length)) {
+
+            products[numProd++] = p;
+
+            return true;
+        }
+        return false;
+    }
 
     public void printBill() {
 
-        String str = "";
+        if (isOpen == false)
+        {
 
-        System.out.println("Чек№" + id);
+            String str = "Чек№" + id +"\n";
 
-        for (int i = 0; i < numProd; i++) {
-            str += arr[i].printFullInfo();
+            for (int i = 0; i < numProd; i++) {
+                str += products[i].printFullInfo();
+            }
+
+            str += String.format("Saler: %s; Time: %s; Sum: %.2f .", salesMan.getFullname(), closeTime.toString(), amountPrice);
+
+            System.out.println(str);
         }
-
-        str += String.format("Saler: %s; Time: %s; Sum: %s .",salesMan.getFullname(), closeTime.toString(), amountPrice);
-
-        System.out.println(str);
+        else System.out.println("Чек не закрыт!");
     }
 
     public void calculateAmountPrice() {
+
         amountPrice = 0;
+
         for (int i = 0; i < numProd; i++) {
-            amountPrice += arr[i].getPrice();
+            amountPrice += products[i].getPrice();
         }
     }
 
-    public void closeBill() {
+    public boolean closeBill() {
+
         if (numProd > 0) {
+
             calculateAmountPrice();
             closeTime = new Date();
             isOpen = false;
+
+            return true;
+
         }
+
+        return false;
     }
 }
 

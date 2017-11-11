@@ -2,15 +2,12 @@ package ua.artcode.market;
 
 public class Salesman {
 
-    private static int seqId;
-    private int id;
     private String fullname;
     private String login;
     private String password;
+    private boolean isLogged;
 
     public Salesman(String fullname, String login, String password) {
-        seqId++;
-        id = seqId;
         this.fullname = fullname;
         this.login = login;
         this.password = password;
@@ -28,6 +25,10 @@ public class Salesman {
         return password;
     }
 
+    public boolean isLogged() {
+        return isLogged;
+    }
+
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -40,7 +41,7 @@ public class Salesman {
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    public void setLogged(boolean logged) {
+        isLogged = logged;
     }
 }

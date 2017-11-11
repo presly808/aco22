@@ -7,59 +7,67 @@ public class Terminal {
     private static final int DEFAULT_AMOUNT_BILLS = 1000;
 
     private Bill[] bills;
-    private Salesman[] salesMen;
+    private Salesman[] sales;
 
     private int numBill;
 
     public Terminal(Salesman[] s) {
-        salesMen = s;
+        sales = s;
         bills = new Bill[DEFAULT_AMOUNT_BILLS];
     }
 
     public Terminal(Salesman[] s, int amountBills) {
-        salesMen = s;
+        sales = s;
         bills = new Bill[amountBills];
     }
 
     public Salesman login() {
 
-        if (salesMen == null) return null;
+        if (sales == null) return null;
         else {
 
             Scanner scan = new Scanner(System.in);
 
-            System.out.println("Введите логин: ");
+            System.out.print("Введите логин: ");
             String login = scan.nextLine();
-            System.out.println("Введите пароль: ");
+            System.out.print("Введите пароль: ");
             String password = scan.nextLine();
 
             int i;
 
-            for (i = 0; i < salesMen.length; i++) {
-                if ((salesMen[i].getLogin().equals(login)) && (salesMen[i].getPassword().equals(password)))
-                    return salesMen[i];
+            for (i = 0; i < sales.length; i++) {
+                if (sales[i] != null)
+                    if ((sales[i].getLogin().equals(login)) && (sales[i].getPassword().equals(password))) {
+                        sales[i].setLogged(true);
+                        return sales[i];
+                    }
             }
 
             return null;
         }
     }
 
-    public void createBill(Salesman s) {
+    public boolean createBill(Salesman s) {
 
-        if (s != null) bills[numBill] = new Bill(s);
+        if ((s != null) && (s.isLogged()) && (numBill < bills.length)) {
+            bills[numBill] = new Bill(s);
+            return true;
+        }
 
+        return false;
     }
 
-    public void addProduct(Product p) {
+    public boolean addProduct(Product p) {
 
-        if (p != null) bills[numBill].addProduct(p);
+        if (bills[numBill].addProduct(p)) return true;
+
+        return false;
 
     }
 
     public Bill closeAndSaveBill() {
 
-        bills[numBill].closeBill();
-        if (!bills[numBill].isOpen()) {
+        if (bills[numBill].closeBill()) {
             return bills[numBill++];
         } else {
             bills[numBill] = null;
@@ -76,58 +84,74 @@ public class Terminal {
         return null;
     }
 
-    public Salesman findSalesmanByLoginOrFullname(String login, String fullname) {
+    public Salesman[] findSalesmanByLoginOrFullname(String loginOrFullname) {
 
-        if ((login == null && fullname == null) || (salesMen.length == 0)) return null;
+        Salesman[] s = new Salesman[sales.length];
+        int index = 0;
 
-        if ((login != null) && (fullname == null)) {
+        if ((loginOrFullname == null || loginOrFullname.isEmpty()) || (sales.length == 0)) return null;
 
-            for (int i = 0; i < salesMen.length; i++) {
-                if (salesMen[i].getLogin().equals(login)) {
-                    return salesMen[i];
-                }
+        for (int i = 0; i < sales.length; i++) {
+            if (sales[i].getLogin().equals(loginOrFullname) || sales[i].getFullname().equals(loginOrFullname))
+                s[index++] = sales[i];
+        }
+
+        if (index > 0) return s;
+
+        return null;
+    }
+
+    public int getIndexSales(Salesman s) {
+
+        if (s != null) {
+
+            for (int i = 0; i < sales.length; i++) {
+               if (sales[i]==s) return i;
             }
-        } else if ((login == null) && (fullname != null)) {
+        }
 
-            for (int i = 0; i < salesMen.length; i++) {
-                if (salesMen[i].getFullname().equals(fullname)) {
-                    return salesMen[i];
-                }
-            }
-        } else if ((login != null) && (fullname != null)) {
+        return -1;
+    }
 
-            for (int i = 0; i < salesMen.length; i++) {
-                if ((salesMen[i].getLogin().equals(login)) && (salesMen[i].getFullname().equals(fullname))) {
-                    return salesMen[i];
-                }
+    public Salesman[] getTopNofSalesMan(int n) {
+
+        if ((n > 0) && (sales != null) && (n <= sales.length)) {
+
+            Salesman[] s = new Salesman[n];
+            int[] salesProducts = new int[sales.length];
+
+            for (int i = 0; i < numBill; i++) {
+                salesProducts[getIndexSales(bills[i].getSalesMan())] += bills[i].getNumProd();
             }
+
+            for (int i = 0; i < n; i++) {
+
+                int max = 0;
+                int index = 0;
+
+                for (int j = 0; j < salesProducts.length; j++) {
+                    if (max < salesProducts[j]) {
+                        max = salesProducts[j];
+                        index = j;
+                    }
+                }
+                salesProducts[index] = 0;
+                s[i] = sales[index];
+            }
+
+            return s;
         }
 
         return null;
     }
 
-    public Salesman[] getTopNofSalesMan(int n) {
-        Salesman[] s = new Salesman[n];
-        int[] sales = new int[salesMen.length];
+    public void doSomeStatisticStuff() {
 
-        for (int i = 0; i < numBill; i++) {
-            sales[bills[i].getSalesMan().getId()] += bills[i].getNumProd();
-        }
+        System.out.println("Максимальная сумма чека: " + getMax());
+        System.out.println("Минимальная сумма чека: " + getMin());
+        System.out.println("Средняя сумма чека: " + getAverage());
+        System.out.println("Количество проданных продуктов: " + countSoldProducts());
 
-        for (int i = 0; i < Math.min(s.length, sales.length); i++) {
-            int max = 0;
-            int index = 0;
-            for (int j = 0; j < sales.length; j++) {
-                if (max < sales[j]) {
-                    max = sales[j];
-                    index = j;
-                }
-            }
-            sales[index] = 0;
-            s[i] = salesMen[index];
-        }
-
-        return s;
     }
 
     public double getMax() {
@@ -145,9 +169,9 @@ public class Terminal {
 
         double min = 0;
 
-            for (int i = 0; i < numBill; i++) {
-                if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
-            }
+        for (int i = 0; i < numBill; i++) {
+            if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+        }
 
         return min;
     }
@@ -171,9 +195,9 @@ public class Terminal {
         int result = 0;
 
 
-            for (int i = 0; i < numBill; i++) {
-                result += bills[i].getNumProd();
-            }
+        for (int i = 0; i < numBill; i++) {
+            result += bills[i].getNumProd();
+        }
 
         return result;
     }
