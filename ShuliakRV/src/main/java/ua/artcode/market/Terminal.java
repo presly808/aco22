@@ -147,10 +147,10 @@ public class Terminal {
 
     public void doSomeStatisticStuff() {
 
-        System.out.println("Максимальная сумма чека: " + getMax());
-        System.out.println("Минимальная сумма чека: " + getMin());
-        System.out.println("Средняя сумма чека: " + getAverage());
-        System.out.println("Количество проданных продуктов: " + countSoldProducts());
+        System.out.printf("Максимальная сумма чека: %.2f %n", getMax());
+        System.out.printf("Минимальная сумма чека: %.2f %n", getMin());
+        System.out.printf("Средняя сумма чека: %.2f %n", getAverage());
+        System.out.printf("Количество проданных продуктов: %d %n", countSoldProducts());
 
     }
 
