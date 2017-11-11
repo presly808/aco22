@@ -1,11 +1,11 @@
-package week1.model;
+package main.java.ua.artcode.market.week1.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static week1.model.Terminal.MAX_COUNT_OF_BILLS;
-import static week1.model.Terminal.MAX_COUNT_OF_SALESMANS;
+import static main.java.ua.artcode.market.week1.model.Terminal.MAX_COUNT_OF_BILLS;
+import static main.java.ua.artcode.market.week1.model.Terminal.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalTest {
 

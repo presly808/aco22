@@ -1,4 +1,4 @@
-package week1.model.ClassroomWork;
+package main.java.ua.artcode.market.week1.model.ClassroomWork;
 
 public class Bill {
 

@@ -1,4 +1,4 @@
-package week1.model;
+package main.java.ua.artcode.market.week1.model;
 
 public class CloseTime {
 
