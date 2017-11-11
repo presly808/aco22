@@ -1,34 +1,47 @@
+import javax.sound.midi.Soundbank;
+
 public class TestBill {
+
+    public static final int DEFAULT_COUNT_PRODUCTS = 100;
+    public static final int DEFAULT_COUNT_SALESMEN = 3;
+    public static final int DEFAULT_COUNT_BILLS = 2;
+
     public static void main(String[] args) {
-        Product p1 = new Product();
-        Product p2 = new Product();
-        Product p3 = new Product();
 
-        Salesman s1 = new Salesman("111","222","333");
 
-        Bill b = new Bill(1,s1,10);
+        Product[] p = new Product[DEFAULT_COUNT_PRODUCTS];
 
-        p1.name = "Хлеб";
-        p1.price = 10.50;
-        p1.id = 111;
+        for (int i = 0; i < p.length; i++) {
+            p[i] = Utils.generateProduct();
+        }
 
-        b.addProduct(p1);
+        Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
-        p2.name = "Масло";
-        p2.price = 70.30;
-        p2.id = 222;
+        for (int i = 0; i < s.length; i++) {
+            s[i] = Utils.generateSalesman();
+        }
 
-        b.addProduct(p2);
+        Terminal t = new Terminal(s);
 
-        p3.name = "Молоко";
-        p3.price = 15.50;
-        p3.id = 333;
+        Salesman saler = t.login();
 
-        b.addProduct(p3);
+        if (saler !=null) {
 
-        b.closeBill();
+            for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
+                t.createBill(saler);
+                for (int j = 0; j < (int) (DEFAULT_COUNT_PRODUCTS * Math.random()); j++) {
+                    t.addProduct(p[j]);
+                }
+                Bill b;
+                b = t.closeAndSaveBill();
+                b.printBill();
+            }
 
-        System.out.println(b.printBill());
+            System.out.println("Минимальная сумма чека: " + t.getMin());
+            System.out.println("Максимальная сумма чека: " + t.getMax());
+            System.out.println("Средняя сумма чека: " + t.getAverage());
+        } else System.out.println("Неверный логин или пароль");
+
 
     }
 }
