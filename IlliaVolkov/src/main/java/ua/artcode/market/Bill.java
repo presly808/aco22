@@ -133,7 +133,10 @@ public class Bill {
             String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name, 0);
             int productQuontity = Integer.parseInt(stringProductQuontity);
 
-            this.addProduct(productCode, productQuontity);
+            if (productQuontity == 0 || productCode == 0) {
+
+                this.addProduct(productCode, productQuontity);
+            }
 
             key = JOptionPane.showConfirmDialog( null, "Continue to select products?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
         }
@@ -153,7 +156,10 @@ public class Bill {
                 String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name);
                 int productQuontity = Integer.parseInt(stringProductQuontity);
 
-                this.changeProduct(productCode, productQuontity);
+                if (productQuontity == 0 || productCode == 0) {
+
+                    this.changeProduct(productCode, productQuontity);
+                }
 
                 Bill.printBill(this);
 
