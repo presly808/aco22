@@ -1,9 +1,9 @@
-package controllers;
+package main.java.controllers;
 
-import Utils.*;
-import interfaces.IBill;
-import models.Product;
-import models.Salesman;
+import main.java.Utils.*;
+import main.java.interfaces.IBill;
+import main.java.models.Product;
+import main.java.models.Salesman;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
