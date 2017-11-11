@@ -1,4 +1,4 @@
-package week1;
+package java.week1;
 
 
 import org.junit.After;
