@@ -1,7 +1,7 @@
 public class Bill {
 
     int id;
-    Product[] products;
+    Product[] products = new Product[20];
     Salesman salesman;
     double amountPrice;
     String closeTime;
@@ -17,10 +17,50 @@ public class Bill {
     public Bill() {
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProducts(Product[] products) {
+        this.products = products;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
+
+    public void setAmountPrice(double amountPrice) {
+        this.amountPrice = amountPrice;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Product[] getProducts() {
+        return products;
+    }
+
+    public Salesman getSalesman() {
+        return salesman;
+    }
+
+    public double getAmountPrice() {
+        return amountPrice;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
     public void addProduct(Product[] product){
 
     }
-    public String closeBill(Bill bill){
+    public String closeBill(){
         if (closeTime == null){
             closeTime = "12:30";
         }else {
@@ -30,19 +70,21 @@ public class Bill {
     }
     public double calculateAmountPrice(Product[] product ){
         double amountPrice = 0.0d;
-        for (int i = 0; i < product.length; i++){
-            amountPrice = product[i].getPrice();
+        for (int i = 0; i < products.length; i++){
+
+            amountPrice = products[i].getPrice();
         }
         return amountPrice;
     }
-    public void printBill(Bill bill){
+    public void printBill(){
         System.out.println("Bill's number" + id);
         for (int i = 0; i < products.length; i++){
+            if (products[i] == null) break;
             System.out.print("Name " + products[i].getName() + " --------- ");
             System.out.println("Price " + products[i].getPrice());
         }
-        System.out.println("Amount price " + calculateAmountPrice(bill.products));
-        System.out.println("Time: " + closeBill(bill));
+        System.out.println("Amount price " + calculateAmountPrice(products));
+        System.out.println("Time: " + closeBill());
     }
 
 }
