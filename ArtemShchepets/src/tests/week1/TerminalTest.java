@@ -29,10 +29,11 @@ public class TerminalTest {
     Bill testBill2;
     Bill testBill3;
 
+    Bill[] testBillList;
+
 
     @Before
     public void setUp() {
-        System.out.println("Before called");
 
         testTerminal = new Terminal();
 
@@ -44,22 +45,41 @@ public class TerminalTest {
 
         testSellerArray = new Seller[5];
 
+        testSellerArray[0] = testSeller1;
+        testSellerArray[1] = testSeller2;
+        testSellerArray[2] = testSeller3;
+        testSellerArray[3] = testSeller4;
+        testSellerArray[4] = testSeller5;
+
         testProduct1 = new Product("Milk", 11.20, "#03242341");
         testProduct2 = new Product("Cheese", 2.05, "#0341");
         testProduct3 = new Product("Water", 33.5, "#01");
         testProduct4 = new Product(null, 7.55, "#222");
 
+        testTime = new Time(12, 33, 50);
+
         testBill1 = new Bill(testSeller1, testTime);
         testBill2 = new Bill(testSeller4);
         testBill3 = new Bill(testSeller5);
 
-        testTime = new Time(12, 33, 50);
+        testBill1.addProduct(testProduct1);
+        testBill2.addProduct(testProduct2);
+        testBill2.addProduct(testProduct1);
+        testBill2.addProduct(testProduct3);
+        testBill2.addProduct(testProduct3);
+        testBill3.addProduct(testProduct2);
+        testBill3.addProduct(testProduct2);
+        testBill3.addProduct(testProduct2);
+
+        testBillList = new Bill[3];
+
+        testBillList[0] = testBill1;
+        testBillList[1] = testBill2;
+        testBillList[2] = testBill3;
     }
 
     @After
     public void tearDown() {
-
-        System.out.println("After called");
 
         Terminal testTerminal = null;
 
@@ -69,25 +89,26 @@ public class TerminalTest {
         Seller testSeller4 = null;
         Seller testSeller5 = null;
 
-        Seller[] testSellerArray = null;
-
         testSellerArray[0] = null;
         testSellerArray[1] = null;
         testSellerArray[2] = null;
         testSellerArray[3] = null;
         testSellerArray[4] = null;
 
+        Seller[] testSellerArray = null;
+
         Product testProduct1 = null;
         Product testProduct2 = null;
         Product testProduct3 = null;
         Product testProduct4 = null;
 
-
         Time testTime = null;
+
         Bill testBill1 = null;
         Bill testBill2 = null;
         Bill testBill3 = null;
 
+        testBillList = null;
     }
 
     @Test
@@ -104,13 +125,6 @@ public class TerminalTest {
     public void testSignInValidation2() {
 
         // trying to sign in with base of logins\passwords, but with non-valid input login\pass
-
-        testSellerArray[0] = testSeller1;
-        testSellerArray[1] = testSeller2;
-        testSellerArray[2] = testSeller3;
-        testSellerArray[3] = testSeller4;
-        testSellerArray[4] = testSeller5;
-
         testTerminal.setSellers(testSellerArray);
 
         testTerminal.signIn("null", "");
@@ -125,13 +139,6 @@ public class TerminalTest {
     public void testSignIn() {
 
         // trying to sign in with base of logins and with valid login/pass
-
-        testSellerArray[0] = testSeller1;
-        testSellerArray[1] = testSeller2;
-        testSellerArray[2] = testSeller3;
-        testSellerArray[3] = testSeller4;
-        testSellerArray[4] = testSeller5;
-
         testTerminal.setSellers(testSellerArray);
 
         testTerminal.signIn("worker3", "password3");
@@ -144,29 +151,16 @@ public class TerminalTest {
 
     }
 
-    /*
-
     @Test
     public void testCloseAndSaveBillValidation() {
+
         //trying to close bill without signing in
-
-        Bill testBill = new Bill(testSeller2);
-
-        Bill[] testBillList = new Bill[1];
-        testBillList[0] = testBill;
-
         testTerminal.setBills(testBillList);
         testTerminal.closeAndSaveBill();
 
         Assert.assertFalse(testTerminal.getBills()[testTerminal.getCurrentBillIndex()].isClosed());
-
-        //instead of @After annotation, which doesnt work
-        testTerminal.setBills(null);
-        testTerminal.setCurrentBillIndex(-1);
-        testTerminal.setActualSizeOfBills(0);
     }
 
-    */
 
 }
 
