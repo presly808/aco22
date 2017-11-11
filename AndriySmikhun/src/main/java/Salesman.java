@@ -6,7 +6,7 @@ public class Salesman {
 
     public Salesman(String fullname, String login, String password) {
         this.fullname = fullname;
-        this.login = login;
+        this.login = login; 
         Password = password;
     }
 
