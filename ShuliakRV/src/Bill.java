@@ -52,7 +52,7 @@ public class Bill {
     }
 
 
-    public String printBill() {
+    public void printBill() {
 
         String str = "";
 
@@ -61,7 +61,9 @@ public class Bill {
         }
 
         str += String.format("ID: %s; Saler: %s; Time: %s; Sum: %s .", id, salesMan.getFullname(), closeTime.toString(), amountPrice);
-        return str;
+
+        System.out.println("Чек№"+id);
+        System.out.println(str);
     }
 
     public void calculateAmountPrice() {

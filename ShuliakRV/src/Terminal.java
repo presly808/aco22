@@ -19,9 +19,9 @@ public class Terminal {
         bills = new Bill[amountBills];
     }
 
-    public int login() {
+    public Salesman login() {
 
-        if (salesMen == null) return -1;
+        if (salesMen == null) return null;
         else {
 
             Scanner scan = new Scanner(System.in);
@@ -35,16 +35,16 @@ public class Terminal {
 
             for (i = 0; i < salesMen.length; i++) {
                 if ((salesMen[i].getLogin().equals(login)) && (salesMen[i].getPassword().equals(password)))
-                    return salesMen[i].getId();
+                    return salesMen[i];
             }
 
-            return -1;
+            return null;
         }
     }
 
     public void createBill(Salesman s) {
 
-        if (s !=null) bills[numBill] = new Bill(s);
+        if (s != null) bills[numBill] = new Bill(s);
 
     }
 
@@ -108,7 +108,7 @@ public class Terminal {
         Salesman[] s = new Salesman[n];
         int[] sales = new int[salesMen.length];
 
-        for (int i = 0; i < bills.length; i++) {
+        for (int i = 0; i < numBill; i++) {
             sales[bills[i].getSalesMan().getId()] += bills[i].getNumProd();
         }
 
@@ -132,7 +132,7 @@ public class Terminal {
 
         double max = 0;
 
-        for (int i = 0; i < bills.length; i++) {
+        for (int i = 0; i < numBill; i++) {
             if (max < bills[i].getAmountPrice()) max = bills[i].getAmountPrice();
         }
 
@@ -143,8 +143,11 @@ public class Terminal {
 
         double min = 0;
 
-        for (int i = 0; i < bills.length; i++) {
-            if (min < bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+        if (numBill > 0) {
+
+            for (int i = 0; i < numBill; i++) {
+                if (min < bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+            }
         }
 
         return min;
@@ -154,18 +157,26 @@ public class Terminal {
 
         double result = 0;
 
-        for (int i = 0; i < bills.length; i++) {
-            result += bills[i].getAmountPrice();
+        if (numBill > 0) {
+
+            for (int i = 0; i < numBill; i++) {
+                result += bills[i].getAmountPrice();
+            }
+            result /= numBill;
         }
-        return result / bills.length;
+        return result;
     }
 
     public int countSoldProducts() {
 
         int result = 0;
 
-        for (int i = 0; i < bills.length; i++) {
-            result += bills[i].getNumProd();
+        if (numBill > 0) {
+
+            for (int i = 0; i < bills.length; i++) {
+                result += bills[i].getNumProd();
+            }
+
         }
         return result;
     }
