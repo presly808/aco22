@@ -1,9 +1,10 @@
-package artcode.shop.bill;
+package ua.artcode.market.bill;
 
-import artcode.shop.salesman.Salesman;
-import artcode.shop.product.Product;
-import artcode.shop.creator.BillCreator;
-import artcode.shop.terminal.Terminal;
+
+
+import ua.artcode.market.creator.BillCreator;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.salesman.Salesman;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

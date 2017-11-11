@@ -1,8 +1,10 @@
-package artcode.shop.salesman;
+package ua.artcode.market.salesman;
 
-import artcode.shop.bill.Bill;
-import artcode.shop.product.Product;
-import artcode.shop.terminal.Terminal;
+
+
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.terminal.Terminal;
 
 import java.util.Scanner;
 

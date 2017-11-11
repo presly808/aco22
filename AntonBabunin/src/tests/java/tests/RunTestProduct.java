@@ -1,10 +1,12 @@
 package tests;
 
-import artcode.shop.product.Product;
+
 import org.junit.Assert;
 import org.junit.Test;
+import ua.artcode.market.product.Product;
 
-import static artcode.shop.creator.ProductGeneration.generateProduct;
+import static ua.artcode.market.creator.ProductGeneration.generateProduct;
+
 
 public class RunTestProduct {
     @Test

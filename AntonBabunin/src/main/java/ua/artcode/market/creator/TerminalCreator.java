@@ -1,8 +1,9 @@
-package artcode.shop.creator;
+package ua.artcode.market.creator;
 
-import artcode.shop.bill.Bill;
-import artcode.shop.salesman.Salesman;
-import artcode.shop.terminal.Terminal;
+
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.salesman.Salesman;
+import ua.artcode.market.terminal.Terminal;
 
 public class TerminalCreator {
 

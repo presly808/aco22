@@ -1,9 +1,9 @@
-package artcode.tests;
+package tests;
 
-import artcode.shop.bill.Bill;
-import artcode.shop.creator.TerminalCreator;
-import artcode.shop.salesman.Salesman;
-import artcode.shop.terminal.Terminal;
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.creator.TerminalCreator;
+import ua.artcode.market.salesman.Salesman;
+import ua.artcode.market.terminal.Terminal;
 import org.junit.Assert;
 import org.junit.Test;
 

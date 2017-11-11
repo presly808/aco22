@@ -1,9 +1,9 @@
-package artcode.shop.creator;
+package ua.artcode.market.creator;
 
-import artcode.shop.salesman.Salesman;
-import artcode.shop.bill.Bill;
-import artcode.shop.product.Product;
-import artcode.shop.terminal.Terminal;
+
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.salesman.Salesman;
 
 public class BillCreator {
 

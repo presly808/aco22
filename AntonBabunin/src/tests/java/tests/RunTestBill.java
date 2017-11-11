@@ -1,10 +1,14 @@
 package tests;
 
 
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.creator.TerminalCreator;
+import ua.artcode.market.salesman.Salesman;
+import ua.artcode.market.terminal.Terminal;
+
+import static ua.artcode.market.creator.BillCreator.createBill;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static artcode.shop.creator.BillCreator.createBill;
 
 public class RunTestBill {
     @Test

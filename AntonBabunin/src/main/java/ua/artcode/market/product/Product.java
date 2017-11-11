@@ -1,6 +1,7 @@
-package artcode.shop.product;
+package ua.artcode.market.product;
 
-import static artcode.shop.creator.methods.Methods.*;
+
+import static ua.artcode.market.creator.methods.Methods.round;
 
 public class Product {
 

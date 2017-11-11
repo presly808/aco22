@@ -1,7 +1,7 @@
-package artcode.shop.creator;
+package ua.artcode.market.creator;
 
 
-import artcode.shop.product.Product;
+import ua.artcode.market.product.Product;
 
 public class ProductGeneration {
     private static final int DEFAULT_PRODUCT_NAME = 30;

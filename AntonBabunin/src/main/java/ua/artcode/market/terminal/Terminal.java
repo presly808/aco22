@@ -1,12 +1,10 @@
-package artcode.shop.terminal;
-
-import artcode.shop.bill.Bill;
-import artcode.shop.creator.BillCreator;
-import artcode.shop.creator.SalesmanCreator;
-import artcode.shop.product.Product;
-import artcode.shop.salesman.Salesman;
+package ua.artcode.market.terminal;
 
 
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.creator.BillCreator;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.salesman.Salesman;
 
 
 public class Terminal {

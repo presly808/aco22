@@ -1,14 +1,15 @@
-package artcode.tests;
+package tests;
 
 
-import artcode.shop.bill.Bill;
-import artcode.shop.creator.ProductGeneration;
-import artcode.shop.creator.SalesmanCreator;
-import artcode.shop.creator.TerminalCreator;
-import artcode.shop.product.Product;
-import artcode.shop.salesman.Salesman;
-import artcode.shop.terminal.Terminal;
+
 import org.junit.Test;
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.creator.ProductGeneration;
+import ua.artcode.market.creator.SalesmanCreator;
+import ua.artcode.market.creator.TerminalCreator;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.salesman.Salesman;
+import ua.artcode.market.terminal.Terminal;
 
 public class RunTests {
     @Test
