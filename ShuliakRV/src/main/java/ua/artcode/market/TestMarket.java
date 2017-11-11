@@ -17,6 +17,9 @@ public class TestMarket {
 
         Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
+        System.out.println("Список продавцов: ");
+        System.out.println();
+
         for (int i = 0; i < s.length; i++) {
             s[i] = Utils.generateSalesman();
         }
@@ -25,13 +28,13 @@ public class TestMarket {
 
         Salesman saler = t.login();
 
-        if (saler !=null) {
+        if (saler != null) {
 
             for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
 
                 t.createBill(saler);
 
-                for (int j = 0; j < (int) (DEFAULT_COUNT_PRODUCTS * Math.random()+1); j++) {
+                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random() + 1); j++) {
                     t.addProduct(p[j]);
                 }
                 Bill b;

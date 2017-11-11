@@ -13,8 +13,10 @@ public class Utils {
 
         String[] s = {"Andry", "Kate", "Sveta", "Igor", "Maxim", "Olya", "Yuliya"};
 
-        String fullname = s[(int) Math.random() * s.length] + (int) (Math.random() * TestMarket.DEFAULT_COUNT_SALESMEN);
-        String login = s[(int) (Math.random() * s.length)];
+        int index = (int) (Math.random() * s.length);
+
+        String fullname = s[index] + (int) (Math.random() * TestMarket.DEFAULT_COUNT_SALESMEN);
+        String login = s[index];
 
         String password = "";
 
@@ -25,6 +27,8 @@ public class Utils {
         System.out.println("Fullname: " + fullname);
         System.out.println("Login: " + login);
         System.out.println("Password: " + password);
+
+        System.out.println();
 
 
         return new Salesman(fullname, login, password);
