@@ -26,7 +26,8 @@ allprojects {
     jacocoTestCoverageVerification {
         violationRules {
             rule {
-                element = "SOURCEFILE"
+                excludes = ['*view.*','*exclude.*']
+                element = "CLASS"
                 limit {
                     counter = "LINE"
                     minimum = 0.50
