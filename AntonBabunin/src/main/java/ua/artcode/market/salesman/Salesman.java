@@ -85,18 +85,17 @@ public class Salesman {
     public boolean closeBill(Bill bill, Terminal terminal) {
         if (bill !=null && terminal != null) {
             for (Bill bill1 : terminal.getBills()) {
-                if (bill.equals(bill1)) {
+                if (bill == bill1) {
+                    boolean bool = terminal.closeAndSaveBill(bill);
+                    System.out.println(bool);
 
-                    terminal.closeAndSaveBill(bill);
-                    return true;
+                    return  bool;
                 }
             }
         }
         return false;
     }
-
-
-
+/*
     public void setLogin(String login) {
         this.login = login;
     }
@@ -105,5 +104,5 @@ public class Salesman {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 }

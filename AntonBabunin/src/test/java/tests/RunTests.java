@@ -43,8 +43,13 @@ public class RunTests {
             salesman1.addProduct(terminal1, product5);
             salesman1.addProduct(terminal1, product6);
 
-            salesman1.closeBill(bill1, terminal1);
+            boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
 
+            System.out.println(billIsClosed);
+
+            Assert.assertTrue(billIsClosed);
+
+            /*
             Salesman salesman2 = SalesmanCreator.salesmanCreateAutomatic();
             salesman2.loginAutomatic(terminal1);
 
@@ -75,9 +80,9 @@ public class RunTests {
 
             System.out.println("The best seller is: " + terminal1.getTopNofSalesMan().getFullName());
 
-            boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
+            boolean billIsClosed = salesman1.closeBill(bill1, terminal1);*/
 
-            Assert.assertTrue(billIsClosed);
+
 
 
 //        Bill bill2 = salesman1.createBill(terminal1);
