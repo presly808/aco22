@@ -43,7 +43,7 @@ public class Terminal {
             System.out.println("please log in");
 
         } else if (countOfBills == MAX_COUNT_OF_BILLS) {
-            System.out.println("Sorry, you've reached the maximum number of checks");
+            System.out.println("Sorry, maximum number of checks");
 
         } else {
             bills[countOfBills] = new Bill(loggedSalesman, id);

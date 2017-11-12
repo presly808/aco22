@@ -44,7 +44,7 @@ public class Bill {
 
     private void printBill() {
         for (int i = 0; i < productsCount; i++) {
-            System.out.println(products[i].getName() + ": " + products[i].getPrice());
+            System.out.println(products[i].getPrice() + ", ");
         }
 
         System.out.printf("id: %d, amount price: %.2f, saleman: %s",

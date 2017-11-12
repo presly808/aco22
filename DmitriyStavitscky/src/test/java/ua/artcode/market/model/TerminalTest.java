@@ -4,7 +4,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static ua.artcode.market.model.Terminal.MAX_COUNT_OF_BILLS;
 import static ua.artcode.market.model.Terminal.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalTest {
@@ -59,7 +58,7 @@ public class TerminalTest {
         terminal.createBill(5);
         terminal.addProduct("Fanta", 15, 9.50);
         terminal.closeAndSaveBill(10, 20, 30);
-        assertEquals("10:20:30", terminal.getBills()[0].getTime().convertTime());
+        assertEquals("10:20:30", terminal.getBills()[0].getTime().convTime());
     }
 
     @Test

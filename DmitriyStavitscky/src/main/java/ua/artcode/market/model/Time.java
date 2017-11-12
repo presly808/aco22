@@ -12,7 +12,7 @@ public class Time {
         this.seconds = seconds;
     }
 
-    public String convertTime() {
+    public String convTime() {
         return String.format("%s:%s:%s", hours, minutes, seconds);
     }
 
