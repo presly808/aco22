@@ -31,12 +31,13 @@ public class Bill {
         this.seller = seller;
     }
 
+
     public void calculateBill() {
 
 
         if (billList != null && actualSizeOfList > 0) {
 
-            for (int i = 0; i < billList.length; i++) {
+            for (int i = 0; i < actualSizeOfList; i++) {
                 billCost += billList[i].getPrice();
             }
 
@@ -68,6 +69,9 @@ public class Bill {
         return time;
     }
 
+    public static int getDefaultSizeOfList() {
+        return DEFAULT_SIZE_OF_LIST;
+    }
 
     public int getActualSizeOfList() {
         return actualSizeOfList;
@@ -104,6 +108,7 @@ public class Bill {
             if (product == null) {
                 System.out.println("ENTER REAL PRODUCT!");
             } else {
+
                 billList[actualSizeOfList] = product;
                 actualSizeOfList++;
             }
