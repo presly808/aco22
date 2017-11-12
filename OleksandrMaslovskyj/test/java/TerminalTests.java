@@ -1,3 +1,5 @@
+package java;
+
 import main.java.Utils.StringGenerator;
 import main.java.Utils.TerminalUtils;
 import main.java.controllers.BillController;
