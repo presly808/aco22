@@ -1,0 +1,44 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '4.3.1'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.11'
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                excludes = ['*view.*','*exclude.*']
+                element = "CLASS"
+                limit {
+                    counter = "LINE"
+                    minimum = 0.50
+                }
+            }
+        }
+    }
+
+    check.dependsOn jacocoTestCoverageVerification
+    check.dependsOn jacocoTestReport
+
+
+}

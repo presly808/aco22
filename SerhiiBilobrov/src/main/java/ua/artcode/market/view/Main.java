@@ -1,3 +1,5 @@
+package ua.artcode.market.view;
+
 /**
  * Created by serhii on 05.11.17.
  */
