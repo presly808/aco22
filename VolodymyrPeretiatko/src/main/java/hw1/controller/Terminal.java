@@ -1,10 +1,14 @@
-package hw1;
+package hw1.controller;
+
+import hw1.model.Bill;
+import hw1.model.Product;
+import hw1.model.Salesman;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Terminal {
+public class Terminal implements ITerminal {
 
     private static Terminal uniqueInstance;
 
@@ -100,7 +104,5 @@ public class Terminal {
         }
         return sales;
     }
-
-
 
 }
