@@ -1,5 +1,7 @@
 package week1;
 
+import week1.exclude.Terminal;
+
 import java.util.Scanner;
 
 public class Run {

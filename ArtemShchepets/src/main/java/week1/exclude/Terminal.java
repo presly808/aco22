@@ -1,4 +1,8 @@
-package week1;
+package week1.exclude;
+
+import week1.Bill;
+import week1.Product;
+import week1.Seller;
 
 import java.util.Arrays;
 import java.util.Scanner;
