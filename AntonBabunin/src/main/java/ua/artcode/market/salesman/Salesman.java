@@ -6,8 +6,6 @@ import ua.artcode.market.bill.Bill;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.terminal.Terminal;
 
-import java.util.Scanner;
-
 public class Salesman {
     private String fullName;
     private String login;
@@ -27,22 +25,21 @@ public class Salesman {
         return login;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 
     public boolean equals (Salesman salesman) {
-        if (salesman != null) {
-            return this.fullName.equals(salesman.fullName);
-        }
-        return false;
+        return salesman != null && this.fullName.equals(salesman.fullName);
     }
 
-    public Bill createBill (Terminal terminal) { // Salesman create a new bill at terminal
-        return  (terminal != null && terminal.login(this)) ? terminal.createBill(this) : null;
+    // Salesman create a new bill at terminal
+    public Bill createBill (Terminal terminal) {
+        return  (terminal != null && terminal.login(this)) ?
+                terminal.createBill(this) : null;
     }
 
-    public void login (Terminal terminal) {
+/*    public void login (Terminal terminal) {
         if (terminal != null) {
             Scanner scanner = new Scanner(System.in);
             String login = "";
@@ -56,31 +53,30 @@ public class Salesman {
                 password = scanner.nextLine();
             } while (password.isEmpty());
 
-            if (this.getLogin().equals(login) && this.getPassword().equals(password)) {
+            if (this.getLogin().equals(login) &&
+            this.getPassword().equals(password)) {
                 terminal.login(this);
             }
         }
     }
+
+*/
     public boolean loginAutomatic (Terminal terminal) {
         String login = this.login;
         String password = this.password;
 
-            if (login.equals(this.getLogin()) && password.equals(this.getPassword())) {
-                boolean bool1 = terminal.login(this);
-                return bool1;
-            }
-        return false;
+        return login.equals(this.getLogin()) &&
+                password.equals(this.getPassword()) &&
+                terminal.login(this);
     }
 
-    public boolean addProduct (Terminal terminal, Product product) {
+    public void addProduct (Terminal terminal, Product product) {
         if (terminal != null && product != null) {
-            Bill bill = terminal.addProduct(product);
+            Bill bill = terminal.addProduct();
             bill.addProduct(product);
-            return true;
         }
-        return false;
     }
-// --------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
     public boolean closeBill(Bill bill, Terminal terminal) {
         if (bill !=null && terminal != null) {

@@ -27,10 +27,10 @@ public class Terminal {
         this.sales = sales;
     }
 
-    public int getCountCreatedBill() {
+    private int getCountCreatedBill() {
         return this.countCreatedBill;
     }
-    public int getCountClosedBill() {
+    private int getCountClosedBill() {
         return this.countClosedBill;
     }
 
@@ -78,10 +78,14 @@ public class Terminal {
         if (this.getSales().length != terminal.getSales().length) return  false;
         if (this.getBills().length != terminal.getBills().length) return  false;
         for (int i = 0; i < terminal.getSales().length; i++) {
-            if (terminal.getSales()[i] != null && !terminal.getSales()[i].equals(this.getSales()[i])) return false;
+            if (terminal.getSales()[i] != null &&
+                    !terminal.getSales()[i].equals(this.getSales()[i]))
+                return false;
         }
         for (int i = 0; i < terminal.getBills().length; i++) {
-            if (terminal.getBills()[i] != null && !terminal.getBills()[i].equals(this.getBills()[i])) return false;
+            if (terminal.getBills()[i] != null &&
+                    !terminal.getBills()[i].equals(this.getBills()[i]))
+                return false;
         }
 
         return true;
@@ -117,7 +121,7 @@ public class Terminal {
         } return null;
     }
 
-    public Bill addProduct(Product product) {
+    public Bill addProduct() {
         if (this.getBills() == null) {
             bills = new Bill[DEFAULT_SIZE];
         } else {
@@ -146,6 +150,7 @@ public class Terminal {
         bill.printBill();
     }
 
+    /*
     public Bill findBillById(int id) {
         if (id > 0) {
             if (this.getBills() != null) {
@@ -162,7 +167,8 @@ public class Terminal {
     public Salesman findSalesmanByLoginOrFullname (String nameOrLogin) {
         if (nameOrLogin != null && this.getSales() != null) {
             for (Salesman salesman : this.getSales()) {
-                if (nameOrLogin.equals(salesman.getFullName()) || nameOrLogin.equals(salesman.getLogin())) {
+                if (nameOrLogin.equals(salesman.getFullName()) ||
+                        nameOrLogin.equals(salesman.getLogin())) {
                     return salesman;
                 }
             }
@@ -175,7 +181,8 @@ public class Terminal {
         for (int i = 0; i < this.getSales().length; i++) {
             int countProduct = 0;
             for (Bill bill : this.getBills()) {
-                if (this.getSales()[i] != null && bill != null && bill.getSalesman() == this.getSales()[i]) {
+                if (this.getSales()[i] != null && bill != null &&
+                        bill.getSalesman() == this.getSales()[i]) {
                     countProduct++;
                 }
                 arrProductSales[i] = countProduct;
@@ -197,7 +204,7 @@ public class Terminal {
         }
         return ind;
     }
-/*
+
    public Salesman getTopNofSalesMan () {
         Salesman bestSeller = null;
         if (this.getSales() != null) {
@@ -206,7 +213,8 @@ public class Terminal {
             for (int i = 0; i < this.getSales().length; i++) {
                 int count = 0;
                 for (Bill bill : this.getBills()) {
-                    if (bill != null && this.getSales()[i] != null && this.getSales()[i].equals(bill.getSalesman())) {
+                    if (bill != null && this.getSales()[i] != null &&
+                    this.getSales()[i].equals(bill.getSalesman())) {
                         count++;
                     }
                 }
@@ -215,11 +223,6 @@ public class Terminal {
              bestSeller = this.getSales()[maxIndex(countSales)];
         }
         return bestSeller;
-
-
-
-
-
 
     public void doSomeStatisticStuff () {
 
@@ -261,7 +264,8 @@ public class Terminal {
     private int getMaxProduct() {
         int max = 0;
         if (this.getBills() != null && this.getBills().length > 0) {
-            max = ( this.getBills()[0].getProducts() != null) ? this.getBills()[0].getProducts().length : max;
+            max = ( this.getBills()[0].getProducts() != null) ?
+            this.getBills()[0].getProducts().length : max;
             for (Bill bill : this.getBills()) {
                 if (bill.getProducts() != null && bill.getProducts().length > max)
                     max = bill.getProducts().length;

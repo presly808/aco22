@@ -17,7 +17,8 @@ public class RunTestBill {
         Salesman s1 = new Salesman("asd", "asd","asd");
         s1.loginAutomatic(t1);
         Bill actual = createBill(s1);
-        Bill expected = new Bill(actual.getId(), new Salesman("asd", "asd","asd"));
+        Bill expected = new Bill(actual.getId(),
+                new Salesman("asd", "asd","asd"));
         Assert.assertTrue(expected.equals(actual));
     }
 

@@ -13,7 +13,8 @@ public class Product {
 
 
     public void printFullInfo(){
-        System.out.printf("Product: id: %d name: %s price: %.2f \n", this.getId(), this.getName(), this.getPrice());
+        System.out.printf("Product: id: %d name: %s price: %.2f \n",
+                this.getId(), this.getName(), this.getPrice());
     }
 
     public Product(int id, String name, double price) {
@@ -35,12 +36,15 @@ public class Product {
     }
 
     public boolean equals(Product product) {
-        return product != null && this.getId() == product.getId() && this.getName().equals(product.getName()) && this.getPrice() == product.getPrice();
+        return product != null && this.getId() == product.getId() &&
+                this.getName().equals(product.getName()) &&
+                this.getPrice() == product.getPrice();
 
     }
 
-    public static double round(double d, int pricise) {
-        return new BigDecimal(d).setScale(pricise, RoundingMode.HALF_UP).doubleValue();
+    private static double round(double d, int pricise) {
+        return
+        new BigDecimal(d).setScale(pricise, RoundingMode.HALF_UP).doubleValue();
     }
 
 

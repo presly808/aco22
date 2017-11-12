@@ -20,14 +20,16 @@ public class Bill {
     private String closeTime;
 
     private boolean isClosed;
-    private int firstFreePositionAtProducts;
-    private int nextFreePositionAtProducts;
+    private int firstFree;
+    private int lastFree;
 
     private int addedProducts;
 
 /*     This constructor use in app
-    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String closeTime, boolean isClosed,
-                                int firstFreePositionAtProducts, int nextFreePositionAtProducts, int addedProduct) {
+    public Bill(int id, Product[] products, Salesman salesman,
+            double amountPrice, String closeTime, boolean isClosed,
+            int firstFree,
+            int lastFree, int addedProduct) {
         BillCreator.createBill(salesman);
     }
 */
@@ -40,14 +42,14 @@ public class Bill {
         this.amountPrice = 0.0;
         this.closeTime = "";
         this.isClosed = false;
-        this.firstFreePositionAtProducts = 0;
-        this.nextFreePositionAtProducts = 1;
+        this.firstFree = 0;
+        this.lastFree = 1;
     }
 
     public Bill(int id, Product[] products, Salesman salesman,
                 double amountPrice, String closeTime,
-                boolean isClosed, int firstFreePositionAtProducts,
-                int nextFreePositionAtProducts) {
+                boolean isClosed, int firstFree,
+                int lastFree) {
 
         this.id = id;
         this.products = products;
@@ -55,23 +57,32 @@ public class Bill {
         this.amountPrice = amountPrice;
         this.closeTime = closeTime;
         this.isClosed = isClosed;
-        this.firstFreePositionAtProducts = firstFreePositionAtProducts;
-        this.nextFreePositionAtProducts = nextFreePositionAtProducts;
+        this.firstFree = firstFree;
+        this.lastFree = lastFree;
 
     }
 
     public static boolean equals(Product[] products1, Product[] products2) {
         for (Product product1 : products1) {
             for (Product product2 : products2) {
-                if (product1 != null && !product1.equals(product2)) return false;
+                if (product1 != null && !product1.equals(product2))
+                    return false;
             }
         }
         return true;
     }
 
-
     public boolean equals(Bill bill) {
-        return bill != null && this.id == bill.id && this.salesman.equals(bill.salesman) && equals(this.getProducts(), bill.getProducts()) && this.amountPrice == bill.amountPrice && this.closeTime.equals(bill.closeTime) && this.isClosed == bill.isClosed && this.firstFreePositionAtProducts == bill.firstFreePositionAtProducts && this.nextFreePositionAtProducts == bill.nextFreePositionAtProducts;
+        return bill != null && this.id == bill.id &&
+                this.salesman.equals(bill.salesman) &&
+                equals(this.getProducts(), bill.getProducts()) &&
+                this.amountPrice == bill.amountPrice &&
+                this.closeTime.equals(bill.closeTime) &&
+                this.isClosed == bill.isClosed &&
+                this.firstFree ==
+                        bill.firstFree &&
+                this.lastFree ==
+                        bill.lastFree;
     }
 
 
@@ -82,31 +93,37 @@ public class Bill {
     public boolean addProduct(Product product) {
         if (!this.isClosed()) {
             if (product != null && product.getName() != null) {
-                if (this.getProducts() == null) {
-                    setProducts();
-                }
-                this.getProducts()[this.firstFreePositionAtProducts] = product;
-                this.firstFreePositionAtProducts = this.nextFreePositionAtProducts;
-                for (int i = firstFreePositionAtProducts; i < this.getProducts().length; i++) {
-                    if (this.getProducts()[i] == null) {
-                        this.nextFreePositionAtProducts = ++i;
-                        return true;
-                    }
-                }
+                addProductlogic(product);
             }
             return true;
         }
         return false;
     }
 
+    private boolean addProductlogic(Product product) {
+        if (this.getProducts() == null) {
+            setProducts();
+        }
+        this.getProducts()[this.firstFree] = product;
+        this.firstFree = this.lastFree;
+        for (int i = firstFree; i < this.getProducts().length;
+             i++) {
+            if (this.getProducts()[i] == null) {
+                this.lastFree = ++i;
+                return true;
+            }
+        }
+        return false;
+    }
     private void setProducts() {
         this.products = new Product[DEFAULT_SIZE];
-        this.firstFreePositionAtProducts = 0;
-        this.nextFreePositionAtProducts = 1;
+        this.firstFree = 0;
+        this.lastFree = 1;
     }
 
     public double closeBill() { //It can be void, but for test it set as double;
-        SimpleDateFormat dF = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss");
+        SimpleDateFormat dF =
+                new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss");
         this.setCloseTime(dF.format(new Date()));
         this.setIsClosed();
         return this.calculateAmountPrice();
@@ -154,17 +171,17 @@ public class Bill {
         return products;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
-    }
+//    public void setProducts(Product[] products) {
+//        this.products = products;
+//    }
 
     public Salesman getSalesman() {
         return salesman;
     }
 
-    public void setSalesman(Salesman salesman) {
-        this.salesman = salesman;
-    }
+//    public void setSalesman(Salesman salesman) {
+//        this.salesman = salesman;
+//    }
 
     public double getAmountPrice() {
         return amountPrice;
