@@ -1,10 +1,7 @@
 package week1;
 
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 
 public class TerminalTest {
@@ -257,6 +254,7 @@ public class TerminalTest {
 
     }
 
+    @Ignore
     @Test
     public void testDoSomeStatisticStuff() {
 
