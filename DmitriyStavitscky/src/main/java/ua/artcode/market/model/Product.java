@@ -1,4 +1,4 @@
-package week1.model;
+package ua.artcode.market.model;
 
 public class Product {
 

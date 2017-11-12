@@ -1,4 +1,4 @@
-package week1.model;
+package ua.artcode.market.model;
 
 
 public class Terminal {
@@ -19,7 +19,7 @@ public class Terminal {
     public void addSalesman(String fullName, String login, int pass) {
 
         if (countOfSalesman == MAX_COUNT_OF_SALESMANS) {
-            System.out.println("Sorry, you've reached the maximum number of checks");
+            System.out.println("Sorry, maximum number of checks");
         } else if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
             System.out.println("wrong data");
         } else {
@@ -43,7 +43,7 @@ public class Terminal {
             System.out.println("please log in");
 
         } else if (countOfBills == MAX_COUNT_OF_BILLS) {
-            System.out.println("Sorry, you've reached the maximum number of checks");
+            System.out.println("Sorry, maximum number of checks");
 
         } else {
             bills[countOfBills] = new Bill(loggedSalesman, id);
