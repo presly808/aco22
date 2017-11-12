@@ -57,4 +57,8 @@ public class TerminalController implements ITerminal{
         });
         return list;
     }
+
+    public Set<Bill> getBillSet() {
+        return billController.getBillSet();
+    }
 }

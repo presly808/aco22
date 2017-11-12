@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bill {
+public class Bill implements Comparable<Bill>{
 
     private long id;
     private List<Product> products;
@@ -74,5 +74,9 @@ public class Bill {
 
     public long getCreationDate() {
         return creationDate;
+    }
+
+    public int compareTo(Bill o) {
+        return (int) (this.creationDate - o.creationDate);
     }
 }
