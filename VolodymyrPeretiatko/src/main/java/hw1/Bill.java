@@ -1,16 +1,24 @@
 package hw1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 
-public class Bill {
+public class Bill implements Comparable {
 
     private int id;
     private ArrayList<Product> products;
     private Salesman salesman;
     private Double amountPrice;
     private Date closeTime;
+
+    public static class sortByDateComparator implements Comparator<Bill>{
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getCloseTime().compareTo(o2.getCloseTime());
+        }
+    }
 
     public Bill(int id, Salesman salesman) {
         this.id = id;
@@ -117,5 +125,13 @@ public class Bill {
         result = 31 * result + (amountPrice != null ? amountPrice.hashCode() : 0);
         result = 31 * result + (closeTime != null ? closeTime.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o.getClass() == Bill.class) {
+            return this.id - ((Bill) o).getId();
+        }
+        return 0;
     }
 }
