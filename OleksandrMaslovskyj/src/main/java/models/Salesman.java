@@ -8,6 +8,7 @@ public class Salesman {
     private String pass;
 
     public Salesman(String login, String pass) {
+        this.fullname = login;
         this.login = login;
         this.pass = pass;
     }

@@ -1,6 +1,5 @@
 import Utils.StringGenerator;
 import Utils.TerminalUtils;
-import controllers.BillController;
 import controllers.TerminalController;
 import models.Bill;
 import models.Product;
@@ -10,8 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TerminalTests {
 
@@ -42,7 +41,7 @@ public class TerminalTests {
         Product product = terminal.addProduct(bill, productName);
 
         Bill bill2 = new Bill();
-        Assert.assertNull("BillController no created", product);
+        Assert.assertNotNull("BillController no created", product);
 
         Bill addedBill = terminal.createBill(bill2);
         product = terminal.addProduct(addedBill, productName);
@@ -54,20 +53,20 @@ public class TerminalTests {
 
     @Test
     public void testFindSalesmanByLoginOrFullName(){
-        Bill bill = new Bill();
-
-
         String salesManName = null;
         int salesManQuantity = 10;
 
         for (int i = 0; i < salesManQuantity; i++) {
+            Bill bill = new Bill();
             salesManName = StringGenerator.generateName();
             String salesManPassword = String.valueOf(TerminalUtils.longIdGenerator());
             Bill addedBills = terminal.createBill(bill);
-            bill.setSalesman(new Salesman(salesManName, salesManPassword));
+            Salesman salesman = new Salesman(salesManName, salesManPassword);
+            salesman.setFullname(salesManName);
+            addedBills.setSalesman(salesman);
         }
 
-        Salesman salesman = terminal.findSalesmanByLoginOrFullName(salesManName);
+        Salesman salesman = terminal.findSalesmanByLoginOrFullName(salesManName, null);
         Assert.assertNotNull("Salesman found", salesman);
         Assert.assertEquals(salesManName, salesman.getFullname());
     }
@@ -78,12 +77,20 @@ public class TerminalTests {
             terminal.createBill(new Bill());
         }
         List<Bill> sortedBills = terminal.sortBillListByDateCreation();
-        Assert.assertTrue(isListSorted());
+        Assert.assertTrue(isListSorted(sortedBills));
     }
 
-    private boolean isListSorted() {
-        List<Bill> list = new ArrayList<>();
-        list.addAll(terminal.getBillSet());
+    @Test
+    public void testFindBillById(){
+        Set<Bill> billSet = terminal.getBillSet();
+        Assert.assertTrue("Empty set", billSet.size() == 0);
+        for (int i = 0; i < 10; i++) {
+            terminal.createBill(new Bill());
+        }
+        Assert.assertTrue(terminal.getBillSet().size() == 10);
+    }
+
+    private boolean isListSorted(List<Bill> list) {
         boolean sorted = true;
 
         for (int i = 1; i < list.size(); i++) {

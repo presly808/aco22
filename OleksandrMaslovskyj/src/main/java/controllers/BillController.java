@@ -10,6 +10,7 @@ import java.util.*;
 public class BillController implements IBill{
 
     private Set<Bill> billSet;
+    private int amountPrice;
 
     public BillController() {
         billSet = new HashSet<>();
@@ -37,7 +38,11 @@ public class BillController implements IBill{
         for (Product product : products) {
             amountPrice += product.getPrice();
         }
+        this.amountPrice = amountPrice;
+        return amountPrice;
+    }
 
+    public int getAmountPrice() {
         return amountPrice;
     }
 
@@ -46,7 +51,7 @@ public class BillController implements IBill{
                 "id=" + currentBill.getId() +
                 ", products=" + currentBill.getProducts() +
                 ", salesman=" + currentBill.getSalesman() +
-                ", amountPrice=" + currentBill.getAmountPrice() +
+                ", amountPrice=" + getAmountPrice() +
                 ", closeTime='" + currentBill.getCloseTime() + '\'' +
                 '}');
     }

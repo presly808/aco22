@@ -10,17 +10,15 @@ import java.util.stream.Collectors;
 
 public class TerminalController implements ITerminal{
 
-    private Set<BillController> billSet;
     private BillController billController;
 
     public TerminalController() {
-        this.billSet = new HashSet<>();
         this.billController = new BillController();
-
     }
 
     public Bill createBill(Bill bill) {
-        return new Bill();
+        billController.getBillSet().add(bill);
+        return bill;
     }
 
     public Product addProduct(Bill bill, String productName) {
@@ -39,10 +37,24 @@ public class TerminalController implements ITerminal{
         return billController.getBillSet().stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
     }
 
-    public Salesman findSalesmanByLoginOrFullName(String fullName) {
-        return billController.getBillSet().stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
-                || bill.getSalesman().getLogin().equals(fullName)).
-                collect(Collectors.toSet()).iterator().next().getSalesman();
+    public Salesman findSalesmanByLoginOrFullName(String fullName, String login) {
+        Set<Bill> billSet = billController.getBillSet();
+        return billSet.stream().filter((Bill bill) -> {
+            Salesman salesman = bill.getSalesman();
+            if (salesman == null) {
+                return false;
+            }
+            String fullname = salesman.getFullname();
+            String login1 = salesman.getLogin();
+            if (fullname == null && login1 == null ) {
+                return false;
+            }
+            if (fullname.equals(fullName) ||
+                    login1.equals(login)) {
+                return true;
+            }
+            return false;
+        }).collect(Collectors.toList()).get(0).getSalesman();
     }
 
     //TODO Need to refactor
@@ -51,9 +63,9 @@ public class TerminalController implements ITerminal{
         Set<Bill> set = billController.getBillSet();
         list.addAll(set);
         Collections.sort(list, (bill, bill1) -> {
-            long i1 = (bill.getCreationDate());
-            long i2 = (bill1.getCreationDate());
-            return i1 > i2 ? -1 : (i1 == i2 ? 0 : 1);
+            Date i1 = (bill.getCreationDate());
+            Date i2 = (bill1.getCreationDate());
+            return i1.compareTo(i2);
         });
         return list;
     }

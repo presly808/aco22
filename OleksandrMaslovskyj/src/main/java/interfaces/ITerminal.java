@@ -17,7 +17,7 @@ public interface ITerminal {
 
     Bill findBillById(long id);
 
-    Salesman findSalesmanByLoginOrFullName(String fullname);
+    Salesman findSalesmanByLoginOrFullName(String fullname, String login);
 
     List<Bill> sortBillListByDateCreation();
 

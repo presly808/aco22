@@ -1,9 +1,9 @@
 package models;
 
+import Utils.DateUtils;
 import Utils.TerminalUtils;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Bill implements Comparable<Bill>{
@@ -11,12 +11,11 @@ public class Bill implements Comparable<Bill>{
     private long id;
     private List<Product> products;
     private Salesman salesman;
-    private double amountPrice;
     private String closeTime;
-    private long creationDate;
+    private Date creationDate;
 
     public Bill() {
-        creationDate = System.currentTimeMillis();
+        this.creationDate = DateUtils.getCurrentDate();
         id = TerminalUtils.longIdGenerator();
         products = new ArrayList<>();
     }
@@ -37,14 +36,6 @@ public class Bill implements Comparable<Bill>{
         this.salesman = salesman;
     }
 
-    public double getAmountPrice() {
-        return amountPrice;
-    }
-
-    public void setAmountPrice(double amountPrice) {
-        this.amountPrice = amountPrice;
-    }
-
     public String getCloseTime() {
         return closeTime;
     }
@@ -62,7 +53,6 @@ public class Bill implements Comparable<Bill>{
                 "id=" + id +
                 ", products=" + products +
                 ", salesman=" + salesman +
-                ", amountPrice=" + amountPrice +
                 ", closeTime='" + closeTime + '\'' +
                 '}';
     }
@@ -72,11 +62,11 @@ public class Bill implements Comparable<Bill>{
         return this.getId() == bill.getId();
     }
 
-    public long getCreationDate() {
-        return creationDate;
+    public int compareTo(Bill o) {
+        return this.creationDate.compareTo(o.creationDate);
     }
 
-    public int compareTo(Bill o) {
-        return (int) (this.creationDate - o.creationDate);
+    public Date getCreationDate() {
+        return creationDate;
     }
 }

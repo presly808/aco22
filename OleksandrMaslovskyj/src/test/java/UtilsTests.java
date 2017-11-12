@@ -1,7 +1,28 @@
-package PACKAGE_NAME;
+import Utils.DateUtils;
+import Utils.StringGenerator;
+import Utils.TerminalUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
-/**
- * Created by ubuntu on 12.11.17.
- */
+import java.util.Date;
+
 public class UtilsTests {
+
+    @Test
+    public void testDateUtilsMethod(){
+        Assert.assertTrue(DateUtils.getCurrentDate() instanceof Date);
+    }
+
+    @Test
+    public void testStringGenerator(){
+        String generatedName = StringGenerator.generateName();
+        Assert.assertNotNull(generatedName);
+        Assert.assertTrue(generatedName instanceof String);
+    }
+
+    @Test
+    public void testTerminalUtils(){
+        Assert.assertTrue(TerminalUtils.longIdGenerator() != TerminalUtils.longIdGenerator());
+    }
+
 }
