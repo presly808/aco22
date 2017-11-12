@@ -23,7 +23,8 @@ public class Bill {
     }
 
     public Bill(Salesman salesMan, int amountProd) {
-        this.id++;
+        seqId++;
+        id = seqId;
         this.salesMan = salesMan;
         products = new Product[amountProd];
     }

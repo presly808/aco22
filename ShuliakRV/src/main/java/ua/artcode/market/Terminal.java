@@ -78,7 +78,7 @@ public class Terminal {
 
     public Bill findBillById(int id) {
         for (int i = 0; i < numBill; i++) {
-            if (bills[i].getId() == id) return bills[i];
+                if (bills[i].getId() == id) return bills[i];
         }
 
         return null;

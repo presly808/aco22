@@ -40,8 +40,9 @@ public class TestMarket {
                 Bill b;
                 b = t.closeAndSaveBill();
                 b.printBill();
-            }
 
+                System.out.println(t.findBillById(i+1).getId());
+            }
             t.doSomeStatisticStuff();
 
         } else System.out.println("Неверный логин или пароль");

@@ -12,16 +12,24 @@ public class TerminalTest {
     public static final int DEFAULT_COUNT_SALESMEN = 5;
     public static final int DEFAULT_COUNT_BILLS = 5;
 
-    Product[] p = new Product[DEFAULT_COUNT_PRODUCTS];
-    Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
-    Bill[] bills = new Bill[DEFAULT_COUNT_BILLS];
+    Product[] p;
+    Salesman[] s;
+    Bill[] bills;
 
 
-    Terminal t = new Terminal(s);
+    Terminal t;
     Salesman saler;
 
     @Before
     public void setUp() throws Exception {
+
+        p = new Product[DEFAULT_COUNT_PRODUCTS];
+
+        s = new Salesman[DEFAULT_COUNT_SALESMEN];
+
+        bills = new Bill[DEFAULT_COUNT_BILLS];
+
+        t = new Terminal(s);
 
         for (int i = 0; i < p.length; i++) {
             p[i] = Utils.generateProduct();
@@ -59,8 +67,9 @@ public class TerminalTest {
 
     @Test
     public void findBillById() throws Exception {
-        closeAndSaveBill();
-        assertEquals(bills[0],t.findBillById(1));
+        t.createBill(saler);
+        addProduct();
+        assertNull(t.findBillById(0));
 
     }
 
