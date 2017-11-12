@@ -51,13 +51,13 @@ public class Terminal {
     }
 
     public boolean login(Salesman salesman) {
-        if (salesman != null)
+        if (salesman != null && this.getSales() == null) {
 
-            if (this.getSales() == null) {
                 this.sales = new Salesman[DEFAULT_SIZE];
                 this.sales[countSalesman] = salesman;
                 return true;
-            }
+        }
+
         boolean isAtSales = false;
         for (Salesman seller : this.getSales()) {
             if (salesman.equals(seller)){
@@ -133,14 +133,11 @@ public class Terminal {
 
     public boolean closeAndSaveBill (Bill bill) {
         if (bill != null) {
-            if (this.bills != null) {
-                if (!bill.isClosed()) {
-                    double amountPrice = bill.closeBill();
-                    bill.setAmountPrice(amountPrice);
-                    this.printBill(bill);
-                    return true;
-
-                }
+            if (this.bills != null && !bill.isClosed()) {
+                double amountPrice = bill.closeBill();
+                bill.setAmountPrice(amountPrice);
+                this.printBill(bill);
+                return true;
             } return false;
         } return false;
     }
@@ -148,12 +145,6 @@ public class Terminal {
     private void printBill(Bill bill) {
         bill.printBill();
     }
-
-
-
-
-
-
 
     public Bill findBillById(int id) {
         if (id > 0) {
@@ -169,19 +160,45 @@ public class Terminal {
     }
 
     public Salesman findSalesmanByLoginOrFullname (String nameOrLogin) {
-        if (nameOrLogin != null) {
-            if (this.getSales() != null) {
-                for (Salesman salesman : this.getSales()) {
-                    if (nameOrLogin.equals(salesman.getFullName()) || nameOrLogin.equals(salesman.getLogin())) {
-                        return salesman;
-                    }
+        if (nameOrLogin != null && this.getSales() != null) {
+            for (Salesman salesman : this.getSales()) {
+                if (nameOrLogin.equals(salesman.getFullName()) || nameOrLogin.equals(salesman.getLogin())) {
+                    return salesman;
                 }
             }
         }
         return null;
     }
 
-/*    public Salesman getTopNofSalesMan () {
+    public Salesman getTopNofSalesMan () {
+        int[] arrProductSales = new int[DEFAULT_SIZE];
+        for (int i = 0; i < this.getSales().length; i++) {
+            int countProduct = 0;
+            for (Bill bill : this.getBills()) {
+                if (this.getSales()[i] != null && bill != null && bill.getSalesman() == this.getSales()[i]) {
+                    countProduct++;
+                }
+                arrProductSales[i] = countProduct;
+            }
+        }
+        return this.getSales()[maxIndex(arrProductSales)];
+    }
+
+    private int maxIndex(int[] arr) {
+        int ind = 0;
+        if (arr != null) {
+            int max = arr[0];
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] > max) {
+                    max = arr[i];
+                    ind = i;
+                }
+            }
+        }
+        return ind;
+    }
+/*
+   public Salesman getTopNofSalesMan () {
         Salesman bestSeller = null;
         if (this.getSales() != null) {
 
@@ -198,38 +215,11 @@ public class Terminal {
              bestSeller = this.getSales()[maxIndex(countSales)];
         }
         return bestSeller;
-    }*/
-public Salesman getTopNofSalesMan () {
-    int[] arrProductSales = new int[DEFAULT_SIZE];
-    for (int i = 0; i < this.getSales().length; i++) {
-        int countProduct = 0;
-        for (Bill bill : this.getBills()) {
-            if (this.getSales()[i] != null && bill != null && bill.getSalesman() == this.getSales()[i]) {
-                countProduct++;
-            }
-            arrProductSales[i] = countProduct;
-        }
-    }
-    return this.getSales()[maxIndex(arrProductSales)];
-}
 
 
 
 
 
-    private int maxIndex(int[] arr) {
-        int ind = 0;
-        if (arr != null) {
-            int max = arr[0];
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i] > max) {
-                    max = arr[i];
-                    ind = i;
-                }
-            }
-        }
-        return ind;
-    }
 
     public void doSomeStatisticStuff () {
 
@@ -308,8 +298,5 @@ public Salesman getTopNofSalesMan () {
         return 0;
     }
 
-
-    public void setCountClosedBill(int countClosedBill) { this.countClosedBill = countClosedBill;    }
-
-
+    public void setCountClosedBill(int countClosedBill) { this.countClosedBill = countClosedBill;}*/
 }

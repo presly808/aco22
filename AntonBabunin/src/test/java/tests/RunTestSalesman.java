@@ -35,11 +35,11 @@ public class RunTestSalesman {
         Assert.assertFalse(actual.equals(expected));
     }
 
-    @Test
+ /*   @Test
     public void testSalesmanCreation3()  {
         Salesman actual = SalesmanCreator.salesmanCreateAutomatic();
         Assert.assertFalse(actual.equals(null));
-    }
+    }*/
 
     @Test
     public void testSalesmanCreateBill() {
@@ -55,7 +55,7 @@ public class RunTestSalesman {
     public void testSalesmanCreateBill2() {
         Salesman salesman = SalesmanCreator.salesmanCreateAutomatic();
         Terminal terminal = TerminalCreator.terminalCreation();
-        boolean bol1 = salesman.loginAutomatic(terminal);
+        salesman.loginAutomatic(terminal);
         Bill actual = salesman.createBill(terminal);
         Bill expected = new Bill(10, salesman);
         Assert.assertFalse(expected.equals(actual));
@@ -72,7 +72,7 @@ public class RunTestSalesman {
         salesman.addProduct(terminal, product);
         salesman.addProduct(terminal, product1);
         Salesman salesman1 = new Salesman("asdq", "asd", "asd");
-        boolean b = salesman1.loginAutomatic(terminal);
+        salesman1.loginAutomatic(terminal);
         Bill expected = salesman1.createBill(terminal);
         expected.addProduct(product);
         expected.addProduct(product1);

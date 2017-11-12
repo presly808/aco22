@@ -2,6 +2,7 @@ package tests;
 
 
 
+import org.junit.Assert;
 import org.junit.Test;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.creator.ProductGeneration;
@@ -11,7 +12,6 @@ import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 import ua.artcode.market.terminal.Terminal;
 
-import java.io.IOException;
 
 public class RunTests {
     @Test
@@ -25,8 +25,8 @@ public class RunTests {
             Product product4 = ProductGeneration.generateProduct();
             Product product5 = ProductGeneration.generateProduct();
             Product product6 = ProductGeneration.generateProduct();
-            Product product7 = ProductGeneration.generateProduct();
-            Product product8 = ProductGeneration.generateProduct();
+//            Product product7 = ProductGeneration.generateProduct();
+//            Product product8 = ProductGeneration.generateProduct();
 
             Salesman salesman1 = SalesmanCreator.salesmanCreateAutomatic();
             salesman1.loginAutomatic(terminal1);
@@ -75,11 +75,10 @@ public class RunTests {
 
             System.out.println("The best seller is: " + terminal1.getTopNofSalesMan().getFullName());
 
+            boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
 
+            Assert.assertTrue(billIsClosed);
 
-
-
-            salesman1.closeBill(bill1, terminal1);
 
 //        Bill bill2 = salesman1.createBill(terminal1);
 //        salesman1.addProduct(terminal1, product1);

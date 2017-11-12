@@ -3,10 +3,6 @@ package ua.artcode.market.creator;
 
 import ua.artcode.market.salesman.Salesman;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class SalesmanCreator {
     private static final int DEFAULT_SALESMAN_NAME = 20;
 /*    public static Salesman salesmanCreate() throws IOException {

@@ -18,8 +18,6 @@ public class BillCreator {
         int firstFreePositionAtProducts = 0;
         int nextFreePositionAtProducts =1;
 
-        int addedProduct = 0;
-
         return new Bill(id, products, salesman, amountPrice, closeTime, isClosed, firstFreePositionAtProducts, nextFreePositionAtProducts);
     }
 

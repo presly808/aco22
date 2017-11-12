@@ -2,17 +2,16 @@ package ua.artcode.market.bill;
 
 
 
-import ua.artcode.market.creator.BillCreator;
+//import ua.artcode.market.creator.BillCreator;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Bill {
 
-    private static final int DEFAULT_SIZE = 5;
+    private static final int DEFAULT_SIZE = 20;
 
     private int id;
     private Product[] products;
@@ -26,10 +25,11 @@ public class Bill {
 
     private int addedProducts;
 
+/*     This constructor use in app
     public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String closeTime, boolean isClosed, int firstFreePositionAtProducts, int nextFreePositionAtProducts, int addedProduct) {
         BillCreator.createBill(salesman);
     }
-
+*/
 
 //    This constructor created for test, isn't used in app
     public Bill(int id, Salesman salesman) {

@@ -85,7 +85,7 @@ public class Salesman {
     public boolean closeBill(Bill bill, Terminal terminal) {
         if (bill !=null && terminal != null) {
             for (Bill bill1 : terminal.getBills()) {
-                if (bill == bill1) {
+                if (bill.equals(bill1)) {
 
                     terminal.closeAndSaveBill(bill);
                     return true;
