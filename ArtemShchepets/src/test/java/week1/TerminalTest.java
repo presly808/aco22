@@ -2,6 +2,7 @@ package week1;
 
 
 import org.junit.*;
+import week1.exclude.Terminal;
 
 
 public class TerminalTest {
