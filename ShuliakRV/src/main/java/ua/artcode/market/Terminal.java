@@ -37,7 +37,8 @@ public class Terminal {
 
             for (i = 0; i < sales.length; i++) {
                 if (sales[i] != null)
-                    if ((sales[i].getLogin().equals(login)) && (sales[i].getPassword().equals(password))) {
+                    if ((sales[i].getLogin().equals(login)) &&
+                            (sales[i].getPassword().equals(password))) {
                         sales[i].setLogged(true);
                         return sales[i];
                     }
@@ -78,7 +79,7 @@ public class Terminal {
 
     public Bill findBillById(int id) {
         for (int i = 0; i < numBill; i++) {
-                if (bills[i].getId() == id) return bills[i];
+            if (bills[i].getId() == id) return bills[i];
         }
 
         return null;
@@ -89,10 +90,12 @@ public class Terminal {
         Salesman[] s = new Salesman[sales.length];
         int index = 0;
 
-        if ((loginOrFullname == null || loginOrFullname.isEmpty()) || (sales.length == 0)) return null;
+        if ((loginOrFullname == null || loginOrFullname.isEmpty()) ||
+                (sales.length == 0)) return null;
 
         for (int i = 0; i < sales.length; i++) {
-            if (sales[i].getLogin().equals(loginOrFullname) || sales[i].getFullname().equals(loginOrFullname))
+            if (sales[i].getLogin().equals(loginOrFullname) ||
+                    sales[i].getFullname().equals(loginOrFullname))
                 s[index++] = sales[i];
         }
 
@@ -121,7 +124,8 @@ public class Terminal {
             int[] salesProducts = new int[sales.length];
 
             for (int i = 0; i < numBill; i++) {
-                salesProducts[getIndexSales(bills[i].getSalesMan())] += bills[i].getNumProd();
+                salesProducts[getIndexSales(bills[i].getSalesMan())] +=
+                        bills[i].getNumProd();
             }
 
             for (int i = 0; i < n; i++) {
@@ -150,7 +154,8 @@ public class Terminal {
         System.out.printf("Максимальная сумма чека: %.2f %n", getMax());
         System.out.printf("Минимальная сумма чека: %.2f %n", getMin());
         System.out.printf("Средняя сумма чека: %.2f %n", getAverage());
-        System.out.printf("Количество проданных продуктов: %d %n", countSoldProducts());
+        System.out.printf("Количество проданных продуктов: %d %n",
+                countSoldProducts());
 
     }
 
@@ -161,7 +166,8 @@ public class Terminal {
             double max = bills[0].getAmountPrice();
 
             for (int i = 1; i < numBill; i++) {
-                if (max < bills[i].getAmountPrice()) max = bills[i].getAmountPrice();
+                if (max < bills[i].getAmountPrice())
+                    max = bills[i].getAmountPrice();
             }
 
             return max;
@@ -176,7 +182,8 @@ public class Terminal {
             double min = bills[0].getAmountPrice();
 
             for (int i = 1; i < numBill; i++) {
-                if (min > bills[i].getAmountPrice()) min = bills[i].getAmountPrice();
+                if (min > bills[i].getAmountPrice())
+                    min = bills[i].getAmountPrice();
             }
 
             return min;

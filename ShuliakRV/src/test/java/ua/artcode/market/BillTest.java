@@ -25,7 +25,7 @@ public class BillTest {
 
     @Test
     public void getId() throws Exception {
-        assertNotEquals(0,b.getId());
+        assertNotEquals(0, b.getId());
     }
 
     @Test
@@ -33,13 +33,13 @@ public class BillTest {
         b.addProduct(p[0]);
         b.addProduct(p[1]);
         b.closeBill();
-        assertEquals(2,b.getNumProd());
+        assertEquals(2, b.getNumProd());
     }
 
     @Test
     public void getAmountPrice() throws Exception {
 
-        assertNotEquals(0,b.getAmountPrice());
+        assertNotEquals(0, b.getAmountPrice());
     }
 
     @Test

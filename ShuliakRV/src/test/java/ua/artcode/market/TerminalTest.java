@@ -45,7 +45,7 @@ public class TerminalTest {
 
     @Test
     public void getIndexSales() throws Exception {
-        assertEquals(0,t.getIndexSales(s[0]));
+        assertEquals(0, t.getIndexSales(s[0]));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TerminalTest {
 
     @Test
     public void createBill() throws Exception {
-       assertTrue( t.createBill(saler));
+        assertTrue(t.createBill(saler));
     }
 
     @Test
@@ -70,9 +70,9 @@ public class TerminalTest {
     public void closeAndSaveBill() throws Exception {
         addProduct();
         Bill b = t.closeAndSaveBill();
-        bills[0]=b;
+        bills[0] = b;
         assertNotNull(b.getSalesMan());
-        assertEquals(3,b.getNumProd());
+        assertEquals(3, b.getNumProd());
     }
 
     @Test
@@ -85,13 +85,13 @@ public class TerminalTest {
 
     @Test
     public void findSalesmanByLoginOrFullname() throws Exception {
-      String login, fullname;
+        String login, fullname;
 
-      login = s[0].getLogin();
-      fullname = s[0].getFullname();
+        login = s[0].getLogin();
+        fullname = s[0].getFullname();
 
-      assertEquals(s[0],t.findSalesmanByLoginOrFullname(login)[0]);
-      assertEquals(s[0],t.findSalesmanByLoginOrFullname(fullname)[0]);
+        assertEquals(s[0], t.findSalesmanByLoginOrFullname(login)[0]);
+        assertEquals(s[0], t.findSalesmanByLoginOrFullname(fullname)[0]);
 
     }
 

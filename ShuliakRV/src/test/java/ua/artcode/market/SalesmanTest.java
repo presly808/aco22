@@ -6,26 +6,26 @@ import static org.junit.Assert.*;
 
 public class SalesmanTest {
 
-    Salesman s = new Salesman("Andry1","Andry","1234567");
+    Salesman s = new Salesman("Andry1", "Andry", "1234567");
 
     @Test
     public void getFullname() throws Exception {
-        assertEquals("Andry1",s.getFullname());
+        assertEquals("Andry1", s.getFullname());
     }
 
     @Test
     public void getLogin() throws Exception {
-        assertEquals("Andry",s.getLogin());
+        assertEquals("Andry", s.getLogin());
     }
 
     @Test
     public void getPassword() throws Exception {
-        assertEquals("1234567",s.getPassword());
+        assertEquals("1234567", s.getPassword());
     }
 
     @Test
     public void isLogged() throws Exception {
-        assertEquals(false,s.isLogged());
+        assertEquals(false, s.isLogged());
     }
 
 }

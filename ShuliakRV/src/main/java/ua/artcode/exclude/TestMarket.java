@@ -36,14 +36,15 @@ public class TestMarket {
 
                 t.createBill(saler);
 
-                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random()); j++) {
+                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random());
+                     j++) {
                     t.addProduct(p[j]);
                 }
                 Bill b;
                 b = t.closeAndSaveBill();
                 b.printBill();
 
-                System.out.println(t.findBillById(i+1).getId());
+                System.out.println(t.findBillById(i + 1).getId());
             }
             t.doSomeStatisticStuff();
 
