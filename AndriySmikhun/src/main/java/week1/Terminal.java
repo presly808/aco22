@@ -1,3 +1,7 @@
+package week1;
+
+import week1.Product;
+
 public class Terminal {
 
     Bill[] bills = new Bill[20];
@@ -21,14 +25,16 @@ public class Terminal {
             }
         }
     }                               //enter login and password
-    public void createBill(Bill bill,Salesman salesman){
+    public boolean createBill(Bill bill, Salesman salesman){
         if(salesman.isStatus()){
             for (int i = 0; i < bills.length; i++){
                 if (bills[i] == null){
                     bills[i] = bill;
+                    return true;
                 }
             }
         }
+        return false;
     }                          //open bill
     public void addProduct(Bill bill, Product product){
         if (bill.getCloseTime() == null){

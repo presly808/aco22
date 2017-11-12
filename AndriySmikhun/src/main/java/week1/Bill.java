@@ -1,3 +1,6 @@
+package week1;
+
+
 public class Bill {
 
     int id;
@@ -15,6 +18,10 @@ public class Bill {
     }
 
     public Bill() {
+    }
+
+    public Bill(Salesman salesman) {
+        this.salesman = salesman;
     }
 
     public void setId(int id) {
