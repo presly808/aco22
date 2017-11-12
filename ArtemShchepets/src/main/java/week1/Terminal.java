@@ -1,4 +1,4 @@
-package week1;
+package java.week1;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -308,7 +308,7 @@ public class Terminal {
 
                     Scanner scanner = new Scanner(System.in);
 
-                    System.out.println("Enter a close time. Like this --> 12:12:12");
+                    System.out.println("Enter a close time. Like this --> 12:12:12\n");
                     String parsingTime = scanner.next();
 
                     String[] parsedTime = parsingTime.split(":");
