@@ -1,4 +1,4 @@
-package java.week1;
+package week1;
 
 public class Seller {
 
