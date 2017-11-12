@@ -19,6 +19,7 @@ allprojects {
 
     jacocoTestReport {
         reports {
+            xml.enabled true
             html.enabled true
         }
     }
@@ -26,7 +27,8 @@ allprojects {
     jacocoTestCoverageVerification {
         violationRules {
             rule {
-                element = "SOURCEFILE"
+                excludes = ['*view.*','*exclude.*']
+                element = "CLASS"
                 limit {
                     counter = "LINE"
                     minimum = 0.50
