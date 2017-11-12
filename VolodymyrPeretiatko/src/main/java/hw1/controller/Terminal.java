@@ -29,6 +29,21 @@ public class Terminal implements ITerminal {
         products = new ArrayList<>();
     }
 
+    public static Salesman getSalesmanByName(ArrayList<Salesman> salesmen, String name){
+
+        if (name == null){
+            return null;
+        }
+
+        for (Salesman s : salesmen){
+            if(name.equals(s.getName())){
+                return  s;
+            }
+        }
+
+        return null;
+    }
+
     public boolean addSalesman(Salesman salesman){
         if (salesmen.contains(salesman))
             return false;
@@ -37,7 +52,7 @@ public class Terminal implements ITerminal {
     }
 
     public Salesman login(String name, String pass){
-        Salesman salesman = Salesman.getSalesmanByName(salesmen, name);
+        Salesman salesman = getSalesmanByName(salesmen, name);
         if (salesman != null && pass.equals(salesman.getPass())){
             return salesman;
         }

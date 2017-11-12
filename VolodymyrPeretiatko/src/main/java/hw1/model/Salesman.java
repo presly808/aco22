@@ -14,21 +14,6 @@ public class Salesman {
         this.pass = pass;
     }
 
-    public static Salesman getSalesmanByName(ArrayList<Salesman> salesmen, String name){
-
-        if (name == null){
-            return null;
-        }
-
-        for (Salesman s : salesmen){
-            if(name.equals(s.name)){
-                return  s;
-            }
-        }
-
-        return null;
-    }
-
     public String getFullName() {
 
         return fullName;
