@@ -44,6 +44,16 @@ public class TerminalTest {
     }
 
     @Test
+    public void getIndexSales() throws Exception {
+        assertEquals(0,t.getIndexSales(s[0]));
+    }
+
+    @Test
+    public void doSomeStatisticStuff() throws Exception {
+        t.doSomeStatisticStuff();
+    }
+
+    @Test
     public void createBill() throws Exception {
        assertTrue( t.createBill(saler));
     }
