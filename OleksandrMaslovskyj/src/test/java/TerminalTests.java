@@ -1,11 +1,9 @@
-package java;
-
-import main.java.Utils.StringGenerator;
-import main.java.Utils.TerminalUtils;
-import main.java.controllers.BillController;
-import main.java.controllers.TerminalController;
-import main.java.models.Product;
-import main.java.models.Salesman;
+import Utils.StringGenerator;
+import Utils.TerminalUtils;
+import controllers.BillController;
+import controllers.TerminalController;
+import models.Product;
+import models.Salesman;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

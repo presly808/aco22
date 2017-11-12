@@ -1,16 +1,16 @@
-package main.java.interfaces;
+package interfaces;
 
-
-import main.java.models.Product;
+import models.Bill;
+import models.Product;
 
 public interface IBill {
 
-    Product addProduct(String name);
+    Product addProductToBill(Bill bill, String name);
 
-    void closeBill();
+    void closeBill(Bill bill);
 
-    double calculateAmountPrice();
+    double calculateAmountPrice(Bill bill);
 
-    void printBill();
+    void printBill(Bill bill);
 
 }

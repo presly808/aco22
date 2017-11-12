@@ -1,60 +1,60 @@
-package main.java.controllers;
+package controllers;
 
-import main.java.interfaces.ITerminal;
-import main.java.models.Product;
-import main.java.models.Salesman;
+import interfaces.ITerminal;
+import models.Bill;
+import models.Product;
+import models.Salesman;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class TerminalController implements ITerminal {
+public class TerminalController implements ITerminal{
 
-    private BillController currentBill;
     private Set<BillController> billSet;
+    private BillController billController;
 
     public TerminalController() {
         this.billSet = new HashSet<>();
+        this.billController = new BillController();
+
     }
 
-    //TODO should be implemented
-    public boolean login() {
-        return false;
+    public Bill createBill(Bill bill) {
+        return new Bill();
     }
 
-    public BillController createBill() {
-        this.currentBill = new BillController();
-        billSet.add(currentBill);
-        return currentBill;
-    }
-
-    public Product addProduct(String productName) {
-        if (currentBill == null) {
+    public Product addProduct(Bill bill, String productName) {
+        if (bill == null) {
             throw new IllegalStateException("BillController not created");
         }
-        return currentBill.addProduct(productName);
+        return billController.addProductToBill(bill, productName);
     }
 
-    public void closeAndSaveBill(BillController bill) {
-        this.currentBill = null;
-        bill.closeBill();
+    public void closeAndSaveBill(Bill bill) {
+        billController.closeBill(bill);
     }
 
     //TODO add validation
-    public BillController findBillById(long id) {
-        return billSet.stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
+    public Bill findBillById(long id) {
+        return billController.getBillSet().stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
     }
 
     public Salesman findSalesmanByLoginOrFullName(String fullName) {
-        return billSet.stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
-                                                    || bill.getSalesman().getLogin().equals(fullName)).
-                                                        collect(Collectors.toSet()).iterator().next().getSalesman();
+        return billController.getBillSet().stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
+                || bill.getSalesman().getLogin().equals(fullName)).
+                collect(Collectors.toSet()).iterator().next().getSalesman();
     }
 
-    //TODO should be implemented
-    public Salesman getTopOnSalesMan() {
-        return null;
+    //TODO Need to refactor
+    public List<Bill> sortBillListByDateCreation() {
+        List<Bill> list = new ArrayList<>();
+        Set<Bill> set = billController.getBillSet();
+        list.addAll(set);
+        Collections.sort(list, (bill, bill1) -> {
+            long i1 = (bill.getCreationDate());
+            long i2 = (bill1.getCreationDate());
+            return i1 > i2 ? -1 : (i1 == i2 ? 0 : 1);
+        });
+        return list;
     }
-
-    //TODO UI should be implemented
 }

@@ -1,23 +1,24 @@
-package main.java.interfaces;
+package interfaces;
 
-import main.java.controllers.BillController;
-import main.java.models.Product;
-import main.java.models.Salesman;
+import models.Bill;
+import models.Product;
+import models.Salesman;
+
+import java.util.List;
+import java.util.Set;
 
 public interface ITerminal {
 
-    boolean login();
+    Bill createBill(Bill bill);
 
-    BillController createBill();
+    Product addProduct(Bill bill, String productName);
 
-    Product addProduct(String productName);
+    void closeAndSaveBill(Bill bill);
 
-    void closeAndSaveBill(BillController bill);
-
-    BillController findBillById(long id);
+    Bill findBillById(long id);
 
     Salesman findSalesmanByLoginOrFullName(String fullname);
 
-    Salesman getTopOnSalesMan();
+    List<Bill> sortBillListByDateCreation();
 
 }
