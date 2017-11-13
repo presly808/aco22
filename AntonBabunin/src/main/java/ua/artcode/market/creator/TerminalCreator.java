@@ -13,6 +13,12 @@ public class TerminalCreator {
         Bill[] bills = new Bill[DEFAULT_SIZE];
         Salesman[] sales = new Salesman[DEFAULT_SIZE];
 
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            sales[i] = SalesmanCreator.salesmanCreateAutomatic();
+        }
+
         return new Terminal(bills, sales);
     }
+
+
 }

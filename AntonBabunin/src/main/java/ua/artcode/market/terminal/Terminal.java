@@ -54,7 +54,8 @@ public class Terminal {
                 isAtSales = true;
                 break;
             }
-        } if (!isAtSales) {
+        }
+        if (!isAtSales) {
             this.sales[countSalesman] = salesman;
             this.countSalesman++;
             return true;

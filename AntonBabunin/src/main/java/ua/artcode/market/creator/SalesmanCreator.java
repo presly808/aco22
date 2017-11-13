@@ -23,19 +23,16 @@ public class SalesmanCreator {
 */
     public static Salesman salesmanCreateAutomatic() {
 
-        String fullName = generateFullName();
-        String login = "asd";
-        String password = "asd";
+        String fullName = "User"+generateFullName();
+        String login = fullName;
+        String password = fullName;
 
         return new Salesman(fullName, login, password);
     }
 
     private static String generateFullName() {
-        char[] nameChar = new char[DEFAULT_SALESMAN_NAME];
-        for (int i = 0; i < DEFAULT_SALESMAN_NAME; i++) {
-            nameChar[i] = (char) ((int)(65+(Math.random()*26)));
-        }
-        return String.valueOf(nameChar);
+
+        return String.valueOf(((int)Math.random()*10));
 
     }
 }

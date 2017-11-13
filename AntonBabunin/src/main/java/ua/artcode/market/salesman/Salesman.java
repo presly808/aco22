@@ -74,12 +74,13 @@ public class Salesman {
 
 */
     public boolean loginAutomatic (Terminal terminal) {
-        String login = this.login;
-        String password = this.password;
-
-        return login.equals(this.getLogin()) &&
-                password.equals(this.getPassword()) &&
-                terminal.login(this);
+        for (int i = 0; i < terminal.getSales().length; i++) {
+            if ((this.login.equals(terminal.getSales()[i].getLogin()) &&
+            this.password.equals((terminal.getSales()[i].getPassword())))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean addProduct (Terminal terminal, Product product) {
