@@ -8,18 +8,17 @@ public class Utils {
 
     public static Product generateProduct() {
 
-        String[] s = {"Мясо", "Крупа", "Рыба", "Фрукт",
-                        "Овощ", "Конфета", "Колбаса"};
+        String[] s =
+                {"Meat", "Fish", "Fruit", "Vegetable", "Sausage"};
 
-        return new Product(s[(int) (Math.random() * s.length)].toString() +
+        return new Product(s[(int) (Math.random() * s.length)] +
                 (int) (Math.random() * DEFAULT_COUNT_PRODUCTS),
                 (Math.random() * 100));
     }
 
     public static Salesman generateSalesman() {
 
-        String[] s = {"Andry", "Kate", "Sveta",
-                        "Igor", "Maxim", "Olya", "Yuliya"};
+        String[] s = {"Andry", "Kate", "Sveta", "Igor", "Maxim", "Olya"};
 
         int index = (int) (Math.random() * s.length);
 

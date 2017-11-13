@@ -19,7 +19,7 @@ public class TestMarket {
 
         Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
-        System.out.println("Список продавцов: ");
+        System.out.println("Salers list: ");
         System.out.println();
 
         for (int i = 0; i < s.length; i++) {
@@ -48,7 +48,7 @@ public class TestMarket {
             }
             t.doSomeStatisticStuff();
 
-        } else System.out.println("Неверный логин или пароль");
+        } else System.out.println("Incorrect login or password!!!");
 
 
     }
