@@ -36,12 +36,11 @@ public class Terminal {
             int i;
 
             for (i = 0; i < sales.length; i++) {
-                if (sales[i] != null)
-                    if ((sales[i].getLogin().equals(login)) &&
-                            (sales[i].getPassword().equals(password))) {
-                        sales[i].setLogged(true);
-                        return sales[i];
-                    }
+                if ((sales[i] != null) && (sales[i].getLogin().equals(login)) &&
+                        (sales[i].getPassword().equals(password))) {
+                    sales[i].setLogged(true);
+                    return sales[i];
+                }
             }
 
             return null;
@@ -60,9 +59,7 @@ public class Terminal {
 
     public boolean addProduct(Product p) {
 
-        if (bills[numBill].addProduct(p)) return true;
-
-        return false;
+        return bills[numBill].addProduct(p);
 
     }
 

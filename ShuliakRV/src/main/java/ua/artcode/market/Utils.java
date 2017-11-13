@@ -9,7 +9,7 @@ public class Utils {
     public static Product generateProduct() {
 
         String[] s = {"Мясо", "Крупа", "Рыба", "Фрукт",
-                "Овощ", "Конфета", "Колбаса"};
+                        "Овощ", "Конфета", "Колбаса"};
 
         return new Product(s[(int) (Math.random() * s.length)].toString() +
                 (int) (Math.random() * DEFAULT_COUNT_PRODUCTS),
@@ -19,7 +19,7 @@ public class Utils {
     public static Salesman generateSalesman() {
 
         String[] s = {"Andry", "Kate", "Sveta",
-                "Igor", "Maxim", "Olya", "Yuliya"};
+                        "Igor", "Maxim", "Olya", "Yuliya"};
 
         int index = (int) (Math.random() * s.length);
 

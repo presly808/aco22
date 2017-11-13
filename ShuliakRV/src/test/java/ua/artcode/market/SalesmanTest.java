@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class SalesmanTest {
 
-    Salesman s = new Salesman("Andry1", "Andry", "1234567");
+    private Salesman s = new Salesman("Andry1", "Andry", "1234567");
 
     @Test
     public void getFullname() throws Exception {

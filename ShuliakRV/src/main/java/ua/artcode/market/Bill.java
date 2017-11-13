@@ -59,7 +59,7 @@ public class Bill {
 
     public void printBill() {
 
-        if (isOpen == false) {
+        if (!isOpen) {
 
             String str = "Чек№" + id + "\n";
 

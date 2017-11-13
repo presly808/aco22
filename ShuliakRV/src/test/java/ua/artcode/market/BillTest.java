@@ -9,9 +9,9 @@ public class BillTest {
 
     public static final int DEFAULT_COUNT_PRODUCTS = 100;
 
-    Product[] p;
-    Salesman saler;
-    Bill b;
+    private Product[] p;
+    private Salesman saler;
+    private Bill b;
 
     @Before
     public void setUp() throws Exception {
