@@ -130,7 +130,7 @@ public class Bill {
         System.out.printf("Bill: \n ID: %d \n", this.getId());
         for (Product product : this.getProducts()) {
             if (product != null) {
-                product.printFullInfo();
+                product.toString();
             }
         }
         System.out.printf("AmountPrice: %.2f \n", this.getAmountPrice());

@@ -6,12 +6,11 @@ import ua.artcode.market.creator.BillCreator;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 
+import java.util.Arrays;
+
 
 public class Terminal {
     private static final int DEFAULT_SIZE = 20;
-
-    private int countClosedBill = 0;
-    private int countCreatedBill = 0;
 
     private int countSalesman = 0;
 
@@ -25,13 +24,6 @@ public class Terminal {
     public Terminal(Bill[] bills, Salesman[] sales) {
         this.bills = bills;
         this.sales = sales;
-    }
-
-    private int getCountCreatedBill() {
-        return this.countCreatedBill;
-    }
-    private int getCountClosedBill() {
-        return this.countClosedBill;
     }
 
     public Bill[] getBills() {
@@ -91,34 +83,49 @@ public class Terminal {
         return true;
     }
     public Bill createBill(Salesman salesman) {
-        if (this.getCountClosedBill() < this.getCountCreatedBill()) {
-            Bill bill = this.getBillBySalesman(salesman, this);
-            bills[bill.getAddedProducts()] = bill;
-            bill.setAddedProducts(bill.getAddedProducts() + 1);
-            return bill;
-        }
+        if (salesman != null) {
 
-        if ((salesman != null)) {
-            for (Salesman seller : this.getSales()) {
-                 if (seller.equals(salesman)) {
-                        Bill bill = BillCreator.createBill(salesman);
-                        bills[bill.getAddedProducts()] = bill;
-                        bill.setAddedProducts(bill.getAddedProducts() + 1);
-                        return bill;
-                }
+            if (findOpenedBill(salesman) == null) {
+                Bill bill = BillCreator.createBill(salesman);
+                bills[freeIndexBills()] = bill;
+                return bill;
             }
+            if (salesman.equals(findOpenedBill(salesman).getSalesman())) {
+                return findOpenedBill(salesman);
+            }
+            System.out.println("You have to close the previous opened bill " +
+                    "%s\n" + findOpenedBill(salesman).toString());
+            return null;
         }
         return null;
     }
 
-    private Bill getBillBySalesman(Salesman salesman, Terminal terminal) {
-        if (terminal != null && salesman != null) {
-            for (Bill bill : terminal.getBills()) {
-                if (bill.getSalesman().equals(salesman) && !bill.isClosed()) {
-                    return bill;
+    private Bill findOpenedBill (Salesman salesman) {
+        int[] bills = new int[2]; //[0] - opened, [1] - closed
+        Bill billOpen = null;
+        if (this.getBills() != null) {
+            for (Bill bill : this.getBills()) {
+                if (bill != null && bill.isClosed()) bills[1]++;
+                else if (bill != null && !bill.isClosed()) {
+                    bills[0]++;
+                    if (salesman.equals(bill.getSalesman())) {
+                        return bill;
+                    } else {
+                        billOpen = bill;
+                    }
                 }
+                return billOpen;
             }
-        } return null;
+        }
+        return null;
+    }
+    private int freeIndexBills() {
+        if (this.getBills() != null){
+            for (int i = 0; i < bills.length; i++) {
+                if (bills[i] == null) return i;
+            }
+        }
+        return 0;
     }
 
     public Bill addProduct() {
@@ -133,24 +140,52 @@ public class Terminal {
         }
         return null;
     }
-//_________________
 
     public boolean closeAndSaveBill (Bill bill) {
         if (bill != null) {
             if (this.bills != null && !bill.isClosed()) {
                 double amountPrice = bill.closeBill();
                 bill.setAmountPrice(amountPrice);
-                this.printBill(bill);
+                bill.toString();
                 return true;
             } return false;
         } return false;
     }
 
+    @Override
+    public String toString() {
+        return "Terminal{" +
+                "countSalesman=" + countSalesman +
+                ", bills=" + Arrays.toString(bills) +
+                ", sales=" + Arrays.toString(sales) +
+                '}';
+    }
+
+// ________________________________________________________________
+
+
+
+
+
+//_________________
+
+    /*
+    private Bill getBillBySalesman(Salesman salesman) {
+        if (salesman != null) {
+            for (Bill bill : this.getBills()) {
+                if (bill.getSalesman().equals(salesman) && !bill.isClosed()) {
+                    return bill;
+                }
+            }
+        } return null;
+    }
+
+
     private void printBill(Bill bill) {
         bill.printBill();
     }
 
-    /*
+
     public Bill findBillById(int id) {
         if (id > 0) {
             if (this.getBills() != null) {
@@ -267,7 +302,8 @@ public class Terminal {
             max = ( this.getBills()[0].getProducts() != null) ?
             this.getBills()[0].getProducts().length : max;
             for (Bill bill : this.getBills()) {
-                if (bill.getProducts() != null && bill.getProducts().length > max)
+                if (bill.getProducts() != null &&
+                bill.getProducts().length > max)
                     max = bill.getProducts().length;
             }
         }
@@ -302,5 +338,6 @@ public class Terminal {
         return 0;
     }
 
-    public void setCountClosedBill(int countClosedBill) { this.countClosedBill = countClosedBill;}*/
+    public void setCountClosedBill(int countClosedBill) {
+    this.countClosedBill = countClosedBill;}*/
 }

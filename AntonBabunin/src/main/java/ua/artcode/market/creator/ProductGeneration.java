@@ -1,10 +1,6 @@
 package ua.artcode.market.creator;
 
-
 import ua.artcode.market.product.Product;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class ProductGeneration {
     private static final int DEFAULT_PRODUCT_NAME = 30;

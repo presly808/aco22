@@ -28,8 +28,10 @@ public class RunTests {
         Salesman salesman1 = SalesmanCreator.salesmanCreateAutomatic();
         salesman1.loginAutomatic(terminal1);
         Bill bill1 = salesman1.createBill(terminal1);
-        salesman1.addProduct(terminal1, product1);
-        salesman1.addProduct(terminal1, product2);
+        boolean b1 = salesman1.addProduct(terminal1, product1);
+        System.out.println("b1 = " + b1);
+        boolean b2 = salesman1.addProduct(terminal1, product2);
+        System.out.println("b2 = " + b2);
         salesman1.addProduct(terminal1, product3);
         salesman1.addProduct(terminal1, product1);
         salesman1.addProduct(terminal1, product2);
@@ -39,9 +41,12 @@ public class RunTests {
         salesman1.addProduct(terminal1, product5);
         salesman1.addProduct(terminal1, product6);
         boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
+        System.out.println(billIsClosed);
 //        System.out.println(billIsClosed);
         System.out.println(bill1.toString());
         Assert.assertTrue(billIsClosed);
+
+
         /*
         Salesman salesman2 = SalesmanCreator.salesmanCreateAutomatic();
         salesman2.loginAutomatic(terminal1);

@@ -71,6 +71,7 @@ public class RunTestSalesman {
         Product product1 = ProductGeneration.generateProduct();
         salesman.addProduct(terminal, product);
         salesman.addProduct(terminal, product1);
+        actual.closeBill();
         Salesman salesman1 = new Salesman("asdq", "asd", "asd");
         salesman1.loginAutomatic(terminal);
         Bill expected = salesman1.createBill(terminal);

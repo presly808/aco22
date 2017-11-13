@@ -73,18 +73,23 @@ public class Salesman {
                 terminal.login(this);
     }
 
-    public void addProduct (Terminal terminal, Product product) {
+    public boolean addProduct (Terminal terminal, Product product) {
         if (terminal != null && product != null) {
             Bill bill = terminal.addProduct();
-            bill.addProduct(product);
+            if (bill != null) {
+                bill.addProduct(product);
+                return true;
+            }
+            return false;
         }
+        return false;
     }
 // ----------------------------------------------------------------------------
 
     public boolean closeBill(Bill bill, Terminal terminal) {
         if (bill !=null && terminal != null) {
             for (Bill bill1 : terminal.getBills()) {
-                if (bill == bill1) {
+                if (bill.equals(bill1)) {
                     boolean bool = terminal.closeAndSaveBill(bill);
                     System.out.println(bool);
 

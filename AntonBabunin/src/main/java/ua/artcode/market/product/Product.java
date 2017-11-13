@@ -1,21 +1,11 @@
 package ua.artcode.market.product;
 
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-
 public class Product {
 
     private int id;
     private String name;
     private double price;
-
-
-    public void printFullInfo(){
-        System.out.printf("Product: id: %d name: %s price: %.2f \n",
-                this.getId(), this.getName(), this.getPrice());
-    }
 
     public Product(int id, String name, double price) {
         this.id = id;
@@ -35,15 +25,17 @@ public class Product {
         return price;
     }
 
-    public boolean equals(Product product) {
-        return product != null && this.getId() == product.getId() &&
-                this.getName().equals(product.getName()) &&
-                this.getPrice() == product.getPrice();
-
+    @Override
+    public boolean equals(Object object) {
+        return object != null && object instanceof Product &&
+                this.getId() == ((Product) object).getId() &&
+                this.getName().equals(((Product) object).getName()) &&
+                this.getPrice() == ((Product) object).getPrice();
     }
 
     @Override
     public String toString() {
-        return  String.format("%d %s %.2f \n", getId(), getName(),getPrice());
+        return  String.format("Product: id: %d name: %s price: %.2f \n",
+                this.getId(), this.getName(), this.getPrice());
     }
 }
