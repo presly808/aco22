@@ -1,9 +1,9 @@
-package artcode.shop.creator;
+package ua.artcode.market.creator;
 
-import artcode.shop.salesman.Salesman;
-import artcode.shop.bill.Bill;
-import artcode.shop.product.Product;
-import artcode.shop.terminal.Terminal;
+
+import ua.artcode.market.bill.Bill;
+import ua.artcode.market.product.Product;
+import ua.artcode.market.salesman.Salesman;
 
 public class BillCreator {
 
@@ -18,12 +18,14 @@ public class BillCreator {
         int firstFreePositionAtProducts = 0;
         int nextFreePositionAtProducts =1;
 
-        return new Bill(id, products, salesman, amountPrice, closeTime, isClosed, firstFreePositionAtProducts, nextFreePositionAtProducts);
+        return new Bill(id, products, salesman, amountPrice, closeTime,
+                isClosed, firstFreePositionAtProducts,
+                nextFreePositionAtProducts);
     }
 
     private static int generateID() {
-        Terminal.setCountCreatedBill(Terminal.getCountCreatedBill()+1);
-        return Terminal.getCountCreatedBill();
+
+        return (int) (Math.random()*10000);
     }
 
 
