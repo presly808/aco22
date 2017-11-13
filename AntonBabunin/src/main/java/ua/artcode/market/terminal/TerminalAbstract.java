@@ -1,8 +1,5 @@
 package ua.artcode.market.terminal;
 
-
-import ua.artcode.market.creator.TerminalCreator;
-
 public abstract class TerminalAbstract {
 
     private int id;

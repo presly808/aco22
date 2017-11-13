@@ -1,6 +1,6 @@
 package ua.artcode.market.salesman;
 
-import ua.artcode.market.Interfaces.ITerminal;
+import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.terminal.Terminal;

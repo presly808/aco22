@@ -1,7 +1,7 @@
 package ua.artcode.market.terminal;
 
 
-import ua.artcode.market.Interfaces.ITerminal;
+import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.creator.BillCreator;
 import ua.artcode.market.salesman.Salesman;

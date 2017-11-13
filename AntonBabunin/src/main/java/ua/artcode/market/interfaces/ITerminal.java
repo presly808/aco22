@@ -1,4 +1,4 @@
-package ua.artcode.market.Interfaces;
+package ua.artcode.market.interfaces;
 
 import ua.artcode.market.bill.Bill;
 
