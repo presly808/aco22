@@ -1,24 +1,19 @@
 package ua.artcode.market.salesman;
 
-
-
+import ua.artcode.market.Interfaces.ITerminal;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.terminal.Terminal;
 
-public class Salesman {
-    private String fullName;
+public class Salesman extends PersonAbstractClass implements ITerminal{
+
     private String login;
     private String password;
 
     public Salesman(String fullName, String login, String password) {
-        this.fullName = fullName;
+        super(fullName);
         this.login = login;
         this.password = password;
-    }
-
-    public String getFullName() {
-        return fullName;
     }
 
     private String getLogin() {
@@ -27,6 +22,13 @@ public class Salesman {
 
     private String getPassword() {
         return password;
+    }
+
+    @Override
+    public Bill createBill (Object object/*Terminal terminal*/) {
+        return  (object != null && object instanceof Terminal &&
+                ((Terminal)object).login(this)) ?
+                ((Terminal)object).createBill(this) : null;
     }
 
     /*
@@ -38,18 +40,8 @@ public class Salesman {
         this.password = password;
     }*/
 
-    @Override
-    public boolean equals (Object object) {
-        if (object != null && object instanceof Salesman) {
-            return this.getFullName().equals(((Salesman) object).getFullName());
-        } return false;
-    }
-
     // Salesman create a new bill at terminal
-    public Bill createBill (Terminal terminal) {
-        return  (terminal != null && terminal.login(this)) ?
-                terminal.createBill(this) : null;
-    }
+
 
 /*    public void login (Terminal terminal) {
         if (terminal != null) {
@@ -76,7 +68,7 @@ public class Salesman {
     public boolean loginAutomatic (Terminal terminal) {
         for (int i = 0; i < terminal.getSales().length; i++) {
             if ((this.login.equals(terminal.getSales()[i].getLogin()) &&
-            this.password.equals((terminal.getSales()[i].getPassword())))) {
+                this.password.equals((terminal.getSales()[i].getPassword())))) {
                 return true;
             }
         }
@@ -109,11 +101,16 @@ public class Salesman {
         return false;
     }
 
+    @Override
+    public boolean equals (Object object) {
+        return object != null && object instanceof Salesman &&
+                this.getFullName().equals(((Salesman) object).getFullName());
+    }
 
     @Override
     public String toString() {
         return "Salesman{" +
-                "fullName='" + fullName + '\'' +
+                "fullName='" + super.getFullName() + '\'' +
                 '}';
     }
 }

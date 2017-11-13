@@ -4,7 +4,6 @@ package ua.artcode.market.creator;
 import ua.artcode.market.salesman.Salesman;
 
 public class SalesmanCreator {
-    private static final int DEFAULT_SALESMAN_NAME = 20;
 /*    public static Salesman salesmanCreate() throws IOException {
         BufferedReader reader =
         new BufferedReader(new InputStreamReader(System.in));
@@ -32,7 +31,7 @@ public class SalesmanCreator {
 
     private static String generateFullName() {
 
-        return String.valueOf(((int)Math.random()*10));
+        return String.valueOf((int)(Math.random()*100));
 
     }
 }
