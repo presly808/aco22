@@ -11,7 +11,6 @@ import ua.artcode.market.creator.TerminalCreator;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 import ua.artcode.market.terminal.Terminal;
-import ua.artcode.market.terminal.TerminalAbstract;
 
 
 public class RunTests {
