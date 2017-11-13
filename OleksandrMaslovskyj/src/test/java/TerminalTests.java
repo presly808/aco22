@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -88,6 +89,31 @@ public class TerminalTests {
             terminal.createBill(new Bill());
         }
         Assert.assertTrue(terminal.getBillSet().size() == 10);
+    }
+
+    @Test
+    public void testGetBillsByStartAndEndDates(){
+        TerminalController terminalController = generateBills();
+        List<Bill> billList = terminalController.getBillsByStartAndEndDates(new Date(System.currentTimeMillis()),
+                                                                            new Date(System.currentTimeMillis() +
+                                                                                            Integer.MAX_VALUE));
+        Assert.assertTrue(billList.size() == 0);
+    }
+
+    @Test
+    public void testGetBillsByCreator(){
+        TerminalController terminalController = generateBills();
+        List<Bill> billList = terminalController.getBillsByCreator(new Salesman("", ""));
+        Assert.assertTrue(billList.isEmpty());
+    }
+
+    private TerminalController generateBills() {
+        TerminalController terminalController = new TerminalController();
+        for (int i = 0; i < 100; i++) {
+            Bill bill = terminalController.createBill(new Bill());
+            bill.setSalesman(new Salesman(StringGenerator.generateName(), StringGenerator.generateName()));
+        }
+        return terminalController;
     }
 
     private boolean isListSorted(List<Bill> list) {

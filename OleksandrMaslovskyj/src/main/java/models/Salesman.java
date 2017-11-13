@@ -1,7 +1,7 @@
 package models;
 
 
-public class Salesman {
+public class Salesman implements Comparable<Salesman>{
 
     private String fullname;
     private String login;
@@ -43,5 +43,11 @@ public class Salesman {
                 ", login='" + login + '\'' +
                 ", pass='" + pass + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Salesman o) {
+        return this.getFullname().equals(o.getFullname()) && this.getLogin().equals(o.getLogin()) ? 1 : 0;
     }
 }

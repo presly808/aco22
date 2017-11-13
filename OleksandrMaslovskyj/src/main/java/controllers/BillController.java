@@ -25,6 +25,7 @@ public class BillController implements IBill{
 
     public void closeBill(Bill bill) {
         bill.setCloseTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
+        bill = null;
     }
 
     public double calculateAmountPrice(Bill bill) {

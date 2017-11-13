@@ -16,6 +16,7 @@ public class TerminalController implements ITerminal{
         this.billController = new BillController();
     }
 
+    //TODO validation
     public Bill createBill(Bill bill) {
         billController.getBillSet().add(bill);
         return bill;
@@ -68,6 +69,28 @@ public class TerminalController implements ITerminal{
             return i1.compareTo(i2);
         });
         return list;
+    }
+
+    public List<Bill> getBillsByStartAndEndDates(Date startDate, Date endDate) {
+        List<Bill> filteredLIst = new ArrayList<>();
+        for (Bill bill : getBillSet()) {
+            Date creationBillDate = bill.getCreationDate();
+            if (creationBillDate.compareTo(startDate) >= 0
+                    && creationBillDate.compareTo(endDate) <= 0) {
+                filteredLIst.add(bill);
+            }
+        }
+        return filteredLIst;
+    }
+
+    public List<Bill> getBillsByCreator(Salesman salesman) {
+        List<Bill> filteredLIst = new ArrayList<>();
+        for (Bill bill : getBillSet()) {
+            if (bill.getSalesman().compareTo(salesman) == 1) {
+                filteredLIst.add(bill);
+            }
+        }
+        return filteredLIst;
     }
 
     public Set<Bill> getBillSet() {

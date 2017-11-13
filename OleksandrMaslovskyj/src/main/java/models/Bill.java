@@ -51,6 +51,7 @@ public class Bill implements Comparable<Bill>{
     public String toString() {
         return "Bill{" +
                 "id=" + id +
+                " creationDate=" + creationDate.toString()+
                 ", products=" + products +
                 ", salesman=" + salesman +
                 ", closeTime='" + closeTime + '\'' +
