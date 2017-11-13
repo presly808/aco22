@@ -11,10 +11,13 @@ public class BillTest {
 
     private Product[] p;
     private Bill b;
+    Salesman s;
 
     @Before
     public void setUp() throws Exception {
         p = new Product[DEFAULT_COUNT_PRODUCTS];
+        s = new Salesman("Andry1", "Andry", "1234567");
+        b = new Bill(s);
         for (int i = 0; i < p.length; i++) {
             p[i] = Utils.generateProduct();
         }
