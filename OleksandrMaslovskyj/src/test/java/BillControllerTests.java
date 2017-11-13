@@ -1,5 +1,6 @@
 import controllers.BillController;
 import models.Bill;
+import models.Product;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,13 @@ public class BillControllerTests {
         Bill bill = new Bill();
         billController.addProductToBill(bill, "Milk");
         billController.addProductToBill(bill, "Coffee");
+        double calculatedPrice = billController.calculateAmountPrice(bill);
+        Assert.assertTrue(calculatedPrice == 0);
+        for (Product product : bill.getProducts()) {
+            product.setPrice(10);
+        }
+        Assert.assertTrue(billController.calculateAmountPrice(bill) == 20);
+
     }
 
 }
