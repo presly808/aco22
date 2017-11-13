@@ -1,11 +1,7 @@
 package ua.artcode.market.bill;
 
-
-//import ua.artcode.market.creator.BillCreator;
-
 import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -183,15 +179,14 @@ public class Bill {
     @Override
     public boolean equals(Object object) {
 
-        if (object != null && object instanceof Bill) {
-            if (((Bill) object).getId() == this.id &&
+            if (object != null && object instanceof Bill &&
+                    ((Bill) object).getId() == this.id &&
                 (Arrays.deepEquals(((Bill) object).getProducts(),
                         (this.getProducts())) &&
                 ((Bill) object).getAmountPrice() == this.getAmountPrice() &&
                 ((Bill) object).getCloseTime().equals(this.getCloseTime()) &&
                 ((Bill) object).getSalesman().equals(this.getSalesman()))) {
                 return true;
-            }
         }
         return false;
     }

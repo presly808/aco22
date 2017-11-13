@@ -65,18 +65,21 @@ public class Terminal {
         return true;
     }
 
-    public boolean equals(Terminal terminal) {
-        if (terminal == null) return false;
-        if (this.getSales().length != terminal.getSales().length) return  false;
-        if (this.getBills().length != terminal.getBills().length) return  false;
-        for (int i = 0; i < terminal.getSales().length; i++) {
-            if (terminal.getSales()[i] != null &&
-                    !terminal.getSales()[i].equals(this.getSales()[i]))
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Terminal)) return false;
+        if (this.getSales().length != ((Terminal)obj).getSales().length)
+            return  false;
+        if (this.getBills().length != ((Terminal)obj).getBills().length)
+            return  false;
+        for (int i = 0; i < ((Terminal)obj).getSales().length; i++) {
+            if (((Terminal)obj).getSales()[i] != null &&
+                    !((Terminal)obj).getSales()[i].equals(this.getSales()[i]))
                 return false;
         }
-        for (int i = 0; i < terminal.getBills().length; i++) {
-            if (terminal.getBills()[i] != null &&
-                    !terminal.getBills()[i].equals(this.getBills()[i]))
+        for (int i = 0; i < ((Terminal)obj).getBills().length; i++) {
+            if (((Terminal)obj).getBills()[i] != null &&
+                    !((Terminal)obj).getBills()[i].equals(this.getBills()[i]))
                 return false;
         }
 

@@ -29,6 +29,15 @@ public class Salesman {
         return password;
     }
 
+    /*
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }*/
+
     @Override
     public boolean equals (Object object) {
         if (object != null && object instanceof Salesman) {
@@ -84,7 +93,6 @@ public class Salesman {
         }
         return false;
     }
-// ----------------------------------------------------------------------------
 
     public boolean closeBill(Bill bill, Terminal terminal) {
         if (bill !=null && terminal != null) {
@@ -99,16 +107,7 @@ public class Salesman {
         }
         return false;
     }
-/*
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
-
-
-    public void setPassword(String password) {
-        this.password = password;
-    }*/
 
     @Override
     public String toString() {
@@ -117,3 +116,4 @@ public class Salesman {
                 '}';
     }
 }
+// ----------------------------------------------------------------------------
