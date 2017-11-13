@@ -13,7 +13,6 @@ public class TerminalTest {
 
     private Product[] p;
     private Salesman[] s;
-    private Bill[] bills;
 
 
     private Terminal t;
@@ -25,8 +24,6 @@ public class TerminalTest {
         p = new Product[DEFAULT_COUNT_PRODUCTS];
 
         s = new Salesman[DEFAULT_COUNT_SALESMEN];
-
-        bills = new Bill[DEFAULT_COUNT_BILLS];
 
         t = new Terminal(s);
 
@@ -70,7 +67,6 @@ public class TerminalTest {
     public void closeAndSaveBill() throws Exception {
         addProduct();
         Bill b = t.closeAndSaveBill();
-        bills[0] = b;
         assertNotNull(b.getSalesMan());
         assertEquals(3, b.getNumProd());
     }

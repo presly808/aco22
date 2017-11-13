@@ -10,7 +10,6 @@ public class BillTest {
     public static final int DEFAULT_COUNT_PRODUCTS = 100;
 
     private Product[] p;
-    private Salesman saler;
     private Bill b;
 
     @Before
@@ -19,8 +18,6 @@ public class BillTest {
         for (int i = 0; i < p.length; i++) {
             p[i] = Utils.generateProduct();
         }
-        saler = Utils.generateSalesman();
-        b = new Bill(saler);
     }
 
     @Test

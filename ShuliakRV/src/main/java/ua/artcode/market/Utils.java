@@ -8,8 +8,7 @@ public class Utils {
 
     public static Product generateProduct() {
 
-        String[] s =
-                {"Meat", "Fish", "Fruit", "Vegetable", "Sausage"};
+        String[] s = {"Meat", "Fish", "Fruit", "Vegetable", "Sausage"};
 
         return new Product(s[(int) (Math.random() * s.length)] +
                 (int) (Math.random() * DEFAULT_COUNT_PRODUCTS),
