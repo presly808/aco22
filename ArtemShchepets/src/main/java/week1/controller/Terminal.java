@@ -6,7 +6,6 @@ import week1.model.Seller;
 import week1.model.Time;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Terminal {
 
@@ -21,7 +20,7 @@ public class Terminal {
     private int currentSellerIndex = -1;
     private int currentBillIndex = -1;
 
-    boolean isSignIn = false;
+   private boolean isSignIn = false;
 
     public Terminal() {
     }
@@ -367,13 +366,34 @@ public class Terminal {
 
         if (bills == null || sellers == null) System.out.println("Sry, we haven't any bills or sellers!");
 
-        double maxPriceBill = bills[0].getBillCost();
-        double minPriceBill = bills[0].getBillCost();
+        double maxPriceBill = findMaxPriceBill();
+        double minPriceBill = findMinPriceBill();
 
-
-        int soldProducts = 0;
+        int soldProducts = calculateSumOfSoldProducts();
 
         Seller[] bestSalesMan = getTopNofSalesMan(1);
+
+        return (String.format("***Statistic***\n " +
+                "The highest price of bill: %f\n " +
+                "The lowest price of bill: %f\n " +
+                "There are %d sold products now!\n " +
+                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan[0].toString()));
+
+    }
+
+    private int calculateSumOfSoldProducts() {
+        int soldProducts = 0;
+
+        if (currentBillIndex > -1) {
+            for (int i = 0; i <= currentBillIndex; i++) {
+                soldProducts += bills[i].getActualSizeOfList();
+            }
+        }
+        return soldProducts;
+    }
+
+    private double findMaxPriceBill() {
+        double maxPriceBill = bills[0].getBillCost();
 
         // find maxPriceBill
         if (currentBillIndex > -1) {
@@ -384,6 +404,12 @@ public class Terminal {
             }
         }
 
+        return  maxPriceBill;
+    }
+
+    private double findMinPriceBill() {
+        double minPriceBill = bills[0].getBillCost();
+
         //find minPriceBill
         if (currentBillIndex > -1) {
             for (int i = 0; i <= currentBillIndex; i++) {
@@ -393,19 +419,6 @@ public class Terminal {
             }
         }
 
-        // calculate the sum of sold products
-        if (currentBillIndex > -1) {
-            for (int i = 0; i <= currentBillIndex; i++) {
-                soldProducts += bills[i].getActualSizeOfList();
-            }
-        }
-
-        return (String.format("***Statistic***\n " +
-                "The highest price of bill: %f\n " +
-                "The lowest price of bill: %f\n " +
-                "There are %d sold products now!\n " +
-                "Best salesman: %s", maxPriceBill, minPriceBill, soldProducts, bestSalesMan[0].toString()));
-
+        return minPriceBill;
     }
-
 }

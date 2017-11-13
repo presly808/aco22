@@ -8,56 +8,13 @@ import week1.model.Time;
 
 import java.util.Scanner;
 
+import static week1.view.OutputMessages.*;
+
 public class ConsoleView {
 
-    public void runMenu() {
-        Seller[] sellers = new Seller[5];
-
-        sellers[0] = new Seller("NadyaHoroshun", 22, "worker1", "password1");
-        sellers[1] = new Seller("AntonVorobey", 17, "worker2", "password2");
-        sellers[2] = new Seller("VasyaPupkin", 59, "worker3", "password3");
-        sellers[3] = new Seller("AnyaTupova", 14, "worker4", "password4");
-        sellers[4] = new Seller(null, 20, "worker5", "password5");
-
-
-        Product product1 = new Product("Milk", 11.20, "#03242341");
-        Product product2 = new Product("Cheese", 2.05, "#0341");
-        Product product3 = new Product("Water", 33.5, "#01");
-        Product product4 = new Product(null, 7.55, "#222");
-
-
-        Bill[] bills = new Bill[3];
-        bills[0] = new Bill(sellers[4]);
-        bills[1] = new Bill(sellers[0]);
-        bills[2] = new Bill(sellers[3]);
-
-        bills[0].addProduct(product4);
-        bills[1].addProduct(product1);
-        bills[1].addProduct(product2);
-        bills[2].addProduct(product1);
-        bills[2].addProduct(product2);
-        bills[2].addProduct(product3);
-        bills[2].addProduct(product4);
-
-        bills[0].setTime(new Time(12, 12, 12));
-        bills[1].setTime(new Time(10, 8, 40));
-        bills[2].setTime(new Time(23, 10, 44));
-
-        Terminal terminal = new Terminal(bills, sellers);
-
+    public void runMenu(Terminal terminal) {
         do {
-
-            System.out.println("\n***WELCOME TO THE TERMINAL!***");
-            System.out.println("1: Login.\n" +
-                    "2: Create bill.\n" +
-                    "3: Add product. \n" +
-                    "4: Close and Save bill. \n" +
-                    "5: Find bill by id. \n" +
-                    "6: Find salesman by login or full name.\n" +
-                    "7: Get top of Salesman.\n" +
-                    "8: Get some statistic.\n" +
-                    "q: Exit from terminal.");
-            System.out.println("\nChoose what you want to do: ");
+            consoleWelcomeMessage();
 
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.nextLine();
@@ -65,40 +22,24 @@ public class ConsoleView {
             switch (choice) {
                 case "1":
                     System.out.println("Enter your login: ");
-
                     String login = scanner.next();
 
                     System.out.println("Enter your password: ");
-
                     String password = scanner.next();
 
                     System.out.println("\nTrying to sign in...\n");
 
                     terminal.signIn(login, password);
-                    scanner.next();
+                    scanner.next(); //dk how to stop for a little my console app except this way
                     break;
                 case "2":
                     if (!terminal.isSignIn()) {
                         System.out.println("Firstly, you should sign in!");
                     } else {
 
-                        if (terminal.getActualSizeOfBills() > 1) {
+                        checkIsClosedAllPreviousBills(scanner, terminal);
 
-                            System.out.println("Firstly, to continue you should close all previous bills!");
-
-                            System.out.println("Set close time. Like this --> 12:12:12");
-
-                            String parsingTime = scanner.next();
-
-                            String[] parsedTime = parsingTime.split(":");
-
-                            Time closeTime = new Time(Integer.decode(parsedTime[0]),
-                                    Integer.decode(parsedTime[1]), Integer.decode(parsedTime[2]));
-
-                            terminal.closeAllPreviousBills(closeTime);
-                        }
-
-                        Bill newBill = new Bill(sellers[terminal.getCurrentSellerIndex()]);
+                        Bill newBill = new Bill(terminal.getSellers()[terminal.getCurrentSellerIndex()]);
 
                         // set actual id for new bill
                         newBill.setId(terminal.getActualSizeOfBills() + 1);
@@ -107,36 +48,14 @@ public class ConsoleView {
 
                         // fill the list of products in new bill
                         do {
-                            // TODO check valid input
-                            System.out.println("Enter product name: ");
-                            String newProductName = scanner.next();
-
-                            System.out.println("Enter product price: ");
-                            double newProductPrice = scanner.nextDouble();
-
-                            System.out.println("Enter product code: ");
-                            String newProductCode = "#" + scanner.next();
-
-                            newBill.getBillList()[newBill.getActualSizeOfList()] = new Product(newProductName, newProductPrice, newProductCode);
-                            newBill.setActualSizeOfList(newBill.getActualSizeOfList() + 1);
-
-                            System.out.println("Want to add another one product? Type \"y\" if you want and anything else - if not.");
-                            toContinue = ("y".equals(scanner.next()));
-
+                            toContinue = fillListOfProducts(scanner, newBill);
                         } while (toContinue);
 
                         // TODO check valid input
-                        // set close time for the bill
-                        System.out.println("Set close time. Like this --> 12:12:12");
-                        String parsingTime = scanner.next();
-
-                        String[] parsedTime = parsingTime.split(":");
-
-                        newBill.getTime().setHours(Integer.decode(parsedTime[0]));
-                        newBill.getTime().setMinutes(Integer.decode(parsedTime[1]));
-                        newBill.getTime().setSeconds(Integer.decode(parsedTime[2]));
+                        newBill.setTime(parseInputClosingTime(scanner));
 
                         newBill.setId(terminal.getActualSizeOfBills());
+
                         newBill.calculateBill();
 
                         if (terminal.createBill(newBill))
@@ -148,21 +67,7 @@ public class ConsoleView {
                     break;
                 case "3":
 
-                    if (terminal.getActualSizeOfBills() > 1) {
-
-                        System.out.println("Firstly, to continue you should close all previous bills!");
-
-                        System.out.println("Set close time. Like this --> 12:12:12");
-
-                        String parsingTime = scanner.next();
-
-                        String[] parsedTime = parsingTime.split(":");
-
-                        Time closeTime = new Time(Integer.decode(parsedTime[0]),
-                                Integer.decode(parsedTime[1]), Integer.decode(parsedTime[2]));
-
-                        terminal.closeAllPreviousBills(closeTime);
-                    }
+                    checkIsClosedAllPreviousBills(scanner, terminal);
 
                     System.out.println("Enter product name: ");
                     String newProductName = scanner.next();
@@ -182,17 +87,7 @@ public class ConsoleView {
                     }
                     break;
                 case "4":
-
-                    System.out.println("Set close time. Like this --> 12:12:12");
-
-                    String parsingTime = scanner.next();
-
-                    String[] parsedTime = parsingTime.split(":");
-
-                    Time closeTime = new Time(Integer.decode(parsedTime[0]),
-                            Integer.decode(parsedTime[1]), Integer.decode(parsedTime[2]));
-
-                    if (terminal.closeAndSaveBill(closeTime)) {
+                    if (terminal.closeAndSaveBill(parseInputClosingTime(scanner))) {
                         System.out.println("Bill was closed!");
                     } else {
                         System.out.println("Bill wasn't closed!");
@@ -219,7 +114,7 @@ public class ConsoleView {
 
                     Seller searchingSeller = terminal.findSalesmanByLoginOrFullname(scanner.next());
                     if (searchingSeller == null) {
-                        System.out.println("We can't find salesman with suck login\\full name.");
+                        System.out.println("We can't find salesman with such login\\full name.");
                     } else System.out.println(searchingSeller.toString());
                     break;
                 case "7":
@@ -238,10 +133,8 @@ public class ConsoleView {
                             System.out.println(topSellers[i].toString());
                         }
                     }
-
                     break;
                 case "8":
-                    System.out.println("***STATISTIC***");
                     System.out.println(terminal.doSomeStatisticStuff());
                     break;
                 case "q":
@@ -251,6 +144,46 @@ public class ConsoleView {
                     break;
             }
         } while (true);
+    }
+
+    private void checkIsClosedAllPreviousBills(Scanner scanner, Terminal terminal) {
+        if (terminal.getActualSizeOfBills() > 1) {
+
+            terminal.closeAllPreviousBills(parseInputClosingTime(scanner));
+        }
+    }
+
+    private Time parseInputClosingTime(Scanner scanner) {
+        System.out.println("Firstly, to continue you should close all previous bills!");
+
+        System.out.println("Set close time. Like this --> 12:12:12");
+
+        String parsingTime = scanner.next();
+
+        String[] parsedTime = parsingTime.split(":");
+
+        return new Time(Integer.decode(parsedTime[0]),
+                Integer.decode(parsedTime[1]), Integer.decode(parsedTime[2]));
+    }
+
+    private boolean fillListOfProducts(Scanner scanner, Bill newBill) {
+
+        // TODO check valid input
+        System.out.println("Enter product name: ");
+        String newProductName = scanner.next();
+
+        System.out.println("Enter product price: ");
+        double newProductPrice = scanner.nextDouble();
+
+        System.out.println("Enter product code: ");
+        String newProductCode = "#" + scanner.next();
+
+        newBill.getBillList()[newBill.getActualSizeOfList()] = new Product(newProductName, newProductPrice, newProductCode);
+        newBill.setActualSizeOfList(newBill.getActualSizeOfList() + 1);
+
+        System.out.println("Want to add another one product? Type \"y\" if you want and anything else - if not.");
+        return ("y".equals(scanner.next()));
+
     }
 
 }

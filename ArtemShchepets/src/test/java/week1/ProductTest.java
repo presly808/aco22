@@ -1,7 +1,5 @@
 package week1;
 
-
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Assert;
 import week1.model.Product;
