@@ -3,7 +3,6 @@ package ua.artcode.market.terminal;
 
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.creator.BillCreator;
-import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 
 import java.util.Arrays;
@@ -44,10 +43,9 @@ public class Terminal {
 
     public boolean login(Salesman salesman) {
         if (salesman != null && this.getSales() == null) {
-
-                this.sales = new Salesman[DEFAULT_SIZE];
-                this.sales[countSalesman] = salesman;
-                return true;
+            this.sales = new Salesman[DEFAULT_SIZE];
+            this.sales[countSalesman] = salesman;
+            return true;
         }
 
         boolean isAtSales = false;
@@ -88,36 +86,27 @@ public class Terminal {
     public Bill createBill(Salesman salesman) {
         if (salesman != null) {
 
-            if (findOpenedBill(salesman) == null) {
+            if (findOpenedBill() == null) {
                 Bill bill = BillCreator.createBill(salesman);
                 bills[freeIndexBills()] = bill;
                 return bill;
             }
-            if (salesman.equals(findOpenedBill(salesman).getSalesman())) {
-                return findOpenedBill(salesman);
+            if (salesman.equals(findOpenedBill().getSalesman())) {
+                return findOpenedBill();
             }
             System.out.println("You have to close the previous opened bill " +
-                    "%s\n" + findOpenedBill(salesman).toString());
+                    "%s\n" + findOpenedBill().toString());
             return null;
         }
         return null;
     }
 
-    private Bill findOpenedBill (Salesman salesman) {
-        int[] bills = new int[2]; //[0] - opened, [1] - closed
-        Bill billOpen = null;
+    private Bill findOpenedBill () {
         if (this.getBills() != null) {
             for (Bill bill : this.getBills()) {
-                if (bill != null && bill.isClosed()) bills[1]++;
-                else if (bill != null && !bill.isClosed()) {
-                    bills[0]++;
-                    if (salesman.equals(bill.getSalesman())) {
-                        return bill;
-                    } else {
-                        billOpen = bill;
-                    }
+                if (bill != null && !bill.isClosed()) {
+                    return bill;
                 }
-                return billOpen;
             }
         }
         return null;

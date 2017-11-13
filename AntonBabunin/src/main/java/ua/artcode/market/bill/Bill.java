@@ -20,7 +20,6 @@ public class Bill {
     private int firstFree;
     private int lastFree;
 
-    private int addedProducts;
 
 /*     This constructor use in app
     public Bill(int id, Product[] products, Salesman salesman,
@@ -56,11 +55,6 @@ public class Bill {
         this.isClosed = isClosed;
         this.firstFree = firstFree;
         this.lastFree = lastFree;
-
-    }
-
-    public void setAddedProducts(int number) {
-        this.addedProducts = number;
     }
 
     public boolean addProduct(Product product) {
@@ -135,7 +129,6 @@ public class Bill {
         return true;
     }
 
-
     public int getId() {
         return id;
     }
@@ -156,7 +149,7 @@ public class Bill {
 //        this.salesman = salesman;
 //    }
 
-    public double getAmountPrice() {
+    private double getAmountPrice() {
         return amountPrice;
     }
 
@@ -164,31 +157,22 @@ public class Bill {
         this.amountPrice = amountPrice;
     }
 
-    public String getCloseTime() {
+    private String getCloseTime() {
         return this.closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    private void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
-    }
-
-    public int getAddedProducts() {
-        return this.addedProducts;
     }
 
     @Override
     public boolean equals(Object object) {
-
-            if (object != null && object instanceof Bill &&
-                    ((Bill) object).getId() == this.id &&
+        return object != null && object instanceof Bill &&
+                ((Bill) object).getId() == this.id &&
                 (Arrays.deepEquals(((Bill) object).getProducts(),
-                        (this.getProducts())) &&
-                ((Bill) object).getAmountPrice() == this.getAmountPrice() &&
+                (this.getProducts())) &&
                 ((Bill) object).getCloseTime().equals(this.getCloseTime()) &&
-                ((Bill) object).getSalesman().equals(this.getSalesman()))) {
-                return true;
-        }
-        return false;
+                ((Bill) object).getSalesman().equals(this.getSalesman()));
     }
 
     @Override
