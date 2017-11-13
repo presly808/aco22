@@ -39,7 +39,8 @@ public class RunTests {
         salesman1.addProduct(terminal1, product5);
         salesman1.addProduct(terminal1, product6);
         boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
-        System.out.println(billIsClosed);
+//        System.out.println(billIsClosed);
+        System.out.println(bill1.toString());
         Assert.assertTrue(billIsClosed);
         /*
         Salesman salesman2 = SalesmanCreator.salesmanCreateAutomatic();

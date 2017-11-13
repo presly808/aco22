@@ -20,7 +20,7 @@ public class Product {
     public Product(int id, String name, double price) {
         this.id = id;
         this.name = name;
-        this.price = round(price, 2);
+        this.price = price;
     }
 
     public int getId() {
@@ -42,10 +42,8 @@ public class Product {
 
     }
 
-    private static double round(double d, int pricise) {
-        return
-        new BigDecimal(d).setScale(pricise, RoundingMode.HALF_UP).doubleValue();
+    @Override
+    public String toString() {
+        return  String.format("%d %s %.2f \n", getId(), getName(),getPrice());
     }
-
-
 }

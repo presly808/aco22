@@ -3,19 +3,22 @@ package ua.artcode.market.creator;
 
 import ua.artcode.market.product.Product;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ProductGeneration {
     private static final int DEFAULT_PRODUCT_NAME = 30;
 
     public static Product generateProduct(){
         int id = generateId();
         String name = generateName();
-        double price = generatePrice();
+        double price = Double.parseDouble(generatePrice());
 
         return new Product(id, name, price);
     }
 
-    private static double generatePrice() {
-        return Math.random()*1000;
+    private static String generatePrice() {
+        return (int)(Math.random()*1000) + "." + (int)(Math.random()*100);
     }
 
     private static String generateName() {

@@ -7,6 +7,7 @@ import ua.artcode.market.product.Product;
 import ua.artcode.market.salesman.Salesman;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Bill {
@@ -61,30 +62,6 @@ public class Bill {
         this.lastFree = lastFree;
 
     }
-
-    public static boolean equals(Product[] products1, Product[] products2) {
-        for (Product product1 : products1) {
-            for (Product product2 : products2) {
-                if (product1 != null && !product1.equals(product2))
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean equals(Bill bill) {
-        return bill != null && this.id == bill.id &&
-                this.salesman.equals(bill.salesman) &&
-                equals(this.getProducts(), bill.getProducts()) &&
-                this.amountPrice == bill.amountPrice &&
-                this.closeTime.equals(bill.closeTime) &&
-                this.isClosed == bill.isClosed &&
-                this.firstFree ==
-                        bill.firstFree &&
-                this.lastFree ==
-                        bill.lastFree;
-    }
-
 
     public void setAddedProducts(int number) {
         this.addedProducts = number;
@@ -203,4 +180,29 @@ public class Bill {
         return this.addedProducts;
     }
 
+    @Override
+    public boolean equals(Object object) {
+
+        if (object != null && object instanceof Bill) {
+            if (((Bill) object).getId() == this.id &&
+                (Arrays.deepEquals(((Bill) object).getProducts(),
+                        (this.getProducts())) &&
+                ((Bill) object).getAmountPrice() == this.getAmountPrice() &&
+                ((Bill) object).getCloseTime().equals(this.getCloseTime()) &&
+                ((Bill) object).getSalesman().equals(this.getSalesman()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{ id=" + id +
+                ",\n products=" + Arrays.toString(products) +
+                ", salesman=" + salesman +
+                ", amountPrice=" + amountPrice +
+                ", closeTime='" + closeTime + '\'' +
+                '}';
+    }
 }

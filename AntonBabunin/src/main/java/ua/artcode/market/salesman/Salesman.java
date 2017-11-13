@@ -21,7 +21,7 @@ public class Salesman {
         return fullName;
     }
 
-    public String getLogin() {
+    private String getLogin() {
         return login;
     }
 
@@ -29,8 +29,11 @@ public class Salesman {
         return password;
     }
 
-    public boolean equals (Salesman salesman) {
-        return salesman != null && this.fullName.equals(salesman.fullName);
+    @Override
+    public boolean equals (Object object) {
+        if (object != null && object instanceof Salesman) {
+            return this.getFullName().equals(((Salesman) object).getFullName());
+        } return false;
     }
 
     // Salesman create a new bill at terminal
@@ -101,4 +104,11 @@ public class Salesman {
     public void setPassword(String password) {
         this.password = password;
     }*/
+
+    @Override
+    public String toString() {
+        return "Salesman{" +
+                "fullName='" + fullName + '\'' +
+                '}';
+    }
 }
