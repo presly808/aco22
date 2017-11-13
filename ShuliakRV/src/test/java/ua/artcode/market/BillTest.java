@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class BillTest {
 
-    public static final int DEFAULT_COUNT_PRODUCTS = 100;
+    private static final int DEFAULT_COUNT_PRODUCTS = 100;
 
     private Product[] p;
     private Bill b;
