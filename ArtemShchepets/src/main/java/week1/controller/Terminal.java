@@ -1,8 +1,9 @@
-package week1.exclude;
+package week1.controller;
 
-import week1.Bill;
-import week1.Product;
-import week1.Seller;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Seller;
+import week1.model.Time;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -178,55 +179,18 @@ public class Terminal {
         }
     }
 
-    public void createBill() {
+    public boolean createBill(Bill newBill) {
 
         // check if salesman is signed in
-        if (!isSignIn) {
+        if (currentSellerIndex == -1) {
             System.out.println("Firstly, you should sign in!");
+            return false;
+        }
+
+        if (newBill == null) {
+            System.out.println("Bill is null.");
+            return false;
         } else {
-
-            Bill newBill = new Bill(sellers[currentSellerIndex]);
-
-            // set actual id for new bill
-            newBill.setId(actualSizeOfBills + 1);
-
-            Scanner scanner = new Scanner(System.in);
-
-            boolean toContinue;
-
-            // fill the list of products in new bill
-            do {
-                // TODO check valid input
-                System.out.println("Enter product name: ");
-                String newProductName = scanner.next();
-
-                System.out.println("Enter product price: ");
-                double newProductPrice = scanner.nextDouble();
-
-                System.out.println("Enter product code: ");
-                String newProductCode = "#" + scanner.next();
-
-                newBill.getBillList()[newBill.getActualSizeOfList()] = new Product(newProductName, newProductPrice, newProductCode);
-                newBill.setActualSizeOfList(newBill.getActualSizeOfList() + 1);
-
-                System.out.println("Want to add another one product? Type \"y\" if you want and anything else - if not.");
-                toContinue = ("y".equals(scanner.next()));
-
-            } while (toContinue);
-
-            // TODO check valid input
-            // set close time for the bill
-            System.out.println("Set close time. Like this --> 12:12:12");
-            String parsingTime = scanner.next();
-
-            String[] parsedTime = parsingTime.split(":");
-
-            newBill.getTime().setHours(Integer.decode(parsedTime[0]));
-            newBill.getTime().setMinutes(Integer.decode(parsedTime[1]));
-            newBill.getTime().setSeconds(Integer.decode(parsedTime[2]));
-
-            newBill.setId(actualSizeOfBills);
-            newBill.calculateBill();
 
             //add new bill to the terminal
             if (currentBillIndex == -1) {
@@ -236,6 +200,8 @@ public class Terminal {
                 bills[actualSizeOfBills] = newBill;
                 actualSizeOfBills++;
                 currentBillIndex = actualSizeOfBills - 1;
+
+                return true;
 
             } else {
 
@@ -249,6 +215,7 @@ public class Terminal {
                     actualSizeOfBills++;
                     currentBillIndex = actualSizeOfBills - 1;
 
+                    return true;
                 } else {
 
                     bills[actualSizeOfBills] = newBill;
@@ -256,78 +223,72 @@ public class Terminal {
                     actualSizeOfBills++;
                     currentBillIndex = actualSizeOfBills - 1;
 
+                    return true;
                 }
             }
-
-            System.out.println("***BILL IS CREATED***");
         }
     }
 
-    public void addProductToBill() {
+    public boolean closeAllPreviousBills(Time closeTime) {
+
+        if (bills != null) {
+            for (int i = 0; i < actualSizeOfBills - 1; i++) {
+                if (!bills[i].isClosed()) bills[i].closeBill(closeTime);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean addProductToBill(Product newProduct) {
 
         if (!isSignIn) {
-
             System.out.println("Firstly, you should sign in!");
-
+            return false;
         } else {
 
-            if (currentBillIndex == -1) {
-
-                System.out.println("There aren't any bills in terminal!");
-
+            if (newProduct == null) {
+                System.out.println("Product is null");
+                return false;
             } else {
 
-                if (bills[actualSizeOfBills - 1].isClosed()) {
-
-                    System.out.println("You can't add products. Bill is closed!");
+                if (currentBillIndex == -1) {
+                    System.out.println("There aren't any bills in terminal!");
+                    return false;
 
                 } else {
 
-                    Scanner scanner = new Scanner(System.in);
+                    if (bills[actualSizeOfBills - 1].isClosed()) {
+                        System.out.println("You can't add products. Bill is closed!");
+                        return false;
 
-                    System.out.println("Enter product name: ");
-                    String newProductName = scanner.next();
+                    } else return bills[actualSizeOfBills - 1].addProduct(newProduct);
 
-                    System.out.println("Enter product price: ");
-                    double newProductPrice = scanner.nextDouble();
-
-                    System.out.println("Enter product code: ");
-                    String newProductCode = "#" + scanner.next();
-
-                    Product newProduct = new Product(newProductName, newProductPrice, newProductCode);
-
-                    bills[actualSizeOfBills - 1].addProduct(newProduct);
                 }
             }
         }
     }
 
-    public void closeAndSaveBill() {
+    public boolean closeAndSaveBill(Time time) {
 
         if (!isSignIn) {
             System.out.println("Firstly, you should sign in!");
+            return false;
         } else {
 
             if (currentBillIndex == -1) {
                 System.out.println("Sorry, there aren't any bills in the terminal!");
+                return false;
             } else {
 
                 if (bills[currentBillIndex].isClosed()) {
                     System.out.println("Sorry, this bill is already closed!");
+                    return false;
                 } else {
 
-                    Scanner scanner = new Scanner(System.in);
-
-                    System.out.println("Enter a close time. Like this --> 12:12:12\n");
-                    String parsingTime = scanner.next();
-
-                    String[] parsedTime = parsingTime.split(":");
-
-                    bills[currentBillIndex].getTime().setHours(Integer.decode(parsedTime[0]));
-                    bills[currentBillIndex].getTime().setMinutes(Integer.decode(parsedTime[1]));
-                    bills[currentBillIndex].getTime().setSeconds(Integer.decode(parsedTime[2]));
-
-                    bills[currentBillIndex].closeBill();
+                    return bills[currentBillIndex].closeBill(time);
                 }
             }
         }
@@ -350,7 +311,9 @@ public class Terminal {
         if (loginOrNameOfSalesMan == null || "".equals(loginOrNameOfSalesMan) || sellers == null) return null;
 
         for (int i = 0; i < actualSizeOfSellers; i++) {
-            if ((sellers[i].getName() != null && sellers[i].getLogin() != null) && (sellers[i].getLogin().equals(loginOrNameOfSalesMan) || sellers[i].getName().equals(loginOrNameOfSalesMan)))
+            if ((sellers[i].getName() != null && sellers[i].getLogin() != null)
+                    && (sellers[i].getLogin().equals(loginOrNameOfSalesMan)
+                    || sellers[i].getName().equals(loginOrNameOfSalesMan)))
                 return sellers[i];
         }
 
@@ -362,11 +325,10 @@ public class Terminal {
         if (quantityOfTopSellers <= 0 || sellers == null || quantityOfTopSellers > sellers.length) return null;
 
         // calculate sold products
-
-        // TODO if used second time appears a bug with doubled sold products
         for (int i = 0; i < actualSizeOfSellers; i++) {
             for (int j = 0; j < actualSizeOfBills; j++) {
-                if (sellers[i].getName() != null && sellers[i].getName().equals(bills[j].getSeller().getName())) {
+                if (sellers[i].getName() != null && sellers[i].getSoldProducts() == 0
+                        && sellers[i].getName().equals(bills[j].getSeller().getName())) {
                     sellers[i].setSoldProducts(sellers[i].getSoldProducts() + bills[j].getActualSizeOfList());
                 }
             }

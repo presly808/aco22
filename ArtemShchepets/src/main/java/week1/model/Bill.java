@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 public class Bill {
 
@@ -27,7 +27,7 @@ public class Bill {
 
     public Bill(Seller seller) {
         this.billList = new Product[DEFAULT_SIZE_OF_LIST];
-        this.time = new Time(00,00,00);
+        this.time = new Time(00, 00, 00);
         this.seller = seller;
     }
 
@@ -102,17 +102,22 @@ public class Bill {
         } else System.out.println("Sorry, bill is closed!");
     }
 
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
 
         if (!isClosed) {
             if (product == null) {
                 System.out.println("ENTER REAL PRODUCT!");
+                return false;
             } else {
 
                 billList[actualSizeOfList] = product;
                 actualSizeOfList++;
+                return true;
             }
-        } else System.out.println("Sorry, bill is closed!");
+        } else  {
+            System.out.println("Sorry, bill is closed!");
+            return false;
+        }
     }
 
     public String showInfo() {
@@ -125,10 +130,21 @@ public class Bill {
 
         resultString += time.toString() + "\n" + seller.toString();
 
-        return   isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
+        return isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
     }
 
-    public void closeBill() {
-        isClosed = true;
+    public boolean closeBill(Time closeTime) {
+
+        if (closeTime == null ||
+                (closeTime.getHours() < 0 || closeTime.getHours() > 24)
+                || (closeTime.getMinutes() < 0 || closeTime.getMinutes() > 60)
+                || (closeTime.getSeconds() < 0 || closeTime.getSeconds() > 60)) {
+            System.out.println("Time is invalid!");
+            return false;
+        } else {
+            time = closeTime;
+            isClosed = true;
+            return true;
+        }
     }
 }
