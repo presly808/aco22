@@ -1,6 +1,8 @@
-import Utils.DateUtils;
-import Utils.StringGenerator;
-import Utils.TerminalUtils;
+package utilsTests;
+
+import utils.DateUtils;
+import utils.StringGenerator;
+import utils.TerminalUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +24,8 @@ public class UtilsTests {
 
     @Test
     public void testTerminalUtils(){
-        Assert.assertTrue(TerminalUtils.longIdGenerator() != TerminalUtils.longIdGenerator());
+        Assert.assertTrue(TerminalUtils.longIdGenerator()
+                                != TerminalUtils.longIdGenerator());
     }
 
 }

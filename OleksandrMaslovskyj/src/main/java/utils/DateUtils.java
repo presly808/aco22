@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,8 @@ import java.util.Date;
 public class DateUtils {
 
     public static Date getCurrentDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
         Date date = new Date();
         String creationDate = simpleDateFormat.format(date);
         Date parse = null;

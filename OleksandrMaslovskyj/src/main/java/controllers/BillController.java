@@ -1,6 +1,6 @@
 package controllers;
 
-import Utils.TerminalUtils;
+import utils.TerminalUtils;
 import interfaces.IBill;
 import models.Bill;
 import models.Product;
@@ -18,14 +18,14 @@ public class BillController implements IBill{
 
     public Product addProductToBill(Bill bill, String productName){
         Product product = new Product(TerminalUtils.longIdGenerator(),
-                                            productName, new Random().nextDouble());
+                            productName, new Random().nextDouble());
         bill.setProducts(product);
         return product;
     }
 
     public void closeBill(Bill bill) {
-        bill.setCloseTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
-        bill = null;
+        bill.setCloseTime(new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss.SSS").toString());
     }
 
     public double calculateAmountPrice(Bill bill) {

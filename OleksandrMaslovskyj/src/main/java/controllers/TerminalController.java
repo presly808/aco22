@@ -35,10 +35,13 @@ public class TerminalController implements ITerminal{
 
     //TODO add validation
     public Bill findBillById(long id) {
-        return billController.getBillSet().stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
+        return billController.getBillSet().
+                stream().filter(bill -> bill.getId() == id).
+                collect(Collectors.toSet()).iterator().next();
     }
 
-    public Salesman findSalesmanByLoginOrFullName(String fullName, String login) {
+    public Salesman findSalesmanByLoginOrFullName(String fullName,
+                                                    String login) {
         Set<Bill> billSet = billController.getBillSet();
         return billSet.stream().filter((Bill bill) -> {
             Salesman salesman = bill.getSalesman();

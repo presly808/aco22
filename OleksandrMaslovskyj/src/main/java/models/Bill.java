@@ -1,7 +1,7 @@
 package models;
 
-import Utils.DateUtils;
-import Utils.TerminalUtils;
+import utils.DateUtils;
+import utils.TerminalUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

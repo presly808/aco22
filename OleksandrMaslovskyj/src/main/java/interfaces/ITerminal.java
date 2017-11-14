@@ -3,10 +3,8 @@ package interfaces;
 import models.Bill;
 import models.Product;
 import models.Salesman;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public interface ITerminal {
 

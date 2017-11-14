@@ -48,6 +48,7 @@ public class Salesman implements Comparable<Salesman>{
 
     @Override
     public int compareTo(Salesman o) {
-        return this.getFullname().equals(o.getFullname()) && this.getLogin().equals(o.getLogin()) ? 1 : 0;
+        return this.getFullname().equals(o.getFullname())
+                && this.getLogin().equals(o.getLogin()) ? 1 : 0;
     }
 }

@@ -1,3 +1,5 @@
+package logicTests;
+
 import controllers.BillController;
 import models.Bill;
 import models.Product;

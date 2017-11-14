@@ -1,5 +1,7 @@
-import Utils.StringGenerator;
-import Utils.TerminalUtils;
+package logicTests;
+
+import utils.StringGenerator;
+import utils.TerminalUtils;
 import controllers.TerminalController;
 import models.Bill;
 import models.Product;
@@ -60,14 +62,16 @@ public class TerminalTests {
         for (int i = 0; i < salesManQuantity; i++) {
             Bill bill = new Bill();
             salesManName = StringGenerator.generateName();
-            String salesManPassword = String.valueOf(TerminalUtils.longIdGenerator());
+            String salesManPassword = String.valueOf(
+                                TerminalUtils.longIdGenerator());
             Bill addedBills = terminal.createBill(bill);
             Salesman salesman = new Salesman(salesManName, salesManPassword);
             salesman.setFullname(salesManName);
             addedBills.setSalesman(salesman);
         }
 
-        Salesman salesman = terminal.findSalesmanByLoginOrFullName(salesManName, null);
+        Salesman salesman = terminal.
+                    findSalesmanByLoginOrFullName(salesManName, null);
         Assert.assertNotNull("Salesman found", salesman);
         Assert.assertEquals(salesManName, salesman.getFullname());
     }
@@ -94,16 +98,18 @@ public class TerminalTests {
     @Test
     public void testGetBillsByStartAndEndDates(){
         TerminalController terminalController = generateBills();
-        List<Bill> billList = terminalController.getBillsByStartAndEndDates(new Date(System.currentTimeMillis()),
-                                                                            new Date(System.currentTimeMillis() +
-                                                                                            Integer.MAX_VALUE));
+        List<Bill> billList = terminalController.
+                getBillsByStartAndEndDates(new Date(System.currentTimeMillis()),
+                                    new Date(System.currentTimeMillis() +
+                                        Integer.MAX_VALUE));
         Assert.assertTrue(billList.size() == 0);
     }
 
     @Test
     public void testGetBillsByCreator(){
         TerminalController terminalController = generateBills();
-        List<Bill> billList = terminalController.getBillsByCreator(new Salesman("", ""));
+        List<Bill> billList = terminalController.
+                getBillsByCreator(new Salesman("", ""));
         Assert.assertTrue(billList.isEmpty());
     }
 
@@ -111,7 +117,9 @@ public class TerminalTests {
         TerminalController terminalController = new TerminalController();
         for (int i = 0; i < 100; i++) {
             Bill bill = terminalController.createBill(new Bill());
-            bill.setSalesman(new Salesman(StringGenerator.generateName(), StringGenerator.generateName()));
+            bill.setSalesman(
+                    new Salesman(StringGenerator.generateName(),
+                            StringGenerator.generateName()));
         }
         return terminalController;
     }
