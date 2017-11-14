@@ -1,8 +1,5 @@
 package hw1.model;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 public class Salesman {
 
     private String fullName;

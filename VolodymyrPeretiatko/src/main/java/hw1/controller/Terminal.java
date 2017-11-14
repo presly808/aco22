@@ -8,7 +8,6 @@ import hw1.utils.LogSout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 
 public class Terminal implements ITerminal {
