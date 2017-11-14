@@ -27,6 +27,4 @@ public class BillCreator {
 
         return (int) (Math.random()*10000);
     }
-
-
 }

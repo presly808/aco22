@@ -13,7 +13,8 @@ public class RunTestProduct {
     @Test
     public void testProductCreation() {
         ProductAbstract actual = generateProduct();
-        ProductAbstract expected = new Product(actual.getId(), actual.getName(), actual.getPrice());
+        ProductAbstract expected = new Product(actual.getId(),
+                                        actual.getName(), actual.getPrice());
         Assert.assertTrue(expected.equals(actual));
     }
 

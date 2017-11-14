@@ -1,6 +1,6 @@
 package ua.artcode.market.salesman;
 
-import ua.artcode.market.Interfaces.ITerminal;
+import ua.artcode.market.myinterfaces.ITerminal;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.product.Product;
 import ua.artcode.market.terminal.Terminal;
@@ -31,41 +31,7 @@ public class Salesman extends PersonAbstractClass implements ITerminal{
                 ((Terminal)object).createBill(this) : null;
     }
 
-    /*
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }*/
-
-    // Salesman create a new bill at terminal
-
-
-/*    public void login (Terminal terminal) {
-        if (terminal != null) {
-            Scanner scanner = new Scanner(System.in);
-            String login = "";
-            do {
-                System.out.println("Enter your login:");
-                login = scanner.nextLine();
-            } while (login.isEmpty());
-            String password = "";
-            do {
-                System.out.println("Enter your password:");
-                password = scanner.nextLine();
-            } while (password.isEmpty());
-
-            if (this.getLogin().equals(login) &&
-            this.getPassword().equals(password)) {
-                terminal.login(this);
-            }
-        }
-    }
-
-*/
-    public boolean loginAutomatic (Terminal terminal) {
+    public boolean login(Terminal terminal) {
         for (int i = 0; i < terminal.getSales().length; i++) {
             if ((this.login.equals(terminal.getSales()[i].getLogin()) &&
                 this.password.equals((terminal.getSales()[i].getPassword())))) {
