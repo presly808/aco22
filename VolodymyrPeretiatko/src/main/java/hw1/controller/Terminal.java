@@ -3,9 +3,12 @@ package hw1.controller;
 import hw1.model.Bill;
 import hw1.model.Product;
 import hw1.model.Salesman;
+import hw1.utils.ILogger;
+import hw1.utils.LogSout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 
 public class Terminal implements ITerminal {
@@ -15,6 +18,8 @@ public class Terminal implements ITerminal {
     private ArrayList<Bill> bills;
     private ArrayList<Salesman> salesmen;
     private ArrayList<Product> products;
+
+    private ILogger log = new LogSout();
 
     public static synchronized Terminal getInstance(){
         if (uniqueInstance == null){
@@ -44,6 +49,9 @@ public class Terminal implements ITerminal {
     }
 
     public boolean addSalesman(Salesman salesman){
+        if (log != null)
+            log.info(Terminal.class, "add salesman " + salesman);
+
         if (salesmen.contains(salesman))
             return false;
 
@@ -53,16 +61,27 @@ public class Terminal implements ITerminal {
     public Salesman login(String name, String pass){
         Salesman salesman = getSalesmanByName(salesmen, name);
         if (salesman != null && pass.equals(salesman.getPass())){
+            if (log != null)
+                log.info(Terminal.class, "Salesman logged in " + salesman);
             return salesman;
         }
+        if (log != null)
+            log.error(Terminal.class, "Wrong authentification data" + name);
+
         return null;
     }
 
     public Bill createBill(int id, Salesman salesman){
-        return new Bill(id, salesman);
+        Bill b = new Bill(id, salesman);
+        if (log != null)
+            log.info(Terminal.class, "New bill was created! " + b);
+        return b;
     }
 
     public boolean closeAndSaveBill(Bill bill){
+        if (log != null)
+            log.info(Terminal.class, "Bill was closed " + bill);
+
         return bills.add(bill.closeBill());
     }
 
