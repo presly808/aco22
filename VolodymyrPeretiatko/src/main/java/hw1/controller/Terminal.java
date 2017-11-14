@@ -40,7 +40,6 @@ public class Terminal implements ITerminal {
                 return  s;
             }
         }
-
         return null;
     }
 
