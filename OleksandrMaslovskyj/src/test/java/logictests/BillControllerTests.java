@@ -1,4 +1,4 @@
-package logicTests;
+package logictests;
 
 import controllers.BillController;
 import models.Bill;

@@ -1,4 +1,4 @@
-package logicTests;
+package logictests;
 
 import org.junit.Assert;
 import utils.StringGenerator;

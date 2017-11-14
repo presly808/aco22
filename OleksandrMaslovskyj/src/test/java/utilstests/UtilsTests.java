@@ -1,4 +1,4 @@
-package utilsTests;
+package utilstests;
 
 import utils.DateUtils;
 import utils.StringGenerator;

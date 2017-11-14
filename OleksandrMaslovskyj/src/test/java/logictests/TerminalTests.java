@@ -1,4 +1,4 @@
-package logicTests;
+package logictests;
 
 import utils.StringGenerator;
 import utils.TerminalUtils;
