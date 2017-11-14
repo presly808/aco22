@@ -1,6 +1,4 @@
-package hw1;
-
-import java.util.ArrayList;
+package hw1.model;
 
 public class Salesman {
 
@@ -12,21 +10,6 @@ public class Salesman {
         this.fullName = fullName;
         this.name = name;
         this.pass = pass;
-    }
-
-    public static Salesman getSalesmanByName(ArrayList<Salesman> salesmen, String name){
-
-        if (name == null){
-            return null;
-        }
-
-        for (Salesman s : salesmen){
-            if(name.equals(s.name)){
-                return  s;
-            }
-        }
-
-        return null;
     }
 
     public String getFullName() {
