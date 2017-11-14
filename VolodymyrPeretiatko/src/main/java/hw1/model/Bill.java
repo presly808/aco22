@@ -20,16 +20,6 @@ public class Bill implements Comparable {
         this.amountPrice = 0.0;
     }
 
-    public static Bill findBillById(ArrayList<Bill> bills, int id){
-
-        for (Bill b : bills){
-            if(b.getId() == id){
-                return b;
-            }
-        }
-        return null;
-    }
-
     public Bill closeBill(){
         setCloseTime(new Date(System.currentTimeMillis()));
         calculateAmountPrice();

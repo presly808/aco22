@@ -76,11 +76,15 @@ public class Terminal implements ITerminal {
             return false;
 
         return products.add(p);
-
     }
 
     public Bill findBillById(int id){
-        return Bill.findBillById(bills, id);
+        for (Bill b : bills){
+            if(b.getId() == id){
+                return b;
+            }
+        }
+        return null;
     }
 
     public Salesman getTopNofSalesMan(){

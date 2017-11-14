@@ -70,7 +70,28 @@ public class TestBill {
     }
 
     @Test
-    public void testSortByDateComparator(){
+    public void testHashCode(){
+
+        Bill b3 = new Bill(1, s1);
+
+        Assert.assertEquals(bill.hashCode(), b3.hashCode());
+        Assert.assertNotEquals(bill.hashCode(), b2.hashCode());
+
+    }
+
+    @Test
+    public void testEquals(){
+
+        Bill b3 = new Bill(1, s1);
+
+        Assert.assertTrue(bill.equals(b3));
+        Assert.assertFalse(bill.equals(b2));
+
+    }
+
+
+    @Test
+    public void testSortingByDateComparator(){
         Bill b1 = new Bill(1, s1);
         Bill b2 = new Bill(2, s1);
         Bill b3 = new Bill(3, s1);
@@ -93,5 +114,17 @@ public class TestBill {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void testSortByDateComparator() {
+        Bill b1 = new Bill(1, s1);
+        Bill b2 = new Bill(2, s1);
 
+        b1.closeBill(new Date(1111111));
+        b2.closeBill(new Date(2222222));
+
+        Bill.SortByDateComparator c =  new Bill.SortByDateComparator();
+
+        Assert.assertTrue((0 > c.compare(b1, b2)));
+
+    }
 }
