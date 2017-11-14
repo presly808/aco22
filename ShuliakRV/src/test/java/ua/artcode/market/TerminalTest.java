@@ -47,7 +47,6 @@ public class TerminalTest {
     @Test
     public void doSomeStatisticStuff() throws Exception {
         t.doSomeStatisticStuff();
-        assertTrue(true);
     }
 
     @Test
