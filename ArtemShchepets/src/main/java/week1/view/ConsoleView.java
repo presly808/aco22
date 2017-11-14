@@ -21,118 +21,27 @@ public class ConsoleView {
 
             switch (choice) {
                 case "1":
-                    System.out.println("Enter your login: ");
-                    String login = scanner.next();
 
-                    System.out.println("Enter your password: ");
-                    String password = scanner.next();
-
-                    System.out.println("\nTrying to sign in...\n");
-
-                    terminal.signIn(login, password);
-                    scanner.next(); //dk how to stop for a little my console app except this way
+                    menuSignIn(scanner, terminal);
                     break;
                 case "2":
-                    if (!terminal.isSignIn()) {
-                        System.out.println("Firstly, you should sign in!");
-                    } else {
-
-                        checkIsClosedAllPreviousBills(scanner, terminal);
-
-                        Bill newBill = new Bill(terminal.getSellers()[terminal.getCurrentSellerIndex()]);
-
-                        // set actual id for new bill
-                        newBill.setId(terminal.getActualSizeOfBills() + 1);
-
-                        boolean toContinue;
-
-                        // fill the list of products in new bill
-                        do {
-                            toContinue = fillListOfProducts(scanner, newBill);
-                        } while (toContinue);
-
-                        // TODO check valid input
-                        newBill.setTime(parseInputClosingTime(scanner));
-
-                        newBill.setId(terminal.getActualSizeOfBills());
-
-                        newBill.calculateBill();
-
-                        if (terminal.createBill(newBill))
-                            System.out.println("Bill is created and added to the terminal!");
-                        else {
-                            System.out.println("Bill wasn't created!");
-                        }
-                    }
+                   menuCreateBill(scanner, terminal);
                     break;
                 case "3":
 
-                    checkIsClosedAllPreviousBills(scanner, terminal);
-
-                    System.out.println("Enter product name: ");
-                    String newProductName = scanner.next();
-
-                    System.out.println("Enter product price: ");
-                    double newProductPrice = scanner.nextDouble();
-
-                    System.out.println("Enter product code: ");
-                    String newProductCode = "#" + scanner.next();
-
-                    Product newProduct = new Product(newProductName, newProductPrice, newProductCode);
-
-                    if (terminal.addProductToBill(newProduct))
-                        System.out.println("Product was added to the last bill!");
-                    else {
-                        System.out.println("Product wasn't added.");
-                    }
+                    menuAddProduct(scanner,terminal);
                     break;
                 case "4":
-                    if (terminal.closeAndSaveBill(parseInputClosingTime(scanner))) {
-                        System.out.println("Bill was closed!");
-                    } else {
-                        System.out.println("Bill wasn't closed!");
-                    }
+                   menuCloseAndSaveBill(scanner,terminal);
                     break;
                 case "5":
-
-                    System.out.println("Enter bill id and we will search for it in our DB.");
-
-                    int id = scanner.nextInt();
-
-                    Bill searchingBill = terminal.findBillById(id);
-
-                    if (searchingBill == null) {
-                        System.out.println("We can't find such bill in our DB.");
-                    } else {
-                        System.out.println("Searching bill: " + searchingBill.toString());
-                    }
+                    menuFindBillById(scanner,terminal);
                     break;
                 case "6":
-
-                    System.out.println("Enter login or full name " +
-                            "and we will search for such salesman in our DB.");
-
-                    Seller searchingSeller = terminal.findSalesmanByLoginOrFullname(scanner.next());
-                    if (searchingSeller == null) {
-                        System.out.println("We can't find salesman with such login\\full name.");
-                    } else System.out.println(searchingSeller.toString());
+                    menuFindSellerByLoginOrName(scanner,terminal);
                     break;
                 case "7":
-
-                    System.out.println("Enter a number of sellers, " +
-                            "which you want to see as top sellers(not more than "
-                            + terminal.getActualSizeOfSellers() + " sellers.");
-
-                    Seller[] topSellers = terminal.getTopNofSalesMan(scanner.nextInt());
-
-                    if (topSellers == null) {
-                        System.out.println("No such info.");
-                    } else {
-                        System.out.println("Top sellers: ");
-                        for (int i = 0; i < topSellers.length; i++) {
-                            System.out.println(topSellers[i].toString());
-                        }
-                    }
+                    menuShowTopSellers(scanner,terminal);
                     break;
                 case "8":
                     System.out.println(terminal.doSomeStatisticStuff());
@@ -144,6 +53,125 @@ public class ConsoleView {
                     break;
             }
         } while (true);
+    }
+
+    private void menuShowTopSellers(Scanner scanner, Terminal terminal) {
+        System.out.println("Enter a number of sellers, " +
+                "which you want to see as top sellers(not more than "
+                + terminal.getActualSizeOfSellers() + " sellers.");
+
+        Seller[] topSellers = terminal.getTopNofSalesMan(scanner.nextInt());
+
+        if (topSellers == null) {
+            System.out.println("No such info.");
+        } else {
+            System.out.println("Top sellers: ");
+            for (int i = 0; i < topSellers.length; i++) {
+                System.out.println(topSellers[i].toString());
+            }
+        }
+    }
+
+    private void menuFindSellerByLoginOrName(Scanner scanner, Terminal terminal) {
+
+        System.out.println("Enter login or full name " +
+                "and we will search for such salesman in our DB.");
+
+        Seller searchingSeller = terminal.findSalesmanByLoginOrFullname(scanner.next());
+        if (searchingSeller == null) {
+            System.out.println("We can't find salesman with such login\\full name.");
+        } else System.out.println(searchingSeller.toString());
+    }
+
+    private void menuFindBillById(Scanner scanner, Terminal terminal) {
+        System.out.println("Enter bill id and we will search for it in our DB.");
+
+        int id = scanner.nextInt();
+
+        Bill searchingBill = terminal.findBillById(id);
+
+        if (searchingBill == null) {
+            System.out.println("We can't find such bill in our DB.");
+        } else {
+            System.out.println("Searching bill: " + searchingBill.toString());
+        }
+    }
+
+    private void menuCloseAndSaveBill(Scanner scanner, Terminal terminal) {
+        if (terminal.closeAndSaveBill(parseInputClosingTime(scanner))) {
+            System.out.println("Bill was closed!");
+        } else {
+            System.out.println("Bill wasn't closed!");
+        }
+    }
+
+    private void menuAddProduct(Scanner scanner, Terminal terminal) {
+        checkIsClosedAllPreviousBills(scanner, terminal);
+
+        System.out.println("Enter product name: ");
+        String newProductName = scanner.next();
+
+        System.out.println("Enter product price: ");
+        double newProductPrice = scanner.nextDouble();
+
+        System.out.println("Enter product code: ");
+        String newProductCode = "#" + scanner.next();
+
+        Product newProduct = new Product(newProductName, newProductPrice, newProductCode);
+
+        if (terminal.addProductToBill(newProduct))
+            System.out.println("Product was added to the last bill!");
+        else {
+            System.out.println("Product wasn't added.");
+        }
+    }
+
+    private void menuCreateBill(Scanner scanner, Terminal terminal) {
+        if (!terminal.isSignIn()) {
+            System.out.println("Firstly, you should sign in!");
+        } else {
+
+            checkIsClosedAllPreviousBills(scanner, terminal);
+
+            Bill newBill = new Bill(terminal.getSellers()[terminal.getCurrentSellerIndex()]);
+
+            // set actual id for new bill
+            newBill.setId(terminal.getActualSizeOfBills() + 1);
+
+            boolean toContinue;
+
+            // fill the list of products in new bill
+            do {
+                toContinue = fillListOfProducts(scanner, newBill);
+            } while (toContinue);
+
+            // TODO check valid input
+            newBill.setTime(parseInputClosingTime(scanner));
+
+            newBill.setId(terminal.getActualSizeOfBills());
+
+            newBill.calculateBill();
+
+            if (terminal.createBill(newBill))
+                System.out.println("Bill is created and added to the terminal!");
+            else {
+                System.out.println("Bill wasn't created!");
+            }
+        }
+    }
+
+    private void menuSignIn(Scanner scanner, Terminal terminal) {
+        System.out.println("Enter your login: ");
+        String login = scanner.next();
+
+        System.out.println("Enter your password: ");
+        String password = scanner.next();
+
+        System.out.println("\nTrying to sign in...\n");
+
+        terminal.signIn(login, password);
+        scanner.next(); //dk how to stop for a little my console app except this way
+
     }
 
     private void checkIsClosedAllPreviousBills(Scanner scanner, Terminal terminal) {
