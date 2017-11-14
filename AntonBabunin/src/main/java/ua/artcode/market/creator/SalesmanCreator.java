@@ -3,7 +3,7 @@ package ua.artcode.market.creator;
 
 import ua.artcode.market.salesman.Salesman;
 
-public class SalesmanCreator {
+public class SalesmanCreator{
 /*    public static Salesman salesmanCreate() throws IOException {
         BufferedReader reader =
         new BufferedReader(new InputStreamReader(System.in));
