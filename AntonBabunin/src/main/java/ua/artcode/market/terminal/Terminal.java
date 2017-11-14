@@ -9,24 +9,24 @@ import ua.artcode.market.salesman.Salesman;
 import java.util.Arrays;
 
 
-public class Terminal extends TerminalAbstract implements ITerminal{
+public class Terminal implements ITerminal{
     private static final int DEFAULT_SIZE = 20;
 
     private int countSalesman = 0;
 
+    private int id;
     private Bill[] bills;
     private Salesman[] sales;
 
-    public Terminal(int countTerminal) {
-        super(countTerminal);
-    }
-
-
-    public Terminal(int countTerminal, Bill[] bills, Salesman[] sales) {
-        super(countTerminal);
+    public Terminal(int id, Bill[] bills, Salesman[] sales) {
+        this.id = id;
         this.bills = bills;
         this.sales = sales;
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Bill[] getBills() {
@@ -154,10 +154,10 @@ public class Terminal extends TerminalAbstract implements ITerminal{
     @Override
     public String toString() {
         return "Terminal{" +
-                "ID=" + getId() +
-                "countSalesman=" + countSalesman +
-                ", bills=" + Arrays.toString(bills) +
-                ", sales=" + Arrays.toString(sales) +
+                "\nID=" + getId() +
+                "\ncountSalesman=" + countSalesman +
+                ", \nbills=" + Arrays.toString(bills) +
+                ", \nsales=" + Arrays.toString(sales) +
                 '}';
     }
 
