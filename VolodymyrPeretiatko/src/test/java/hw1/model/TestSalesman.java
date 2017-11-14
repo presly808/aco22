@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class TestSalesman {
 
-    Salesman s1,s2;
+    private Salesman s1,s2;
 
     @Before
     public void init(){
