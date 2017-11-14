@@ -1,10 +1,10 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static ua.artcode.market.model.Terminal.MAX_COUNT_OF_SALESMANS;
+import static ua.artcode.market.models.Terminal.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalTest {
 
