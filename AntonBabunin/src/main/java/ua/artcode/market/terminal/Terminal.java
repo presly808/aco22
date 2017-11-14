@@ -18,6 +18,13 @@ public class Terminal implements ITerminal{
     private Bill[] bills;
     private Salesman[] sales;
 
+    public Terminal() {
+    }
+
+    public Terminal(int id) {
+        this.id = id;
+    }
+
     public Terminal(int id, Bill[] bills, Salesman[] sales) {
         this.id = id;
         this.bills = bills;

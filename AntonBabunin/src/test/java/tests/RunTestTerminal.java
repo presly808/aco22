@@ -20,7 +20,7 @@ public class RunTestTerminal {
     @Test
     public void testTerminalCreation1() {
         Terminal actual = TerminalCreator.terminalCreation();
-        Terminal exepted = new Terminal(0);
+        Terminal exepted = new Terminal();
         exepted.setSales(new Salesman[20]);
         exepted.setBills(new Bill[19]);
         Assert.assertFalse(actual.equals(exepted));
