@@ -4,7 +4,7 @@ import week1.model.*;
 
 import java.util.Arrays;
 
-public class Terminal implements ITerminal{
+public class Terminal implements ITerminal {
 
     private static final int DEFAULT_SIZE_OF_BILL_ARRAY = 10;
 
@@ -17,7 +17,7 @@ public class Terminal implements ITerminal{
     private int currentSellerIndex = -1;
     private int currentBillIndex = -1;
 
-   private boolean isSignIn = false;
+    private boolean isSignIn = false;
 
     public Terminal() {
     }
@@ -401,7 +401,7 @@ public class Terminal implements ITerminal{
             }
         }
 
-        return  maxPriceBill;
+        return maxPriceBill;
     }
 
     private double findMinPriceBill() {

@@ -21,27 +21,26 @@ public class ConsoleView {
 
             switch (choice) {
                 case "1":
-
                     menuSignIn(scanner, terminal);
                     break;
                 case "2":
-                   menuCreateBill(scanner, terminal);
+                    menuCreateBill(scanner, terminal);
                     break;
                 case "3":
 
-                    menuAddProduct(scanner,terminal);
+                    menuAddProduct(scanner, terminal);
                     break;
                 case "4":
-                   menuCloseAndSaveBill(scanner,terminal);
+                    menuCloseAndSaveBill(scanner, terminal);
                     break;
                 case "5":
-                    menuFindBillById(scanner,terminal);
+                    menuFindBillById(scanner, terminal);
                     break;
                 case "6":
-                    menuFindSellerByLoginOrName(scanner,terminal);
+                    menuFindSellerByLoginOrName(scanner, terminal);
                     break;
                 case "7":
-                    menuShowTopSellers(scanner,terminal);
+                    menuShowTopSellers(scanner, terminal);
                     break;
                 case "8":
                     System.out.println(terminal.doSomeStatisticStuff());
@@ -56,6 +55,7 @@ public class ConsoleView {
     }
 
     private void menuShowTopSellers(Scanner scanner, Terminal terminal) {
+
         System.out.println("Enter a number of sellers, " +
                 "which you want to see as top sellers(not more than "
                 + terminal.getActualSizeOfSellers() + " sellers.");
