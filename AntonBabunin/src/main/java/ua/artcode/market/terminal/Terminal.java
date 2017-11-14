@@ -1,6 +1,7 @@
 package ua.artcode.market.terminal;
 
 
+import ua.artcode.market.Interfaces.ITerminal;
 import ua.artcode.market.bill.Bill;
 import ua.artcode.market.creator.BillCreator;
 import ua.artcode.market.salesman.Salesman;
@@ -8,21 +9,24 @@ import ua.artcode.market.salesman.Salesman;
 import java.util.Arrays;
 
 
-public class Terminal {
+public class Terminal extends TerminalAbstract implements ITerminal{
     private static final int DEFAULT_SIZE = 20;
 
     private int countSalesman = 0;
 
-
     private Bill[] bills;
     private Salesman[] sales;
 
-    public Terminal() {
+    public Terminal(int countTerminal) {
+        super(countTerminal);
     }
 
-    public Terminal(Bill[] bills, Salesman[] sales) {
+
+    public Terminal(int countTerminal, Bill[] bills, Salesman[] sales) {
+        super(countTerminal);
         this.bills = bills;
         this.sales = sales;
+
     }
 
     public Bill[] getBills() {
@@ -84,15 +88,17 @@ public class Terminal {
 
         return true;
     }
-    public Bill createBill(Salesman salesman) {
-        if (salesman != null) {
+
+    @Override
+    public Bill createBill(Object object/*Salesman salesman*/) {
+        if (object != null && object instanceof Salesman) {
 
             if (findOpenedBill() == null) {
-                Bill bill = BillCreator.createBill(salesman);
+                Bill bill = BillCreator.createBill(((Salesman) (object)));
                 bills[freeIndexBills()] = bill;
                 return bill;
             }
-            if (salesman.equals(findOpenedBill().getSalesman())) {
+            if (object.equals(findOpenedBill().getSalesman())) {
                 return findOpenedBill();
             }
             System.out.println("You have to close the previous opened bill " +
@@ -148,6 +154,7 @@ public class Terminal {
     @Override
     public String toString() {
         return "Terminal{" +
+                "ID=" + getId() +
                 "countSalesman=" + countSalesman +
                 ", bills=" + Arrays.toString(bills) +
                 ", sales=" + Arrays.toString(sales) +

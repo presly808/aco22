@@ -17,6 +17,7 @@ public class RunTests {
     @Test
     public void testAllFunction () {
         Terminal terminal1 = TerminalCreator.terminalCreation();
+        System.out.println();
         Product product1 = ProductGeneration.generateProduct();
         Product product2 = ProductGeneration.generateProduct();
         Product product3 = ProductGeneration.generateProduct();
@@ -39,6 +40,7 @@ public class RunTests {
         salesman1.addProduct(terminal1, product5);
         salesman1.addProduct(terminal1, product6);
         boolean billIsClosed = salesman1.closeBill(bill1, terminal1);
+
         Assert.assertTrue(billIsClosed);
 
     }
