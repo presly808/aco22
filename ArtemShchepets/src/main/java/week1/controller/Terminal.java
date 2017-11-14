@@ -1,13 +1,10 @@
 package week1.controller;
 
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Seller;
-import week1.model.Time;
+import week1.model.*;
 
 import java.util.Arrays;
 
-public class Terminal {
+public class Terminal implements ITerminal{
 
     private static final int DEFAULT_SIZE_OF_BILL_ARRAY = 10;
 
