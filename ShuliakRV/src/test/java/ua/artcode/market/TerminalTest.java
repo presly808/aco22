@@ -9,7 +9,7 @@ public class TerminalTest {
 
     private static final int DEFAULT_COUNT_PRODUCTS = 100;
     private static final int DEFAULT_COUNT_SALESMEN = 5;
-    private static final int DEFAULT_COUNT_BILLS = 5;
+    //private static final int DEFAULT_COUNT_BILLS = 5;
 
     private Product[] p;
     private Salesman[] s;

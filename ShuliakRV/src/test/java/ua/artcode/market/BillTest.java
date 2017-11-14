@@ -11,7 +11,7 @@ public class BillTest {
 
     private Product[] p;
     private Bill b;
-    Salesman s;
+    private Salesman s;
 
     @Before
     public void setUp() throws Exception {
