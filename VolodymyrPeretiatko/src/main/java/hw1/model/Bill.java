@@ -1,10 +1,11 @@
-package hw1;
+package hw1.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 
-public class Bill {
+public class Bill implements Comparable {
 
     private int id;
     private ArrayList<Product> products;
@@ -19,18 +20,14 @@ public class Bill {
         this.amountPrice = 0.0;
     }
 
-    public static Bill findBillById(ArrayList<Bill> bills, int id){
-
-        for (Bill b : bills){
-            if(b.getId() == id){
-                return b;
-            }
-        }
-        return null;
-    }
-
     public Bill closeBill(){
         setCloseTime(new Date(System.currentTimeMillis()));
+        calculateAmountPrice();
+        return this;
+    }
+
+    public Bill closeBill(Date d){
+        setCloseTime(d);
         calculateAmountPrice();
         return this;
     }
@@ -118,4 +115,20 @@ public class Bill {
         result = 31 * result + (closeTime != null ? closeTime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o.getClass() == Bill.class) {
+            return this.id - ((Bill) o).getId();
+        }
+        return 0;
+    }
+
+    public static class SortByDateComparator implements Comparator<Bill>{
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getCloseTime().compareTo(o2.getCloseTime());
+        }
+    }
+
 }
