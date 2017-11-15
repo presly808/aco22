@@ -154,6 +154,10 @@ public class Terminal implements ITerminal, Comparator {
         Product product1 = (Product)o1;
         Product product2 = (Product)o2;
         int result = product1.getName().compareTo(product2.getName());
+        if (result != 0){
+            result = result / Math.abs(result);
+            return result;
+        }
 
 return 0;
     }

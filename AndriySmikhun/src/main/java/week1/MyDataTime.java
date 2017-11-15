@@ -19,6 +19,26 @@ public class MyDataTime {
     public MyDataTime() {
     }
 
+    public void setSecond(int second) {
+        this.second = second;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
     @Override
     public String toString(){
         return " " + second + ":" + minute + ":" + hour + " " + day + "/" + month;
