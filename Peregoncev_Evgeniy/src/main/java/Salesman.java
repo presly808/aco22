@@ -8,15 +8,19 @@ public class Salesman {
     private String login;
     private String pass;
 
+    public Salesman() {
+
+    }
+
     public Salesman(String fullname, String login, String pass) {
         this.fullname = fullname;
         this.login = login;
         this.pass = pass;
     }
 
-//    public Salesman getFullname() {
-//        return fullname;
-//    }
+    public String getFullname() {
+        return fullname;
+    }
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
@@ -37,4 +41,8 @@ public class Salesman {
     public void setPass(String pass) {
         this.pass = pass;
     }
+
+
+
 }
+

@@ -9,18 +9,15 @@ public class Product {
     private double price;
     private String barcode;
 
+    public Product() {
+
+    }
+
     public Product(String name, double price, String barcode) {
         this.name = name;
         this.price = price;
         this.barcode = barcode;
     }
-
-
-    public String printFullInfo() {
-
-        return String.format("name %s price %f barcode %s barcode", name, price, barcode);
-    }
-
 
     public String getBarcode() {
         return barcode;
@@ -46,5 +43,12 @@ public class Product {
         this.name = name;
     }
 
+
+    //Methods
+
+    public String printFullInfo() {
+
+        return String.format("%-15s %-8.2f %s", name, price, barcode);
+    }
 
 }
