@@ -23,9 +23,9 @@ public class BillController implements IBill{
         return bills;
     }
 
-//    public double getAmountPrice() {
-//        return amountPrice;
-//    }
+    public double getAmountPrice() {
+        return amountPrice;
+    }
 
     public boolean addProduct(Bill bill, Product product) {
         return bill != null && product != null && addProductIs(bill, product);
@@ -39,8 +39,6 @@ public class BillController implements IBill{
                     pair.setValue(pair.getValue() + 1);
                     return true;
                 }
-                bill.getProducts().put(product, 1);
-                return true;
             }
         }
         bill.getProducts().put(product, 1);
@@ -62,6 +60,7 @@ public class BillController implements IBill{
     public boolean closeBill(Bill bill) {
         if  (bill != null){
             bill.setCloseTime(Utils.getCurrentTime());
+            this.amountPrice = calculateAmountPrice (bill);
             return true;
         }
         return false;

@@ -34,12 +34,10 @@ public class TerminalController implements ITerminal{
 
     @Override
     public boolean closeAndSafeBill(Bill bill) {
-        if (bill != null) {
-            if (billController.closeBill(bill)) {
-                bill.setAmountPrice(billController.calculateAmountPrice(bill));
-                billController.printBill(bill);
-                return true;
-            }
+        if (bill != null && billController.closeBill(bill)) {
+            bill.setAmountPrice(billController.getAmountPrice());
+            billController.printBill(bill);
+            return true;
         }
         return false;
     }

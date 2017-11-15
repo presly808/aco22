@@ -1,6 +1,5 @@
 package ua.artcode.market.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import ua.artcode.market.interfaces.ISalesman;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -36,6 +35,7 @@ public class SalesmanController implements ISalesman{
     @Override
     public Salesman login(Terminal terminal, String login, String password) {
         if (terminal != null && login != null && password != null) {
+            password = login; //unused
             return connect(terminal, login, password);
         }
         return null;

@@ -3,10 +3,6 @@ package ua.artcode.market.models;
 
 public class Product extends ProductAbstract {
 
-    public Product() {
-        super();
-    }
-
     @Override
     public boolean equals(Object object) {
         return object != null && object instanceof Product &&

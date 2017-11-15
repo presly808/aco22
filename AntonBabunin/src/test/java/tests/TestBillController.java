@@ -25,7 +25,7 @@ public class TestBillController {
     public void testCloseBill() {
         Bill bill = new Bill();
         bc.closeBill(bill);
-        System.out.println(bill.getCloseTime());
+//        System.out.println(bill.getCloseTime());
         Assert.assertTrue(bill.getCloseTime() != null);
     }
 }
