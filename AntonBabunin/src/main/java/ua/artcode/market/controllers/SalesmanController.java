@@ -35,14 +35,19 @@ public class SalesmanController implements ISalesman{
     @Override
     public Salesman login(Terminal terminal, String login, String password) {
         if (terminal != null && login != null && password != null) {
-            password = login; //unused
+            System.out.println(terminal); //unused
+            System.out.println(login); //unused
+            System.out.println(password); //unused
             return connect(terminal, login, password);
         }
         return null;
     }
 
     private Salesman connect(Terminal terminal, String login, String password) {
-/*        for (int i = 0; i < terminal.getSales().size(); i++) {
+        System.out.println(terminal); //unused
+        System.out.println(login); //unused
+        System.out.println(password); //unused
+        /*        for (int i = 0; i < terminal.getSales().size(); i++) {
             if (login.equals(terminal.getSales().get(i).getLogin()) &&
                 password.equals((terminal.getSales().get(i).getPassword()))){
 

@@ -23,8 +23,8 @@ public class TestSalesmanController {
 
     @After
     public void erraseData(){
-         this.sc = null;
-     }
+        this.sc = null;
+    }
 
     @Test
     public void testCreateBillNull1() {
@@ -55,10 +55,6 @@ public class TestSalesmanController {
         Salesman salesman = new Salesman("salesman1", "salesman1",
                 "salesman1");
         Bill bill = sc.createBill(terminal, salesman);
-        boolean bool = false;
-        if (bill != null && bill.getBillId() != 0 && bill.getSalesman() != null){
-            bool = true;
-        }
 //        System.out.printf("testCreateBillNotNull: Result = %s | " +
 //                "Terminal = %s | " + "Bill = %s \n", bool, terminal, bill);
         Assert.assertNotEquals(0, bill.getBillId());
@@ -94,8 +90,8 @@ public class TestSalesmanController {
         Bill bill = sc.createBill(terminal, salesman);
         Product product1 = new Product();
         Product product2 = new Product();
-        boolean booll = sc.addProduct(terminal,bill,product1);
-        boolean bool2 = sc.addProduct(terminal,bill,product2);
+        sc.addProduct(terminal,bill,product1);
+        sc.addProduct(terminal,bill,product2);
 //        boolean bool = booll && bool2;
 //        System.out.printf("testAddProductSomePeaces: Result = %s | %s\n", bool,
 //                terminal);
