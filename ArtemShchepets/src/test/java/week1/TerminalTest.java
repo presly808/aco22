@@ -2,6 +2,11 @@ package week1;
 
 
 import org.junit.*;
+import week1.controller.Terminal;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Seller;
+import week1.model.Time;
 
 
 public class TerminalTest {
@@ -154,7 +159,7 @@ public class TerminalTest {
 
         //trying to close bill without signing in
         testTerminal.setBills(testBillList);
-        testTerminal.closeAndSaveBill();
+        testTerminal.closeAndSaveBill(testTime);
 
         Assert.assertFalse(testTerminal.getBills()[testTerminal.getCurrentBillIndex()].isClosed());
     }
@@ -224,8 +229,6 @@ public class TerminalTest {
         testTerminal.signIn("worker2", "password2");
 
 
-
-
         testBillList[0] = testBill1;
         testBillList[1] = testBill2;
         testBillList[2] = testBill3;
@@ -234,7 +237,7 @@ public class TerminalTest {
 
         Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(1);
 
-        Assert.assertEquals(testSeller4.toString(),searchingSellerArray[0].toString());
+        Assert.assertEquals(testSeller4.toString(), searchingSellerArray[0].toString());
     }
 
     @Test
@@ -250,27 +253,74 @@ public class TerminalTest {
         expectedTopSellers[0] = testSeller4;
         expectedTopSellers[1] = testSeller2;
 
-        Assert.assertArrayEquals(expectedTopSellers,searchingSellerArray);
+        Assert.assertArrayEquals(expectedTopSellers, searchingSellerArray);
 
     }
 
-    @Ignore
     @Test
-    public void testDoSomeStatisticStuff() {
+    public void testCreateBill() {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
         testTerminal.setBills(testBillList);
 
-        testSeller4.setSoldProducts(4);
+        Assert.assertTrue(testTerminal.createBill(testBill3));
+    }
 
-        String statisticOutput = testTerminal.doSomeStatisticStuff();
+    @Test
+    public void testCreateBill2() {
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
 
-        Assert.assertEquals("***Statistic***\n " +
-        "The highest price of bill: 80,250000\n " +
-                "The lowest price of bill: 6,150000\n " +
-                "There are 8 sold products now!\n " +
-                "Best salesman: " + testSeller4.toString(), statisticOutput);
+        testTerminal.createBill(testBill3);
+
+        Assert.assertEquals(testBill3, testTerminal.getBills()[3]);
+    }
+
+    @Test
+    public void testAddProduct() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Assert.assertTrue(testTerminal.addProductToBill(testProduct1));
+    }
+
+    @Test
+    public void testAddProduct2() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        testTerminal.addProductToBill(testProduct1);
+
+        Product actualProductInBill = testTerminal.getBills()[testTerminal.getCurrentBillIndex()]
+                .getBillList()[testTerminal.getBills()
+                [testTerminal.getCurrentBillIndex()].getActualSizeOfList() - 1];
+
+        Assert.assertEquals(testProduct1, actualProductInBill);
+    }
+
+    @Test
+    public void testCloseAndSaveBill() {
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Assert.assertTrue(testTerminal.closeAndSaveBill(testTime));
+    }
+
+    @Test
+    public void testCloseAllPreviousBills() {
+
+        testTerminal.setSellers(testSellerArray);
+        testTerminal.signIn("worker2", "password2");
+        testTerminal.setBills(testBillList);
+
+        Assert.assertTrue(testTerminal.closeAllPreviousBills(testTime));
     }
 }
 
