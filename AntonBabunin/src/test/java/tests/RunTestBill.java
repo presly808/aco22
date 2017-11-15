@@ -15,7 +15,7 @@ public class RunTestBill {
     public void testBillCreation() {
         Terminal t1 = TerminalCreator.terminalCreation();
         Salesman s1 = new Salesman("asd", "asd","asd");
-        s1.loginAutomatic(t1);
+        s1.login(t1);
         Bill actual = createBill(s1);
         Bill expected = new Bill(actual.getId(),
                 new Salesman("asd", "asd","asd"));

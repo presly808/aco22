@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 public class Time {
 
@@ -27,7 +27,18 @@ public class Time {
         this.seconds = seconds;
     }
 
-    @Override
+    public int getHours() {
+        return hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
     public String toString() {
         return hours + ":" + minutes + ":" + seconds;
     }
