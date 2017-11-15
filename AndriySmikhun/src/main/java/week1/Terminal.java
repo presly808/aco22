@@ -2,7 +2,9 @@ package week1;
 
 import week1.Product;
 
-public class Terminal implements ITerminal {
+import java.util.Comparator;
+
+public class Terminal implements ITerminal, Comparator {
 
     Bill[] bills = new Bill[20];
     Salesman[] sales = new Salesman[10];
@@ -147,5 +149,12 @@ public class Terminal implements ITerminal {
         return average;
     }
 
+    @Override
+    public int compare(Object o1, Object o2) {
+        Product product1 = (Product)o1;
+        Product product2 = (Product)o2;
+        int result = product1.getName().compareTo(product2.getName());
 
+return 0;
+    }
 }

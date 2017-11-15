@@ -1,6 +1,6 @@
 package week1;
 
-public class Product {
+public class Product implements Comparable {
 
     int id;
     String name;
@@ -15,7 +15,7 @@ public class Product {
     public Product() {
     }
 
-    public void printFullInfo(){
+    public void printFullInfo() {
         System.out.println(" ID " + id + " Name " + name + "Price " + price);
     }
 
@@ -32,7 +32,24 @@ public class Product {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Name " + name + " Price " + price;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Product prod = (Product) o;
+        int res = this.name.compareTo(prod.name);
+        if (res != 0) {
+            return res / Math.abs(res);
+        }
+
+        if (this.price == prod.price) {
+            return 0;
+        } else if (this.price < prod.price) {
+            return -1;
+        } else return 1;
+
+
     }
 }
