@@ -7,6 +7,12 @@ public class Salesman{
     private String login;
     private String password;
 
+    public Salesman() {
+        this.fullName = fullName;
+        this.login = login;
+        this.password = password;
+    }
+
     public Salesman(String fullName, String login, String password) {
         this.fullName = fullName;
         this.login = login;
@@ -17,25 +23,25 @@ public class Salesman{
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+//    public void setFullName(String fullName) {
+//        this.fullName = fullName;
+//    }
 
-    public String getLogin() {
-        return login;
-    }
+//    public String getLogin() {
+//        return login;
+//    }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+//    public void setLogin(String login) {
+//        this.login = login;
+//    }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     @Override
     public boolean equals (Object object) {

@@ -16,29 +16,29 @@ public class Terminal {
         this.sales = new ArrayList<Salesman>();
     }
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public List<Bill> getBills() {
         return bills;
     }
 
-    public void setBills(List<Bill> bills) {
-        this.bills = bills;
-    }
+//    public void setBills(List<Bill> bills) {
+//        this.bills = bills;
+//    }
 
     public List<Salesman> getSales() {
         return sales;
     }
 
-    public void setSales(List<Salesman> sales) {
-        this.sales = sales;
-    }
+//    public void setSales(List<Salesman> sales) {
+//        this.sales = sales;
+//    }
 
     @Override
     public boolean equals(Object object) {
@@ -47,9 +47,8 @@ public class Terminal {
 
         Terminal terminal = (Terminal) object;
 
-        if (id != terminal.id) return false;
-        if (!bills.equals(terminal.bills)) return false;
-        return sales.equals(terminal.sales);
+        return id == terminal.id && bills.equals(terminal.bills) &&
+                sales.equals(terminal.sales);
     }
 
     @Override

@@ -3,9 +3,11 @@ package ua.artcode.market.interfaces;
 
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Terminal;
 
 public interface ITerminal {
-    boolean createBill(Bill bill);
+    Bill createBill(Terminal terminal, Salesman salesman);
     boolean addProduct(Bill bill, Product product);
     boolean closeAndSafeBill(Bill bill);
 }

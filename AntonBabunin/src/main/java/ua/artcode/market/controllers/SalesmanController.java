@@ -1,37 +1,29 @@
 package ua.artcode.market.controllers;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import ua.artcode.market.interfaces.ISalesman;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
 
-import java.util.ArrayList;
-
 public class SalesmanController implements ISalesman{
 
     private TerminalController terminalController;
 
-    private ArrayList<Terminal> getTerminals() {
-        return terminals;
-    }
-
-    ArrayList<Terminal> terminals;
-
     public SalesmanController(){
         this.terminalController = new TerminalController();
-        this.terminals = new ArrayList<Terminal>();
     }
 
 
     @Override
-    public boolean createBill(Terminal terminal, Bill bill) {
-        if (bill != null && terminal != null) {
-            terminal.getBills().add(bill);
-            terminalController.createBill(bill);
-            return true;
+    public Bill createBill(Terminal terminal, Salesman salesman) {
+        if (terminal != null && salesman != null) {
+            Bill bill = terminalController.createBill(terminal,salesman);
+
+            return bill;
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -50,15 +42,15 @@ public class SalesmanController implements ISalesman{
     }
 
     private Salesman connect(Terminal terminal, String login, String password) {
-        for (int i = 0; i < terminal.getSales().size(); i++) {
+/*        for (int i = 0; i < terminal.getSales().size(); i++) {
             if (login.equals(terminal.getSales().get(i).getLogin()) &&
                 password.equals((terminal.getSales().get(i).getPassword()))){
 
                 return terminal.getSales().get(i);
             }
         }
-        terminals.add(terminal);
-        return terminal.getSales().get(terminal.getSales().size());
+        return terminal.getSales().get(terminal.getSales().size());*/
+        return null;
     }
 
     @Override
@@ -67,5 +59,9 @@ public class SalesmanController implements ISalesman{
 
         return terminalController.closeAndSafeBill(bill);
     }
+
+//    public TerminalController getTerminalController() {
+//        return terminalController;
+//    }
 }
 

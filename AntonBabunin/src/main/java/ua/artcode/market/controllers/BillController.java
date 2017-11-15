@@ -18,14 +18,14 @@ public class BillController implements IBill{
         this.bills = new ArrayList<Bill>();
     }
 
+
     public List<Bill> getBills() {
         return bills;
     }
 
-
-    public double getAmountPrice() {
-        return amountPrice;
-    }
+//    public double getAmountPrice() {
+//        return amountPrice;
+//    }
 
     public boolean addProduct(Bill bill, Product product) {
         return bill != null && product != null && addProductIs(bill, product);

@@ -3,6 +3,8 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Terminal;
 
 
 public class TerminalController implements ITerminal{
@@ -13,14 +15,19 @@ public class TerminalController implements ITerminal{
     }
 
     @Override
-    public boolean createBill(Bill bill) {
-        return bill != null && this.billController.getBills().add(bill);
+    public Bill createBill(Terminal terminal, Salesman salesman) {
+        Bill bill = new Bill();
+        bill.setSalesman(salesman);
+        terminal.getSales().add(salesman);
+        terminal.getBills().add(bill);
+
+        return this.billController.getBills().add(bill) ? bill : null;
     }
 
     @Override
     public boolean addProduct(Bill bill, Product product) {
         return bill != null && product != null &&
-                !this.billController.getBills().contains(bill) &&
+                this.billController.getBills().contains(bill) &&
                 this.billController.addProduct(bill, product);
 
     }
@@ -29,7 +36,7 @@ public class TerminalController implements ITerminal{
     public boolean closeAndSafeBill(Bill bill) {
         if (bill != null) {
             if (billController.closeBill(bill)) {
-                billController.calculateAmountPrice(bill);
+                bill.setAmountPrice(billController.calculateAmountPrice(bill));
                 billController.printBill(bill);
                 return true;
             }
