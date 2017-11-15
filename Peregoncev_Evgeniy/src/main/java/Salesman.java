@@ -1,5 +1,3 @@
-
-
 /**
  * Created by ENIAC on 10.11.2017.
  */
@@ -41,8 +39,6 @@ public class Salesman {
     public void setPass(String pass) {
         this.pass = pass;
     }
-
-
 
 }
 

@@ -1,5 +1,3 @@
-
-
 /**
  * Created by ENIAC on 05.11.2017.
  */
@@ -20,10 +18,6 @@ public class Bill {
 
     public Bill() {
 
-    }
-
-    public Bill(int i) {
-        this.products = new Product[i];
     }
 
     public Bill(double amountPrice, Salesman salesman, String closeTimel, int billId) {

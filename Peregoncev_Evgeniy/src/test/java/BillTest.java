@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 public class BillTest {
 
     Bill testBill;
-    Bill testBill1;
 
     double testAmountPrice;
 
@@ -25,10 +24,8 @@ public class BillTest {
     @Before
     public void setUp() {
 
-        testBill = new Bill(5);
-
         testSalesMan = new Salesman("Izolda", "isoldaLog", "IsoldaPass");
-        testBill1 = new Bill(testAmountPrice, testSalesMan, "23:00", 1);
+        testBill = new Bill(testAmountPrice, testSalesMan, "23:00", 1);
 
         testProduct1 = new Product("apricot", 16.5, "#001");
         testProduct2 = new Product("banana", 20.0, "#002");
@@ -38,8 +35,8 @@ public class BillTest {
 
     @After
     public void setDown() {
+
         testBill = null;
-        testBill1 = null;
 
         testSalesMan = null;
 
@@ -72,30 +69,29 @@ public class BillTest {
     @Test
     public void printBillInfo() throws Exception {
 
-        testBill1.getProducts()[0] = testProduct1;
-        testBill1.getProducts()[1] = testProduct2;
-        testBill1.getProducts()[2] = testProduct3;
-        testBill1.getProducts()[3] = testProduct4;
+        testBill.getProducts()[0] = testProduct1;
+        testBill.getProducts()[1] = testProduct2;
+        testBill.getProducts()[2] = testProduct3;
+        testBill.getProducts()[3] = testProduct4;
 
+        testBill.setProductsCounter(4);
 
-        testBill1.setProductsCounter(4);
+        double testAmountPrice = testBill.getProducts()[0].getPrice() +
+                testBill.getProducts()[1].getPrice() +
+                testBill.getProducts()[2].getPrice() +
+                testBill.getProducts()[3].getPrice();
 
-        double testAmountPrice = testBill1.getProducts()[0].getPrice() +
-                testBill1.getProducts()[1].getPrice() +
-                testBill1.getProducts()[2].getPrice() +
-                testBill1.getProducts()[3].getPrice();
-
-        testBill1.setAmountPrice(testAmountPrice);
+        testBill.setAmountPrice(testAmountPrice);
 
         String expected1 = "              BiLL  \n" +
                 "Title           Price    Barcode\n" +
                 "--------------------------------\n" +
-                testBill1.printAllProducts() +
+                testBill.printAllProducts() +
                 "\nAmount Price = 95,50\n" +
                 "Seller: Izolda\n" +
                 "Time: 23:00";
 
-        Assert.assertEquals(expected1, testBill1.printBillInfo());
+        Assert.assertEquals(expected1, testBill.printBillInfo());
 
     }
 }

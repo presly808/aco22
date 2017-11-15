@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /**
  * Created by ENIAC on 10.11.2017.
  */
@@ -13,9 +11,9 @@ public class Terminal {
 
     private int currentSallerIndex = -1;
 
-    public Terminal() {
-
-    }
+//    public Terminal() {
+//
+//    }
 
     public int getCurrentSallerIndex() {
         return currentSallerIndex;
@@ -25,9 +23,9 @@ public class Terminal {
         this.currentSallerIndex = currentSallerIndex;
     }
 
-    public Terminal(Bill[] bils, Salesman[] sales) {
-        this.bils = bils;
-        this.sales = sales;
+    public Terminal() {
+        this.bils = new Bill[10];
+        this.sales = new Salesman[10];
     }
 
     public Bill[] getBils() {
@@ -77,7 +75,7 @@ public class Terminal {
         for (int i = 0; i < sales.length; i++) {
             if (sales[i].getLogin().equals(login) &&
                     sales[i].getPass().equals(pass)) {
-                System.out.println("Hello "+sales[i].getFullname());
+                System.out.println("Hello " + sales[i].getFullname());
                 setCurrentSallerIndex(i);
             }
         }
@@ -104,22 +102,23 @@ public class Terminal {
         }
     }
 
-    public Bill findBillById(Bill[] bill, Bill currentBill, int billId) {
-
-        if (bill == null || billCountSize == 0) return null;
-
-        for (int i = 0; i < billCountSize; i++) {
-            if (currentBill.getBillId() == billId)
-                return currentBill;
+    public Bill findBillById(Bill[] bill, int billId) {
+        if (bill == null || billCountSize == 0) {
+        } else {
+            for (int i = 0; i < billCountSize; i++) {
+                if (bill[i].getBillId() == billId) {
+                    return bill[i];
+                }
+            }
         }
-        return currentBill;
+        return null;
     }
 
-    public Salesman findSalesmanByLogin(Salesman[] sales, Salesman searchLogin) {
+    public Salesman findSalesmanByLogin(Salesman[] sales, String searchLogin) {
         if ((sales == null) || (searchLogin == null)) {
         } else {
-            for (int i = 0; i < sales.length; i++) {
-                if (sales[i].getLogin() == searchLogin.getLogin()) {
+            for (int i = 0; i < salesCountSize; i++) {
+                if (sales[i].getLogin() == searchLogin) {
                     return sales[i];
                 }
             }
