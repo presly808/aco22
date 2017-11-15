@@ -3,8 +3,8 @@ package ua.artcode.market.models;
 
 public class Product extends ProductAbstract {
 
-    public Product(int id, String name, double price) {
-        super(id, name, price);
+    public Product() {
+        super();
     }
 
     @Override

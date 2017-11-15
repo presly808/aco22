@@ -12,10 +12,12 @@ public class TerminalController implements ITerminal{
         this.billController = new BillController();
     }
 
+    @Override
     public boolean createBill(Bill bill) {
         return bill != null && this.billController.getBills().add(bill);
     }
 
+    @Override
     public boolean addProduct(Bill bill, Product product) {
         return bill != null && product != null &&
                 !this.billController.getBills().contains(bill) &&
@@ -23,6 +25,7 @@ public class TerminalController implements ITerminal{
 
     }
 
+    @Override
     public boolean closeAndSafeBill(Bill bill) {
         if (bill != null) {
             if (billController.closeBill(bill)) {
