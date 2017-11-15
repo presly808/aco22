@@ -20,7 +20,10 @@ public class ProductTest {
 
     @Test
     public void testPrintFullInfoMethod(){
-        product.printFullInfo();
-        Assert.assertTrue(true);
+        String printedInfo = product.printFullInfo();
+        System.out.println(printedInfo);
+        Assert.assertTrue(printedInfo.contains("id"));
+        Assert.assertTrue(printedInfo.contains("name"));
+        Assert.assertTrue(printedInfo.contains("price"));
     }
 }
