@@ -4,6 +4,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Seller;
+import week1.model.Time;
 
 public class BillTest {
 
@@ -115,7 +119,7 @@ public class BillTest {
     @Test
     public void testCloseBill() {
 
-        testBill.closeBill();
+        testBill.closeBill(testTime);
 
         Assert.assertEquals(true, testBill.isClosed());
     }
