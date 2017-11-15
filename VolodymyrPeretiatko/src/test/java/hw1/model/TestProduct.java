@@ -1,5 +1,6 @@
-package hw1;
+package hw1.model;
 
+import hw1.model.Product;
 import org.junit.*;
 
 public class TestProduct {

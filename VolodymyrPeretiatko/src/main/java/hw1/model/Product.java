@@ -1,4 +1,4 @@
-package hw1;
+package hw1.model;
 
 public class Product {
 
@@ -17,12 +17,10 @@ public class Product {
     }
 
     public void setName(String name) {
-
         this.name = name;
     }
 
     public int getId() {
-
         return id;
     }
 
