@@ -34,7 +34,9 @@ public class ProductTest {
     @Test
     public void printFullInfo() throws Exception {
         Product[] newProductList = Product.initProductsList(5);
-
+        int i = 0;
+        int r = 0;
+        int a = 0;
         Assert.assertNotEquals("", Product.fulInfoOfProdukts(newProductList));
     }
 

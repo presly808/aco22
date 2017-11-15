@@ -1,5 +1,7 @@
 package ua.artcode.market;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+
 import javax.swing.*;
 import java.util.Date;
 
@@ -45,7 +47,8 @@ public class Bill {
         }
 
         if (!productProcessed) {
-            System.out.println("The limit of the number of products in the Check has been reached " + this.products.length + " pieces");
+            System.out.println("The limit of the number of products in the Check has been reached " +
+                                this.products.length + " pieces");
         }
     }
 
@@ -76,7 +79,12 @@ public class Bill {
 
     public static void printBill(Bill currentBill) {
 
-        System.out.println("Bill №" + currentBill.code + "/ quontity of goods - " + currentBill.quantityGoods + "/ Amount - " + currentBill.amountPrice + "/  SalesMan - " + currentBill.salesMan.fullName + "/ Closed - " + currentBill.closed + "/ CloseTime - " + currentBill.closeTime);
+        System.out.println("Bill №" + currentBill.code +
+                            "/ quontity of goods - " + currentBill.quantityGoods +
+                            "/ Amount - " + currentBill.amountPrice +
+                            "/  SalesMan - " + currentBill.salesMan.fullName +
+                            "/ Closed - " + currentBill.closed +
+                            "/ CloseTime - " + currentBill.closeTime);
 
         Bill.showProducts(currentBill);
     }
@@ -90,7 +98,10 @@ public class Bill {
             if (currentBill.products[i][0] != 0) {
 
                 Product currentProduct = Product.findByCode(currentBill.productList, currentBill.products[i][0]);
-                System.out.println("" + currentProduct.code + "\t\t" + currentProduct.name + "\t\t" + currentProduct.price + "\t\t" + currentBill.products[i][1]);
+                System.out.println("" + currentProduct.code +
+                                    "\t\t" + currentProduct.name +
+                                    "\t\t" + currentProduct.price +
+                                    "\t\t" + currentBill.products[i][1]);
             }
         }
     }
@@ -103,14 +114,17 @@ public class Bill {
 
 
             if (this.products[i][0] != 0) {
-                this.amountPrice = Math.rint(this.amountPrice + Product.findByCode( this.productList, this.products[i][0]).price*this.products[i][1]*100)/100;
+                Product currentProduct = Product.findByCode( this.productList, this.products[i][0]);
+                this.amountPrice = Math.rint(this.amountPrice + currentProduct.price*this.products[i][1]*100)/100;
             }
         }
     }
 
     public void closeBill(){
 
-        int key = JOptionPane.showConfirmDialog( null, "Close check?","Waiting for confirmation to continue", JOptionPane.YES_NO_OPTION);
+        String message = "Close check?";
+        String title = "Waiting for confirmation to continue";
+        int key = JOptionPane.showConfirmDialog( null, message,title, JOptionPane.YES_NO_OPTION);
 
         if (key == JOptionPane.YES_OPTION){
 
@@ -130,21 +144,27 @@ public class Bill {
             String stringProductCode = JOptionPane.showInputDialog("Enter the product code", 0);
             int productCode = Integer.parseInt((stringProductCode == null ? ""+0: stringProductCode));
 
-            String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name, 0);
+            Product currentProduct = Product.findByCode(this.productList, productCode);
+            String message = "Enter the quantity of the product " + currentProduct.name;
+            String stringProductQuontity = JOptionPane.showInputDialog(message, 0);
             int productQuontity = Integer.parseInt(stringProductQuontity);
 
-            if (productQuontity == 0 || productCode == 0) {
+            if (productQuontity != 0 && productCode != 0) {
 
                 this.addProduct(productCode, productQuontity);
             }
 
-            key = JOptionPane.showConfirmDialog( null, "Continue to select products?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
+            message = "Continue to select products?";
+            String title = "Waiting to continue work";
+            key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
         }
     }
 
     public void allProductsSelected() {
 
-        int key = JOptionPane.showConfirmDialog( null, "Are the products selected correctly?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
+        String message = "Are the products selected correctly?";
+        String title = "Waiting to continue work";
+        int key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
 
         if (key != JOptionPane.YES_OPTION) {
 
@@ -153,7 +173,8 @@ public class Bill {
                 String stringProductCode = JOptionPane.showInputDialog("Enter the product code");
                 int productCode = Integer.parseInt(stringProductCode);
 
-                String stringProductQuontity = JOptionPane.showInputDialog("Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name);
+                message = "Enter the quantity of the product " + Product.findByCode(this.productList, productCode).name;
+                String stringProductQuontity = JOptionPane.showInputDialog(message);
                 int productQuontity = Integer.parseInt(stringProductQuontity);
 
                 if (productQuontity == 0 || productCode == 0) {
@@ -163,7 +184,9 @@ public class Bill {
 
                 Bill.printBill(this);
 
-                key = JOptionPane.showConfirmDialog(null, "All positions are corrected?", "Waiting to continue work", JOptionPane.YES_NO_OPTION);
+                message = "All positions are corrected?";
+                title = "Waiting to continue work";
+                key = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
             }
         }
     }
