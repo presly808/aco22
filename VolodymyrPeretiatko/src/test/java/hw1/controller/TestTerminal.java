@@ -1,14 +1,18 @@
-package hw1;
+package hw1.controller;
 
+import hw1.controller.Terminal;
+import hw1.model.Bill;
+import hw1.model.Product;
+import hw1.model.Salesman;
 import org.junit.*;
 
 public class TestTerminal {
 
-    public static Terminal terminal;
+    private static Terminal terminal;
 
-    public static Bill b1, b2;
-    public static Product p1, p2;
-    public static Salesman s1, s2;
+    private static Bill b1, b2;
+    private static Product p1, p2;
+    private static Salesman s1, s2;
 
 
     @BeforeClass

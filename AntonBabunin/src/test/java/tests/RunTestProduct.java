@@ -4,6 +4,7 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 import ua.artcode.market.product.Product;
+import ua.artcode.market.product.ProductAbstract;
 
 import static ua.artcode.market.creator.ProductGeneration.generateProduct;
 
@@ -11,8 +12,9 @@ import static ua.artcode.market.creator.ProductGeneration.generateProduct;
 public class RunTestProduct {
     @Test
     public void testProductCreation() {
-        Product actual = generateProduct();
-        Product expected = new Product(actual.getId(), actual.getName(), actual.getPrice());
+        ProductAbstract actual = generateProduct();
+        ProductAbstract expected = new Product(actual.getId(),
+                                        actual.getName(), actual.getPrice());
         Assert.assertTrue(expected.equals(actual));
     }
 

@@ -1,8 +1,11 @@
+package ua.artcode.market;
+
 public class Salesman {
 
     private String fullname;
     private String login;
     private String password;
+    private boolean isLogged;
 
     public Salesman(String fullname, String login, String password) {
         this.fullname = fullname;
@@ -22,6 +25,10 @@ public class Salesman {
         return password;
     }
 
+    public boolean isLogged() {
+        return isLogged;
+    }
+
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
@@ -32,5 +39,9 @@ public class Salesman {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setLogged(boolean logged) {
+        isLogged = logged;
     }
 }
