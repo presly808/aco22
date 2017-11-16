@@ -1,13 +1,15 @@
 package ua.artcode.market.models;
 
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Salesman{
     private String fullName;
     private String login;
     private String password;
 
-    public Salesman() {
+    private Salesman() {
         this.fullName = fullName;
         this.login = login;
         this.password = password;

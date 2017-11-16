@@ -2,10 +2,11 @@ package ua.artcode.market.models;
 
 import ua.artcode.market.utils.Utils;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bill {
+public class Bill implements Comparator<Bill>{
 
     private int billId;
     private int terminalId;
@@ -104,4 +105,16 @@ public class Bill {
 
         return false;
     }
+
+    @Override
+    public int compare(Bill o1, Bill o2) {
+        return 0;
+    }
+
+    @Override
+    public Comparator<Bill> reversed() {
+        return null;
+    }
+
+
 }

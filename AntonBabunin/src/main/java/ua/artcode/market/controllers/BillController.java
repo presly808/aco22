@@ -18,7 +18,6 @@ public class BillController implements IBill{
         this.bills = new ArrayList<Bill>();
     }
 
-
     public List<Bill> getBills() {
         return bills;
     }

@@ -1,12 +1,15 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.ISalesman;
+import ua.artcode.market.interfaces.SomeStatistics;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
 
-public class SalesmanController implements ISalesman{
+import java.util.List;
+
+public class SalesmanController implements ISalesman, SomeStatistics{
 
     private TerminalController terminalController;
 
@@ -33,37 +36,30 @@ public class SalesmanController implements ISalesman{
     }
 
     @Override
-    public Salesman login(Terminal terminal, String login, String password) {
-        if (terminal != null && login != null && password != null) {
-            System.out.println(terminal); //unused
-            System.out.println(login); //unused
-            System.out.println(password); //unused
-            return connect(terminal, login, password);
-        }
-        return null;
-    }
+    public boolean closeAndSafeBill(Terminal terminal, Bill bill) {
+        return terminal != null && bill != null &&
+                terminalController.closeAndSafeBill(bill);
 
-    private Salesman connect(Terminal terminal, String login, String password) {
-        System.out.println(terminal); //unused
-        System.out.println(login); //unused
-        System.out.println(password); //unused
-        /*        for (int i = 0; i < terminal.getSales().size(); i++) {
-            if (login.equals(terminal.getSales().get(i).getLogin()) &&
-                password.equals((terminal.getSales().get(i).getPassword()))){
-
-                return terminal.getSales().get(i);
-            }
-        }
-        return terminal.getSales().get(terminal.getSales().size());*/
-        return null;
     }
 
     @Override
-    public boolean closeAndSafeBill(Terminal terminal, Bill bill) {
-        if (terminal == null || bill == null) return false;
-
-        return terminalController.closeAndSafeBill(bill);
+    public Salesman login(String login, String password) {
+        return terminalController.login(login, password);
     }
+
+    @Override
+    public Salesman create(String fullName, String login, String password) {
+        return terminalController.create(fullName, login, password);
+    }
+
+    @Override
+    public List<Bill> getSalesmanBills(Salesman salesman) {
+        if (salesman != null) {
+            return terminalController.getSalesmanBills(salesman);
+        }
+        return null;
+    }
+
 
 //    public TerminalController getTerminalController() {
 //        return terminalController;
