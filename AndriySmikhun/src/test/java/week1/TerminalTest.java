@@ -3,8 +3,10 @@ package week1;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import week1.controller.Terminal;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Salesman;
 
 public class TerminalTest {
 

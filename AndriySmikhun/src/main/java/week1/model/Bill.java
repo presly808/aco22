@@ -1,20 +1,22 @@
-package week1;
+package week1.model;
 
 
-public class Bill {
+import java.util.Comparator;
 
-    int id;
-    Product[] products = new Product[20];
-    Salesman salesman;
-    double amountPrice;
-    MyDataTime dataTime = new MyDataTime();
+public class Bill implements Comparable{
+
+    private int id;
+    private Product[] products;
+    private Salesman salesman;
+    private double amountPrice;
+    private MyDataTime dataTime = new MyDataTime();
 
     public Bill(int id, Product[] products, Salesman salesman, double amountPrice, MyDataTime dataTime) {
         this.id = id;
-        this.products = products;
+        this.products = new Product[20];
         this.salesman = salesman;
-        this.amountPrice = amountPrice;
-        this.dataTime = dataTime;
+        this.amountPrice = 0.0;
+        this.dataTime = null;
     }
 
     public Bill() {
@@ -40,9 +42,6 @@ public class Bill {
         this.amountPrice = amountPrice;
     }
 
-    public void setCloseTime(MyDataTime dataTime) {
-        this.dataTime = dataTime;
-    }
 
     public int getId() {
         return id;
@@ -67,7 +66,7 @@ public class Bill {
     public void addProduct(Product[] product){
 
     }
-    public boolean closeBill(){
+    public boolean setCloseBill(){
         if (dataTime == null){
             dataTime.setDay(1);
             dataTime.setMonth(12);
@@ -96,8 +95,20 @@ public class Bill {
             System.out.println("Price " + products[i].getPrice());
         }
         System.out.println("Amount price " + calculateAmountPrice(products));
-        System.out.println("Time: " + closeBill());
+        System.out.println("Time: " + dataTime.toString());
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return getId() - ((Bill)o).getId();
+
+    }
+
+    public static class SortByDateComparator implements Comparator<Bill>{
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return 0;
+        }
+    }
 
 }
