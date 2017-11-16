@@ -1,0 +1,9 @@
+
+
+gradlew.bat test --debug
+gradlew.bat check --info start tests and make report
+gradlew.bat test --info start tests
+
+
+
+

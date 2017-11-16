@@ -11,7 +11,7 @@
                 fullname
                 login
                 pass
-        Product
+        ua.artcode.market.model.Product
             fields:
                 id
                 name
