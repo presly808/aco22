@@ -1,20 +1,27 @@
+package week1;
+
+
 public class Bill {
 
     int id;
     Product[] products = new Product[20];
     Salesman salesman;
     double amountPrice;
-    String closeTime;
+    MyDataTime dataTime = new MyDataTime();
 
-    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String closeTime) {
+    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, MyDataTime dataTime) {
         this.id = id;
         this.products = products;
         this.salesman = salesman;
         this.amountPrice = amountPrice;
-        this.closeTime = closeTime;
+        this.dataTime = dataTime;
     }
 
     public Bill() {
+    }
+
+    public Bill(Salesman salesman) {
+        this.salesman = salesman;
     }
 
     public void setId(int id) {
@@ -33,8 +40,8 @@ public class Bill {
         this.amountPrice = amountPrice;
     }
 
-    public void setCloseTime(String closeTime) {
-        this.closeTime = closeTime;
+    public void setCloseTime(MyDataTime dataTime) {
+        this.dataTime = dataTime;
     }
 
     public int getId() {
@@ -53,36 +60,44 @@ public class Bill {
         return amountPrice;
     }
 
-    public String getCloseTime() {
-        return closeTime;
+    public MyDataTime getDataTime() {
+        return dataTime;
     }
 
     public void addProduct(Product[] product){
 
     }
-    public String closeBill(){
-        if (closeTime == null){
-            closeTime = "12:30";
-        }else {
-            System.out.printf("This bill was closed");
+    public boolean closeBill(){
+        if (dataTime == null){
+            dataTime.setDay(1);
+            dataTime.setMonth(12);
+            dataTime.setHour(15);
+            dataTime.setMinute(25);
+            dataTime.setSecond(35);
+            return true;
         }
-        return closeTime;
+        System.out.printf("This bill was closed");
+
+        return false;
     }
     public double calculateAmountPrice(Product[] product ){
         double amountPrice = 0.0d;
-        for (int i = 0; i < product.length; i++){
-            amountPrice = product[i].getPrice();
+        for (int i = 0; i < products.length; i++){
+
+            amountPrice = products[i].getPrice();
         }
         return amountPrice;
     }
     public void printBill(){
         System.out.println("Bill's number" + id);
         for (int i = 0; i < products.length; i++){
+            if (products[i] == null) break;
             System.out.print("Name " + products[i].getName() + " --------- ");
             System.out.println("Price " + products[i].getPrice());
         }
         System.out.println("Amount price " + calculateAmountPrice(products));
         System.out.println("Time: " + closeBill());
     }
+
 
 }
