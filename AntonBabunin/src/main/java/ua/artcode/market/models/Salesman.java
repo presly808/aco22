@@ -1,9 +1,6 @@
 package ua.artcode.market.models;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Salesman{
     private String fullName;
     private String login;

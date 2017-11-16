@@ -142,7 +142,7 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
         for (Object obj : objects)
             if (obj != null) {
-            filtered = filter(filtered, obj, objects.indexOf(obj));
+                filtered = filter(filtered, obj, objects.indexOf(obj));
             }
         return filtered;
     }

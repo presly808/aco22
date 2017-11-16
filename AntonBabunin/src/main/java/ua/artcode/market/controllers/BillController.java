@@ -3,7 +3,6 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.interfaces.IBill;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Terminal;
 import ua.artcode.market.utils.Utils;
 
 import java.util.ArrayList;

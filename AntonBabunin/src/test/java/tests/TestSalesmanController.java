@@ -4,9 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.controllers.BillController;
 import ua.artcode.market.controllers.SalesmanController;
-import ua.artcode.market.controllers.TerminalController;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -148,17 +146,17 @@ public class TestSalesmanController {
     }
 
     @Test
-    public void testLogin_1() {
+    public void testLogin1() {
         Terminal terminal = new Terminal();
         Salesman actual = sc.login(terminal,  "sad", "asd");
         Assert.assertNull(actual);
     }
 
     @Test
-    public void testLogin_2() {
+    public void testLogin2() {
         Salesman expected = sc.create("SalesMan1", "SalesMan1", "Sales");
         Terminal terminal = new Terminal();
-        Salesman top = sc.create("top", "top", "top");
+        sc.create("top", "top", "top");
         sc.login(terminal, "top", "top");
         Salesman actual = sc.login(terminal,  "SalesMan1", "Sales");
         Assert.assertEquals(expected, actual);
@@ -176,7 +174,7 @@ public class TestSalesmanController {
     }
 
     @Test
-    public void testCreateBill_1() {
+    public void testCreateBill1() {
         Terminal terminal = new Terminal();
         Salesman salesman = sc.create(null,"1","2");
         sc.login(terminal, "1","1");
@@ -185,7 +183,7 @@ public class TestSalesmanController {
     }
 
     @Test
-    public void testFindBillById_1() {
+    public void testFindBillById1() {
         Terminal terminal = new Terminal();
         Salesman salesman = sc.create("1","1","2");
         sc.login(terminal, "1","1");
@@ -199,7 +197,7 @@ public class TestSalesmanController {
 
 
     @Test
-    public void testFindBillById_2() {
+    public void testFindBillById2() {
         Terminal terminal = new Terminal();
         Terminal test = new Terminal();
         Salesman salesman = sc.create("1","1","2");
@@ -213,7 +211,7 @@ public class TestSalesmanController {
     }
 
     @Test
-    public void testFindBillById_3() {
+    public void testFindBillById3() {
         Terminal terminal = new Terminal();
         Terminal test = new Terminal();
         Salesman salesman = sc.create("1","1","2");

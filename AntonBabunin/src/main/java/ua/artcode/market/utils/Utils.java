@@ -1,9 +1,5 @@
 package ua.artcode.market.utils;
 
-import ua.artcode.market.controllers.BillController;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
