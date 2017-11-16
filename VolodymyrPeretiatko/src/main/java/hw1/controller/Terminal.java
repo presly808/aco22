@@ -1,12 +1,17 @@
 package hw1.controller;
 
+import com.sun.deploy.util.ArrayUtil;
 import hw1.model.Bill;
 import hw1.model.Product;
 import hw1.model.Salesman;
 import hw1.utils.ILogger;
 import hw1.utils.LogSout;
+import hw1.utils.Utils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -74,6 +79,7 @@ public class Terminal implements ITerminal {
         Bill b = new Bill(id, salesman);
         if (log != null)
             log.info(Terminal.class, "New bill was created! " + b);
+
         return b;
     }
 
@@ -124,6 +130,35 @@ public class Terminal implements ITerminal {
             }
         }
         return topSalesman;
+    }
+
+    public ArrayList<Bill> filter(ArrayList<Salesman> salesmen, ArrayList<Product> products, Date startDate, Date endDate, Comparator<Bill> c){
+
+        ArrayList<Bill> result = new ArrayList<>();
+        Date BDate;
+
+        for(Bill b : this.bills){
+
+            BDate = b.getCloseTime();
+            if (startDate.compareTo(BDate) < 0 || endDate.compareTo(BDate) > 0){
+                continue;
+            }
+
+            if (salesmen != null
+                    && !salesmen.contains(b.getSalesman())){
+                continue;
+            }
+
+            if (products != null
+                    && !Utils.listContainElementsOther(b.getProducts(), products)){
+                continue;
+            }
+
+            result.add(b);
+
+        }
+
+        return result;
     }
 
     public HashMap<Salesman, Double> getSalesAmountBySalesman(){

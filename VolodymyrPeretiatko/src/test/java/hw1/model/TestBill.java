@@ -1,8 +1,5 @@
 package hw1.model;
 
-import hw1.model.Bill;
-import hw1.model.Product;
-import hw1.model.Salesman;
 import org.junit.*;
 
 import java.util.ArrayList;
