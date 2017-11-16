@@ -4,28 +4,21 @@ import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.interfaces.SomeStatistics;
 import ua.artcode.market.models.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class TerminalController implements ITerminal, SomeStatistics{
+
     private static Map<Salesman, String> salesmanLogin;
     private static Map<String, String> loginPassword;
+
     private BillController billController;
 
     public TerminalController() {
         this.billController = new BillController();
     }
 
-//    public static Map<Salesman, String[]> getSalesmanList() {
-//        return salesmanList;
-//    }
-//
-//    public static void setSalesmanList(Map<Salesman, String[]> list) {
-//        salesmanList = list;
-//    }
+
 
     @Override
     public Bill createBill(Terminal terminal, Salesman salesman) {
@@ -66,7 +59,7 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     @Override
     public Salesman login(Terminal terminal, String login, String pass) {
-        if (this == null || terminal == null || login == null || pass == null) return null;
+        if (terminal == null || login == null || pass == null) return null;
         if (salesmanLogin == null || salesmanLogin.isEmpty()) return null;
 
         for (Map.Entry<String, String> pair : loginPassword.entrySet()) {
@@ -101,6 +94,16 @@ public class TerminalController implements ITerminal, SomeStatistics{
     }
 
     @Override
+    public Bill findBillById(int id) {
+        for (Bill bill : billController.getBills()) {
+            if (bill.getBillId() == id) {
+                return bill;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Salesman create (String fullName, String login, String password) {
         if (fullName == null || login == null || password == null)
             return null;
@@ -123,6 +126,96 @@ public class TerminalController implements ITerminal, SomeStatistics{
         return null;
     }
 
+    /*@Override
+    public List<Bill> filterMethod (Salesman salesman) {
+        if (billController.getBills() == null) return null;
+        if (salesman == null) return billController.getBills();
 
+        List<Bill> arrBills = new ArrayList<Bill>();
+        for(Bill bill : billController.getBills()) {
+            if (salesman.equals(bill.getSalesman())) {
+                arrBills.add(bill);
+            }
+        }
+        return arrBills;
+    }*/
+
+    private List<Bill> addToListByProduct (List<Bill> list, Product product) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null && product != null)
+        for (Bill bill : list) {
+            if ((bill.getProducts().containsKey(product))) {
+                arrList.add(bill);
+            }
+        }
+        return arrList;
+    }
+
+    private List<Bill> addToListBySalesman (List<Bill> list, Salesman salesman) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null && salesman != null) {
+            for (Bill bill : list) {
+                if ((bill.getSalesman().equals(salesman))) {
+                    arrList.add(bill);
+                }
+            }
+        }
+        return arrList;
+    }
+
+
+
+    private List<Bill> filter(List<Bill> list, Object object, int i) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (object instanceof Salesman && i == 0) {
+            Salesman obj = (Salesman) object;
+            arrList = addToListBySalesman(list, obj);
+
+        }
+        if (object instanceof Product && i == 1) {
+            Product obj = (Product) object;
+            arrList = addToListByProduct(list, obj);
+        }
+/*        if (object instanceof Date) {
+            Date obj = (Date) object;
+            for (Bill bill : list) {
+                if (i == 2) {
+                    if ((bill.getOpenTime().compareTo(obj) >= 0)) {
+                        arrList.add(bill);
+                    }
+                }
+                if (i == 3) {
+                    if ((bill.getOpenTime().compareTo(obj) <= 0)) {
+                        arrList.add(bill);
+                    }
+                }
+            }
+        }
+        if (object instanceof Comparator) {
+            Comparator obj = (Comparator) object;
+        }*/
+        return arrList;
+    }
+
+    @Override
+    public List<Bill> filterMethodAll(Salesman salesman, Product product,
+                                      Date startDate, Date endDate,
+                                      Comparator<Bill> billComparator) {
+
+        List<Object> objects = new ArrayList<Object>();
+        objects.add(salesman);
+        objects.add(product);
+        objects.add(startDate);
+        objects.add(endDate);
+        objects.add(billComparator);
+
+        List<Bill> filtered = billController.getBills();
+
+        for (Object obj : objects)
+            if (obj != null) {
+            filtered = filter(filtered, obj, objects.indexOf(obj));
+            }
+        return filtered;
+    }
 
 }

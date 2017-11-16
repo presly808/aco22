@@ -3,8 +3,10 @@ package ua.artcode.market.models;
 import ua.artcode.market.utils.Utils;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Bill implements Comparator<Bill>{
 
@@ -14,11 +16,11 @@ public class Bill implements Comparator<Bill>{
     private Salesman salesman;
     private double amountPrice;
 
-    private String openTime;
-    private String closeTime;
+    private Date openTime;
+    private Date closeTime;
 
     public Bill() {
-        this.billId = Utils.generateID();
+        this.billId = Utils.generateBillID();
         this.products = new HashMap<Product, Integer>();
         this.openTime = Utils.getCurrentTime();
     }
@@ -63,19 +65,19 @@ public class Bill implements Comparator<Bill>{
         this.amountPrice = amountPrice;
     }
 
-    public String getOpenTime() {
+    public Date getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(String openTime) {
+    public void setOpenTime(Date openTime) {
         this.openTime = openTime;
     }
 
-    public String getCloseTime() {
+    public Date getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
     }
 

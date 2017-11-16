@@ -7,6 +7,9 @@ import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class SalesmanController implements ISalesman, SomeStatistics{
@@ -60,9 +63,24 @@ public class SalesmanController implements ISalesman, SomeStatistics{
         return null;
     }
 
+    @Override
+    public Bill findBillById(int id) {
+        return terminalController.findBillById(id);
+    }
 
-//    public TerminalController getTerminalController() {
-//        return terminalController;
+    @Override
+    public List<Bill> filterMethodAll(Salesman salesman, Product product,
+                                      Date startDate, Date endDate,
+                                      Comparator<Bill> billComparator) {
+        return terminalController.filterMethodAll(salesman, product, startDate,
+                endDate,billComparator);
+    }
+
+//    @Override
+//    public List<Bill> filterMethod (Salesman salesman) {
+//        return new ArrayList<>();
 //    }
+
+
 }
 
