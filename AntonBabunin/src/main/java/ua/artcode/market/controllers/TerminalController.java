@@ -168,13 +168,13 @@ public class TerminalController implements ITerminal, SomeStatistics{
                 arrList = addToListByEndDate(list, obj);
             }
         }
-        if (object instanceof Comparator) {
-            Comparator obj = (Comparator) object;
-            Set<Bill> sorted = sortByComparator(list, obj);
-            for (Bill sort : sorted) {
-                arrList.add(sort);
-            }
-        }
+//        if (object instanceof Comparator) {
+//            Comparator obj = (Comparator) object;
+//            Set<Bill> sorted = sortByComparator(list, obj);
+//            for (Bill sort : sorted) {
+//                arrList.add(sort);
+//            }
+//        }
         return arrList;
     }
 
@@ -225,9 +225,9 @@ public class TerminalController implements ITerminal, SomeStatistics{
         return arrList;
     }
 
-    private Set sortByComparator(List<Bill> list, Comparator<Bill> comp) {
-        Set treeSet = new TreeSet();
-        treeSet.addAll(list);
-        return treeSet;
-    }
+//    private Set sortByComparator(List<Bill> list, Comparator<Bill> comp) {
+//        Set treeSet = new TreeSet();
+//        treeSet.addAll(list);
+//        return treeSet;
+//    }
 }

@@ -11,6 +11,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
+import ua.artcode.market.utils.BillComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class TestSalesmanController {
     public void erraseData(){
         this.sc = null;
     }
-/*
+
     @Test
     public void testCreateBillNull1() {
         Terminal terminal = new Terminal();
@@ -224,7 +225,6 @@ public class TestSalesmanController {
         Bill actual = sc.findBillById(11);
         Assert.assertNotEquals(expected,actual);
     }
-*/
     @Test
     public void filterMethodAll() {
         Terminal terminal = new Terminal();
@@ -274,7 +274,8 @@ public class TestSalesmanController {
         List<Bill> expected = new ArrayList<>();
         expected.add(bill5);
 
-        List<Bill> actual = sc.filterMethodAll(salesman4, product3,null, null,null);
+        List<Bill> actual = sc.filterMethodAll(salesman4, product3, null,
+                null, null);
 
         Assert.assertArrayEquals(expected.toArray(), actual.toArray());
 

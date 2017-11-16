@@ -2,13 +2,12 @@ package ua.artcode.market.models;
 
 import ua.artcode.market.utils.Utils;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Bill {
+public class Bill implements Comparable {
 
     private int billId;
     private int terminalId;
@@ -106,5 +105,13 @@ public class Bill {
         }
 
         return false;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Bill bill = (Bill) o;
+        if (this.amountPrice == bill.amountPrice) return 0;
+        else if (this.amountPrice < bill.amountPrice) return -10;
+        else return 10;
     }
 }
