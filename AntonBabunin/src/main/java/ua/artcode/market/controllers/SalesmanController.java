@@ -43,8 +43,8 @@ public class SalesmanController implements ISalesman, SomeStatistics{
     }
 
     @Override
-    public Salesman login(String login, String password) {
-        return terminalController.login(login, password);
+    public Salesman login(Terminal terminal, String login, String password) {
+        return terminalController.login(terminal, login, password);
     }
 
     @Override

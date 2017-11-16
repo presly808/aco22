@@ -29,12 +29,21 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     @Override
     public Bill createBill(Terminal terminal, Salesman salesman) {
+        if (terminal == null || salesman == null) return null;
+
+        if (!terminal.getSales().contains(salesman)) {
+            login(terminal,salesman);
+        }
         Bill bill = new Bill();
         bill.setSalesman(salesman);
         terminal.getSales().add(salesman);
         terminal.getBills().add(bill);
-
         return this.billController.getBills().add(bill) ? bill : null;
+
+    }
+
+    private void login(Terminal terminal, Salesman salesman) {
+        login(terminal, salesman.getFullName(), salesman.getPassword());
     }
 
     @Override
@@ -57,7 +66,8 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     @Override
     public Salesman login(Terminal terminal, String login, String pass) {
-        if (terminal != null || login == null || pass == null) return null;
+        if (this == null || terminal == null || login == null || pass == null) return null;
+        if (salesmanLogin == null || salesmanLogin.isEmpty()) return null;
 
         for (Map.Entry<String, String> pair : loginPassword.entrySet()) {
             if (login.equals(pair.getKey()) && pass.equals(pair.getValue())){
@@ -70,7 +80,6 @@ public class TerminalController implements ITerminal, SomeStatistics{
                     }
                 }
             }
-            return null;
         }
         return null;
     }
@@ -93,7 +102,8 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     @Override
     public Salesman create (String fullName, String login, String password) {
-
+        if (fullName == null || login == null || password == null)
+            return null;
         Salesman seller =
                 new Salesman(fullName, login, password);
 

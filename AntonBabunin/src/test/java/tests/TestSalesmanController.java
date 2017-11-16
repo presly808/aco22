@@ -127,4 +127,59 @@ public class TestSalesmanController {
 
         Assert.assertTrue(bool);
     }
+
+
+    @Test
+    public void testCreate() {
+        Salesman salesman = sc.create("SalesMan1", "SalesMan1", "SalesMan1");
+        Assert.assertNotNull(salesman);
+    }
+
+    @Test
+    public void testLogin() {
+        Terminal terminal = new Terminal();
+        Salesman actual = sc.login(terminal,  null, null);
+        Assert.assertNull(actual);
+    }
+
+    @Test
+    public void testLogin_1() {
+        Terminal terminal = new Terminal();
+        Salesman actual = sc.login(terminal,  "sad", "asd");
+        Assert.assertNull(actual);
+    }
+
+    @Test
+    public void testLogin_2() {
+        Salesman expected = sc.create("SalesMan1", "SalesMan1", "Sales");
+        Terminal terminal = new Terminal();
+        Salesman top = sc.create("top", "top", "top");
+        sc.login(terminal, "top", "top");
+        Salesman actual = sc.login(terminal,  "SalesMan1", "Sales");
+        Assert.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void testCreateBill() {
+        Bill expected = new Bill();
+        Terminal terminal = new Terminal();
+        Salesman salesman = sc.create("1","1","2");
+        sc.login(terminal, salesman.getFullName(),salesman.getPassword());
+        Bill actual = sc.createBill(terminal, salesman);
+        Assert.assertNotSame(expected, actual);
+    }
+
+    @Test
+    public void testCreateBill_1() {
+        Terminal terminal = new Terminal();
+        Salesman salesman = sc.create(null,"1","2");
+        Salesman nullP = sc.login(terminal, "1","1");
+        Bill actual = sc.createBill(terminal, salesman);
+        Assert.assertNull(actual);
+    }
+
+
+
+
 }
