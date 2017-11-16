@@ -65,6 +65,7 @@ public class Bill implements Comparable{
 
     public void addProduct(Product[] product){
 
+
     }
     public boolean setCloseBill(){
         if (dataTime == null){

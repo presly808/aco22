@@ -41,8 +41,7 @@ public class Terminal implements ITerminal {
             bill.setSalesman(salesman);
             return bill;
         }
-
-        
+        return null;
     }
 
     @Override
@@ -58,27 +57,29 @@ public class Terminal implements ITerminal {
     }
 
     @Override
-    public void findBillById(int id) {
+    public Bill getBillById(int id) {
         for (int i = 0; i < bills.length; i++) {
             if (bills[i] == null) break;
             if (bills[i].getId() == id) {
-                bills[i].printBill();
+                return bills[i];
             }
         }
+        return null;
     }                        //search bill
 
     @Override
-    public void findSalesmanByLoginOrFullname(String salesman) {
+    public Salesman getSalemanByName(String salesman) {
         for (int i = 0; i < salesman.length(); i++) {
             if (sales[i] == null) break;
             if (sales[i].getLogin().equals(salesman) || sales[i].getFullname().equals(salesman)) {
-                sales[i].printSalesman();
+                return sales[i];
             }
         }
+        return null;
     }
 
     @Override
-    public void getTopNofSalesMan() {
+    public Salesman getTopNofSalesMan() {
         int id = 0;
         int[] count = new int[sales.length];
         for (int i = 0; i < sales.length; i++) {
@@ -97,8 +98,7 @@ public class Terminal implements ITerminal {
                 max = count[i];
             }
         }
-
-        System.out.println("Top Salesman " + sales[id].getFullname() + " Summ Bill = " + max);
+        return sales[id];
     }                   //
 
     public void doSomeStatisticStuff() {
@@ -145,18 +145,5 @@ public class Terminal implements ITerminal {
         }
         average = average / count;
         return average;
-    }
-
-    @Override
-    public int compare(Object o1, Object o2) {
-        Product product1 = (Product) o1;
-        Product product2 = (Product) o2;
-        int result = product1.getName().compareTo(product2.getName());
-        if (result != 0) {
-            result = result / Math.abs(result);
-            return result;
-        }
-
-        return 0;
     }
 }
