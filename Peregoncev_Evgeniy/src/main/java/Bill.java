@@ -3,7 +3,6 @@
  */
 public class Bill {
 
-
     private Product[] products;
     private double AmountPrice;
     private Salesman salesman;

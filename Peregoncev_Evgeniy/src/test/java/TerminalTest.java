@@ -77,7 +77,7 @@ public class TerminalTest {
     }
 
     @Test
-    public void createbill() throws Exception {
+    public void createBill() throws Exception {
 
         testTerminal.setCurrentSallerIndex(1);
 
