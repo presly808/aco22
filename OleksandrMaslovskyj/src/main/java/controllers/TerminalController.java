@@ -1,60 +1,102 @@
-package main.java.controllers;
+package controllers;
 
-import main.java.interfaces.ITerminal;
-import main.java.models.Product;
-import main.java.models.Salesman;
+import interfaces.ITerminal;
+import models.Bill;
+import models.Product;
+import models.Salesman;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class TerminalController implements ITerminal {
+public class TerminalController implements ITerminal{
 
-    private BillController currentBill;
-    private Set<BillController> billSet;
+    private BillController billController;
 
     public TerminalController() {
-        this.billSet = new HashSet<>();
+        this.billController = new BillController();
     }
 
-    //TODO should be implemented
-    public boolean login() {
-        return false;
+    //TODO validation
+    public Bill createBill(Bill bill) {
+        billController.getBillSet().add(bill);
+        return bill;
     }
 
-    public BillController createBill() {
-        this.currentBill = new BillController();
-        billSet.add(currentBill);
-        return currentBill;
-    }
-
-    public Product addProduct(String productName) {
-        if (currentBill == null) {
+    public Product addProduct(Bill bill, String productName) {
+        if (bill == null) {
             throw new IllegalStateException("BillController not created");
         }
-        return currentBill.addProduct(productName);
+        return billController.addProductToBill(bill, productName);
     }
 
-    public void closeAndSaveBill(BillController bill) {
-        this.currentBill = null;
-        bill.closeBill();
+    public void closeAndSaveBill(Bill bill) {
+        billController.closeBill(bill);
     }
 
     //TODO add validation
-    public BillController findBillById(long id) {
-        return billSet.stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
+    public Bill findBillById(long id) {
+        return billController.getBillSet().
+                stream().filter(bill -> bill.getId() == id).
+                collect(Collectors.toSet()).iterator().next();
     }
 
-    public Salesman findSalesmanByLoginOrFullName(String fullName) {
-        return billSet.stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
-                                                    || bill.getSalesman().getLogin().equals(fullName)).
-                                                        collect(Collectors.toSet()).iterator().next().getSalesman();
+    public Salesman findSalesmanByLoginOrFullName(String fullName,
+                                                    String login) {
+        Set<Bill> billSet = billController.getBillSet();
+        return billSet.stream().filter((Bill bill) -> {
+            Salesman salesman = bill.getSalesman();
+            if (salesman == null) {
+                return false;
+            }
+            String fullname = salesman.getFullname();
+            String login1 = salesman.getLogin();
+            if (fullname == null && login1 == null ) {
+                return false;
+            }
+            if (fullname.equals(fullName) ||
+                    login1.equals(login)) {
+                return true;
+            }
+            return false;
+        }).collect(Collectors.toList()).get(0).getSalesman();
     }
 
-    //TODO should be implemented
-    public Salesman getTopOnSalesMan() {
-        return null;
+    //TODO Need to refactor
+    public List<Bill> sortBillListByDateCreation() {
+        List<Bill> list = new ArrayList<>();
+        Set<Bill> set = billController.getBillSet();
+        list.addAll(set);
+        Collections.sort(list, (bill, bill1) -> {
+            Date i1 = (bill.getCreationDate());
+            Date i2 = (bill1.getCreationDate());
+            return i1.compareTo(i2);
+        });
+        return list;
     }
 
-    //TODO UI should be implemented
+    public List<Bill> getBillsByStartAndEndDates(Date startDate, Date endDate) {
+        List<Bill> filteredLIst = new ArrayList<>();
+        for (Bill bill : getBillSet()) {
+            Date creationBillDate = bill.getCreationDate();
+            if (creationBillDate.compareTo(startDate) >= 0
+                    && creationBillDate.compareTo(endDate) <= 0) {
+                filteredLIst.add(bill);
+            }
+        }
+        return filteredLIst;
+    }
+
+    public List<Bill> getBillsByCreator(Salesman salesman) {
+        List<Bill> filteredLIst = new ArrayList<>();
+        for (Bill bill : getBillSet()) {
+            if (bill.getSalesman().compareTo(salesman) == 1) {
+                filteredLIst.add(bill);
+            }
+        }
+        return filteredLIst;
+    }
+
+    public Set<Bill> getBillSet() {
+        return billController.getBillSet();
+    }
 }

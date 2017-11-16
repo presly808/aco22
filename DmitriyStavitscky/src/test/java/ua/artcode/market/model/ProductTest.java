@@ -1,4 +1,4 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 import ua.artcode.market.Utils.TimeUtils;
 

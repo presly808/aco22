@@ -1,4 +1,4 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 import java.util.Arrays;
 import java.util.Comparator;
