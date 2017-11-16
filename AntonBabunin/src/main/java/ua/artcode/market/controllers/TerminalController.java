@@ -126,77 +126,6 @@ public class TerminalController implements ITerminal, SomeStatistics{
         return null;
     }
 
-    /*@Override
-    public List<Bill> filterMethod (Salesman salesman) {
-        if (billController.getBills() == null) return null;
-        if (salesman == null) return billController.getBills();
-
-        List<Bill> arrBills = new ArrayList<Bill>();
-        for(Bill bill : billController.getBills()) {
-            if (salesman.equals(bill.getSalesman())) {
-                arrBills.add(bill);
-            }
-        }
-        return arrBills;
-    }*/
-
-    private List<Bill> addToListByProduct (List<Bill> list, Product product) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null && product != null)
-        for (Bill bill : list) {
-            if ((bill.getProducts().containsKey(product))) {
-                arrList.add(bill);
-            }
-        }
-        return arrList;
-    }
-
-    private List<Bill> addToListBySalesman (List<Bill> list, Salesman salesman) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null && salesman != null) {
-            for (Bill bill : list) {
-                if ((bill.getSalesman().equals(salesman))) {
-                    arrList.add(bill);
-                }
-            }
-        }
-        return arrList;
-    }
-
-
-
-    private List<Bill> filter(List<Bill> list, Object object, int i) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (object instanceof Salesman && i == 0) {
-            Salesman obj = (Salesman) object;
-            arrList = addToListBySalesman(list, obj);
-
-        }
-        if (object instanceof Product && i == 1) {
-            Product obj = (Product) object;
-            arrList = addToListByProduct(list, obj);
-        }
-/*        if (object instanceof Date) {
-            Date obj = (Date) object;
-            for (Bill bill : list) {
-                if (i == 2) {
-                    if ((bill.getOpenTime().compareTo(obj) >= 0)) {
-                        arrList.add(bill);
-                    }
-                }
-                if (i == 3) {
-                    if ((bill.getOpenTime().compareTo(obj) <= 0)) {
-                        arrList.add(bill);
-                    }
-                }
-            }
-        }
-        if (object instanceof Comparator) {
-            Comparator obj = (Comparator) object;
-        }*/
-        return arrList;
-    }
-
     @Override
     public List<Bill> filterMethodAll(Salesman salesman, Product product,
                                       Date startDate, Date endDate,
@@ -218,4 +147,87 @@ public class TerminalController implements ITerminal, SomeStatistics{
         return filtered;
     }
 
+    private List<Bill> filter(List<Bill> list, Object object, int i) {
+        if (object == null) return list;
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (object instanceof Salesman && i == 0) {
+            Salesman obj = (Salesman) object;
+            arrList = addToListBySeller(list, obj);
+
+        }
+        if (object instanceof Product && i == 1) {
+            Product obj = (Product) object;
+            arrList = addToListByProduct(list, obj);
+        }
+        if (object instanceof Date) {
+            Date obj = (Date) object;
+            if (i == 2) {
+                arrList = addToListByStartDate(list, obj);
+            }
+            if (i == 3) {
+                arrList = addToListByEndDate(list, obj);
+            }
+        }
+        if (object instanceof Comparator) {
+            Comparator obj = (Comparator) object;
+            Set<Bill> sorted = sortByComparator(list, obj);
+            for (Bill sort : sorted) {
+                arrList.add(sort);
+            }
+        }
+        return arrList;
+    }
+
+    private List<Bill> addToListByProduct (List<Bill> list, Product product) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null)
+            for (Bill bill : list) {
+                if ((bill.getProducts().containsKey(product))) {
+                    arrList.add(bill);
+                }
+            }
+        return arrList;
+    }
+
+    private List<Bill> addToListBySeller (List<Bill> list, Salesman salesman) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null) {
+            for (Bill bill : list) {
+                if ((salesman.equals(bill.getSalesman()))) {
+                    arrList.add(bill);
+                }
+            }
+        }
+        return arrList;
+    }
+
+    private List<Bill> addToListByStartDate(List<Bill> list, Date date) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null) {
+            for (Bill bill : list) {
+                if ((date.compareTo(bill.getOpenTime())) >=0 ) {
+                    arrList.add(bill);
+                }
+            }
+        }
+        return arrList;
+    }
+
+    private List<Bill> addToListByEndDate(List<Bill> list, Date date) {
+        List<Bill> arrList = new ArrayList<Bill>();
+        if (list != null) {
+            for (Bill bill : list) {
+                if ((date.compareTo(bill.getCloseTime())) < 0 ) {
+                    arrList.add(bill);
+                }
+            }
+        }
+        return arrList;
+    }
+
+    private Set sortByComparator(List<Bill> list, Comparator<Bill> comp) {
+        Set treeSet = new TreeSet();
+        treeSet.addAll(list);
+        return treeSet;
+    }
 }

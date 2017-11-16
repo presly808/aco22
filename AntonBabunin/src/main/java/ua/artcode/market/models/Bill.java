@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Bill implements Comparator<Bill>{
+public class Bill {
 
     private int billId;
     private int terminalId;
@@ -107,16 +107,4 @@ public class Bill implements Comparator<Bill>{
 
         return false;
     }
-
-    @Override
-    public int compare(Bill o1, Bill o2) {
-        return 0;
-    }
-
-    @Override
-    public Comparator<Bill> reversed() {
-        return null;
-    }
-
-
 }
