@@ -10,7 +10,7 @@ public class Bill {
     private Salesman salesman;
     private String closeTimel;
 
-    private int billId;
+    private int billId = 0;
 
     private boolean isclosed = false;
 

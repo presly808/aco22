@@ -12,14 +12,14 @@ public class BillTest {
 
     Bill testBill;
 
-    double testAmountPrice;
+    private Salesman testSalesMan;
 
     Product testProduct1;
     Product testProduct2;
     Product testProduct3;
     Product testProduct4;
 
-    private Salesman testSalesMan;
+    double testAmountPrice;
 
     @Before
     public void setUp() {

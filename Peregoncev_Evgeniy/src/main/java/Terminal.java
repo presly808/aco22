@@ -62,6 +62,8 @@ public class Terminal {
 
 
     //Methods
+
+
     public boolean login(String login, String pass) {
         if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
             System.out.println("write true login/pass");
@@ -72,7 +74,7 @@ public class Terminal {
             return false;
         }
 
-        for (int i = 0; i < sales.length; i++) {
+        for (int i = 0; i < salesCountSize; i++) {
             if (sales[i].getLogin().equals(login) &&
                     sales[i].getPass().equals(pass)) {
                 System.out.println("Hello " + sales[i].getFullname());
@@ -88,8 +90,8 @@ public class Terminal {
         if (currentSallerIndex == -1)
             return null;
 
-        bils[billCountSize++] = bill;
-        bill.setBillId(billCountSize + 1);
+        bils[billCountSize] = bill;
+        bill.setBillId(++billCountSize);
         return bill;
     }
 

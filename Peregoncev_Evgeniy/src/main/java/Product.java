@@ -44,6 +44,7 @@ public class Product {
 
     //Methods
 
+
     public String printFullInfo() {
 
         return String.format("%-15s %-8.2f %s", name, price, barcode);
