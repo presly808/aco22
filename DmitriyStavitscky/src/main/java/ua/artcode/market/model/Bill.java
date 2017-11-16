@@ -1,6 +1,9 @@
 package ua.artcode.market.model;
 
-public class Bill {
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Bill implements Comparable<Bill> {
 
     private static final int MAX_COUNT_OF_PRODUCTS_IN_BILL = 10;
 
@@ -20,7 +23,7 @@ public class Bill {
         this.id = idOfBill;
     }
 
-    private void addProduct(String name, int id, double price) {
+    public void addProduct(String name, int id, double price) {
         if (productsCount == MAX_COUNT_OF_PRODUCTS_IN_BILL) {
             System.out.println("sorry, max count of products in bill");
 
@@ -42,25 +45,52 @@ public class Bill {
         }
     }
 
-    private void printBill() {
-        for (int i = 0; i < productsCount; i++) {
-            System.out.println(products[i].getPrice() + ", ");
-        }
-
-        System.out.printf("id: %d, amount price: %.2f, saleman: %s",
-                id, amountPrice, salesman.getFullName());
-
-    }
-
     public void closeBill(int hours, int minutes, int seconds) {
         isClosed = true;
         time = new Time(hours, minutes, seconds);
-        printBill();
         salesman.setSumOfAllSales(amountPrice);
     }
 
-    public void setProducts(String name, int id, double price) {
-        addProduct(name, id, price);
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "products=" + Arrays.toString(products) +
+                ", productsCount=" + productsCount +
+                ", id=" + id +
+                ", amountPrice=" + amountPrice +
+                ", isClosed=" + isClosed +
+                ", salesman=" + salesman.toString() +
+                ", time=" + time.toString() +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+
+        Bill other = (Bill) obj;
+
+        return (products != null && Arrays.equals(products, other.products)) &&
+                (productsCount == other.productsCount) &&
+                id == other.id &&
+                amountPrice == other.amountPrice &&
+                isClosed == other.isClosed &&
+                salesman.equals(other.salesman) &&
+                time.equals(other.time);
+
+    }
+
+    // if this < object -> -
+    // if this > object -> +
+
+    public void setProducts(Product[] products) {
+        this.products = products;
     }
 
     public int getProductsCount() {
@@ -90,4 +120,66 @@ public class Bill {
     public Time getTime() {
         return time;
     }
+
+    public boolean isClosed() { return isClosed; }
+
+    public Salesman getSalesman() { return salesman; }
+
+    @Override
+    public int compareTo(Bill o) {
+        double res = amountPrice - o.getAmountPrice();
+
+        return res > 0 ? 1 :
+                res < 0 ? -1 : 0;
+    }
 }
+
+    class BillIdComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+
+            return o1.getId() - o2.getId();
+        }
+    }
+
+    class BillProductsCountComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getProductsCount() - o2.getProductsCount();
+        }
+    }
+
+    class BillAmountPriceComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+
+            double res = o1.getAmountPrice() - o2.getAmountPrice();
+
+            return res > 0 ? 1 :
+                    res < 0 ? -1 : 0;
+        }
+    }
+
+    class BillSalesmanComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getSalesman().getFullName().compareTo
+                    (o2.getSalesman().getFullName());
+        }
+    }
+
+    class BillTimeComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getTime().compareTo(o2.getTime());
+        }
+    }
+
+
+
+

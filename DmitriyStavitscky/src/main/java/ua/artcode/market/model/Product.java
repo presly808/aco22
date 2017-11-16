@@ -12,7 +12,25 @@ public class Product {
         this.price = price;
     }
 
-    public String convertToStringFullInfo() {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this){
+            return true;
+        }
+
+        if(obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+
+        Product other = (Product) obj;
+
+        return (name != null && name.equals(other.name)) &&
+                id == other.id &&
+                price == other.price;
+    }
+
+    @Override
+    public String toString() {
         return String.format("name: %s, id: %d, price: %.2f", name, id, price);
     }
 

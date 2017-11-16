@@ -1,11 +1,16 @@
-package ua.artcode.market.model;
+package ua.artcode.market.controller;
+
+import ua.artcode.market.interf.ITerminal;
+
+import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Salesman;
+import ua.artcode.market.model.Time;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 
-public class Terminal {
-
-    public static final int MAX_COUNT_OF_BILLS = 10;
-    public static final int MAX_COUNT_OF_SALESMANS = 10;
-
+public class Terminal implements ITerminal {
 
     private Bill[] bills = new Bill[MAX_COUNT_OF_BILLS];
     private int countOfBills;
@@ -16,6 +21,7 @@ public class Terminal {
     private Salesman loggedSalesman;
     private boolean logged;
 
+    @Override
     public void addSalesman(String fullName, String login, int pass) {
 
         if (countOfSalesman == MAX_COUNT_OF_SALESMANS) {
@@ -27,6 +33,7 @@ public class Terminal {
         }
     }
 
+    @Override
     public void signIn(boolean isLogin, String loginOrName, int password) {
         if (findSalesman(loginOrName, isLogin) == null ||
                 findSalesman(loginOrName, isLogin).getPass() != password) {
@@ -37,6 +44,12 @@ public class Terminal {
         }
     }
 
+    public void logOut() {
+        setLogged(false);
+    }
+
+
+    @Override
     public void createBill(int id) {
 
         if (!logged) {
@@ -50,7 +63,9 @@ public class Terminal {
         }
     }
 
+    @Override
     public void closeAndSaveBill(int hours, int minutes, int seconds) {
+
         if (!logged) {
             System.out.println("please log in");
         } else if (bills[countOfBills].getProducts() == null) {
@@ -60,14 +75,16 @@ public class Terminal {
         }
     }
 
+    @Override
     public void addProduct(String name, int id, double price) {
         if (logged) {
-            bills[countOfBills].setProducts(name, id, price);
+            bills[countOfBills].addProduct(name, id, price);
         } else {
             System.out.println("please log in");
         }
     }
 
+    @Override
     public Bill findBillById(int id) {
         if (id == 0) return null;
 
@@ -80,6 +97,7 @@ public class Terminal {
         return null;
     }
 
+    @Override
     public Salesman findSalesman(String loginOrName, boolean isLogin) {
         if (loginOrName == null || loginOrName.isEmpty()) return null;
 
@@ -101,6 +119,7 @@ public class Terminal {
         return null;
     }
 
+    @Override
     public Salesman getTopNofSalesMan() {
         int topSalemanId = 0;
 
@@ -117,6 +136,7 @@ public class Terminal {
         return salesmans[topSalemanId];
     }
 
+    @Override
     public void doSomeStatisticStuff() {
         if (countOfBills == 0) {
             System.out.println("count of bills = 0");
@@ -159,6 +179,30 @@ public class Terminal {
         }
     }
 
+    @Override
+    public Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
+        Bill[] billsFilt = new Bill[bills.length];
+        int countFiltBills = 0;
+
+        for (int i = 0; i < countOfBills; i++) {
+            if (bills[i].getTime().compareTo(startTime) > 0 &&
+                    bills[i].getTime().compareTo(endTime) < 0) {
+                billsFilt[countFiltBills++] = bills[i];
+
+            }
+        }
+
+        Bill[] billsRes = Arrays.copyOf(billsFilt, countFiltBills);
+        for (Bill billsRe : billsRes) {
+            billsRe.setProducts(Arrays.copyOf(billsRe.getProducts(),
+                    billsRe.getProductsCount()));
+
+        }
+
+        Arrays.sort(billsRes, comparator);
+        return billsRes;
+    }
+
     public Bill[] getBills() {
         return bills;
     }
@@ -179,9 +223,7 @@ public class Terminal {
         return loggedSalesman;
     }
 
-    public boolean getIsLogged() {
-        return logged;
-    }
+    public boolean getIsLogged() { return logged; }
 
     public void setBills(Bill[] bills) {
         this.bills = bills;
@@ -203,7 +245,5 @@ public class Terminal {
         this.loggedSalesman = loggedSalesman;
     }
 
-    public void setLogged(boolean logged) {
-        this.logged = logged;
-    }
+    private void setLogged(boolean logged) { this.logged = logged; }
 }

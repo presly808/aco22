@@ -1,6 +1,8 @@
 package ua.artcode.market.model;
 
-public class Time {
+import ua.artcode.market.Utils.TimeUtils;
+
+public class Time implements Comparable<Time> {
 
     private int hours;
     private int minutes;
@@ -12,8 +14,31 @@ public class Time {
         this.seconds = seconds;
     }
 
-    public String convTime() {
-        return String.format("%s:%s:%s", hours, minutes, seconds);
+    @Override
+    public String toString() { return String.format("%s:%s:%s", hours, minutes, seconds); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+
+        Time other = (Time) obj;
+
+        return hours == other.hours &&
+                minutes == other.minutes &&
+                seconds == other.seconds;
+    }
+
+    @Override
+    public int compareTo(Time o) {
+
+        return TimeUtils.sumOfSeconds(this) -
+                TimeUtils.sumOfSeconds(o);
     }
 
     public int getHours() {
@@ -27,5 +52,4 @@ public class Time {
     public int getSeconds() {
         return seconds;
     }
-
 }
