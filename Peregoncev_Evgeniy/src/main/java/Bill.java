@@ -3,16 +3,17 @@
  */
 public class Bill {
 
-    private static final int SIZE_OF_LIST = 10;
 
     private Product[] products;
     private double AmountPrice;
     private Salesman salesman;
-    private String closeTimel;
+    private Time time;
 
     private int billId = 0;
 
     private boolean isclosed = false;
+
+    private static final int SIZE_OF_LIST = 10;
 
     private int productsCounter = 0;
 
@@ -20,12 +21,20 @@ public class Bill {
 
     }
 
-    public Bill(double amountPrice, Salesman salesman, String closeTimel, int billId) {
+    public Bill(double amountPrice, Salesman salesman, Time time, int billId) {
         this.products = new Product[SIZE_OF_LIST];
         this.AmountPrice = amountPrice;
         this.salesman = salesman;
-        this.closeTimel = closeTimel;
+        this.time = new Time();
         this.billId = billId;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     public static int getSizeOfList() {
@@ -80,14 +89,6 @@ public class Bill {
         this.salesman = salesman;
     }
 
-    public String getCloseTimel() {
-        return closeTimel;
-    }
-
-    public void setCloseTimel(String closeTimel) {
-        this.closeTimel = closeTimel;
-    }
-
 
 //    Methods
 
@@ -123,8 +124,9 @@ public class Bill {
         return String.format("              BiLL  \n" +
                         "Title           Price    Barcode\n" +
                         "--------------------------------\n" +
-                        "%s\nAmount Price = %.2f\nSeller: %s\nTime: %s",
-                printAllProducts(), AmountPrice, salesman.getFullname(), closeTimel);
+                        "%s\nAmount Price = %.2f\nSeller: %s\n%s",
+                printAllProducts(), AmountPrice, salesman.getFullname(),time.printTime());
     }
+
 }
 

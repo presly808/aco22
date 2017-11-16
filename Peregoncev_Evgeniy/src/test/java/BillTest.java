@@ -4,20 +4,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
 /**
  * Created by ENIAC on 14.11.2017.
  */
 public class BillTest {
 
-    Bill testBill;
+    Salesman testSalesMan;
 
-    private Salesman testSalesMan;
+    Bill testBill;
 
     Product testProduct1;
     Product testProduct2;
     Product testProduct3;
     Product testProduct4;
+
+    Time testTime;
 
     double testAmountPrice;
 
@@ -25,25 +26,31 @@ public class BillTest {
     public void setUp() {
 
         testSalesMan = new Salesman("Izolda", "isoldaLog", "IsoldaPass");
-        testBill = new Bill(testAmountPrice, testSalesMan, "23:00", 1);
+        testBill = new Bill(testAmountPrice, testSalesMan, testTime, 1);
 
         testProduct1 = new Product("apricot", 16.5, "#001");
         testProduct2 = new Product("banana", 20.0, "#002");
         testProduct3 = new Product("watermelon", 50.5, "#003");
         testProduct4 = new Product("apple", 8.5, "#004");
+
+        testTime = new Time();
+
     }
 
     @After
     public void setDown() {
 
-        testBill = null;
-
         testSalesMan = null;
+        testBill = null;
 
         testProduct1 = null;
         testProduct2 = null;
         testProduct3 = null;
         testProduct4 = null;
+
+        testTime = null;
+
+        testAmountPrice = 0;
     }
 
     @Test
@@ -89,7 +96,7 @@ public class BillTest {
                 testBill.printAllProducts() +
                 "\nAmount Price = 95,50\n" +
                 "Seller: Izolda\n" +
-                "Time: 23:00";
+                testTime.printTime();
 
         Assert.assertEquals(expected1, testBill.printBillInfo());
 

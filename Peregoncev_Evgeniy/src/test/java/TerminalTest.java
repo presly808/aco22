@@ -2,7 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 /**
  * Created by ENIAC on 11.11.2017.
  */
@@ -20,9 +19,11 @@ public class TerminalTest {
     Bill testBill3;
     Bill testBill4;
 
+    Time testTime;
 
     @Before
     public void setUp() {
+
         testTerminal = new Terminal();
 
         testSalesman1 = new Salesman("Inna", "InnaLog", "InnaPass");
@@ -30,15 +31,19 @@ public class TerminalTest {
         testSalesman3 = new Salesman("Izolda", "IzoldaLog", "IzoldaPass");
         testSalesman4 = new Salesman("Dasha", "DashaLog", "DashaPass");
 
-        testBill1 = new Bill(0, testSalesman1, "close time", 1);
-        testBill2 = new Bill(0, testSalesman1, "close time", 2);
-        testBill3 = new Bill(0, testSalesman1, "close time", 3);
-        testBill4 = new Bill(0, testSalesman1, "close time", 4);
+        testBill1 = new Bill(0, testSalesman1, testTime, 1);
+        testBill2 = new Bill(0, testSalesman1, testTime, 2);
+        testBill3 = new Bill(0, testSalesman1, testTime, 3);
+        testBill4 = new Bill(0, testSalesman1, testTime, 4);
+
+        testTime = new Time();
 
     }
 
     @After
     public void setDown() {
+
+        testTerminal = null;
 
         testSalesman1 = null;
         testSalesman2 = null;
@@ -49,6 +54,8 @@ public class TerminalTest {
         testBill2 = null;
         testBill3 = null;
         testBill4 = null;
+
+        testTime = null;
 
     }
 
@@ -91,7 +98,7 @@ public class TerminalTest {
         testTerminal.getBils()[3] = testBill4;
 
         testTerminal.setBillCountSize(4);
-        Assert.assertSame(testTerminal.findBillById(testTerminal.getBils(), 003), testBill3);
+        Assert.assertSame(testTerminal.findBillById(testTerminal.getBils(), 3), testBill3);
 
     }
 
