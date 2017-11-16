@@ -276,7 +276,7 @@ public class TestSalesmanController {
 
         List<Bill> actual = sc.filterMethodAll(salesman4, product3, null,
                 null, null);
-
+        new BillComparator().compare(bill1, bill2);
         Assert.assertArrayEquals(expected.toArray(), actual.toArray());
 
 
