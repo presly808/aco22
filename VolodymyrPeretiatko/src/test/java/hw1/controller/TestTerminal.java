@@ -1,10 +1,10 @@
 package hw1.controller;
 
-import hw1.controller.Terminal;
-import hw1.model.Bill;
-import hw1.model.Product;
-import hw1.model.Salesman;
+import hw1.model.*;
 import org.junit.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class TestTerminal {
 
@@ -47,7 +47,9 @@ public class TestTerminal {
         terminal.addSalesman(s2);
 
         terminal.closeAndSaveBill(b1);
+        b1.setCloseTime(new Date(1510842400007L));
         terminal.closeAndSaveBill(b2);
+        b2.setCloseTime(new Date(1510842400777L));
     }
 
     @AfterClass
@@ -95,6 +97,71 @@ public class TestTerminal {
     public void testAddSalesman(){
         Assert.assertFalse(terminal.addSalesman(s1));
     }
+
+    @Test
+    public void testFilter(){
+
+        ArrayList<Bill> expected = new ArrayList<>();
+        expected.add(b1);
+        expected.add(b2);
+
+        ArrayList<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
+                new Date(1510842400000L), new Date(1510842400999L), new Bill.SortByDateComparator());
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void testFilterbyDate(){
+
+        ArrayList<Bill> expected = new ArrayList<>();
+        expected.add(b2);
+
+        ArrayList<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
+                new Date(1510842400077L), new Date(1510842400999L), new Bill.SortByDateComparator());
+
+        Assert.assertEquals(expected, actual);
+
+        expected.clear();
+        expected.add(b1);
+
+        actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
+                new Date(1510842400007L), new Date(1510842400667L), new Bill.SortByDateComparator());
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void testFilterbySalesman(){
+
+        ArrayList<Bill> expected = new ArrayList<>();
+        expected.add(b1);
+
+        ArrayList<Salesman> salesmen = new ArrayList<>();
+        salesmen.add(s1);
+
+        ArrayList<Bill> actual = terminal.filter(salesmen, terminal.getProducts(),
+                new Date(1510842400000L), new Date(1510842400999L), new Bill.SortByDateComparator());
+
+        Assert.assertEquals(expected, actual);
+
+        expected.clear();
+        expected.add(b2);
+
+        salesmen.clear();
+        salesmen.add(s2);
+
+        actual = terminal.filter(salesmen, terminal.getProducts(),
+                new Date(1510842400000L), new Date(1510842400999L), new Bill.SortByDateComparator());
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
+
+
 
 
 }
