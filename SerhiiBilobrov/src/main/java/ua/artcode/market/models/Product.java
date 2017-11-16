@@ -1,4 +1,4 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 /**
  * Created by serhii on 11.11.17.

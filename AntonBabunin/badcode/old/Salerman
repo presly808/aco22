@@ -9,7 +9,7 @@ Class Salesman:
         this.password = password;
     }*/
 
-    // Salesman create a new bill at terminal
+    // Salesman create a new billController at terminal
 
 
 /*    public void login (Terminal terminal) {
