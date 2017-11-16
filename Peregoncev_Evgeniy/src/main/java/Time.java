@@ -7,6 +7,8 @@ public class Time {
 
      static Time time = new Time();
 
+    String closeTime = printTime();
+
     public String printTime() {
         Date timeNow = new Date();
         SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");

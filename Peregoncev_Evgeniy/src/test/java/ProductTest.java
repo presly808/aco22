@@ -9,6 +9,7 @@ public class ProductTest {
 
     Product testProduct;
 
+
     @Test
     public void printFullInfo() throws Exception {
 

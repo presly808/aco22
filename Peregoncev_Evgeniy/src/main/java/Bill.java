@@ -49,12 +49,12 @@ public class Bill {
         this.billId = billId;
     }
 
-    public boolean isclosed() {
+    public boolean getIsclosed() {
         return isclosed;
     }
 
     public void setIsclosed(boolean isclosed) {
-        isclosed = isclosed;
+        this.isclosed = isclosed;
     }
 
     public int getProductsCounter() {
@@ -125,7 +125,7 @@ public class Bill {
                         "Title           Price    Barcode\n" +
                         "--------------------------------\n" +
                         "%s\nAmount Price = %.2f\nSeller: %s\n%s",
-                printAllProducts(), AmountPrice, salesman.getFullname(),time.printTime());
+                printAllProducts(), AmountPrice, salesman.getFullname(), getTime().closeTime);
     }
 
 }

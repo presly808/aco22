@@ -100,6 +100,7 @@ public class Terminal {
 
         } else {
             bill.setIsclosed(true);
+            bill.getTime().printTime();
 
         }
     }
@@ -129,11 +130,3 @@ public class Terminal {
     }
 
 }
-
-//    public boolean addproduct(Bill[] bill, Product product) {
-//        boolean isContains = false;
-//
-//        bill[billCountSize++].addProduct(product);
-//
-//        return false;
-//    }

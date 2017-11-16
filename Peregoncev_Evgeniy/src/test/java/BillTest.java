@@ -53,6 +53,7 @@ public class BillTest {
         testAmountPrice = 0;
     }
 
+
     @Test
     public void addProduct() throws Exception {
 

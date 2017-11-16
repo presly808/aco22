@@ -105,6 +105,12 @@ public class TerminalTest {
     @Test
     public void closeAndSaveBill() throws Exception {
 
+        testTerminal.getBils()[0] = testBill1;
+
+        testTerminal.closeAndSaveBill(testBill1);
+
+        Assert.assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().closeTime)));
+
     }
 
     @Test
