@@ -2,6 +2,7 @@
  * Created by ENIAC on 10.11.2017.
  */
 public class Salesman {
+
     private String fullname;
     private String login;
     private String pass;

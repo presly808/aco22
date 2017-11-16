@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
  * Created by ENIAC on 16.11.2017.
  */
 public class ProductTest {
+
     Product testProduct;
 
     @Test
