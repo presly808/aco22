@@ -10,6 +10,7 @@ import ua.artcode.market.models.Terminal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class SalesmanController implements ISalesman, SomeStatistics{
 
@@ -68,9 +69,9 @@ public class SalesmanController implements ISalesman, SomeStatistics{
     }
 
     @Override
-    public List<Bill> filterMethodAll(Salesman salesman, Product product,
-                                      Date startDate, Date endDate,
-                                      Comparator<Bill> billComparator) {
+    public Set<Bill> filterMethodAll(Salesman salesman, Product product,
+                                     Date startDate, Date endDate,
+                                     Comparator<Bill> billComparator) {
         return terminalController.filterMethodAll(salesman, product, startDate,
                 endDate,billComparator);
     }

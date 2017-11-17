@@ -127,11 +127,33 @@ public class TerminalController implements ITerminal, SomeStatistics{
     }
 
     @Override
-    public List<Bill> filterMethodAll(Salesman salesman, Product product,
-                                      Date startDate, Date endDate,
-                                      Comparator<Bill> billComparator) {
+    public Set<Bill> filterMethodAll(Salesman salesman, Product product,
+                                     Date startDate, Date endDate,
+                                     Comparator<Bill> billComparator) {
 
-        List<Object> objects = new ArrayList<Object>();
+        Set<Bill> filtered = new HashSet<>();
+        filtered.addAll(billController.getBills());
+
+        if  (salesman == null) return filtered;
+        else {
+            filtered = addToListBySeller(filtered, salesman);
+        }
+        if  (product == null) return filtered;
+        else {
+            filtered = addToListByProduct(filtered, product);
+        }
+        if  (startDate == null) return filtered;
+        else {
+            filtered = addToListByStartDate(filtered, startDate);
+        }
+        if  (endDate == null) return filtered;
+        else {
+            filtered = addToListByEndDate(filtered, endDate);
+        }
+
+        return filtered;
+
+    /*    List<Object> objects = new ArrayList<Object>();
         objects.add(salesman);
         objects.add(product);
         objects.add(startDate);
@@ -144,85 +166,85 @@ public class TerminalController implements ITerminal, SomeStatistics{
             if (obj != null) {
                 filtered = filter(filtered, obj, objects.indexOf(obj));
             }
-        return filtered;
+        return filtered;*/
     }
 
-    private List<Bill> filter(List<Bill> list, Object object, int i) {
-        if (object == null) return list;
+/*    private Set<Bill> filter(Set<Bill> set, Object object, int i) {
+        if (object == null) return set;
         List<Bill> arrList = new ArrayList<Bill>();
         if (object instanceof Salesman && i == 0) {
             Salesman obj = (Salesman) object;
-            arrList = addToListBySeller(list, obj);
+            arrList = addToListBySeller(set, obj);
 
         }
         if (object instanceof Product && i == 1) {
             Product obj = (Product) object;
-            arrList = addToListByProduct(list, obj);
+            arrList = addToListByProduct(set, obj);
         }
         if (object instanceof Date) {
             Date obj = (Date) object;
             if (i == 2) {
-                arrList = addToListByStartDate(list, obj);
+                arrList = addToListByStartDate(set, obj);
             }
             if (i == 3) {
-                arrList = addToListByEndDate(list, obj);
+                arrList = addToListByEndDate(set, obj);
             }
         }
 //        if (object instanceof Comparator) {
 //            Comparator obj = (Comparator) object;
-//            Set<Bill> sorted = sortByComparator(list, obj);
+//            Set<Bill> sorted = sortByComparator(set, obj);
 //            for (Bill sort : sorted) {
 //                arrList.add(sort);
 //            }
 //        }
         return arrList;
-    }
+    }*/
 
-    private List<Bill> addToListByProduct (List<Bill> list, Product product) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null)
-            for (Bill bill : list) {
+    private Set<Bill> addToListByProduct (Set<Bill> set, Product product) {
+        Set<Bill> setBills = new HashSet<>();
+        if (set != null)
+            for (Bill bill : set) {
                 if ((bill.getProducts().containsKey(product))) {
-                    arrList.add(bill);
+                    setBills.add(bill);
                 }
             }
-        return arrList;
+        return setBills;
     }
 
-    private List<Bill> addToListBySeller (List<Bill> list, Salesman salesman) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null) {
-            for (Bill bill : list) {
+    private Set<Bill> addToListBySeller (Set<Bill> set, Salesman salesman) {
+        Set<Bill> setBills = new HashSet<>();
+        if (set != null) {
+            for (Bill bill : set) {
                 if ((salesman.equals(bill.getSalesman()))) {
-                    arrList.add(bill);
+                    setBills.add(bill);
                 }
             }
         }
-        return arrList;
+        return setBills;
     }
 
-    private List<Bill> addToListByStartDate(List<Bill> list, Date date) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null) {
-            for (Bill bill : list) {
+    private Set<Bill> addToListByStartDate(Set<Bill> set, Date date) {
+        Set<Bill> setBills = new HashSet<>();
+        if (set != null) {
+            for (Bill bill : set) {
                 if ((date.compareTo(bill.getOpenTime())) >=0 ) {
-                    arrList.add(bill);
+                    setBills.add(bill);
                 }
             }
         }
-        return arrList;
+        return setBills;
     }
 
-    private List<Bill> addToListByEndDate(List<Bill> list, Date date) {
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (list != null) {
-            for (Bill bill : list) {
+    private Set<Bill> addToListByEndDate(Set<Bill> set, Date date) {
+        Set<Bill> setBills = new HashSet<>();
+        if (set != null) {
+            for (Bill bill : set) {
                 if ((date.compareTo(bill.getCloseTime())) < 0 ) {
-                    arrList.add(bill);
+                    setBills.add(bill);
                 }
             }
         }
-        return arrList;
+        return setBills;
     }
 
 //    private Set sortByComparator(List<Bill> list, Comparator<Bill> comp) {

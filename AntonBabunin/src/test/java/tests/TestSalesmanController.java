@@ -11,9 +11,7 @@ import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
 import ua.artcode.market.utils.BillComparator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 public class TestSalesmanController {
@@ -154,11 +152,11 @@ public class TestSalesmanController {
 
     @Test
     public void testLogin2() {
-        Salesman expected = sc.create("SalesMan1", "SalesMan1", "Sales");
+        Salesman expected = sc.create("SalesMan2", "SalesMan2", "Sales");
         Terminal terminal = new Terminal();
         sc.create("top", "top", "top");
         sc.login(terminal, "top", "top");
-        Salesman actual = sc.login(terminal,  "SalesMan1", "Sales");
+        Salesman actual = sc.login(terminal,  "SalesMan2", "Sales");
         Assert.assertEquals(expected, actual);
     }
 
@@ -269,10 +267,10 @@ public class TestSalesmanController {
         sc.addProduct(terminal, bill3, product2);
         sc.addProduct(terminal, bill5, product3);
 
-        List<Bill> expected = new ArrayList<>();
+        Set<Bill> expected = new HashSet<>();
         expected.add(bill5);
 
-        List<Bill> actual = sc.filterMethodAll(salesman4, product3, null,
+        Set<Bill> actual = sc.filterMethodAll(salesman4, product3, null,
                 null, null);
         new BillComparator().compare(bill1, bill2);
         Assert.assertArrayEquals(expected.toArray(), actual.toArray());
