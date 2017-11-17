@@ -55,4 +55,9 @@ public class Salesman {
         System.out.println("Login" + login);
         System.out.println("Is working " + status);
     }
+    @Override
+    public boolean equels(Salesman salesman){
+        return this.login.equals(salesman.getLogin());
+
+    }
 }

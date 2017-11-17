@@ -146,4 +146,25 @@ public class Terminal implements ITerminal {
         average = average / count;
         return average;
     }
+    public Bill[] filterByParameter(Salesman[] salesman, Product[] product, MyDataTime dataTime){
+
+        Bill[] tempbill = new Bill[bills.length];
+
+        for (Salesman s : salesman
+             ) {if (s == null)break;
+            for (Bill b : bills
+                 ) { if (b.getSalesman().equals(s)){};
+
+            }
+
+        }
+        for (Bill i: bills
+             ) {if (i == null) break;
+
+
+
+        }
+
+        return null;
+    }
 }
