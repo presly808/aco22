@@ -34,7 +34,7 @@ public class Terminal implements ITerminal {
     }
 
     @Override
-    public Bill createBill(int id,Salesman salesman) {
+    public Bill createBill(int id, Salesman salesman) {
         if (salesman.isStatus()) {
             Bill bill = new Bill();
             bill.setId(id);
@@ -146,25 +146,31 @@ public class Terminal implements ITerminal {
         average = average / count;
         return average;
     }
-    public Bill[] filterByParameter(Salesman[] salesman, Product[] product, MyDataTime dataTime){
+
+    public Bill[] filterByParameter(Salesman[] salesman, Product[] product, MyDataTime startTime, MyDataTime endTime ) {
 
         Bill[] tempbill = new Bill[bills.length];
+        int count = 0;
 
-        for (Salesman s : salesman
-             ) {if (s == null)break;
-            for (Bill b : bills
-                 ) { if (b.getSalesman().equals(s)){};
-
+        for (int i = 0; i < bills.length; i++) {
+            if ( bills[i] == null)break;
+            for (int y = 0; y < salesman.length; i++){
+                if (bills[i].getSalesman().equals(salesman[y])){
+                    if (((startTime.compareTo(bills[i].getDataTime())) >= 0 &&
+                            (startTime.compareTo(bills[i].getDataTime())) <= 0 )){
+                        tempbill[count] = bills[i];
+                    }
+                }
             }
-
-        }
-        for (Bill i: bills
-             ) {if (i == null) break;
-
-
-
         }
 
-        return null;
+        Bill [] forReturn = new Bill[tempbill.length];
+        int countForReturn = 0;
+        for (int i = 0; i < forReturn.length; i++){
+            if (bills[i].getProducts().equals(product))
+                forReturn[count] = bills[i];
+            countForReturn++;
+        }
+        return forReturn;
     }
 }

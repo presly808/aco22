@@ -55,9 +55,25 @@ public class Salesman {
         System.out.println("Login" + login);
         System.out.println("Is working " + status);
     }
-    @Override
-    public boolean equels(Salesman salesman){
-        return this.login.equals(salesman.getLogin());
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Salesman)) return false;
+
+        Salesman o = (Salesman) obj;
+        if (!(this.login.equals(o.login))) return false;
+        if (!(this.fullname.equals(o.fullname)))return false;
+        return this.password.equals(o.password);
+
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = fullname.hashCode();
+        result = prime * result + login.hashCode();
+        result = prime * result + password.hashCode();
+        return super.hashCode();
     }
 }
