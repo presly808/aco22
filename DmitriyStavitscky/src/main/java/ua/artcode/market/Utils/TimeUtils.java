@@ -3,8 +3,8 @@ package ua.artcode.market.Utils;
 import ua.artcode.market.models.Time;
 
 public class TimeUtils {
-    public static int sumOfSeconds (Time time) {
-        if(time == null) {
+    public static int sumOfSeconds(Time time) {
+        if (time == null) {
             return 0;
         }
 

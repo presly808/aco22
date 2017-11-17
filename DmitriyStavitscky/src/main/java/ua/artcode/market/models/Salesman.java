@@ -7,7 +7,7 @@ public class Salesman {
     private int pass;
     private double sumOfAllSales;
 
-    public Salesman(String name){
+    public Salesman(String name) {
         this.fullName = name;
     }
 
@@ -25,11 +25,11 @@ public class Salesman {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj){
+        if (this == obj) {
             return true;
         }
 
-        if(obj == null || obj.getClass() != getClass()){
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 
@@ -40,7 +40,6 @@ public class Salesman {
                 pass == other.pass &&
                 sumOfAllSales == other.sumOfAllSales;
     }
-
 
 
     public int getPass() {

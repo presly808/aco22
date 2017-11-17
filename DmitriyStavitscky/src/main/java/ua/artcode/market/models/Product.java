@@ -14,11 +14,11 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this){
+        if (obj == this) {
             return true;
         }
 
-        if(obj == null || obj.getClass() != getClass()) {
+        if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
 

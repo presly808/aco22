@@ -1,7 +1,9 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.interf.ITerminal;
-import ua.artcode.market.models.*;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Time;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -203,43 +205,47 @@ public class Terminal implements ITerminal {
         return bills;
     }
 
-    public int getCountOfBills() {
-        return countOfBills;
-    }
-
-    public Salesman[] getSalesmans() {
-        return salesmans;
-    }
-
-    public int getCountOfSalesman() {
-        return countOfSalesman;
-    }
-
-    public Salesman getLoggedSalesman() {
-        return loggedSalesman;
-    }
-
-    public boolean getIsLogged() { return logged; }
-
     public void setBills(Bill[] bills) {
         this.bills = bills;
+    }
+
+    public int getCountOfBills() {
+        return countOfBills;
     }
 
     public void setCountOfBills(int countOfBills) {
         this.countOfBills = countOfBills;
     }
 
+    public Salesman[] getSalesmans() {
+        return salesmans;
+    }
+
     public void setSalesmans(Salesman[] salesmans) {
         this.salesmans = salesmans;
+    }
+
+    public int getCountOfSalesman() {
+        return countOfSalesman;
     }
 
     public void setCountOfSalesman(int countOfSalesman) {
         this.countOfSalesman = countOfSalesman;
     }
 
+    public Salesman getLoggedSalesman() {
+        return loggedSalesman;
+    }
+
     public void setLoggedSalesman(Salesman loggedSalesman) {
         this.loggedSalesman = loggedSalesman;
     }
 
-    private void setLogged(boolean logged) { this.logged = logged; }
+    public boolean getIsLogged() {
+        return logged;
+    }
+
+    private void setLogged(boolean logged) {
+        this.logged = logged;
+    }
 }

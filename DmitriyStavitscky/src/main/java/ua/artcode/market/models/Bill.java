@@ -1,9 +1,5 @@
 package ua.artcode.market.models;
 
-import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
-import ua.artcode.market.models.Time;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -93,10 +89,6 @@ public class Bill implements Comparable<Bill> {
     // if this < object -> -
     // if this > object -> +
 
-    public void setProducts(Product[] products) {
-        this.products = products;
-    }
-
     public int getProductsCount() {
         return productsCount;
     }
@@ -121,13 +113,21 @@ public class Bill implements Comparable<Bill> {
         return products;
     }
 
+    public void setProducts(Product[] products) {
+        this.products = products;
+    }
+
     public Time getTime() {
         return time;
     }
 
-    public boolean isClosed() { return isClosed; }
+    public boolean isClosed() {
+        return isClosed;
+    }
 
-    public Salesman getSalesman() { return salesman; }
+    public Salesman getSalesman() {
+        return salesman;
+    }
 
     @Override
     public int compareTo(Bill o) {
@@ -138,51 +138,51 @@ public class Bill implements Comparable<Bill> {
     }
 }
 
-    class BillIdComparator implements Comparator<Bill> {
+class BillIdComparator implements Comparator<Bill> {
 
-        @Override
-        public int compare(Bill o1, Bill o2) {
+    @Override
+    public int compare(Bill o1, Bill o2) {
 
-            return o1.getId() - o2.getId();
-        }
+        return o1.getId() - o2.getId();
     }
+}
 
-    class BillProductsCountComparator implements Comparator<Bill> {
+class BillProductsCountComparator implements Comparator<Bill> {
 
-        @Override
-        public int compare(Bill o1, Bill o2) {
-            return o1.getProductsCount() - o2.getProductsCount();
-        }
+    @Override
+    public int compare(Bill o1, Bill o2) {
+        return o1.getProductsCount() - o2.getProductsCount();
     }
+}
 
-    class BillAmountPriceComparator implements Comparator<Bill> {
+class BillAmountPriceComparator implements Comparator<Bill> {
 
-        @Override
-        public int compare(Bill o1, Bill o2) {
+    @Override
+    public int compare(Bill o1, Bill o2) {
 
-            double res = o1.getAmountPrice() - o2.getAmountPrice();
+        double res = o1.getAmountPrice() - o2.getAmountPrice();
 
-            return res > 0 ? 1 :
-                    res < 0 ? -1 : 0;
-        }
+        return res > 0 ? 1 :
+                res < 0 ? -1 : 0;
     }
+}
 
-    class BillSalesmanComparator implements Comparator<Bill> {
+class BillSalesmanComparator implements Comparator<Bill> {
 
-        @Override
-        public int compare(Bill o1, Bill o2) {
-            return o1.getSalesman().getFullName().compareTo
-                    (o2.getSalesman().getFullName());
-        }
+    @Override
+    public int compare(Bill o1, Bill o2) {
+        return o1.getSalesman().getFullName().compareTo
+                (o2.getSalesman().getFullName());
     }
+}
 
-    class BillTimeComparator implements Comparator<Bill> {
+class BillTimeComparator implements Comparator<Bill> {
 
-        @Override
-        public int compare(Bill o1, Bill o2) {
-            return o1.getTime().compareTo(o2.getTime());
-        }
+    @Override
+    public int compare(Bill o1, Bill o2) {
+        return o1.getTime().compareTo(o2.getTime());
     }
+}
 
 
 

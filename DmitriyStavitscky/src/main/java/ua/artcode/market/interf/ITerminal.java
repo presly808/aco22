@@ -29,5 +29,5 @@ public interface ITerminal {
 
     void doSomeStatisticStuff();
 
-    Bill[] filter (Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator);
+    Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator);
 }

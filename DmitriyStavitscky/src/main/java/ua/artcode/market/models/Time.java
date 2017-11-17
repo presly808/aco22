@@ -16,11 +16,13 @@ public class Time implements Comparable<Time> {
     }
 
     @Override
-    public String toString() { return String.format("%s:%s:%s", hours, minutes, seconds); }
+    public String toString() {
+        return String.format("%s:%s:%s", hours, minutes, seconds);
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if (this == obj) {
             return true;
         }
 

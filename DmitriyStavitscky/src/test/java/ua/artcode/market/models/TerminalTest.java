@@ -6,7 +6,8 @@ import ua.artcode.market.controller.Terminal;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static ua.artcode.market.controller.Terminal.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalTest {
@@ -38,7 +39,7 @@ public class TerminalTest {
 
         salesmans = terminal.getSalesmans();
 
-        terminal.signIn(true, login3, pass3 );
+        terminal.signIn(true, login3, pass3);
         terminal.createBill(1);
         terminal.addProduct("Milk", 19, 100);
         terminal.closeAndSaveBill(23, 58, 59);
@@ -53,7 +54,7 @@ public class TerminalTest {
         terminal.signIn(true, login2, pass2);
         terminal.createBill(3);
         terminal.addProduct("Apple", 7, 10);
-        terminal.closeAndSaveBill(1, 1,1);
+        terminal.closeAndSaveBill(1, 1, 1);
         terminal.logOut();
     }
 
@@ -119,8 +120,8 @@ public class TerminalTest {
     public void filterAndSortWitIdCompar() throws Exception {
 
         Bill[] billsFilter = terminal.filter(terminal.getBills(),
-                new Time(0, 0,0),
-                new Time(23,59,59),
+                new Time(0, 0, 0),
+                new Time(23, 59, 59),
                 new BillIdComparator());
 
         assertEquals(3, terminal.getCountOfBills());
@@ -168,13 +169,13 @@ public class TerminalTest {
         Bill[] bills = Arrays.copyOf(terminal.getBills(), terminal.getCountOfBills());
         Arrays.sort(bills, new BillTimeComparator());
 
-        assertTrue(new Time(1,1,1).
-                        compareTo(bills[0].getTime()) == 0);
+        assertTrue(new Time(1, 1, 1).
+                compareTo(bills[0].getTime()) == 0);
 
-        assertTrue(new Time(13,13,13).
-                        compareTo(bills[1].getTime()) == 0);
+        assertTrue(new Time(13, 13, 13).
+                compareTo(bills[1].getTime()) == 0);
 
-        assertTrue(new Time(23,58,59).
-                        compareTo(bills[2].getTime()) == 0);
+        assertTrue(new Time(23, 58, 59).
+                compareTo(bills[2].getTime()) == 0);
     }
 }
