@@ -5,16 +5,13 @@ import java.text.*;
  */
 public class Time {
 
-     static Time time = new Time();
-
-    String closeTime = printTime();
+    String closeTime;
 
     public String printTime() {
         Date timeNow = new Date();
         SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");
         return (time.format(timeNow));
     }
-
 
 }
 

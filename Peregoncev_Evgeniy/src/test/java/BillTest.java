@@ -9,21 +9,23 @@ import static org.junit.Assert.*;
  */
 public class BillTest {
 
-    Salesman testSalesMan;
+    private Salesman testSalesMan;
 
-    Bill testBill;
+    private Bill testBill;
 
-    Product testProduct1;
-    Product testProduct2;
-    Product testProduct3;
-    Product testProduct4;
+    private Product testProduct1;
+    private Product testProduct2;
+    private Product testProduct3;
+    private Product testProduct4;
 
-    Time testTime;
+    private Time testTime;
 
-    double testAmountPrice;
+    private double testAmountPrice;
 
     @Before
     public void setUp() {
+
+        testTime = new Time();
 
         testSalesMan = new Salesman("Izolda", "isoldaLog", "IsoldaPass");
         testBill = new Bill(testAmountPrice, testSalesMan, testTime, 1);
@@ -32,8 +34,6 @@ public class BillTest {
         testProduct2 = new Product("banana", 20.0, "#002");
         testProduct3 = new Product("watermelon", 50.5, "#003");
         testProduct4 = new Product("apple", 8.5, "#004");
-
-        testTime = new Time();
 
     }
 
@@ -51,6 +51,7 @@ public class BillTest {
         testTime = null;
 
         testAmountPrice = 0;
+
     }
 
 
@@ -58,7 +59,7 @@ public class BillTest {
     public void addProduct() throws Exception {
 
         testBill.addProduct(testProduct1);
-        Assert.assertSame(testBill.getProducts()[testBill.getProductsCounter() - 1], testProduct1);
+        assertSame(testBill.getProducts()[testBill.getProductsCounter() - 1], testProduct1);
 
     }
 
@@ -70,7 +71,7 @@ public class BillTest {
         testBill.setProductsCounter(2);
         double expected = testProduct1.getPrice() + testProduct2.getPrice();
 
-        Assert.assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
+        assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
 
     }
 
@@ -99,7 +100,9 @@ public class BillTest {
                 "Seller: Izolda\n" +
                 testTime.printTime();
 
-        Assert.assertEquals(expected1, testBill.printBillInfo());
+        testTime.closeTime = testTime.printTime();
+
+        assertEquals(expected1, testBill.printBillInfo());
 
     }
 

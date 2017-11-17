@@ -24,7 +24,7 @@ public class Bill {
         this.products = new Product[SIZE_OF_LIST];
         this.AmountPrice = amountPrice;
         this.salesman = salesman;
-        this.time = new Time();
+        this.time = time;
         this.billId = billId;
     }
 
@@ -94,6 +94,7 @@ public class Bill {
 
     public void addProduct(Product product) {
         if (product == null) {
+            System.out.println("product is null");
         } else {
             products[productsCounter] = product;
             productsCounter++;
@@ -102,6 +103,7 @@ public class Bill {
 
     public double calculateAmountPrice(Bill bill) {
         if ((bill == null) || (productsCounter == 0)) {
+            System.out.println("bill is null or there no one product to calc");
         } else
             for (int i = 0; i < productsCounter; i++) {
                 AmountPrice += products[i].getPrice();
@@ -112,6 +114,7 @@ public class Bill {
     public String printAllProducts() {
         String allproducts = "";
         if (productsCounter == 0) {
+            System.out.println("no product to print");
         } else
             for (int i = 0; i < productsCounter; i++) {
                 allproducts += products[i].printFullInfo() + "\n";

@@ -1,30 +1,34 @@
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 /**
  * Created by ENIAC on 11.11.2017.
  */
 public class TerminalTest {
 
-    Terminal testTerminal;
+    private Terminal testTerminal;
 
-    Salesman testSalesman1;
-    Salesman testSalesman2;
-    Salesman testSalesman3;
-    Salesman testSalesman4;
+    private Salesman testSalesman1;
+    private Salesman testSalesman2;
+    private Salesman testSalesman3;
+    private Salesman testSalesman4;
 
-    Bill testBill1;
-    Bill testBill2;
-    Bill testBill3;
-    Bill testBill4;
+    private Bill testBill1;
+    private Bill testBill2;
+    private Bill testBill3;
+    private Bill testBill4;
 
-    Time testTime;
+    private Time testTime;
 
     @Before
     public void setUp() {
 
         testTerminal = new Terminal();
+        testTime = new Time();
 
         testSalesman1 = new Salesman("Inna", "InnaLog", "InnaPass");
         testSalesman2 = new Salesman("Vanessa", "VanessaLog", "VanessaPass");
@@ -35,8 +39,6 @@ public class TerminalTest {
         testBill2 = new Bill(0, testSalesman1, testTime, 2);
         testBill3 = new Bill(0, testSalesman1, testTime, 3);
         testBill4 = new Bill(0, testSalesman1, testTime, 4);
-
-        testTime = new Time();
 
     }
 
@@ -72,7 +74,7 @@ public class TerminalTest {
 
         testTerminal.login("IzoldaLog", "IzoldaPass");
 
-        Assert.assertEquals(2, testTerminal.getCurrentSallerIndex());
+        assertEquals(2, testTerminal.getCurrentSallerIndex());
 
     }
 
@@ -86,19 +88,21 @@ public class TerminalTest {
         testTerminal.createbill(testBill3);
         testTerminal.createbill(testBill4);
 
-        Assert.assertEquals(3, testTerminal.getBils()[2].getBillId());
+        assertEquals(3, testTerminal.getBils()[2].getBillId());
 
     }
 
     @Test
     public void findBillById() throws Exception {
+
         testTerminal.getBils()[0] = testBill1;
         testTerminal.getBils()[1] = testBill2;
         testTerminal.getBils()[2] = testBill3;
         testTerminal.getBils()[3] = testBill4;
 
         testTerminal.setBillCountSize(4);
-        Assert.assertSame(testTerminal.findBillById(testTerminal.getBils(), 3), testBill3);
+
+        assertSame(testTerminal.findBillById(testTerminal.getBils(), 3), testBill3);
 
     }
 
@@ -109,7 +113,7 @@ public class TerminalTest {
 
         testTerminal.closeAndSaveBill(testBill1);
 
-        Assert.assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().closeTime)));
+        assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().closeTime)));
 
     }
 
@@ -123,7 +127,8 @@ public class TerminalTest {
 
         testTerminal.setSalesCountSize(4);
 
-        Assert.assertSame(testTerminal.findSalesmanByLogin(testTerminal.getSales(), "VanessaLog"), testSalesman2);
+        assertSame(testTerminal.findSalesmanByLogin(testTerminal.getSales(), "VanessaLog"), testSalesman2);
+
     }
 
 }

@@ -11,9 +11,6 @@ public class Terminal {
 
     private int currentSallerIndex = -1;
 
-//    public Terminal() {
-//
-//    }
 
     public int getCurrentSallerIndex() {
         return currentSallerIndex;
@@ -97,16 +94,18 @@ public class Terminal {
 
     public void closeAndSaveBill(Bill bill) {
         if ((bill == null) || (bils == null)) {
+            System.out.println("there is no one bill to save");
 
         } else {
             bill.setIsclosed(true);
-            bill.getTime().printTime();
+            bill.getTime().closeTime = bill.getTime().printTime();
 
         }
     }
 
     public Bill findBillById(Bill[] bill, int billId) {
         if (bill == null || billCountSize == 0) {
+            System.out.println("there is no one bill to search ");
         } else {
             for (int i = 0; i < billCountSize; i++) {
                 if (bill[i].getBillId() == billId) {
@@ -119,6 +118,7 @@ public class Terminal {
 
     public Salesman findSalesmanByLogin(Salesman[] sales, String searchLogin) {
         if ((sales == null) || (searchLogin == null)) {
+            System.out.println("there is no salesman to search");
         } else {
             for (int i = 0; i < salesCountSize; i++) {
                 if (sales[i].getLogin() == searchLogin) {
