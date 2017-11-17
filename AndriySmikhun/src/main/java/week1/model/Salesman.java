@@ -2,10 +2,10 @@ package week1.model;
 
 public class Salesman {
 
-    String fullname;
-    String login;
-    String password;
-    boolean status;
+    private String fullname;
+    private String login;
+    private String password;
+    private boolean status;
 
     public Salesman(String fullname, String login, String password, boolean status) {
         this.fullname = fullname;

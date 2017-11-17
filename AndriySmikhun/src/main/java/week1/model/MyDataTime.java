@@ -2,11 +2,11 @@ package week1.model;
 
 public class MyDataTime implements Comparable{
 
-    int second;
-    int minute;
-    int hour;
-    int day;
-    int month;
+    private int second;
+    private int minute;
+    private int hour;
+    private int day;
+    private int month;
 
     public MyDataTime(int second, int minute, int hour, int day, int month) {
         this.second = second;

@@ -9,8 +9,8 @@ import java.util.Comparator;
 
 public class Terminal implements ITerminal {
 
-    Bill[] bills = new Bill[20];
-    Salesman[] sales = new Salesman[10];
+    private Bill[] bills = new Bill[20];
+    private Salesman[] sales = new Salesman[10];
 
     public Terminal(Bill[] bills, Salesman[] sales) {
         this.bills = bills;
