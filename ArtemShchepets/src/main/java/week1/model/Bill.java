@@ -1,16 +1,12 @@
 package week1.model;
 
-import week1.interfaces.IBill;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Arrays;
 
 import static week1.utils.Utils.getCurrentDate;
 
-public class Bill implements IBill{
+public class Bill{
 
     private static final int DEFAULT_SIZE_OF_LIST = 20;
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     private Product[] billList;
     private int actualSizeOfList = 0;
@@ -84,19 +80,26 @@ public class Bill implements IBill{
         isClosed = closed;
     }
 
+    public String getCloseTime() {
+        return closeTime;
+    }
+
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
         setClosed(true);
+    }
+
+    public String getCreationDate() {
+        return creationDate;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setSeller(Seller seller) {
-        if (!isClosed) {
-            this.seller = seller;
-        } else System.out.println("Sorry, bill is closed!");
+    public void setBillList(Product[] billList) {
+        this.billList = billList;
+        actualSizeOfList = billList.length;
     }
 
     public boolean addProduct(Product product) {
@@ -118,7 +121,28 @@ public class Bill implements IBill{
     }
 
     public String showInfo() {
+        return this.toString();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) return true;
+
+        if (obj == null || obj.getClass() != Bill.class) return false;
+
+        Bill other = (Bill) obj;
+
+        if ((billList != null && Arrays.equals(billList,other.getBillList())) &&
+                billCost == other.getBillCost() &&
+                (closeTime != null && closeTime.equals(other.getCloseTime())) &&
+                (creationDate != null && creationDate.equals(other.getCreationDate()))) return true;
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
         String resultString = "***BILL***\n";
 
         for (int i = 0; i < actualSizeOfList; i++) {
@@ -128,11 +152,5 @@ public class Bill implements IBill{
         resultString +=  creationDate + "\n" + seller.toString();
 
         return isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
-    }
-
-    public void closeBill() {
-
-        setCloseTime(new SimpleDateFormat(
-                DATE_FORMAT).toString());
     }
 }

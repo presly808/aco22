@@ -4,13 +4,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import week1.controller.BillController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
 
 import static week1.utils.Utils.getCurrentDate;
 
-public class BillTest {
+public class BillControllerTest {
 
     Product testProduct1;
     Product testProduct2;
@@ -22,6 +23,10 @@ public class BillTest {
     Seller testSeller;
 
     Bill testBill;
+
+    Bill[] testBills;
+
+    BillController billController;
 
     @Before
     public void setUp() {
@@ -35,6 +40,12 @@ public class BillTest {
         testBill = new Bill(testSeller);
 
         testProductList = new Product[testBill.getDefaultSizeOfList()];
+
+        testBills = new Bill[1];
+
+        testBills[0] = testBill;
+
+        billController = new BillController(testBills);
     }
 
     @After
@@ -55,6 +66,7 @@ public class BillTest {
     public void testAddProducts() {
 
         testProductList[0] = testProduct1;
+
         testProductList[1] = testProduct2;
         testProductList[2] = testProduct3;
         testProductList[3] = testProduct4;
@@ -112,9 +124,9 @@ public class BillTest {
     @Test
     public void testCloseBill() {
 
-        testBill.closeBill();
+        billController.closeAndSaveBill();
 
-        Assert.assertEquals(true, testBill.isClosed());
+        Assert.assertEquals(true, billController.getBills()[billController.getCurrentBillIndex()].isClosed());
     }
 }
 

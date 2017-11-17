@@ -1,12 +1,15 @@
 package week1.controller;
 
+import week1.comparators.CreationDateComparator;
+import week1.interfaces.IBill;
 import week1.model.Bill;
 import week1.model.Product;
-import week1.model.Seller;
 
 import java.util.Arrays;
 
-public class BillController {
+import static week1.utils.Utils.getCurrentDate;
+
+public class BillController implements IBill {
 
     private static final int DEFAULT_SIZE_OF_BILL_ARRAY = 10;
 
@@ -27,16 +30,12 @@ public class BillController {
         return actualSizeOfBills;
     }
 
-    public void setActualSizeOfBills(int actualSizeOfBills) {
-        this.actualSizeOfBills = actualSizeOfBills;
+    public Bill[] getBills() {
+        return bills;
     }
 
     public int getCurrentBillIndex() {
         return currentBillIndex;
-    }
-
-    public void setCurrentBillIndex(int currentBillIndex) {
-        this.currentBillIndex = currentBillIndex;
     }
 
     public void setBills(Bill[] bills) {
@@ -118,7 +117,7 @@ public class BillController {
 
         if (bills != null) {
             for (int i = 0; i < actualSizeOfBills - 1; i++) {
-                if (!bills[i].isClosed()) bills[i].closeBill();
+                if (!bills[i].isClosed()) bills[i].setCloseTime(getCurrentDate());
             }
 
             return true;
@@ -129,44 +128,43 @@ public class BillController {
 
     public boolean addProductToBill(Product newProduct) {
 
-            if (newProduct == null) {
-                System.out.println("Product is null");
+        if (newProduct == null) {
+            System.out.println("Product is null");
+            return false;
+        } else {
+
+            if (currentBillIndex == -1) {
+                System.out.println("There aren't any bills in terminal!");
                 return false;
+
             } else {
 
-                if (currentBillIndex == -1) {
-                    System.out.println("There aren't any bills in terminal!");
+                if (bills[actualSizeOfBills - 1].isClosed()) {
+                    System.out.println("You can't add products. Bill is closed!");
                     return false;
 
-                } else {
+                } else return bills[actualSizeOfBills-1].addProduct(newProduct);
 
-                    if (bills[actualSizeOfBills - 1].isClosed()) {
-                        System.out.println("You can't add products. Bill is closed!");
-                        return false;
-
-                    } else return bills[actualSizeOfBills - 1].addProduct(newProduct);
-
-                }
             }
         }
+    }
 
     public boolean closeAndSaveBill() {
 
-            if (currentBillIndex == -1) {
-                System.out.println("Sorry, there aren't any bills in the terminal!");
+        if (currentBillIndex == -1) {
+            System.out.println("Sorry, there aren't any bills in the terminal!");
+            return false;
+        } else {
+
+            if (bills[currentBillIndex].isClosed()) {
+                System.out.println("Sorry, this bill is already closed!");
                 return false;
             } else {
-
-                if (bills[currentBillIndex].isClosed()) {
-                    System.out.println("Sorry, this bill is already closed!");
-                    return false;
-                } else {
-
-                    bills[currentBillIndex].closeBill();
-                    return true;
-                }
+                bills[currentBillIndex].setCloseTime(getCurrentDate());
+                return true;
             }
         }
+    }
 
     public Bill findBillById(int searchingId) {
 
@@ -180,8 +178,43 @@ public class BillController {
         return null;
     }
 
+    public Bill[] filter(String startDate, String endDate, CreationDateComparator comparator) {
 
-    public Bill[] getBills() {
-        return bills;
+        if (bills == null || startDate.compareTo(endDate) > 0) return null;
+
+        Arrays.sort(bills, comparator);
+
+        return filteredArray(startDate, endDate);
+    }
+
+    private Bill[] filteredArray(String startDate, String endDate) {
+
+        int startCopyIndex = findStartIndexForFilter(startDate);
+        int endCopyIndex = findEndIndexForFilter(endDate);
+
+        if (startCopyIndex != -1 && endCopyIndex != -1)
+            return Arrays.copyOfRange(bills, startCopyIndex, endCopyIndex);
+        else return null;
+    }
+
+    private int findEndIndexForFilter(String endDate) {
+
+        for (int i = 0; i < actualSizeOfBills; i++) {
+            if (i != actualSizeOfBills - 1) {
+                if (bills[i].getCreationDate().compareTo(endDate) > 0) return i - 1;
+            } else {
+                if (bills[i].getCreationDate().compareTo(endDate) <= 0)
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+    private int findStartIndexForFilter(String startDate) {
+        for (int i = 0; i < actualSizeOfBills; i++) {
+            if (bills[i].getCreationDate().compareTo(startDate) >= 0) return i;
+        }
+
+        return -1;
     }
 }

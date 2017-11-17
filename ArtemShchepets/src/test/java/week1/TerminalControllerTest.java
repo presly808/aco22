@@ -9,7 +9,7 @@ import week1.model.Product;
 import week1.model.Seller;
 
 
-public class TerminalTest {
+public class TerminalControllerTest {
 
     TerminalController testTerminal;
 
@@ -244,11 +244,10 @@ public class TerminalTest {
         Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(2);
 
         Seller[] expectedTopSellers = new Seller[2];
-        expectedTopSellers[0] = testSeller4;
-        expectedTopSellers[1] = testSeller2;
+        expectedTopSellers[0] = testSeller2;
+        expectedTopSellers[1] = testSeller4;
 
         Assert.assertArrayEquals(expectedTopSellers, searchingSellerArray);
-
     }
 
     @Test
@@ -317,5 +316,6 @@ public class TerminalTest {
 
         Assert.assertTrue(testTerminal.getBillController().closeAllPreviousBills());
     }
+
 }
 

@@ -1,9 +1,12 @@
 package week1.controller;
 
+import week1.comparators.CreationDateComparator;
+import week1.comparators.SellersSoldProductsComparator;
 import week1.interfaces.ITerminal;
 import week1.model.*;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TerminalController implements ITerminal {
 
@@ -18,12 +21,6 @@ public class TerminalController implements ITerminal {
 
     public TerminalController() {
         billController = new BillController();
-    }
-
-    public TerminalController(Seller[] sellers) {
-        this.sellers = makeAnActualSellersArray(sellers);
-        this.actualSizeOfSellers = this.sellers.length;
-        this.billController = new BillController();
     }
 
     public TerminalController(BillController billController, Seller[] sellers) {
@@ -133,7 +130,6 @@ public class TerminalController implements ITerminal {
         return billController.createBill(newBill);
     }
 
-
     public boolean addProductToBill(Product newProduct) {
 
         if (!isSignIn) {
@@ -190,37 +186,17 @@ public class TerminalController implements ITerminal {
         }
 
         // sort sellers by sold products
-        int lastUnsortedIndex = sellers.length - 1;
-
-        Seller tmp;
-        boolean swapped;
-
-        do {
-            swapped = false;
-
-            for (int i = 0; i < lastUnsortedIndex; i++) {
-                if (sellers[i].getSoldProducts() < sellers[i + 1].getSoldProducts()) {
-
-                    tmp = sellers[i];
-                    sellers[i] = sellers[i + 1];
-                    sellers[i + 1] = tmp;
-
-                    swapped = true;
-                }
-
-
-            }
-            lastUnsortedIndex--;
-        } while (swapped);
+        Arrays.sort(sellers, new SellersSoldProductsComparator());
 
         //return an array with N top-sellers
-        return Arrays.copyOfRange(sellers, 0, quantityOfTopSellers);
+        return Arrays.copyOfRange(sellers, actualSizeOfSellers - quantityOfTopSellers, actualSizeOfSellers);
 
     }
 
     public String doSomeStatisticStuff() {
 
-        if (billController.getBills() == null || sellers == null) System.out.println("Sry, we haven't any bills or sellers!");
+        if (billController.getBills() == null || sellers == null)
+            System.out.println("Sry, we haven't any bills or sellers!");
 
         double maxPriceBill = findMaxPriceBill();
         double minPriceBill = findMinPriceBill();
@@ -276,5 +252,15 @@ public class TerminalController implements ITerminal {
         }
 
         return minPriceBill;
+    }
+
+    @Override
+    public Bill[] filter(String startDate, String endDate, CreationDateComparator someComparator) {
+        return billController.filter(startDate,endDate,someComparator);
+    }
+
+    @Override
+    public boolean closeAllPreviousBills() {
+        return billController.closeAllPreviousBills();
     }
 }
