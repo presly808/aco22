@@ -11,7 +11,6 @@ public class TestProduct {
 
     @BeforeClass
     public static void initTestData(){
-
         testData1 = new Product(1, "Laptop HP 750B", 500.0);
         testData2 = new Product(2, "Laptop HP 1020Z", 650.0);
     }
