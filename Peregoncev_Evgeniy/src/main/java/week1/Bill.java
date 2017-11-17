@@ -127,8 +127,8 @@ public class Bill {
         return String.format("              BiLL  \n" +
                         "Title           Price    Barcode\n" +
                         "--------------------------------\n" +
-                        "%s\nAmount Price = %.2f\nSeller: %s\n%s",
-                printAllProducts(), AmountPrice, salesman.getFullname(), getTime().closeTime);
+                        "%s\nAmount Price = "+getAmountPrice()+"\nSeller: %s\n%s",
+                printAllProducts(), salesman.getFullname(), getTime().closeTime);
     }
 
 

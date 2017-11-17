@@ -98,7 +98,7 @@ public class BillTest {
                 "Title           Price    Barcode\n" +
                 "--------------------------------\n" +
                 testBill.printAllProducts() +
-                "\nAmount Price = 95,50\n" +
+                "\nAmount Price = "+testBill.getAmountPrice()+"\n" +
                 "Seller: Izolda\n" +
                 testTime.printTime();
 
