@@ -19,7 +19,11 @@ public class ProductTest {
         testProduct.setPrice(4.75);
         testProduct.setBarcode("001");
 
-        Assert.assertEquals("carrot          4,75     001", testProduct.printFullInfo());
+        String expected = String.format("%-15s %-8.2f %s",testProduct.getName(), testProduct.getPrice(), testProduct.getBarcode());
+
+
+
+        Assert.assertEquals(expected, testProduct.printFullInfo());
     }
 
 }
