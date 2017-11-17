@@ -2,12 +2,13 @@ package week1;
 
 import java.util.Date;
 import java.text.*;
+
 /**
  * Created by ENIAC on 16.11.2017.
  */
 public class Time {
 
-     private String closeTime;
+    private String closeTime;
 
     public String getCloseTime() {
         return closeTime;
@@ -23,7 +24,7 @@ public class Time {
         return (time.format(timeNow));
     }
 
-    
+
 }
 
 

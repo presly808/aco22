@@ -1,11 +1,11 @@
 package week1;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
 /**
  * Created by ENIAC on 14.11.2017.
  */
@@ -98,7 +98,7 @@ public class BillTest {
                 "Title           Price    Barcode\n" +
                 "--------------------------------\n" +
                 testBill.printAllProducts() +
-                "\nAmount Price = "+testBill.getAmountPrice()+"\n" +
+                "\nAmount Price = " + testBill.getAmountPrice() + "\n" +
                 "Seller: Izolda\n" +
                 testTime.printTime();
 

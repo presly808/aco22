@@ -1,4 +1,5 @@
 package week1;
+
 /**
  * Created by ENIAC on 05.11.2017.
  */
@@ -127,7 +128,7 @@ public class Bill {
         return String.format("              BiLL  \n" +
                         "Title           Price    Barcode\n" +
                         "--------------------------------\n" +
-                        "%s\nAmount Price = "+getAmountPrice()+"\nSeller: %s\n%s",
+                        "%s\nAmount Price = " + getAmountPrice() + "\nSeller: %s\n%s",
                 printAllProducts(), salesman.getFullname(), getTime().getCloseTime());
     }
 

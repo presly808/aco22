@@ -49,7 +49,7 @@ public class Product {
 
     public String printFullInfo() {
 
-        return String.format("%-15s %-8.2f %s",getName(), getPrice(), getBarcode());
+        return String.format("%-15s %-8.2f %s", getName(), getPrice(), getBarcode());
     }
 
 }
