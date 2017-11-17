@@ -1,7 +1,6 @@
 package ua.artcode.market.models;
 
-import ua.artcode.market.Utils.TimeUtils;
-
+import ua.artcode.market.utils.TimeUtils;
 
 public class Time implements Comparable<Time> {
 
