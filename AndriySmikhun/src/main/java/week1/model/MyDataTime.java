@@ -1,6 +1,6 @@
-package week1;
+package week1.model;
 
-public class MyDataTime {
+public class MyDataTime implements Comparable{
 
     int second;
     int minute;
@@ -43,5 +43,16 @@ public class MyDataTime {
     public String toString(){
         return " " + second + ":" + minute + ":" + hour + " " + day + "/" + month;
 
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        String str = ((MyDataTime) o).toString();
+        int count = this.toString().compareTo(str);
+        if (count != 0){
+            count = count / Math.abs(count);
+            return count;
+        }
+        return 0;
     }
 }
