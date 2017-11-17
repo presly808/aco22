@@ -1,3 +1,7 @@
+package week1;
+
+import week1.Bill;
+
 /**
  * Created by ENIAC on 10.11.2017.
  */

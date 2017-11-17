@@ -1,3 +1,5 @@
+package week1;
+
 /**
  * Created by ENIAC on 10.11.2017.
  */

@@ -1,3 +1,6 @@
+package week1;
+
+import org.junit.Assert;
 import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +20,7 @@ public class TimeTest {
         Date testTimeNow = new Date();
         SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");
 
-        assertEquals(time.format(testTimeNow), testTime.printTime());
+        Assert.assertEquals(time.format(testTimeNow), testTime.printTime());
 
     }
 

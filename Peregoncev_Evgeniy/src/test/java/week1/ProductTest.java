@@ -1,3 +1,6 @@
+package week1;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,7 +19,7 @@ public class ProductTest {
         testProduct.setPrice(4.75);
         testProduct.setBarcode("001");
 
-        assertEquals("carrot          4,75     001", testProduct.printFullInfo());
+        Assert.assertEquals("carrot          4,75     001", testProduct.printFullInfo());
     }
 
 }

@@ -1,4 +1,7 @@
+package week1;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -74,7 +77,7 @@ public class TerminalTest {
 
         testTerminal.login("IzoldaLog", "IzoldaPass");
 
-        assertEquals(2, testTerminal.getCurrentSallerIndex());
+        Assert.assertEquals(2, testTerminal.getCurrentSallerIndex());
 
     }
 
@@ -88,7 +91,7 @@ public class TerminalTest {
         testTerminal.createbill(testBill3);
         testTerminal.createbill(testBill4);
 
-        assertEquals(3, testTerminal.getBils()[2].getBillId());
+        Assert.assertEquals(3, testTerminal.getBils()[2].getBillId());
 
     }
 

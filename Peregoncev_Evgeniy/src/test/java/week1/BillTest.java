@@ -1,3 +1,5 @@
+package week1;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +73,7 @@ public class BillTest {
         testBill.setProductsCounter(2);
         double expected = testProduct1.getPrice() + testProduct2.getPrice();
 
-        assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
+        Assert.assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
 
     }
 
@@ -102,7 +104,7 @@ public class BillTest {
 
         testTime.closeTime = testTime.printTime();
 
-        assertEquals(expected1, testBill.printBillInfo());
+        Assert.assertEquals(expected1, testBill.printBillInfo());
 
     }
 
