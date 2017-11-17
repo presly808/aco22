@@ -13,8 +13,7 @@ public interface SomeStatistics {
 
     List<Bill> getSalesmanBills (Salesman salesman);
     Bill findBillById (int id);
-//    List<Bill> filterMethod (Salesman salesman);
-    Set<Bill> filterMethodAll (Salesman salesman, Product product,
+    Set<Bill> filter(Salesman salesman, Product product,
                                Date startDate, Date endDate,
                                Comparator<Bill> billComparator);
 

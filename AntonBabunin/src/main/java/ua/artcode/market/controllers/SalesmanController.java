@@ -69,10 +69,10 @@ public class SalesmanController implements ISalesman, SomeStatistics{
     }
 
     @Override
-    public Set<Bill> filterMethodAll(Salesman salesman, Product product,
+    public Set<Bill> filter(Salesman salesman, Product product,
                                      Date startDate, Date endDate,
                                      Comparator<Bill> billComparator) {
-        return terminalController.filterMethodAll(salesman, product, startDate,
+        return terminalController.filter(salesman, product, startDate,
                 endDate,billComparator);
     }
 

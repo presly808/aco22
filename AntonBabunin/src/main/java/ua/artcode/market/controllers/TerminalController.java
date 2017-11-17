@@ -127,81 +127,40 @@ public class TerminalController implements ITerminal, SomeStatistics{
     }
 
     @Override
-    public Set<Bill> filterMethodAll(Salesman salesman, Product product,
+    public Set<Bill> filter(Salesman salesman, Product product,
                                      Date startDate, Date endDate,
                                      Comparator<Bill> billComparator) {
+
+        if (billController.getBills() == null) return null;
 
         Set<Bill> filtered = new HashSet<>();
         filtered.addAll(billController.getBills());
 
-        if  (salesman == null) return filtered;
+        if (salesman == null) return filtered;
         else {
             filtered = addToListBySeller(filtered, salesman);
         }
-        if  (product == null) return filtered;
+        if (product == null) return filtered;
         else {
             filtered = addToListByProduct(filtered, product);
         }
-        if  (startDate == null) return filtered;
+        if (startDate == null) return filtered;
         else {
             filtered = addToListByStartDate(filtered, startDate);
         }
-        if  (endDate == null) return filtered;
+        if (endDate == null) return filtered;
         else {
             filtered = addToListByEndDate(filtered, endDate);
         }
 
         return filtered;
-
-    /*    List<Object> objects = new ArrayList<Object>();
-        objects.add(salesman);
-        objects.add(product);
-        objects.add(startDate);
-        objects.add(endDate);
-        objects.add(billComparator);
-
-        List<Bill> filtered = billController.getBills();
-
-        for (Object obj : objects)
-            if (obj != null) {
-                filtered = filter(filtered, obj, objects.indexOf(obj));
-            }
-        return filtered;*/
     }
-
-/*    private Set<Bill> filter(Set<Bill> set, Object object, int i) {
-        if (object == null) return set;
-        List<Bill> arrList = new ArrayList<Bill>();
-        if (object instanceof Salesman && i == 0) {
-            Salesman obj = (Salesman) object;
-            arrList = addToListBySeller(set, obj);
-
-        }
-        if (object instanceof Product && i == 1) {
-            Product obj = (Product) object;
-            arrList = addToListByProduct(set, obj);
-        }
-        if (object instanceof Date) {
-            Date obj = (Date) object;
-            if (i == 2) {
-                arrList = addToListByStartDate(set, obj);
-            }
-            if (i == 3) {
-                arrList = addToListByEndDate(set, obj);
-            }
-        }
-//        if (object instanceof Comparator) {
-//            Comparator obj = (Comparator) object;
-//            Set<Bill> sorted = sortByComparator(set, obj);
-//            for (Bill sort : sorted) {
-//                arrList.add(sort);
-//            }
-//        }
-        return arrList;
-    }*/
 
     private Set<Bill> addToListByProduct (Set<Bill> set, Product product) {
         Set<Bill> setBills = new HashSet<>();
+
+        if (product == null) return set;
+
         if (set != null)
             for (Bill bill : set) {
                 if ((bill.getProducts().containsKey(product))) {
@@ -213,6 +172,9 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     private Set<Bill> addToListBySeller (Set<Bill> set, Salesman salesman) {
         Set<Bill> setBills = new HashSet<>();
+
+        if (salesman == null) return set;
+
         if (set != null) {
             for (Bill bill : set) {
                 if ((salesman.equals(bill.getSalesman()))) {
@@ -225,6 +187,9 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     private Set<Bill> addToListByStartDate(Set<Bill> set, Date date) {
         Set<Bill> setBills = new HashSet<>();
+
+        if (date == null) return set;
+
         if (set != null) {
             for (Bill bill : set) {
                 if ((date.compareTo(bill.getOpenTime())) >=0 ) {
@@ -237,7 +202,10 @@ public class TerminalController implements ITerminal, SomeStatistics{
 
     private Set<Bill> addToListByEndDate(Set<Bill> set, Date date) {
         Set<Bill> setBills = new HashSet<>();
-        if (set != null) {
+
+        if (date == null) return set;
+
+        if (set != null ) {
             for (Bill bill : set) {
                 if ((date.compareTo(bill.getCloseTime())) < 0 ) {
                     setBills.add(bill);
