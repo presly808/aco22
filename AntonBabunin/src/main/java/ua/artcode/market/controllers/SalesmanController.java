@@ -76,6 +76,34 @@ public class SalesmanController implements ISalesman, SomeStatistics{
                 endDate,billComparator);
     }
 
+    @Override
+    public double averageAmountPrice(Salesman salesman, Date startDate,
+                                     Date endDate) {
+        return terminalController.averageAmountPrice(salesman, startDate,
+                endDate);
+    }
+
+    @Override
+    public Bill minAmountPrice(Salesman salesman, Date startDate,
+                               Date endDate) {
+        return terminalController.minAmountPrice(salesman, startDate,
+                endDate);
+    }
+
+    @Override
+    public Bill maxAmountPrice(Salesman salesman, Date startDate,
+                               Date endDate) {
+        return terminalController.maxAmountPrice(salesman, startDate,
+                endDate);
+    }
+
+    @Override
+    public double[] aggrAmountPrice(Salesman salesman, Date startDate,
+                                    Date endDate) {
+        return terminalController.aggrAmountPrice(salesman, startDate,
+                endDate);
+    }
+
 //    @Override
 //    public List<Bill> filterMethod (Salesman salesman) {
 //        return new ArrayList<>();

@@ -220,4 +220,62 @@ public class TerminalController implements ITerminal, SomeStatistics{
 //        treeSet.addAll(list);
 //        return treeSet;
 //    }
+
+    @Override
+    public double[] aggrAmountPrice(Salesman salesman, Date startDate,
+                                    Date endDate) {
+        if (billController.getBills() == null) return new double[]{0.0, 0.0};
+        double[] mas = new double[2];
+
+        double summ = 0.0;
+        int count = 0;
+        Set<Bill> filtered = filter(salesman,null, startDate, endDate, null);
+        for (Bill bill : filtered) {
+            summ += bill.getAmountPrice();
+            count++;
+            mas[0] = summ;
+            mas[1] = count;
+        }
+        return mas;
+    }
+
+    @Override
+    public double averageAmountPrice(Salesman salesman, Date startDate,
+                                     Date endDate) {
+        return aggrAmountPrice(salesman,startDate,endDate)[0] /
+                (int)aggrAmountPrice(salesman,startDate,endDate)[1];
+    }
+
+    @Override
+    public Bill minAmountPrice(Salesman salesman, Date startDate,
+                               Date endDate) {
+
+        if (billController.getBills() == null) return null;
+        Set<Bill> filtered = filter(salesman,null, startDate, endDate, null);
+        Bill billMin = null;
+        double minAmountPrice = filtered.iterator().next().getAmountPrice();
+        for (Bill bill : filtered) {
+            if (minAmountPrice >= bill.getAmountPrice()) {
+                billMin = bill;
+            }
+        }
+        return billMin;
+    }
+
+    @Override
+    public Bill maxAmountPrice(Salesman salesman, Date startDate,
+                               Date endDate) {
+        if (billController.getBills() == null) return null;
+        Set<Bill> filtered = filter(salesman,null, startDate, endDate, null);
+        Bill billMax = null;
+        double maxAmountPrice = 0.0;
+        for (Bill bill : filtered) {
+            if (maxAmountPrice < bill.getAmountPrice()) {
+                maxAmountPrice = bill.getAmountPrice();
+                billMax = bill;
+            }
+        }
+        return billMax;
+    }
+
 }
