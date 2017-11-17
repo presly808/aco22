@@ -130,7 +130,6 @@ public class Bill {
                         "%s\nAmount Price = "+getAmountPrice()+"\nSeller: %s\n%s",
                 printAllProducts(), salesman.getFullname(), getTime().closeTime);
     }
-
-
+    
 }
 
