@@ -1,6 +1,6 @@
 package ua.artcode.market.Utils;
 
-import ua.artcode.market.model.Time;
+import ua.artcode.market.models.Time;
 
 public class TimeUtils {
     public static int sumOfSeconds (Time time) {

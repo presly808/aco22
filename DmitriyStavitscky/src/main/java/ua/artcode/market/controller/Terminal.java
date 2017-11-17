@@ -1,14 +1,10 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.interf.ITerminal;
-
-import ua.artcode.market.model.Bill;
-import ua.artcode.market.model.Salesman;
-import ua.artcode.market.model.Time;
+import ua.artcode.market.models.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
 
 public class Terminal implements ITerminal {
 

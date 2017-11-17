@@ -1,8 +1,8 @@
 package ua.artcode.market.interf;
 
-import ua.artcode.market.model.Bill;
-import ua.artcode.market.model.Salesman;
-import ua.artcode.market.model.Time;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Time;
 
 import java.util.Comparator;
 

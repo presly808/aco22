@@ -1,5 +1,9 @@
 package ua.artcode.market.models;
 
+import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Time;
+
 import java.util.Arrays;
 import java.util.Comparator;
 

@@ -2,6 +2,7 @@ package ua.artcode.market.models;
 
 import ua.artcode.market.Utils.TimeUtils;
 
+
 public class Time implements Comparable<Time> {
 
     private int hours;
