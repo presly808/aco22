@@ -131,5 +131,6 @@ public class Bill {
                 printAllProducts(), AmountPrice, salesman.getFullname(), getTime().closeTime);
     }
 
+    
 }
 
