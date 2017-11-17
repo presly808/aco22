@@ -102,7 +102,7 @@ public class Terminal {
 
         } else {
             bill.setIsclosed(true);
-            bill.getTime().closeTime = bill.getTime().printTime();
+            bill.getTime().setCloseTime(bill.getTime().printTime());
 
         }
     }

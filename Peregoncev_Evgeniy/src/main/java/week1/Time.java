@@ -7,7 +7,15 @@ import java.text.*;
  */
 public class Time {
 
-    String closeTime;
+     private String closeTime;
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
 
     public String printTime() {
         Date timeNow = new Date();

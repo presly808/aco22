@@ -128,8 +128,8 @@ public class Bill {
                         "Title           Price    Barcode\n" +
                         "--------------------------------\n" +
                         "%s\nAmount Price = "+getAmountPrice()+"\nSeller: %s\n%s",
-                printAllProducts(), salesman.getFullname(), getTime().closeTime);
+                printAllProducts(), salesman.getFullname(), getTime().getCloseTime());
     }
-    
+
 }
 

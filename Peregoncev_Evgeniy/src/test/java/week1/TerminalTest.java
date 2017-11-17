@@ -1,9 +1,9 @@
 package week1;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -77,7 +77,7 @@ public class TerminalTest {
 
         testTerminal.login("IzoldaLog", "IzoldaPass");
 
-        Assert.assertEquals(2, testTerminal.getCurrentSallerIndex());
+        assertEquals(2, testTerminal.getCurrentSallerIndex());
 
     }
 
@@ -91,7 +91,7 @@ public class TerminalTest {
         testTerminal.createbill(testBill3);
         testTerminal.createbill(testBill4);
 
-        Assert.assertEquals(3, testTerminal.getBils()[2].getBillId());
+        assertEquals(3, testTerminal.getBils()[2].getBillId());
 
     }
 
@@ -116,7 +116,7 @@ public class TerminalTest {
 
         testTerminal.closeAndSaveBill(testBill1);
 
-        assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().closeTime)));
+        assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().getCloseTime())));
 
     }
 

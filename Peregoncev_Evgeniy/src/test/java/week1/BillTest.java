@@ -73,7 +73,7 @@ public class BillTest {
         testBill.setProductsCounter(2);
         double expected = testProduct1.getPrice() + testProduct2.getPrice();
 
-        Assert.assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
+        assertEquals(expected, testBill.calculateAmountPrice(testBill), 0);
 
     }
 
@@ -102,9 +102,9 @@ public class BillTest {
                 "Seller: Izolda\n" +
                 testTime.printTime();
 
-        testTime.closeTime = testTime.printTime();
+        testTime.setCloseTime(testTime.printTime());
 
-        Assert.assertEquals(expected1, testBill.printBillInfo());
+        assertEquals(expected1, testBill.printBillInfo());
 
     }
 

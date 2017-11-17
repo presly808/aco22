@@ -23,7 +23,7 @@ public class ProductTest {
 
 
 
-        Assert.assertEquals(expected, testProduct.printFullInfo());
+        assertEquals(expected, testProduct.printFullInfo());
     }
 
 }
