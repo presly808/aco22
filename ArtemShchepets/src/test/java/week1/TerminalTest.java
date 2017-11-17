@@ -2,16 +2,16 @@ package week1;
 
 
 import org.junit.*;
-import week1.controller.Terminal;
+import week1.controller.BillController;
+import week1.controller.TerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-import week1.model.Time;
 
 
 public class TerminalTest {
 
-    Terminal testTerminal;
+    TerminalController testTerminal;
 
     Seller testSeller1;
     Seller testSeller2;
@@ -26,8 +26,6 @@ public class TerminalTest {
     Product testProduct3;
     Product testProduct4;
 
-
-    Time testTime;
     Bill testBill1;
     Bill testBill2;
     Bill testBill3;
@@ -38,7 +36,7 @@ public class TerminalTest {
     @Before
     public void setUp() {
 
-        testTerminal = new Terminal();
+        testTerminal = new TerminalController();
 
         testSeller1 = new Seller("NadyaHoroshun", 22, "worker1", "password1"); // 1 pr
         testSeller2 = new Seller("AntonVorobey", 17, "worker2", "password2"); // 3 pr
@@ -58,8 +56,6 @@ public class TerminalTest {
         testProduct2 = new Product("Cheese", 2.05, "#0341");
         testProduct3 = new Product("Water", 33.5, "#01");
         testProduct4 = new Product(null, 7.55, "#222");
-
-        testTime = new Time(12, 33, 50);
 
         testBill1 = new Bill(testSeller1);
         testBill2 = new Bill(testSeller4);
@@ -84,7 +80,7 @@ public class TerminalTest {
     @After
     public void tearDown() {
 
-        Terminal testTerminal = null;
+        TerminalController testTerminal = null;
 
         Seller testSeller1 = null;
         Seller testSeller2 = null;
@@ -105,8 +101,6 @@ public class TerminalTest {
         Product testProduct3 = null;
         Product testProduct4 = null;
 
-        Time testTime = null;
-
         Bill testBill1 = null;
         Bill testBill2 = null;
         Bill testBill3 = null;
@@ -121,7 +115,6 @@ public class TerminalTest {
         testTerminal.signIn("login", "pass");
 
         Assert.assertFalse(testTerminal.isSignIn());
-
     }
 
     @Test
@@ -158,10 +151,11 @@ public class TerminalTest {
     public void testCloseAndSaveBillValidation() {
 
         //trying to close bill without signing in
-        testTerminal.setBills(testBillList);
-        testTerminal.closeAndSaveBill(testTime);
+        testTerminal.getBillController().setBills(testBillList);
+        testTerminal.closeAndSaveBill();
 
-        Assert.assertFalse(testTerminal.getBills()[testTerminal.getCurrentBillIndex()].isClosed());
+        Assert.assertFalse(testTerminal.getBillController().getBills()
+                [testTerminal.getBillController().getCurrentBillIndex()].isClosed());
     }
 
 
@@ -170,7 +164,7 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Bill searchingBill = testTerminal.findBillById(-21435);
 
@@ -182,7 +176,7 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Bill searchingBill = testTerminal.findBillById(2);
 
@@ -233,7 +227,7 @@ public class TerminalTest {
         testBillList[1] = testBill2;
         testBillList[2] = testBill3;
 
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(1);
 
@@ -245,7 +239,7 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Seller[] searchingSellerArray = testTerminal.getTopNofSalesMan(2);
 
@@ -262,7 +256,7 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Assert.assertTrue(testTerminal.createBill(testBill3));
     }
@@ -271,11 +265,11 @@ public class TerminalTest {
     public void testCreateBill2() {
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         testTerminal.createBill(testBill3);
 
-        Assert.assertEquals(testBill3, testTerminal.getBills()[3]);
+        Assert.assertEquals(testBill3, testTerminal.getBillController().getBills()[3]);
     }
 
     @Test
@@ -283,7 +277,7 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         Assert.assertTrue(testTerminal.addProductToBill(testProduct1));
     }
@@ -293,13 +287,14 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
         testTerminal.addProductToBill(testProduct1);
 
-        Product actualProductInBill = testTerminal.getBills()[testTerminal.getCurrentBillIndex()]
-                .getBillList()[testTerminal.getBills()
-                [testTerminal.getCurrentBillIndex()].getActualSizeOfList() - 1];
+        Product actualProductInBill = testTerminal.getBillController().
+                getBills()[testTerminal.getBillController().getCurrentBillIndex()]
+                .getBillList()[testTerminal.getBillController().getBills()
+                [testTerminal.getBillController().getCurrentBillIndex()].getActualSizeOfList() - 1];
 
         Assert.assertEquals(testProduct1, actualProductInBill);
     }
@@ -308,9 +303,9 @@ public class TerminalTest {
     public void testCloseAndSaveBill() {
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
-        Assert.assertTrue(testTerminal.closeAndSaveBill(testTime));
+        Assert.assertTrue(testTerminal.closeAndSaveBill());
     }
 
     @Test
@@ -318,9 +313,9 @@ public class TerminalTest {
 
         testTerminal.setSellers(testSellerArray);
         testTerminal.signIn("worker2", "password2");
-        testTerminal.setBills(testBillList);
+        testTerminal.getBillController().setBills(testBillList);
 
-        Assert.assertTrue(testTerminal.closeAllPreviousBills(testTime));
+        Assert.assertTrue(testTerminal.getBillController().closeAllPreviousBills());
     }
 }
 

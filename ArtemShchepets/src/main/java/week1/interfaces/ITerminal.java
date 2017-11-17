@@ -1,4 +1,8 @@
-package week1.model;
+package week1.interfaces;
+
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Seller;
 
 public interface ITerminal {
 
@@ -6,11 +10,9 @@ public interface ITerminal {
 
     boolean createBill(Bill newBill);
 
-    boolean closeAllPreviousBills(Time closeTime);
-
     boolean addProductToBill(Product newProduct);
 
-    boolean closeAndSaveBill(Time time);
+    boolean closeAndSaveBill();
 
     Bill findBillById(int searchingId);
 

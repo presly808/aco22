@@ -1,8 +1,16 @@
 package week1.model;
 
-public class Bill {
+import week1.interfaces.IBill;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static week1.utils.Utils.getCurrentDate;
+
+public class Bill implements IBill{
 
     private static final int DEFAULT_SIZE_OF_LIST = 20;
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     private Product[] billList;
     private int actualSizeOfList = 0;
@@ -10,24 +18,19 @@ public class Bill {
     private int id;
 
     private double billCost = 0;
-    private Time time;
+    private String closeTime;
     private Seller seller;
+
+    private String creationDate;
 
     private boolean isClosed = false;
 
     public Bill() {
     }
 
-    public Bill(Seller seller, Time time) {
-        this.billList = new Product[DEFAULT_SIZE_OF_LIST];
-        this.time = time;
-        this.seller = seller;
-        isClosed = true;
-    }
-
     public Bill(Seller seller) {
         this.billList = new Product[DEFAULT_SIZE_OF_LIST];
-        this.time = new Time(00, 00, 00);
+        this.creationDate = getCurrentDate();
         this.seller = seller;
     }
 
@@ -65,10 +68,6 @@ public class Bill {
         return id;
     }
 
-    public Time getTime() {
-        return time;
-    }
-
     public static int getDefaultSizeOfList() {
         return DEFAULT_SIZE_OF_LIST;
     }
@@ -85,11 +84,9 @@ public class Bill {
         isClosed = closed;
     }
 
-    public void setTime(Time time) {
-        if (!isClosed) {
-            this.time = time;
-            this.isClosed = true;
-        } else System.out.println("Sorry, bill is closed!");
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+        setClosed(true);
     }
 
     public void setId(int id) {
@@ -128,23 +125,14 @@ public class Bill {
             resultString += billList[i].showInfo() + "\n";
         }
 
-        resultString += time.toString() + "\n" + seller.toString();
+        resultString +=  creationDate + "\n" + seller.toString();
 
         return isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
     }
 
-    public boolean closeBill(Time closeTime) {
+    public void closeBill() {
 
-        if (closeTime == null ||
-                (closeTime.getHours() < 0 || closeTime.getHours() > 24)
-                || (closeTime.getMinutes() < 0 || closeTime.getMinutes() > 60)
-                || (closeTime.getSeconds() < 0 || closeTime.getSeconds() > 60)) {
-            System.out.println("Time is invalid!");
-            return false;
-        } else {
-            time = closeTime;
-            isClosed = true;
-            return true;
-        }
+        setCloseTime(new SimpleDateFormat(
+                DATE_FORMAT).toString());
     }
 }

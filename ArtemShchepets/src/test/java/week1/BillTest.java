@@ -7,7 +7,8 @@ import org.junit.Test;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-import week1.model.Time;
+
+import static week1.utils.Utils.getCurrentDate;
 
 public class BillTest {
 
@@ -19,10 +20,8 @@ public class BillTest {
     Product[] testProductList;
 
     Seller testSeller;
-    Time testTime;
 
     Bill testBill;
-    Bill testBill2;
 
     @Before
     public void setUp() {
@@ -36,10 +35,6 @@ public class BillTest {
         testBill = new Bill(testSeller);
 
         testProductList = new Product[testBill.getDefaultSizeOfList()];
-
-        testTime = new Time(12, 33, 50);
-
-
     }
 
     @After
@@ -52,10 +47,10 @@ public class BillTest {
         Product[] testProductList = null;
 
         Seller testSeller = null;
-        Time testTime = null;
 
         Bill testBill = null;
     }
+
     @Test
     public void testAddProducts() {
 
@@ -100,8 +95,6 @@ public class BillTest {
         testBill.addProduct(testProduct3);
         testBill.addProduct(testProduct4);
 
-        testBill.setTime(testTime);
-
         testBill.setClosed(false);
 
         String expected = "***BILL***\n"
@@ -109,17 +102,17 @@ public class BillTest {
                 + testProduct2.showInfo() + "\n"
                 + testProduct3.showInfo() + "\n"
                 + testProduct4.showInfo() + "\n"
-                + "12:33:50\n" + "Seller: Valya, age: 22" + ", sold: 0" +"\n***BILL IS OPENED***";
+                + getCurrentDate() + "\n" + "Seller: Valya, age: 22" + ", sold: 0" + "\n***BILL IS OPENED***";
 
         String actual = testBill.showInfo();
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testCloseBill() {
 
-        testBill.closeBill(testTime);
+        testBill.closeBill();
 
         Assert.assertEquals(true, testBill.isClosed());
     }

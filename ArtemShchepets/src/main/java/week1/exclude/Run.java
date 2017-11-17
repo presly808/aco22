@@ -1,10 +1,10 @@
 package week1.exclude;
 
-import week1.controller.Terminal;
+import week1.controller.BillController;
+import week1.controller.TerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-import week1.model.Time;
 import week1.view.ConsoleView;
 
 public class Run {
@@ -39,11 +39,9 @@ public class Run {
         bills[2].addProduct(product3);
         bills[2].addProduct(product4);
 
-        bills[0].setTime(new Time(12, 12, 12));
-        bills[1].setTime(new Time(10, 8, 40));
-        bills[2].setTime(new Time(23, 10, 44));
+        BillController billController = new BillController(bills);
 
-        Terminal terminal = new Terminal(bills, sellers);
+        TerminalController terminal = new TerminalController(billController, sellers);
 
         ConsoleView consoleView = new ConsoleView();
 
