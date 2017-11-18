@@ -68,7 +68,7 @@ public class TerminalTest {
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
         t.closeAndSaveBill();
-        assertNull(t.findBillById(2));
+        assertNotEquals(appDB.getBills()[0].getId(),t.findBillById(appDB.getBills()[0].getId()));
     }
 
     @Test

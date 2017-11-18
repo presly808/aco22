@@ -67,6 +67,7 @@ public class TerminalController {
     }
 
     public Bill findBillById(int id) {
+
         for (int i = 0; i < appDB.getCountBill(); i++) {
             if (appDB.getBills()[i] != null &&
                     appDB.getBills()[i].getId() == id)

@@ -1,8 +1,7 @@
-package ua.artcode.exclude;
+package ua.artcode.market.exclude;
 
 import ua.artcode.market.controller.TerminalController;
 import ua.artcode.market.models.*;
-import ua.artcode.market.utils.Utils;
 
 public class TestMarket {
 
