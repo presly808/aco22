@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 /**
  * Created by ENIAC on 05.11.2017.

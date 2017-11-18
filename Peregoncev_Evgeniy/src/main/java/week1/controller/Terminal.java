@@ -1,11 +1,13 @@
-package week1;
+package week1.controller;
 
-import week1.Bill;
+import week1.model.Bill;
+import week1.model.ITerminal;
+import week1.model.Salesman;
 
 /**
  * Created by ENIAC on 10.11.2017.
  */
-public class Terminal {
+public class Terminal implements ITerminal{
 
     private Bill[] bils;
     private Salesman[] sales;

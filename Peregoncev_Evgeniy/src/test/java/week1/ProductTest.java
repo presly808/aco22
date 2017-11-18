@@ -1,6 +1,7 @@
 package week1;
 
 import org.junit.Test;
+import week1.model.Product;
 
 import static org.junit.Assert.*;
 

@@ -3,6 +3,10 @@ package week1;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Salesman;
+import week1.model.Time;
 
 import static org.junit.Assert.*;
 

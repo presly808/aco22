@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 import java.util.Date;
 import java.text.*;
