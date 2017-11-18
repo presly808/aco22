@@ -6,7 +6,6 @@ import week1.interfaces.ITerminal;
 import week1.model.*;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class TerminalController implements ITerminal {
 

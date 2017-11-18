@@ -24,9 +24,10 @@ public class BillControllerTest {
 
     Bill testBill;
 
-    Bill[] testBills;
+    Bill[] testBills = new Bill[1];
 
-    BillController billController;
+    BillController billController = new BillController();
+
 
     @Before
     public void setUp() {
@@ -41,11 +42,7 @@ public class BillControllerTest {
 
         testProductList = new Product[testBill.getDefaultSizeOfList()];
 
-        testBills = new Bill[1];
-
         testBills[0] = testBill;
-
-        billController = new BillController(testBills);
     }
 
     @After
@@ -124,6 +121,7 @@ public class BillControllerTest {
     @Test
     public void testCloseBill() {
 
+        billController.setBills(testBills);
         billController.closeAndSaveBill();
 
         Assert.assertEquals(true, billController.getBills()[billController.getCurrentBillIndex()].isClosed());

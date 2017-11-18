@@ -3,14 +3,10 @@ package week1;
 
 import org.junit.*;
 import week1.comparators.CreationDateComparator;
-import week1.controller.BillController;
 import week1.controller.TerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-
-import static week1.utils.Utils.getCurrentDate;
-
 
 public class TerminalControllerTest {
 
@@ -83,30 +79,11 @@ public class TerminalControllerTest {
     @After
     public void tearDown() {
 
-        TerminalController testTerminal = null;
-
-        Seller testSeller1 = null;
-        Seller testSeller2 = null;
-        Seller testSeller3 = null;
-        Seller testSeller4 = null;
-        Seller testSeller5 = null;
-
         testSellerArray[0] = null;
         testSellerArray[1] = null;
         testSellerArray[2] = null;
         testSellerArray[3] = null;
         testSellerArray[4] = null;
-
-        Seller[] testSellerArray = null;
-
-        Product testProduct1 = null;
-        Product testProduct2 = null;
-        Product testProduct3 = null;
-        Product testProduct4 = null;
-
-        Bill testBill1 = null;
-        Bill testBill2 = null;
-        Bill testBill3 = null;
 
         testBillList = null;
     }
@@ -322,7 +299,7 @@ public class TerminalControllerTest {
 
     @Test
     public void tesFilterCreation() {
-        testTerminal.filter(new String(), new String(), new CreationDateComparator());
+        testTerminal.filter("", "", new CreationDateComparator());
     }
 
 }
