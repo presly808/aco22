@@ -22,7 +22,8 @@ public class TerminalTest {
         Statistic s = null;
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
@@ -34,7 +35,8 @@ public class TerminalTest {
     public void createBill() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         assertTrue(t.createBill(appDB.getSales()[0]));
     }
 
@@ -42,7 +44,8 @@ public class TerminalTest {
     public void addProduct() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         assertTrue(t.addProduct(appDB.getProducts()[0]));
         assertTrue(t.addProduct(appDB.getProducts()[1]));
@@ -52,7 +55,8 @@ public class TerminalTest {
     public void closeAndSaveBill() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         assertTrue(t.addProduct(appDB.getProducts()[0]));
         assertTrue(t.addProduct(appDB.getProducts()[1]));
@@ -63,12 +67,14 @@ public class TerminalTest {
     public void findBillById() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
         t.closeAndSaveBill();
-        assertNotEquals(appDB.getBills()[0].getId(),t.findBillById(appDB.getBills()[0].getId()));
+        assertNotEquals(appDB.getBills()[0].getId(),
+                t.findBillById(appDB.getBills()[0].getId()));
     }
 
     @Test
@@ -79,8 +85,10 @@ public class TerminalTest {
         String login = appDB.getSales()[0].getLogin();
         String fullname = appDB.getSales()[0].getFullname();
 
-        assertEquals(appDB.getSales()[0], t.findSalesmanByLoginOrFullname(login)[0]);
-        assertEquals(appDB.getSales()[0], t.findSalesmanByLoginOrFullname(fullname)[0]);
+        assertEquals(appDB.getSales()[0],
+                t.findSalesmanByLoginOrFullname(login)[0]);
+        assertEquals(appDB.getSales()[0],
+                t.findSalesmanByLoginOrFullname(fullname)[0]);
 
     }
 
@@ -88,7 +96,8 @@ public class TerminalTest {
     public void getMax() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
@@ -100,7 +109,8 @@ public class TerminalTest {
     public void getMin() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
@@ -112,7 +122,8 @@ public class TerminalTest {
     public void getAverage() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
@@ -124,7 +135,8 @@ public class TerminalTest {
     public void countSoldProducts() throws Exception {
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
-        t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
         t.createBill(appDB.getSales()[0]);
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
