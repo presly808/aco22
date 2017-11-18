@@ -28,7 +28,7 @@ public class TerminalTest {
         t.addProduct(appDB.getProducts()[0]);
         t.addProduct(appDB.getProducts()[1]);
         t.closeAndSaveBill();
-        assertNotNull(t.doSomeStatisticStuff(s));
+        assertNotNull(t.doSomeStatisticStuff());
     }
 
     @Test

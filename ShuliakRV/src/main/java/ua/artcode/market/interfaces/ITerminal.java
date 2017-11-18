@@ -17,7 +17,7 @@ public interface ITerminal {
     public Bill findBillById(int id);
     public Salesman[] findSalesmanByLoginOrFullname(String loginOrFullname);
     public Salesman[] getTopNofSalesMan(int n);
-    public Statistic doSomeStatisticStuff(Statistic s);
+    public Statistic doSomeStatisticStuff();
     public double getMax();
     public double getMin();
     public double getAverage();

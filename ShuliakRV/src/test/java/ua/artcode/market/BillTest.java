@@ -2,11 +2,7 @@ package ua.artcode.market;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.models.AppDB;
-import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
-import ua.artcode.market.utils.Utils;
+import ua.artcode.market.models.*;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +33,8 @@ public class BillTest {
         AppDB appDB = new AppDB();
         Bill b = new Bill(appDB.getSales()[0]);;
         b.addProduct(appDB.getProducts()[0]);
-        assertNotEquals(0, b.getAmountPrice());
+        b.closeBill();
+        assertEquals(appDB.getProducts()[0].getPrice(),b.getAmountPrice(),0.1);
     }
 
     @Test

@@ -12,8 +12,8 @@ public class AppDB {
     private Salesman[] sales = new Salesman[DEFAULT_COUNT_SALESMEN];
     private Bill[] bills = new Bill[DEFAULT_COUNT_BILLS];
 
-    private int countProducts;
-    private int countSalesmen;
+    //private int countProducts;
+    //private int countSalesmen;
     private int countBill;
 
     public AppDB() {

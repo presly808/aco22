@@ -35,7 +35,7 @@ public class TestMarket {
             }
 
             Statistic st = new Statistic();
-            System.out.println(t.doSomeStatisticStuff(st));
+            System.out.println(t.doSomeStatisticStuff());
 
         } else System.out.println("Incorrect login or password!!!");
 

@@ -1,13 +1,10 @@
 package ua.artcode.market.controller;
 
-import com.sun.corba.se.spi.monitoring.StatisticsAccumulator;
-import com.sun.deploy.panel.ITreeNode;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.*;
 
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Scanner;
 
 public class TerminalController implements ITerminal {
 
@@ -149,9 +146,9 @@ public class TerminalController implements ITerminal {
         return null;
     }
 
-    public Statistic doSomeStatisticStuff(Statistic s) {
+    public Statistic doSomeStatisticStuff() {
 
-        s = new Statistic();
+        Statistic s = new Statistic();
 
         s.setMaxAmountofBill(getMax());
         s.setMinAmountofBill(getMin());
