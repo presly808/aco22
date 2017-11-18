@@ -22,7 +22,8 @@ public class TerminalController {
         else {
 
             for (int i = 0; i < appDB.getSales().length; i++) {
-                if ((appDB.getSales()[i] != null) && (appDB.getSales()[i].getLogin().equals(login)) &&
+                if ((appDB.getSales()[i] != null) &&
+                        (appDB.getSales()[i].getLogin().equals(login)) &&
                         (appDB.getSales()[i].getPassword().equals(password))) {
                     appDB.getSales()[i].setLogged(true);
                     return appDB.getSales()[i];
@@ -37,7 +38,8 @@ public class TerminalController {
 
         currentBill = appDB.getCountBill();
 
-        if ((s != null) && (s.isLogged()) && (currentBill < appDB.getBills().length)) {
+        if ((s != null) && (s.isLogged()) &&
+                (currentBill < appDB.getBills().length)) {
             appDB.getBills()[currentBill] = new Bill(s);
             return true;
         }

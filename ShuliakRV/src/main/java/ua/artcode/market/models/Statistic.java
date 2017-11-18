@@ -43,7 +43,8 @@ public class Statistic {
     public String toString() {
         return String.format("MaxAmountofBill: %.2f, MinAmountofBill: %.2f,"+
                 " AverageAmountofBill: %.2f, CountSoldProducts: %s; %n ",
-                maxAmountofBill,minAmountofBill,averageAmountofBill,countSoldProducts);
+                maxAmountofBill,minAmountofBill,averageAmountofBill,
+                countSoldProducts);
     }
 }
 

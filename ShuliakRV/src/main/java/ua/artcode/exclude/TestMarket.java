@@ -14,7 +14,8 @@ public class TestMarket {
         TerminalController t = new TerminalController(appDB);
 
 
-        Salesman saler = t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
+        Salesman saler = t.login(appDB.getSales()[0].getLogin(),
+                appDB.getSales()[0].getPassword());
 
         if (saler != null) {
 
@@ -22,7 +23,8 @@ public class TestMarket {
 
                 t.createBill(saler);
 
-                for (int j = 0; j < (int)(appDB.DEFAULT_COUNT_PRODUCTS * Math.random())+1;
+                for (int j = 0; j < (int) (appDB.DEFAULT_COUNT_PRODUCTS *
+                        Math.random()) + 1;
                      j++) {
                     t.addProduct(appDB.getProducts()[j]);
                 }
@@ -30,7 +32,7 @@ public class TestMarket {
                 b = t.closeAndSaveBill();
                 System.out.println(b);
 
-                System.out.println(t.findBillById(i+1).getId());
+                System.out.println(t.findBillById(i + 1).getId());
             }
 
             Statistic st = new Statistic();
