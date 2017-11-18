@@ -48,14 +48,6 @@ public class BillController implements IBill {
 
     }
 
-    public void setActualSizeOfBills(int actualSizeOfBills) {
-        this.actualSizeOfBills = actualSizeOfBills;
-    }
-
-    public void setCurrentBillIndex(int currentBillIndex) {
-        this.currentBillIndex = currentBillIndex;
-    }
-
     private Bill[] makeAnActualBillArray(Bill[] inputBillArray) {
 
         if (inputBillArray == null) return null;
