@@ -7,7 +7,7 @@ public class Salesman {
     private int pass;
     private double sumOfAllSales;
 
-    public Salesman(String name){
+    public Salesman(String name) {
         this.fullName = name;
     }
 
@@ -16,6 +16,31 @@ public class Salesman {
         this.login = login;
         this.pass = pass;
     }
+
+    @Override
+    public String toString() {
+        return String.format("name: %s, sum of all sales: %.2f", fullName, sumOfAllSales);
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+
+        Salesman other = (Salesman) obj;
+
+        return (fullName != null && fullName.equals(other.fullName)) &&
+                (login != null && login.equals(other.login)) &&
+                pass == other.pass &&
+                sumOfAllSales == other.sumOfAllSales;
+    }
+
 
     public int getPass() {
         return pass;
