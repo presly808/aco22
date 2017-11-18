@@ -1,4 +1,4 @@
-package ua.artcode.market;
+package ua.artcode.market.models;
 
 import java.util.Date;
 
@@ -96,6 +96,25 @@ public class Bill {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+
+        String str = "Чек№" + id + "\n";
+
+        if (!isOpen) {
+
+            for (int i = 0; i < numProd; i++) {
+                str += products[i].printFullInfo();
+            }
+
+            str += String.format("Saler: %s; Time: %s; Sum: %.2f .",
+                    salesMan.getFullname(), closeTime.toString(), amountPrice);
+
+        } else str = "Чек не закрыт!";
+
+        return str;
     }
 }
 

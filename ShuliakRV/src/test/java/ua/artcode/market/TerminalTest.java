@@ -2,6 +2,11 @@ package ua.artcode.market;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.utils.Utils;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +20,7 @@ public class TerminalTest {
     private Salesman[] s;
 
 
-    private Terminal t;
+    private TerminalController t;
     private Salesman saler;
 
     @Before
@@ -25,7 +30,7 @@ public class TerminalTest {
 
         s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
-        t = new Terminal(s);
+        t = new TerminalController(s);
 
         for (int i = 0; i < p.length; i++) {
             p[i] = Utils.generateProduct();

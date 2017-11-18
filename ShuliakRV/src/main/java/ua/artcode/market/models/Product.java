@@ -1,4 +1,4 @@
-package ua.artcode.market;
+package ua.artcode.market.models;
 
 public class Product {
     private static int seqId;

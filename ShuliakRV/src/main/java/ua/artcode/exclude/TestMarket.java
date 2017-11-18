@@ -1,52 +1,40 @@
 package ua.artcode.exclude;
 
-import ua.artcode.market.*;
+import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.models.*;
+import ua.artcode.market.utils.Utils;
 
 public class TestMarket {
 
-    public static final int DEFAULT_COUNT_PRODUCTS = 100;
-    public static final int DEFAULT_COUNT_SALESMEN = 3;
-    public static final int DEFAULT_COUNT_BILLS = 2;
-
     public static void main(String[] args) {
 
+        AppDB appDB = new AppDB();
 
-        Product[] p = new Product[DEFAULT_COUNT_PRODUCTS];
 
-        for (int i = 0; i < p.length; i++) {
-            p[i] = Utils.generateProduct();
-        }
+        TerminalController t = new TerminalController(appDB);
 
-        Salesman[] s = new Salesman[DEFAULT_COUNT_SALESMEN];
 
-        System.out.println("Salers list: ");
-        System.out.println();
-
-        for (int i = 0; i < s.length; i++) {
-            s[i] = Utils.generateSalesman();
-        }
-
-        Terminal t = new Terminal(s);
-
-        Salesman saler = t.login();
+        Salesman saler = t.login(appDB.getSales()[0].getLogin(),appDB.getSales()[0].getPassword());
 
         if (saler != null) {
 
-            for (int i = 0; i < DEFAULT_COUNT_BILLS; i++) {
+            for (int i = 0; i < appDB.DEFAULT_COUNT_BILLS; i++) {
 
                 t.createBill(saler);
 
-                for (int j = 0; j < (DEFAULT_COUNT_PRODUCTS * Math.random());
+                for (int j = 0; j < (int)(appDB.DEFAULT_COUNT_PRODUCTS * Math.random())+1;
                      j++) {
-                    t.addProduct(p[j]);
+                    t.addProduct(appDB.getProducts()[j]);
                 }
                 Bill b;
                 b = t.closeAndSaveBill();
-                b.printBill();
+                System.out.println(b);
 
-                System.out.println(t.findBillById(i + 1).getId());
+                System.out.println(t.findBillById(i+1).getId());
             }
-            t.doSomeStatisticStuff();
+
+            Statistic st = new Statistic();
+            System.out.println(t.doSomeStatisticStuff(st));
 
         } else System.out.println("Incorrect login or password!!!");
 
