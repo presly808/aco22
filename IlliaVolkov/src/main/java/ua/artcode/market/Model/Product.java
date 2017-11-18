@@ -1,4 +1,4 @@
-package ua.artcode.market;
+package ua.artcode.market.Model;
 
 public class Product {
 

@@ -2,17 +2,22 @@ package ua.artcode.market;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ua.artcode.market.Controller.BillController;
+import ua.artcode.market.Model.Bill;
+import ua.artcode.market.Model.Product;
 
-import static org.junit.Assert.*;
+public class BillControllerTest {
 
-public class BillTest {
+    private BillController bc = new BillController();
+
     @Test
     public void addProduct() throws Exception {
 
         Bill currentBill = new Bill(1, 100, "Vova", Product.initProductsList(5));
 
         int num = currentBill.getQuantityGoods();
-        currentBill.addProduct( 2, 1);
+
+        bc.addProduct(currentBill, 2, 1);
 
         Assert.assertEquals((""+(num+1)), (""+currentBill.getQuantityGoods()));
     }
@@ -22,11 +27,11 @@ public class BillTest {
 
         Bill currentBill = new Bill(1, 100, "Vova", Product.initProductsList(5));
 
-        currentBill.addProduct( 2, 8);
-        currentBill.addProduct( 4, 1);
+        bc.addProduct(currentBill, 2, 8);
+        bc.addProduct(currentBill, 4, 1);
 
         int num = currentBill.getQuantityGoods();
-        currentBill.changeProduct( 2, 0);
+        bc.changeProduct(currentBill, 2, 0);
 
         Assert.assertEquals(""+num, ""+(currentBill.getQuantityGoods()+1));
     }
@@ -39,9 +44,9 @@ public class BillTest {
         Bill currentBill = new Bill(1, 100, "Vova", productList);
 
         double amountPrice = currentBill.getAmountPrice();
-        currentBill.addProduct( 2, 1);
+        bc.addProduct(currentBill, 2, 1);
 
-        currentBill.calculateAmountPrice();
+        bc.calculateAmountPrice(currentBill);
 
         Assert.assertEquals((""+(amountPrice+productList[1].price)), (""+currentBill.getAmountPrice()));
     }
@@ -53,13 +58,13 @@ public class BillTest {
 
         Bill currentBill = new Bill(1, 100, "Vova", productList);
 
-        currentBill.addProduct( 2, 8);
-        currentBill.addProduct( 4, 1);
-        currentBill.addProduct( 5, 6);
-        currentBill.addProduct( 1, 4);
-        currentBill.addProduct( 3, 3);
+        bc.addProduct(currentBill,2, 8);
+        bc.addProduct(currentBill, 4, 1);
+        bc.addProduct(currentBill, 5, 6);
+        bc.addProduct(currentBill, 1, 4);
+        bc.addProduct(currentBill, 3, 3);
 
-        Assert.assertNotEquals("", ""+Bill.GetProductsForPrint(currentBill));
+        Assert.assertNotEquals("", ""+bc.GetProductsForPrint(currentBill));
     }
 
     @Test
@@ -69,15 +74,15 @@ public class BillTest {
 
         Bill currentBill = new Bill(1, 100, "Vova", productList);
 
-        currentBill.addProduct( 2, 8);
-        currentBill.addProduct( 4, 1);
-        currentBill.addProduct( 5, 6);
-        currentBill.addProduct( 1, 4);
-        currentBill.addProduct( 3, 3);
+        bc.addProduct(currentBill,2, 8);
+        bc.addProduct(currentBill, 4, 1);
+        bc.addProduct(currentBill, 5, 6);
+        bc.addProduct(currentBill, 1, 4);
+        bc.addProduct(currentBill, 3, 3);
 
-        currentBill.calculateAmountPrice();
+        bc.calculateAmountPrice(currentBill);
 
-        Assert.assertNotEquals("", ""+Bill.getBillInfoForPrint(currentBill));
+        Assert.assertNotEquals("", ""+bc.getBillInfoForPrint(currentBill));
     }
 
     @Test
@@ -87,7 +92,7 @@ public class BillTest {
 
         Bill currentBill = new Bill(1, 100, "Vova", productList);
 
-        currentBill.closeBill();
+        bc.closeBill(currentBill);
 
         Assert.assertEquals(true, currentBill.closed);
     }

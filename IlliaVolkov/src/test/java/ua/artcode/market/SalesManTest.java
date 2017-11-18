@@ -2,8 +2,7 @@ package ua.artcode.market;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import ua.artcode.market.Model.SalesMan;
 
 public class SalesManTest {
 
@@ -11,7 +10,7 @@ public class SalesManTest {
     public void createProduct() throws Exception {
         SalesMan newSalesMan = new SalesMan("fullName");
 
-        Assert.assertEquals("fullName", newSalesMan.fullName);
+        Assert.assertEquals("fullName", newSalesMan.getFullName());
         //Assert.assertEquals( "login", newSalesMan.login);
         //Assert.assertEquals( "pass", newSalesMan.pass);
     }
