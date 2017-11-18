@@ -2,11 +2,14 @@ package week1;
 
 
 import org.junit.*;
+import week1.comparators.CreationDateComparator;
 import week1.controller.BillController;
 import week1.controller.TerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
+
+import static week1.utils.Utils.getCurrentDate;
 
 
 public class TerminalControllerTest {
@@ -315,6 +318,11 @@ public class TerminalControllerTest {
         testTerminal.getBillController().setBills(testBillList);
 
         Assert.assertTrue(testTerminal.getBillController().closeAllPreviousBills());
+    }
+
+    @Test
+    public void tesFilterCreation() {
+        testTerminal.filter(new String(), new String(), new CreationDateComparator());
     }
 
 }

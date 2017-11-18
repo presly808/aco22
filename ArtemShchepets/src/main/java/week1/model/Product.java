@@ -30,10 +30,6 @@ public class Product implements Comparable<Product>{
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String showInfo() {
         return toString();
     }
