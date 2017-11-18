@@ -1,11 +1,15 @@
 package ua.artcode.market.controller;
 
 import com.sun.corba.se.spi.monitoring.StatisticsAccumulator;
+import com.sun.deploy.panel.ITreeNode;
+import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.*;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Scanner;
 
-public class TerminalController {
+public class TerminalController implements ITerminal {
 
     private AppDB appDB;
 
@@ -235,6 +239,11 @@ public class TerminalController {
         }
 
         return result;
+    }
+
+    @Override
+    public Bill[] filter(Salesman[] sales, Product[] products, Date startTime, Date endTime, Comparator<Bill> comparator) {
+        return new Bill[0];
     }
 
 }
