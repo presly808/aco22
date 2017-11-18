@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.BillController;
 import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
 
 public class TestBillController {
 
@@ -25,6 +26,12 @@ public class TestBillController {
     public void testCloseBill() {
         Bill bill = new Bill();
         bc.closeBill(bill);
+        Product product = new Product();
+        bc.addProduct(bill, product);
+        bc.closeBill(bill);
+        bc.printBill(bill);
+
+
 //        System.out.println(bill.getCloseTime());
         Assert.assertTrue(bill.getCloseTime() != null);
     }

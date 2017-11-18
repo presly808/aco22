@@ -2,10 +2,12 @@ package ua.artcode.market.models;
 
 import ua.artcode.market.utils.Utils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bill {
+
+public class Bill implements Comparable {
 
     private int billId;
     private int terminalId;
@@ -13,11 +15,11 @@ public class Bill {
     private Salesman salesman;
     private double amountPrice;
 
-    private String openTime;
-    private String closeTime;
+    private Date openTime;
+    private Date closeTime;
 
     public Bill() {
-        this.billId = Utils.generateID();
+        this.billId = Utils.generateBillID();
         this.products = new HashMap<Product, Integer>();
         this.openTime = Utils.getCurrentTime();
     }
@@ -62,19 +64,19 @@ public class Bill {
         this.amountPrice = amountPrice;
     }
 
-    public String getOpenTime() {
+    public Date getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(String openTime) {
+    public void setOpenTime(Date openTime) {
         this.openTime = openTime;
     }
 
-    public String getCloseTime() {
+    public Date getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -103,5 +105,13 @@ public class Bill {
         }
 
         return false;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Bill bill = (Bill) o;
+        if (this.amountPrice == bill.amountPrice) return 0;
+        else if (this.amountPrice < bill.amountPrice) return -10;
+        else return 10;
     }
 }
