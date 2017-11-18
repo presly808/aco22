@@ -242,7 +242,8 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public Bill[] filter(Salesman[] sales, Product[] products, Date startTime, Date endTime, Comparator<Bill> comparator) {
+    public Bill[] filter(Salesman[] sales, Product[] products, Date startTime,
+                         Date endTime, Comparator<Bill> comparator) {
         return new Bill[0];
     }
 
