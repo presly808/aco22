@@ -32,9 +32,9 @@ public class MiniMarket {
 
                 currentBill.allProductsSelected();
 
-                currentBill.closeBill();
+                currentBill.questionForClosingBill();
 
-                myTerminal.closeAndSaveBill(currentBill);
+                myTerminal.saveBill(currentBill);
 
             }
 

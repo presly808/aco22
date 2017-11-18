@@ -18,8 +18,11 @@ public class Terminal {
         return JOptionPane.showConfirmDialog( null, "Create a new check?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
     }
 
+    public Bill[] getBills() {
+        return bills;
+    }
 
-    public Bill createBill( String nameSaler, Product[] productsList) {
+    public Bill createBill(String nameSaler, Product[] productsList) {
 
         for (int i = 0; i < this.bills.length; i++) {
             if (this.bills[i] == null) {
@@ -35,7 +38,7 @@ public class Terminal {
         return new Bill(0,0, "", productsList);
     }
 
-    public void closeAndSaveBill(Bill currentBill) {
+    public void saveBill(Bill currentBill) {
 
         if (currentBill.closed) {
 
@@ -49,6 +52,8 @@ public class Terminal {
         }
     }
 
+
+
     public static void showInfo(Terminal myTerminal){
 
         System.out.println("\n\n\n STATISTICS OF THE WORK OF THE STORE");
@@ -60,5 +65,18 @@ public class Terminal {
                 Bill.printBill(myTerminal.bills[i]);
             }
         }
+    }
+
+    public int countQuontityBills(){
+
+        int quontuty = 0;
+
+        for (int i = 0; i < this.bills.length; i++) {
+            if (this.bills[i] != null) {
+                quontuty ++;
+            }
+        }
+
+        return quontuty;
     }
 }
