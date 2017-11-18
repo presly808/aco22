@@ -41,6 +41,7 @@ public class TerminalController {
         if ((s != null) && (s.isLogged()) &&
                 (currentBill < appDB.getBills().length)) {
             appDB.getBills()[currentBill] = new Bill(s);
+
             return true;
         }
 
@@ -144,6 +145,8 @@ public class TerminalController {
     }
 
     public Statistic doSomeStatisticStuff(Statistic s) {
+
+        s = new Statistic();
 
         s.setMaxAmountofBill(getMax());
         s.setMinAmountofBill(getMin());
