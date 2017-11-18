@@ -1,14 +1,20 @@
-package models;
+package week1;
 
-
-public class Salesman implements Comparable<Salesman>{
+/**
+ * Created by ENIAC on 10.11.2017.
+ */
+public class Salesman {
 
     private String fullname;
     private String login;
     private String pass;
 
-    public Salesman(String login, String pass) {
-        this.fullname = login;
+    public Salesman() {
+
+    }
+
+    public Salesman(String fullname, String login, String pass) {
+        this.fullname = fullname;
         this.login = login;
         this.pass = pass;
     }
@@ -37,18 +43,5 @@ public class Salesman implements Comparable<Salesman>{
         this.pass = pass;
     }
 
-    public String toString() {
-        return "Salesman{" +
-                "fullname='" + fullname + '\'' +
-                ", login='" + login + '\'' +
-                ", pass='" + pass + '\'' +
-                '}';
-    }
-
-
-    @Override
-    public int compareTo(Salesman o) {
-        return this.getFullname().equals(o.getFullname())
-                && this.getLogin().equals(o.getLogin()) ? 1 : 0;
-    }
 }
+

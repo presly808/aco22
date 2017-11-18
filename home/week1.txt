@@ -11,16 +11,16 @@
                 fullname
                 login
                 pass
-        ua.artcode.market.model.Product
+        ua.artcode.market.models.Product
             fields:
-                id
+                billId
                 name
             methods:
                 printFullInfo
 
         Bill
             fields:
-                id
+                billId
                 products[]
                 salesman
                 amountPrice
@@ -33,7 +33,7 @@
 
         Terminal
             fields:
-                bills[]
+                billControllers[]
                 sales[]
             methods:
                 login

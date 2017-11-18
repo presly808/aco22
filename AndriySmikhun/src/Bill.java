@@ -70,14 +70,16 @@ public class Bill {
     }
     public double calculateAmountPrice(Product[] product ){
         double amountPrice = 0.0d;
-        for (int i = 0; i < product.length; i++){
-            amountPrice = product[i].getPrice();
+        for (int i = 0; i < products.length; i++){
+
+            amountPrice = products[i].getPrice();
         }
         return amountPrice;
     }
     public void printBill(){
         System.out.println("Bill's number" + id);
         for (int i = 0; i < products.length; i++){
+            if (products[i] == null) break;
             System.out.print("Name " + products[i].getName() + " --------- ");
             System.out.println("Price " + products[i].getPrice());
         }
