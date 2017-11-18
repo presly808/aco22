@@ -57,23 +57,6 @@ public class Bill {
         return false;
     }
 
-    public void printBill() {
-
-        if (!isOpen) {
-
-            String str = "Чек№" + id + "\n";
-
-            for (int i = 0; i < numProd; i++) {
-                str += products[i].printFullInfo();
-            }
-
-            str += String.format("Saler: %s; Time: %s; Sum: %.2f .",
-                    salesMan.getFullname(), closeTime.toString(), amountPrice);
-
-            System.out.println(str);
-        } else System.out.println("Чек не закрыт!");
-    }
-
     public void calculateAmountPrice() {
 
         amountPrice = 0;
