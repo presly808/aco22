@@ -118,23 +118,6 @@ public class Terminal implements ITerminal {
     }
 
     @Override
-    public Salesman getTopNofSalesMan() {
-        int topSalemanId = 0;
-
-        if (countOfSalesman == 0) return null;
-
-        double max = salesmans[0].getSumOfAllSales();
-        for (int i = 1; i < countOfSalesman; i++) {
-            if (salesmans[i].getSumOfAllSales() > max) {
-                max = salesmans[i].getSumOfAllSales();
-                topSalemanId = i;
-            }
-        }
-
-        return salesmans[topSalemanId];
-    }
-
-    @Override
     public void doSomeStatisticStuff() {
         if (countOfBills == 0) {
             System.out.println("count of bills = 0");
@@ -178,6 +161,23 @@ public class Terminal implements ITerminal {
     }
 
     @Override
+    public Salesman getTopNofSalesMan() {
+        int topSalemanId = 0;
+
+        if (countOfSalesman == 0) return null;
+
+        double max = salesmans[0].getSumOfAllSales();
+        for (int i = 1; i < countOfSalesman; i++) {
+            if (salesmans[i].getSumOfAllSales() > max) {
+                max = salesmans[i].getSumOfAllSales();
+                topSalemanId = i;
+            }
+        }
+
+        return salesmans[topSalemanId];
+    }
+
+    @Override
     public Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
         Bill[] billsFilt = new Bill[bills.length];
         int countFiltBills = 0;
@@ -186,7 +186,6 @@ public class Terminal implements ITerminal {
             if (bills[i].getTime().compareTo(startTime) > 0 &&
                     bills[i].getTime().compareTo(endTime) < 0) {
                 billsFilt[countFiltBills++] = bills[i];
-
             }
         }
 
@@ -194,7 +193,6 @@ public class Terminal implements ITerminal {
         for (Bill billsRe : billsRes) {
             billsRe.setProducts(Arrays.copyOf(billsRe.getProducts(),
                     billsRe.getProductsCount()));
-
         }
 
         Arrays.sort(billsRes, comparator);
