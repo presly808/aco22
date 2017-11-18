@@ -31,7 +31,7 @@ public class BillTest {
     @Test
     public void getAmountPrice() throws Exception {
         AppDB appDB = new AppDB();
-        Bill b = new Bill(appDB.getSales()[0]);;
+        Bill b = new Bill(appDB.getSales()[0]);
         b.addProduct(appDB.getProducts()[0]);
         b.closeBill();
         assertEquals(appDB.getProducts()[0].getPrice(),b.getAmountPrice(),0.1);
