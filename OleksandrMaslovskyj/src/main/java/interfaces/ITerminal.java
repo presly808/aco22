@@ -5,6 +5,7 @@ import models.Product;
 import models.Salesman;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface ITerminal {
 
@@ -14,9 +15,9 @@ public interface ITerminal {
 
     void closeAndSaveBill(Bill bill);
 
-    Bill findBillById(long id);
+    Bill findBillById(long id) throws NoSuchElementException;
 
-    Salesman findSalesmanByLoginOrFullName(String fullname, String login);
+    Salesman findSalesmanByLoginOrFullName(String fullname, String login) throws NoSuchElementException;
 
     List<Bill> sortBillListByDateCreation();
 

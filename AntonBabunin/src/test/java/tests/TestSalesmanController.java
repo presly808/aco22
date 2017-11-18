@@ -9,8 +9,9 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
+import ua.artcode.market.utils.BillComparator;
 
-import java.util.Arrays;
+import java.util.*;
 
 
 public class TestSalesmanController {
@@ -127,4 +128,158 @@ public class TestSalesmanController {
 
         Assert.assertTrue(bool);
     }
+
+
+    @Test
+    public void testCreate() {
+        Salesman salesman = sc.create("SalesMan1", "SalesMan1", "SalesMan1");
+        Assert.assertNotNull(salesman);
+    }
+
+    @Test
+    public void testLogin() {
+        Terminal terminal = new Terminal();
+        Salesman actual = sc.login(terminal,  null, null);
+        Assert.assertNull(actual);
+    }
+
+    @Test
+    public void testLogin1() {
+        Terminal terminal = new Terminal();
+        Salesman actual = sc.login(terminal,  "sad", "asd");
+        Assert.assertNull(actual);
+    }
+
+    @Test
+    public void testLogin2() {
+        Salesman expected = sc.create("SalesMan2", "SalesMan2", "Sales");
+        Terminal terminal = new Terminal();
+        sc.create("top", "top", "top");
+        sc.login(terminal, "top", "top");
+        Salesman actual = sc.login(terminal,  "SalesMan2", "Sales");
+        Assert.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void testCreateBill() {
+        Bill expected = new Bill();
+        Terminal terminal = new Terminal();
+        Salesman salesman = sc.create("1","1","2");
+        sc.login(terminal, salesman.getFullName(),salesman.getPassword());
+        Bill actual = sc.createBill(terminal, salesman);
+        Assert.assertNotSame(expected, actual);
+    }
+
+    @Test
+    public void testCreateBill1() {
+        Terminal terminal = new Terminal();
+        Salesman salesman = sc.create(null,"1","2");
+        sc.login(terminal, "1","1");
+        Bill actual = sc.createBill(terminal, salesman);
+        Assert.assertNull(actual);
+    }
+
+    @Test
+    public void testFindBillById1() {
+        Terminal terminal = new Terminal();
+        Salesman salesman = sc.create("1","1","2");
+        sc.login(terminal, "1","1");
+        sc.createBill(terminal,salesman);
+        sc.createBill(terminal,salesman);
+        Bill expected = sc.createBill(terminal,salesman);
+        sc.createBill(terminal,salesman);
+        Bill actual = sc.findBillById(expected.getBillId());
+        Assert.assertEquals(expected,actual);
+    }
+
+
+    @Test
+    public void testFindBillById2() {
+        Terminal terminal = new Terminal();
+        Terminal test = new Terminal();
+        Salesman salesman = sc.create("1","1","2");
+        sc.login(terminal, "1","1");
+        sc.createBill(terminal,salesman);
+        sc.createBill(test,salesman);
+        Bill expected = sc.createBill(test,salesman);
+        sc.createBill(terminal,salesman);
+        Bill actual = sc.findBillById(expected.getBillId());
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testFindBillById3() {
+        Terminal terminal = new Terminal();
+        Terminal test = new Terminal();
+        Salesman salesman = sc.create("1","1","2");
+        sc.login(terminal, "1","1");
+        sc.createBill(terminal,salesman);
+        sc.createBill(test,salesman);
+        Bill expected = sc.createBill(test,salesman);
+        sc.createBill(terminal,salesman);
+        Bill actual = sc.findBillById(11);
+        Assert.assertNotEquals(expected,actual);
+    }
+    @Test
+    public void filterMethodAll() {
+        Terminal terminal = new Terminal();
+        Salesman salesman1 = sc.create("Saleerman1","Saleerman1","1");
+        Salesman salesman2 = sc.create("Saleerman2","Saleerman2","1");
+        Salesman salesman3 = sc.create("Saleerman3","Saleerman3","1");
+        Salesman salesman4 = sc.create("Saleerman4","Saleerman4","1");
+
+        sc.login(terminal, "Saleerman1","1");
+        sc.login(terminal, "Saleerman2","1");
+        sc.login(terminal, "Saleerman3","1");
+        sc.login(terminal, "Saleerman4","1");
+
+        sc.createBill(terminal,salesman1);
+        sc.createBill(terminal,salesman1);
+        sc.createBill(terminal,salesman1);
+        sc.createBill(terminal,salesman1);
+        sc.createBill(terminal,salesman1);
+
+        sc.createBill(terminal,salesman2);
+        sc.createBill(terminal,salesman2);
+        sc.createBill(terminal,salesman2);
+
+        sc.createBill(terminal,salesman3);
+        sc.createBill(terminal,salesman3);
+        sc.createBill(terminal,salesman3);
+        sc.createBill(terminal,salesman3);
+
+        Bill bill1 = sc.createBill(terminal,salesman4);
+        Bill bill2 = sc.createBill(terminal,salesman4);
+        Bill bill3 = sc.createBill(terminal,salesman4);
+        Bill bill4 = sc.createBill(terminal,salesman4);
+        Bill bill5 = sc.createBill(terminal,salesman4);
+        Product product1 = new Product();
+        Product product2 = new Product();
+        Product product3 = new Product();
+
+        sc.addProduct(terminal, bill1, product1);
+        sc.addProduct(terminal, bill2, product1);
+        sc.addProduct(terminal, bill3, product1);
+        sc.addProduct(terminal, bill4, product1);
+        sc.addProduct(terminal, bill1, product2);
+        sc.addProduct(terminal, bill2, product2);
+        sc.addProduct(terminal, bill3, product2);
+        sc.addProduct(terminal, bill5, product3);
+
+        Set<Bill> expected = new HashSet<>();
+        expected.add(bill5);
+
+        Set<Bill> actual = sc.filterMethodAll(salesman4, product3, null,
+                null, null);
+        new BillComparator().compare(bill1, bill2);
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
+
+
+
+    }
+
+
+
+
 }

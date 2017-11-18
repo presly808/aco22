@@ -1,10 +1,9 @@
 package week1.view;
 
-import week1.controller.Terminal;
+import week1.controller.TerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-import week1.model.Time;
 
 import java.util.Scanner;
 
@@ -12,7 +11,7 @@ import static week1.view.OutputMessages.*;
 
 public class ConsoleView {
 
-    public void runMenu(Terminal terminal) {
+    public void runMenu(TerminalController terminal) {
         do {
             consoleWelcomeMessage();
 
@@ -54,7 +53,7 @@ public class ConsoleView {
         } while (true);
     }
 
-    private void menuShowTopSellers(Scanner scanner, Terminal terminal) {
+    private void menuShowTopSellers(Scanner scanner, TerminalController terminal) {
 
         System.out.println("Enter a number of sellers, " +
                 "which you want to see as top sellers(not more than "
@@ -70,9 +69,11 @@ public class ConsoleView {
                 System.out.println(topSellers[i].toString());
             }
         }
+
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuFindSellerByLoginOrName(Scanner scanner, Terminal terminal) {
+    private void menuFindSellerByLoginOrName(Scanner scanner, TerminalController terminal) {
 
         System.out.println("Enter login or full name " +
                 "and we will search for such salesman in our DB.");
@@ -81,9 +82,11 @@ public class ConsoleView {
         if (searchingSeller == null) {
             System.out.println("We can't find salesman with such login\\full name.");
         } else System.out.println(searchingSeller.toString());
+
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuFindBillById(Scanner scanner, Terminal terminal) {
+    private void menuFindBillById(Scanner scanner, TerminalController terminal) {
         System.out.println("Enter bill id and we will search for it in our DB.");
 
         int id = scanner.nextInt();
@@ -93,20 +96,22 @@ public class ConsoleView {
         if (searchingBill == null) {
             System.out.println("We can't find such bill in our DB.");
         } else {
-            System.out.println("Searching bill: " + searchingBill.toString());
+            System.out.println("Searching bill: " + searchingBill.showInfo());
         }
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuCloseAndSaveBill(Scanner scanner, Terminal terminal) {
-        if (terminal.closeAndSaveBill(parseInputClosingTime(scanner))) {
+    private void menuCloseAndSaveBill(Scanner scanner, TerminalController terminal) {
+        if (terminal.closeAndSaveBill()) {
             System.out.println("Bill was closed!");
         } else {
             System.out.println("Bill wasn't closed!");
         }
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuAddProduct(Scanner scanner, Terminal terminal) {
-        checkIsClosedAllPreviousBills(scanner, terminal);
+    private void menuAddProduct(Scanner scanner, TerminalController terminal) {
+        checkIsClosedAllPreviousBills(terminal);
 
         System.out.println("Enter product name: ");
         String newProductName = scanner.next();
@@ -124,19 +129,20 @@ public class ConsoleView {
         else {
             System.out.println("Product wasn't added.");
         }
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuCreateBill(Scanner scanner, Terminal terminal) {
+    private void menuCreateBill(Scanner scanner, TerminalController terminal) {
         if (!terminal.isSignIn()) {
             System.out.println("Firstly, you should sign in!");
         } else {
 
-            checkIsClosedAllPreviousBills(scanner, terminal);
+            checkIsClosedAllPreviousBills(terminal);
 
             Bill newBill = new Bill(terminal.getSellers()[terminal.getCurrentSellerIndex()]);
 
             // set actual id for new bill
-            newBill.setId(terminal.getActualSizeOfBills() + 1);
+            newBill.setId(terminal.getBillController().getActualSizeOfBills() + 1);
 
             boolean toContinue;
 
@@ -145,10 +151,7 @@ public class ConsoleView {
                 toContinue = fillListOfProducts(scanner, newBill);
             } while (toContinue);
 
-            // TODO check valid input
-            newBill.setTime(parseInputClosingTime(scanner));
-
-            newBill.setId(terminal.getActualSizeOfBills());
+            newBill.setId(terminal.getBillController().getActualSizeOfBills());
 
             newBill.calculateBill();
 
@@ -158,9 +161,10 @@ public class ConsoleView {
                 System.out.println("Bill wasn't created!");
             }
         }
+        scanner.next(); //dk how to stop for a little my console app except this way
     }
 
-    private void menuSignIn(Scanner scanner, Terminal terminal) {
+    private void menuSignIn(Scanner scanner, TerminalController terminal) {
         System.out.println("Enter your login: ");
         String login = scanner.next();
 
@@ -174,24 +178,11 @@ public class ConsoleView {
 
     }
 
-    private void checkIsClosedAllPreviousBills(Scanner scanner, Terminal terminal) {
-        if (terminal.getActualSizeOfBills() > 1) {
+    private void checkIsClosedAllPreviousBills(TerminalController terminal) {
+        if (terminal.getBillController().getActualSizeOfBills() > 1) {
 
-            terminal.closeAllPreviousBills(parseInputClosingTime(scanner));
+            terminal.getBillController().closeAllPreviousBills();
         }
-    }
-
-    private Time parseInputClosingTime(Scanner scanner) {
-        System.out.println("Firstly, to continue you should close all previous bills!");
-
-        System.out.println("Set close time. Like this --> 12:12:12");
-
-        String parsingTime = scanner.next();
-
-        String[] parsedTime = parsingTime.split(":");
-
-        return new Time(Integer.decode(parsedTime[0]),
-                Integer.decode(parsedTime[1]), Integer.decode(parsedTime[2]));
     }
 
     private boolean fillListOfProducts(Scanner scanner, Bill newBill) {
@@ -211,7 +202,6 @@ public class ConsoleView {
 
         System.out.println("Want to add another one product? Type \"y\" if you want and anything else - if not.");
         return ("y".equals(scanner.next()));
-
     }
 
 }
