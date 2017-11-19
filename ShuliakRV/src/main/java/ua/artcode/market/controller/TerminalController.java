@@ -241,7 +241,60 @@ public class TerminalController implements ITerminal {
     @Override
     public Bill[] filter(Salesman[] sales, Product[] products, Date startTime,
                          Date endTime, Comparator<Bill> comparator) {
-        return new Bill[0];
+
+        Bill[] resBill = new Bill[appDB.getBills().length];
+
+        int index = 0;
+
+        for (int i = 0; i < appDB.getCountBill(); i++) {
+
+            boolean addBill = false;
+
+            if (sales != null) {
+
+                for (int j = 0; j < sales.length; j++) {
+                    if (appDB.getBills()[i].getSalesMan().equals(sales[j])) {
+                        addBill = true;
+                        break;
+                    }
+                }
+            }
+
+            if (addBill && products != null) {
+
+                if (appDB.getBills()[i].hasProducts(products)) {
+                    addBill = true;
+                } else {
+                    addBill = false;
+                }
+            }
+
+            if (addBill && (startTime != null || endTime != null)) {
+
+                if (startTime != null) {
+                    if (appDB.getBills()[i].getCloseTime().compareTo(startTime) >= 0) {
+                        addBill = true;
+                    } else {
+                        addBill = false;
+                    }
+                }
+
+                if (endTime != null) {
+                    if (appDB.getBills()[i].getCloseTime().compareTo(endTime) <= 0) {
+                        addBill = true;
+                    } else {
+                        addBill = false;
+                    }
+                }
+
+            }
+
+            if (addBill) resBill[index++] = appDB.getBills()[i];
+
+
+        }
+
+        return resBill;
     }
 
 }

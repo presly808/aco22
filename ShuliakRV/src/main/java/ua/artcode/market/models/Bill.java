@@ -45,6 +45,9 @@ public class Bill {
         return amountPrice;
     }
 
+    public Date getCloseTime() {
+        return closeTime;
+    }
 
     public boolean addProduct(Product p) {
 
@@ -81,6 +84,28 @@ public class Bill {
         return false;
     }
 
+    public boolean hasProducts(Product[] p) {
+
+
+        for (int i=0; i<p.length; i++) {
+
+            boolean hasProd = false;
+
+            for (int j=0; j<products.length; j++) {
+                if (products[j].equals(p[i])) {
+                    hasProd = true;
+                    break;
+                }
+            }
+
+            if (!hasProd) return false;
+        }
+
+        return true;
+
+    }
+
+
     @Override
     public String toString() {
 
@@ -89,7 +114,7 @@ public class Bill {
         if (!isOpen) {
 
             for (int i = 0; i < numProd; i++) {
-                str += products[i].printFullInfo();
+                str += products[i].toString();
             }
 
             str += String.format("Saler: %s; Time: %s; Sum: %.2f .",
@@ -99,6 +124,19 @@ public class Bill {
 
         return str;
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bill bill = (Bill) o;
+
+        return id == bill.id;
+    }
+
 }
+
 
 
