@@ -3,12 +3,14 @@ package ua.artcode.market.controller;
 import ua.artcode.market.interf.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
+import ua.artcode.market.utils.TerminalUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Terminal implements ITerminal {
+public class TerminalController implements ITerminal {
 
     private Bill[] bills = new Bill[MAX_COUNT_OF_BILLS];
     private int countOfBills;
@@ -111,50 +113,35 @@ public class Terminal implements ITerminal {
                     return salesmans[i];
                 }
             }
-
         }
 
         return null;
     }
 
     @Override
-    public void doSomeStatisticStuff() {
+    public Statistics makeStatistics() {
         if (countOfBills == 0) {
             System.out.println("count of bills = 0");
+            return null;
         } else {
 
-            double maxAmount = bills[0].getAmountPrice();
-            int billIdWithMaxAmount = 0;
-
-            double minAmount = bills[0].getAmountPrice();
-            int billIdWithMinAmount = 0;
-
-            double averageAmountInOneChek = bills[0].getAmountPrice();
+            //search average amount and sum of all sales
             double sumOfAllSalles = bills[0].getAmountPrice();
 
             for (int i = 1; i < countOfBills; i++) {
-                if (bills[i].getAmountPrice() > maxAmount) {
-                    maxAmount = bills[i].getAmountPrice();
-                    billIdWithMaxAmount = i;
-                }
-
-                if (bills[i].getAmountPrice() < minAmount) {
-                    minAmount = bills[i].getAmountPrice();
-                    billIdWithMinAmount = i;
-                }
-
-                averageAmountInOneChek += bills[i].getAmountPrice();
                 sumOfAllSalles += bills[i].getAmountPrice();
             }
 
-            averageAmountInOneChek = averageAmountInOneChek / countOfBills;
+            double averageAmountInOneChek = sumOfAllSalles / countOfBills;
 
-            System.out.printf("Max amount: %.2f, saleman: %s \n" +
-                            "Min amount: %.2f, saleman: %s \n" +
-                            "Average amount in one chek: %.2f \n" +
-                            "Sum of all salles: %.2f",
-                    maxAmount, salesmans[billIdWithMaxAmount].getFullName(),
-                    minAmount, salesmans[billIdWithMinAmount].getFullName(),
+            // search bil with max and min amount
+            Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(bills);
+            Bill billWithMinAmount = TerminalUtils.billWithMinAmount(bills);
+
+            return new Statistics(billWithMaxAmount.getAmountPrice(),
+                    billWithMaxAmount.getSalesman(),
+                    billWithMinAmount.getAmountPrice(),
+                    billWithMinAmount.getSalesman(),
                     averageAmountInOneChek,
                     sumOfAllSalles);
         }
@@ -189,14 +176,8 @@ public class Terminal implements ITerminal {
             }
         }
 
-        Bill[] billsRes = Arrays.copyOf(billsFilt, countFiltBills);
-        for (Bill billsRe : billsRes) {
-            billsRe.setProducts(Arrays.copyOf(billsRe.getProducts(),
-                    billsRe.getProductsCount()));
-        }
-
-        Arrays.sort(billsRes, comparator);
-        return billsRes;
+        Arrays.sort(TerminalUtils.splitBillArr(billsFilt, countFiltBills), comparator);
+        return billsFilt;
     }
 
     public Bill[] getBills() {
