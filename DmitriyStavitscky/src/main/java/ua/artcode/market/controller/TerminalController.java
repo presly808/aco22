@@ -6,11 +6,22 @@ import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
 import ua.artcode.market.utils.TerminalUtils;
+import ua.artcode.market.appdb.AppDB;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class TerminalController implements ITerminal {
+
+    public TerminalController(int countOfBills, int countOfSalesman,
+                              Salesman loggedSalesman, boolean logged,
+                              AppDB newAppDB) {
+        this.countOfBills = countOfBills;
+        this.countOfSalesman = countOfSalesman;
+        this.loggedSalesman = loggedSalesman;
+        this.logged = logged;
+        AppDB appDB = newAppDB;
+    }
 
     private Bill[] bills = new Bill[MAX_COUNT_OF_BILLS];
     private int countOfBills;
@@ -29,7 +40,8 @@ public class TerminalController implements ITerminal {
         } else if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
             System.out.println("wrong data");
         } else {
-            salesmans[countOfSalesman++] = new Salesman(fullName, login, pass);
+
+            /*salesmans[countOfSalesman++] = new Salesman(fullName, login, pass);*/
         }
     }
 
