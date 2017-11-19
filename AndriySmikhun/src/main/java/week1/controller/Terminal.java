@@ -9,16 +9,14 @@ import java.util.Comparator;
 
 public class Terminal implements ITerminal {
 
-    private Bill[] bills = new Bill[20];
-    private Salesman[] sales = new Salesman[10];
-
-    public Terminal(Bill[] bills, Salesman[] sales) {
-        this.bills = bills;
-        this.sales = sales;
-    }
+     Bill[] bills = new Bill[10];
+     Salesman[] sales = new Salesman[10];
 
     public Terminal() {
+        this.bills = new Bill[20];
+        this.sales = new Salesman[10];
     }
+
 
     @Override
     public boolean login(String login, String password) {
@@ -36,9 +34,10 @@ public class Terminal implements ITerminal {
     @Override
     public Bill createBill(int id, Salesman salesman) {
         if (salesman.isStatus()) {
-            Bill bill = new Bill();
+            Bill bill = new Bill(id,salesman);
             bill.setId(id);
             bill.setSalesman(salesman);
+
             return bill;
         }
         return null;
@@ -82,12 +81,13 @@ public class Terminal implements ITerminal {
     public Salesman getTopNofSalesMan() {
         int id = 0;
         int[] count = new int[sales.length];
+
         for (int i = 0; i < sales.length; i++) {
             if (sales[i] == null) break;
             count[i] = 0;
-            for (int y = 0; y < bills.length; i++) {
-                if (bills[y].getSalesman().equals(sales[i])) {
-                    count[i]++;
+            for (int j = 0; j < bills.length; j++) {
+                if (bills[0].getSalesman().equals(sales[5])) {
+                    count[i] = count[i] + 1;
                 }
             }
         }
@@ -154,7 +154,7 @@ public class Terminal implements ITerminal {
 
         for (int i = 0; i < bills.length; i++) {
             if ( bills[i] == null)break;
-            for (int y = 0; y < salesman.length; i++){
+            for (int y = 0; y < salesman.length; y++){
                 if (bills[i].getSalesman().equals(salesman[y])){
                     if (((startTime.compareTo(bills[i].getDataTime())) >= 0 &&
                             (startTime.compareTo(bills[i].getDataTime())) <= 0 )){

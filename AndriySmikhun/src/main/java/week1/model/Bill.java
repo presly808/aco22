@@ -3,17 +3,17 @@ package week1.model;
 
 import java.util.Comparator;
 
-public class Bill implements Comparable{
+public class Bill implements Comparable {
 
-    private int id;
-    private Product[] products;
-    private Salesman salesman;
-    private double amountPrice;
-    private MyDataTime dataTime = new MyDataTime();
+    int id;
+    Product[] products = new Product[10];
+    Salesman salesman;
+    double amountPrice;
+    MyDataTime dataTime = new MyDataTime();
 
     public Bill(int id, Product[] products, Salesman salesman, double amountPrice, MyDataTime dataTime) {
         this.id = id;
-        this.products = new Product[20];
+        this.products = products;
         this.salesman = salesman;
         this.amountPrice = 0.0;
         this.dataTime = null;
@@ -22,7 +22,7 @@ public class Bill implements Comparable{
     public Bill() {
     }
 
-    public Bill(Salesman salesman) {
+    public Bill(int i, Salesman salesman) {
         this.salesman = salesman;
     }
 
@@ -63,12 +63,19 @@ public class Bill implements Comparable{
         return dataTime;
     }
 
-    public void addProduct(Product[] product){
-
-
+    public boolean addProduct(Product product) {
+        for (int p = 0; p < products.length; p++) {
+            if (products[p] == null) {
+                products[p] = product;
+                return true;
+            }
+        }
+        return false;
     }
-    public boolean setCloseBill(){
-        if (dataTime == null){
+
+    public boolean setCloseBill() {
+        if (dataTime == null) {
+
             dataTime.setDay(1);
             dataTime.setMonth(12);
             dataTime.setHour(15);
@@ -80,32 +87,37 @@ public class Bill implements Comparable{
 
         return false;
     }
-    public double calculateAmountPrice(Product[] product ){
+
+    // you should not pass prodcuts as arr
+    public double calculateAmountPrice(Product[] product) {
         double amountPrice = 0.0d;
-        for (int i = 0; i < products.length; i++){
+        for (int i = 0; i < products.length; i++) {
 
             amountPrice = products[i].getPrice();
         }
         return amountPrice;
     }
-    public void printBill(){
+
+    // ret string or use toStr
+    public void printBill() {
         System.out.println("Bill's number" + id);
-        for (int i = 0; i < products.length; i++){
+        for (int i = 0; i < products.length; i++) {
             if (products[i] == null) break;
             System.out.print("Name " + products[i].getName() + " --------- ");
             System.out.println("Price " + products[i].getPrice());
         }
         System.out.println("Amount price " + calculateAmountPrice(products));
         System.out.println("Time: " + dataTime.toString());
+
     }
 
     @Override
     public int compareTo(Object o) {
-        return getId() - ((Bill)o).getId();
+        return getId() - ((Bill) o).getId();
 
     }
 
-    public static class SortByDateComparator implements Comparator<Bill>{
+    public static class SortByDateComparator implements Comparator<Bill> {
         @Override
         public int compare(Bill o1, Bill o2) {
             return 0;

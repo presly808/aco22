@@ -60,7 +60,6 @@ public class Salesman {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Salesman)) return false;
-
         Salesman o = (Salesman) obj;
         if (!(this.login.equals(o.login))) return false;
         if (!(this.fullname.equals(o.fullname)))return false;
