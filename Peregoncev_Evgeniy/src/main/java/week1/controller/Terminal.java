@@ -73,7 +73,7 @@ public class Terminal implements ITerminal{
             return false;
         }
         if (sales == null) {
-            System.out.println("dd");
+            System.out.println("wrong salesman database");
             return false;
         }
 
@@ -84,6 +84,11 @@ public class Terminal implements ITerminal{
                 setCurrentSallerIndex(i);
             }
         }
+           if (currentSallerIndex == -1){
+            System.out.println("wrong log/pass");
+           }
+
+
         return false;
     }
 
