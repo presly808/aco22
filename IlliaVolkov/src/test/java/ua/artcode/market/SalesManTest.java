@@ -2,7 +2,7 @@ package ua.artcode.market;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.artcode.market.Model.SalesMan;
+import ua.artcode.market.model.SalesMan;
 
 public class SalesManTest {
 

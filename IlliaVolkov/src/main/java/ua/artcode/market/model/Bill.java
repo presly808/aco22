@@ -1,6 +1,5 @@
-package ua.artcode.market.Model;
+package ua.artcode.market.model;
 
-import javax.swing.*;
 import java.util.Date;
 
 public class Bill {

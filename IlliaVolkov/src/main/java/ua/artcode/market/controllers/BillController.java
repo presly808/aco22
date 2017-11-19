@@ -1,16 +1,15 @@
-package ua.artcode.market.Controller;
+package ua.artcode.market.controllers;
 
-import ua.artcode.market.Interface.IBill;
-import ua.artcode.market.Model.Bill;
-import ua.artcode.market.Model.Product;
-import ua.artcode.market.Model.SalesMan;
+import ua.artcode.market.interfaces.IBill;
+import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Product;
+import ua.artcode.market.view.InterfaceServices;
 
-import javax.swing.*;
 import java.util.Date;
 
 public class BillController implements IBill{
 
-    public void addProduct(Bill currentBill, int productCode, int quantity){
+    public static void addProduct(Bill currentBill, int productCode, int quantity){
 
         boolean productProcessed = false;
 
@@ -35,7 +34,7 @@ public class BillController implements IBill{
         }
     }
 
-    public void changeProduct(Bill currentBill, int productCode, int quantity){
+    public static void changeProduct(Bill currentBill, int productCode, int quantity){
 
         boolean productProcessed = false;
 
@@ -64,11 +63,10 @@ public class BillController implements IBill{
         }
     }
 
-    public static void printBill(Bill currentBill) {
+    @Override
+    public void choseProduct(Bill currentBill) {
 
-        System.out.println(getBillInfoForPrint(currentBill));
-
-        System.out.println(GetProductsForPrint(currentBill));
+        InterfaceServices.choseProduct(currentBill);
     }
 
     public static String getBillInfoForPrint(Bill currentBill){
@@ -102,7 +100,7 @@ public class BillController implements IBill{
         return message;
     }
 
-    public void calculateAmountPrice(Bill currentBill){
+    public static void calculateAmountPrice(Bill currentBill){
 
         currentBill.setAmountPrice(0);
 
@@ -119,84 +117,18 @@ public class BillController implements IBill{
     @Override
     public void questionForClosingBill(Bill currentBill) {
 
-        String message = "Close check?";
-        String title = "Waiting for confirmation to continue";
-        int key = JOptionPane.showConfirmDialog( null, message,title, JOptionPane.YES_NO_OPTION);
-
-        if (key == JOptionPane.YES_OPTION){
-
-            closeBill(currentBill);
-        }
+        InterfaceServices.questionForClosingBill(currentBill);
     }
 
-    public void closeBill(Bill currentBill){
+    public static void closeBill(Bill currentBill){
 
         currentBill.closed = true;
         currentBill.closeTime = new Date();
     }
 
     @Override
-    public void choseProduct(Bill currentBill) {
-
-        int key = JOptionPane.YES_OPTION;
-        String message;
-        Product.printFullInfo(currentBill.getProductList());
-
-        while (key == JOptionPane.YES_OPTION) {
-
-            String stringProductCode = JOptionPane.showInputDialog("Enter the product code", 0);
-            int productCode = Integer.parseInt((stringProductCode == null ? ""+0: stringProductCode));
-
-            if (productCode != 0) {
-
-                Product currentProduct = Product.findByCode(currentBill.getProductList(), productCode);
-                message = "Enter the quantity of the product " + currentProduct.name;
-                String stringProductQuontity = JOptionPane.showInputDialog(message, 0);
-                int productQuontity = Integer.parseInt(stringProductQuontity);
-
-                if (productQuontity != 0 && productCode != 0) {
-
-                    addProduct(currentBill, productCode, productQuontity);
-                }
-            }
-
-            message = "Continue to select products?";
-            String title = "Waiting to continue work";
-            key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
-        }
-    }
-
-    @Override
     public void allProductsSelected(Bill currentBill) {
 
-        String message = "Are the products selected correctly?";
-        String title = "Waiting to continue work";
-        int key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
-
-        if (key != JOptionPane.YES_OPTION) {
-
-            while (key == JOptionPane.NO_OPTION) {
-
-                String stringProductCode = JOptionPane.showInputDialog("Enter the product code");
-                int productCode = Integer.parseInt(stringProductCode);
-
-                if (productCode != 0) {
-
-                    message = "Enter the quantity of the product " + Product.findByCode(currentBill.getProductList(), productCode).name;
-                    String stringProductQuontity = JOptionPane.showInputDialog(message);
-                    int productQuontity = Integer.parseInt(stringProductQuontity);
-
-                    if (productQuontity == 0 || productCode == 0) {
-
-                        changeProduct(currentBill, productCode, productQuontity);
-                    }
-
-                    printBill(currentBill);
-                }
-                message = "All positions are corrected?";
-                title = "Waiting to continue work";
-                key = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
-            }
-        }
+        InterfaceServices.allProductsSelected(currentBill);
     }
 }

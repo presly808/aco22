@@ -1,4 +1,4 @@
-package ua.artcode.market.Model;
+package ua.artcode.market.model;
 
 public class SalesMan {
 

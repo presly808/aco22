@@ -1,14 +1,15 @@
-package ua.artcode.market.Model;
+package ua.artcode.market.model;
 
-import ua.artcode.market.Controller.BillController;
-import ua.artcode.market.Interface.ITerminal;
+import ua.artcode.market.controllers.BillController;
+import ua.artcode.market.interfaces.ITerminal;
+import ua.artcode.market.view.InterfaceServices;
 
 import javax.swing.*;
 
 public class Terminal implements ITerminal{
 
     private Bill[] bills;
-    private BillController billController;
+    public final BillController billController;
     //private SalesMan[] sales;
 
     public Terminal(BillController billController){
@@ -25,7 +26,8 @@ public class Terminal implements ITerminal{
 
     @Override
     public int questionCreateBill(){
-        return JOptionPane.showConfirmDialog( null, "Create a new check?","Waiting to continue work", JOptionPane.YES_NO_OPTION);
+        return JOptionPane.showConfirmDialog( null, "Create a new check?",
+                "Waiting to continue work", JOptionPane.YES_NO_OPTION);
     }
 
     @Override
@@ -46,43 +48,7 @@ public class Terminal implements ITerminal{
     }
 
     public static void runTerminal(){
-
-        BillController billController = new BillController();
-
-        Terminal myTerminal = new Terminal(billController);
-
-        JOptionPane.showMessageDialog(null, "Good afternoon!\n" + "Shop starts work");
-
-        String stringCountProducts = JOptionPane.showInputDialog("Enter the number of products in the store", 0);
-        int countProducts = Integer.parseInt((stringCountProducts == null ? "0" : stringCountProducts));
-
-        Product[] productsList = Product.initProductsList(countProducts);
-
-        String nameSaler = JOptionPane.showInputDialog("Enter SalesMan Name");
-
-        int key = myTerminal.questionCreateBill();
-
-        while (key == JOptionPane.YES_OPTION) {
-
-            Bill currentBill = myTerminal.createBill(nameSaler, productsList);
-
-            while (!currentBill.closed) {
-
-                billController.choseProduct(currentBill);
-
-                billController.printBill(currentBill);
-
-                billController.allProductsSelected(currentBill);
-
-                billController.questionForClosingBill(currentBill);
-
-                myTerminal.saveBill(currentBill);
-
-            }
-
-            key = myTerminal.questionCreateBill();
-        }
-        Terminal.showInfo(myTerminal);
+        InterfaceServices.runTerminal();
     }
 
     public void saveBill(Bill currentBill) {
@@ -109,7 +75,7 @@ public class Terminal implements ITerminal{
 
             if (myTerminal.bills[i] != null) {
 
-                myTerminal.billController.printBill(myTerminal.bills[i]);
+                InterfaceServices.printBill(myTerminal.bills[i]);
             }
         }
     }

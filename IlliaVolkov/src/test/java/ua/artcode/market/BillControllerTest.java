@@ -2,9 +2,9 @@ package ua.artcode.market;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.artcode.market.Controller.BillController;
-import ua.artcode.market.Model.Bill;
-import ua.artcode.market.Model.Product;
+import ua.artcode.market.controllers.BillController;
+import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Product;
 
 public class BillControllerTest {
 

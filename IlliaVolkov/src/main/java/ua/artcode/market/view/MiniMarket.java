@@ -1,7 +1,7 @@
-package ua.artcode.market;
+package ua.artcode.market.view;
 
-import ua.artcode.market.Interface.IMiniMarket;
-import ua.artcode.market.Model.Terminal;
+import ua.artcode.market.interfaces.IMiniMarket;
+import ua.artcode.market.model.Terminal;
 
 public class MiniMarket implements IMiniMarket {
 

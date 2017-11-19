@@ -1,6 +1,6 @@
-package ua.artcode.market.Interface;
+package ua.artcode.market.interfaces;
 
-import ua.artcode.market.Model.Bill;
+import ua.artcode.market.model.Bill;
 
 public interface IBill {
 

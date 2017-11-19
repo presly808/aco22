@@ -1,7 +1,7 @@
-package ua.artcode.market.Interface;
+package ua.artcode.market.interfaces;
 
-import ua.artcode.market.Model.Bill;
-import ua.artcode.market.Model.Product;
+import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Product;
 
 public interface ITerminal {
 
