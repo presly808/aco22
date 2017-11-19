@@ -59,6 +59,6 @@ public class Salesman {
     }
 
     public void setSumOfAllSales(double sumOfAllSales) {
-        this.sumOfAllSales += sumOfAllSales;
+        this.sumOfAllSales = sumOfAllSales;
     }
 }

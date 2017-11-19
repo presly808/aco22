@@ -2,6 +2,7 @@ package ua.artcode.market.interf;
 
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
 
 import java.util.Comparator;
@@ -27,7 +28,7 @@ public interface ITerminal {
 
     Object getTopNofSalesMan();
 
-    void doSomeStatisticStuff();
+    Statistics makeStatistics();
 
     Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator);
 }
