@@ -272,7 +272,8 @@ public class TerminalController implements ITerminal {
             if (addBill && (startTime != null || endTime != null)) {
 
                 if (startTime != null) {
-                    if (appDB.getBills()[i].getCloseTime().compareTo(startTime) >= 0) {
+                    if (appDB.getBills()[i].getCloseTime().
+                            compareTo(startTime) >= 0) {
                         addBill = true;
                     } else {
                         addBill = false;
@@ -280,7 +281,8 @@ public class TerminalController implements ITerminal {
                 }
 
                 if (endTime != null) {
-                    if (appDB.getBills()[i].getCloseTime().compareTo(endTime) <= 0) {
+                    if (appDB.getBills()[i].getCloseTime().
+                            compareTo(endTime) <= 0) {
                         addBill = true;
                     } else {
                         addBill = false;
