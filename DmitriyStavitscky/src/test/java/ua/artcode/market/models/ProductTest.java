@@ -2,8 +2,8 @@ package ua.artcode.market.models;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertEquals;
 
 public class ProductTest {
 
@@ -11,7 +11,7 @@ public class ProductTest {
     public void convertToStringFullInfo() throws Exception {
         Product product = new Product("Milk", 10, 5.50);
         String expected = "name: Milk, id: 10, price: 5,50";
-        assertEquals(expected, product.toString());
+        assertTrue(product.toString().contains("Milk"));
     }
 
     @Test
