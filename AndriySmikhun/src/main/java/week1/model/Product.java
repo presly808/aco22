@@ -50,6 +50,5 @@ public class Product implements Comparable {
             return -1;
         } else return 1;
 
-
     }
 }

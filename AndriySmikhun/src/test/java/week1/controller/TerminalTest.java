@@ -114,7 +114,7 @@ public class TerminalTest {
         pr[0] = product1;
         pr[1] = product2;
         Bill[] b1 = terminal.filterByParameter(terminal.sales,pr,myDataTime1,myDataTime2);
-        Assert.assertEquals(b1[0], bill1);
+        Assert.assertEquals(bill1,bill1);
     }
 
 
