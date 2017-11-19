@@ -148,7 +148,7 @@ public class Terminal implements ITerminal {
     }
 
     public Bill[] filterByParameter(Salesman[] salesman, Product[] product, MyDataTime startTime, MyDataTime endTime) {
-        Bill[] billTime = filterByDate(bills,startTime,endTime);
+        Bill[] billTime = filterByDate(startTime,endTime);
         Bill[] bySales = filterBySales(billTime,salesman);
         Bill[] byProduct = filterByProduct(bySales,product);
         return byProduct;
@@ -156,13 +156,14 @@ public class Terminal implements ITerminal {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////FilterByDate
-    public Bill[] filterByDate(Bill[] whithBills, MyDataTime startTime, MyDataTime endTime) {
-        Bill[] forRerurn = new Bill[whithBills.length];
+    public Bill[] filterByDate(MyDataTime startTime, MyDataTime endTime) {
+        Bill[] forRerurn = new Bill[bills.length];
         int count = 0;
-        for (int i = 0; i < whithBills.length; i++) {
-            if (((whithBills[i].getDataTime().compareTo(startTime)) >= 0 &&
-                    (whithBills[i].getDataTime().compareTo((endTime))) <= 0)) {
-                forRerurn[count] = whithBills[i];
+        for (int i = 0; i < bills.length; i++) {
+            if (bills[i] == null)break;
+            if (((bills[i].getDataTime().compareTo(startTime)) >= 0 &&
+                    (bills[i].getDataTime().compareTo((endTime))) <= 0)) {
+                forRerurn[count] = bills[i];
                 count++;
             }
 

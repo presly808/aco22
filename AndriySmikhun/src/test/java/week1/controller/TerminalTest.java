@@ -51,6 +51,10 @@ public class TerminalTest {
         bill2.addProduct(product2);
         bill3.addProduct(product1);
 
+        bill1.setCloseBill();
+        bill2.setCloseBill();
+        bill3.setCloseBill();
+
     }
 
     @After
@@ -108,16 +112,22 @@ public class TerminalTest {
         System.out.println(everage);
     }
 
+//    @Test
+ //   public void filterByParameter(){
+   //     Product[] pr = new Product[2];
+    //    pr[0] = product1;
+      //  pr[1] = product2;
+      //  Bill[] b1 = terminal.filterByParameter(terminal.sales,pr,myDataTime1,myDataTime2);
+      //  Assert.assertEquals(bill1,b1);
+   // }
+
     @Test
-    public void filterByParameter(){
-        Product[] pr = new Product[2];
-        pr[0] = product1;
-        pr[1] = product2;
-        Bill[] b1 = terminal.filterByParameter(terminal.sales,pr,myDataTime1,myDataTime2);
-        Assert.assertEquals(bill1,bill1);
+    public void filterByDate(){
+        Product[] testprod = new Product[2];
+        testprod[0] = product2;
+
+        Bill[] btest = terminal.filterByDate(myDataTime1,myDataTime2);
+        Assert.assertEquals(btest[0].getDataTime(),myDataTime1);
     }
-
-
-
 
 }

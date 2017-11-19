@@ -76,11 +76,11 @@ public class Bill implements Comparable {
     public boolean setCloseBill() {
         if (dataTime == null) {
 
-            dataTime.setDay(1);
-            dataTime.setMonth(12);
-            dataTime.setHour(15);
-            dataTime.setMinute(25);
-            dataTime.setSecond(35);
+            dataTime.setDay(25);
+            dataTime.setMonth(7);
+            dataTime.setHour(10);
+            dataTime.setMinute(15);
+            dataTime.setSecond(12);
             return true;
         }
         System.out.printf("This bill was closed");
