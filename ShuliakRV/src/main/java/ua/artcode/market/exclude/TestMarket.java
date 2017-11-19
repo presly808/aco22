@@ -34,7 +34,6 @@ public class TestMarket {
                 System.out.println(t.findBillById(i + 1).getId());
             }
 
-            Statistic st = new Statistic();
             System.out.println(t.doSomeStatisticStuff());
 
         } else System.out.println("Incorrect login or password!!!");

@@ -46,7 +46,6 @@ public class BillTest {
     public void closeBill() throws Exception {
         AppDB appDB = new AppDB();
         Bill b = new Bill(appDB.getSales()[0]);
-        ;
         b.addProduct(appDB.getProducts()[0]);
         b.addProduct(appDB.getProducts()[1]);
         assertTrue(b.closeBill());

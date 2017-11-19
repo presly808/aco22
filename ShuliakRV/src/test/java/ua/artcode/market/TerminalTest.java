@@ -19,7 +19,6 @@ public class TerminalTest {
 
     @Test
     public void doSomeStatisticStuff() throws Exception {
-        Statistic s = null;
         AppDB appDB = new AppDB();
         TerminalController t = new TerminalController(appDB);
         t.login(appDB.getSales()[0].getLogin(),
