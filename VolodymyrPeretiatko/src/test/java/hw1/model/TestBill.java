@@ -31,10 +31,8 @@ public class TestBill {
     public void testAddProduct(){
         Assert.assertTrue(bill.addProduct(p1));
         Assert.assertEquals(500.0, bill.getAmountPrice(), 0.00001);
-
         ArrayList<Product> products = bill.getProducts();
         Assert.assertTrue(products.contains(p1));
-
     }
 
     @Test
