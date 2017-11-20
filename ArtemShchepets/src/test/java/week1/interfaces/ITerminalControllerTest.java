@@ -8,21 +8,89 @@ import week1.controller.ITerminalControllerImpl;
 import week1.database.IAppDBImpl;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.Seller;
 
 import static org.junit.Assert.*;
 
 public class ITerminalControllerTest {
 
     private ITerminalController terminalController;
+    private IAppDB iAppDB;
 
     @Before
     public void setUp() throws Exception {
-        terminalController = new ITerminalControllerImpl(new IAppDBImpl());
+        iAppDB = new IAppDBImpl();
+        terminalController = new ITerminalControllerImpl(iAppDB);
     }
 
     @After
     public void tearDown() throws Exception {
         terminalController = null;
+    }
+
+
+    @Test
+    public void login() throws Exception {
+
+        iAppDB.getAllSellers().add(
+                new Seller("worker", "password", "Nadya Horoshun"));
+
+        assertTrue(terminalController.login("worker", "password"));
+        assertEquals(0, iAppDB.getCurrentSellerId());
+    }
+
+    @Test
+    public void findSellerByLoginOrFullName() throws Exception {
+
+        Seller addSeller1 = new Seller(
+                "worker", "password", "Nadya Horoshun");
+        Seller addSeller2 = new Seller(
+                "worker123", "password11", "Vasya Noob");
+        Seller addSeller3 = new Seller(
+                "worker22", "password432", "Annita Volosova");
+
+        iAppDB.getAllSellers().add(addSeller1);
+        iAppDB.getAllSellers().add(addSeller2);
+        iAppDB.getAllSellers().add(addSeller3);
+
+        Seller seller = terminalController.findSellerByLoginOrFullName("worker123");
+        Seller seller1 = terminalController.findSellerByLoginOrFullName("Annita Volosova");
+
+        assertEquals(addSeller2,seller);
+        assertEquals(addSeller3,seller1);
+    }
+
+    @Test
+    public void getTopNOfSalesman() throws Exception {
+
+        Seller addSeller1 = new Seller(
+                "worker", "password", "Nadya Horoshun");
+        Seller addSeller2 = new Seller(
+                "worker123", "password11", "Vasya Noob");
+        Seller addSeller3 = new Seller(
+                "worker22", "password432", "Annita Volosova");
+        Seller addSeller4 = new Seller(
+                "worker01", "password1111", "Vova Split");
+
+        addSeller1.setSoldProducts(12);
+        addSeller2.setSoldProducts(2);
+        addSeller3.setSoldProducts(344);
+        addSeller4.setSoldProducts(15);
+
+        iAppDB.getAllSellers().add(addSeller1);
+        iAppDB.getAllSellers().add(addSeller2);
+        iAppDB.getAllSellers().add(addSeller3);
+        iAppDB.getAllSellers().add(addSeller4);
+
+        Seller[] expectedArray = new Seller[1];
+        expectedArray[0] = addSeller3;
+
+        assertArrayEquals(expectedArray, terminalController.getTopNOfSalesman(1));
+    }
+
+    @Test
+    public void doSomeStatisticStuff() throws Exception {
+
     }
 
     @Test
