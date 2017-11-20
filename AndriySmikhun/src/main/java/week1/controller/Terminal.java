@@ -9,16 +9,14 @@ import java.util.Comparator;
 
 public class Terminal implements ITerminal {
 
-    Bill[] bills = new Bill[20];
+    Bill[] bills = new Bill[10];
     Salesman[] sales = new Salesman[10];
 
-    public Terminal(Bill[] bills, Salesman[] sales) {
-        this.bills = bills;
-        this.sales = sales;
+    public Terminal() {
+        this.bills = new Bill[20];
+        this.sales = new Salesman[10];
     }
 
-    public Terminal() {
-    }
 
     @Override
     public boolean login(String login, String password) {
@@ -34,11 +32,12 @@ public class Terminal implements ITerminal {
     }
 
     @Override
-    public Bill createBill(int id,Salesman salesman) {
+    public Bill createBill(int id, Salesman salesman) {
         if (salesman.isStatus()) {
-            Bill bill = new Bill();
+            Bill bill = new Bill(id, salesman);
             bill.setId(id);
             bill.setSalesman(salesman);
+
             return bill;
         }
         return null;
@@ -82,12 +81,13 @@ public class Terminal implements ITerminal {
     public Salesman getTopNofSalesMan() {
         int id = 0;
         int[] count = new int[sales.length];
+
         for (int i = 0; i < sales.length; i++) {
             if (sales[i] == null) break;
             count[i] = 0;
-            for (int y = 0; y < bills.length; i++) {
-                if (bills[y].getSalesman().equals(sales[i])) {
-                    count[i]++;
+            for (int j = 0; j < bills.length; j++) {
+                if (bills[0].getSalesman().equals(sales[5])) {
+                    count[i] = count[i] + 1;
                 }
             }
         }
@@ -146,4 +146,66 @@ public class Terminal implements ITerminal {
         average = average / count;
         return average;
     }
+
+    public Bill[] filterByParameter(Salesman[] salesman, Product[] product, MyDataTime startTime, MyDataTime endTime) {
+        Bill[] billTime = filterByDate(startTime,endTime);
+        Bill[] bySales = filterBySales(billTime,salesman);
+        Bill[] byProduct = filterByProduct(bySales,product);
+        return byProduct;
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////FilterByDate
+    public Bill[] filterByDate(MyDataTime startTime, MyDataTime endTime) {
+        Bill[] forRerurn = new Bill[bills.length];
+        int count = 0;
+        for (int i = 0; i < bills.length; i++) {
+            if (bills[i] == null)break;
+            if (((bills[i].getDataTime().compareTo(startTime)) >= 0 &&
+                    (bills[i].getDataTime().compareTo((endTime))) <= 0)) {
+                forRerurn[count] = bills[i];
+                count++;
+            }
+
+        }
+        return forRerurn;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////FilterBySaleman
+    public Bill[] filterBySales(Bill[] withBill, Salesman[] withSales) {
+        Bill[] forRerurn = new Bill[withBill.length];
+        int count = 0;
+        for (int i = 0; i < withSales.length; i++) {
+            for (int y = 0; y < withBill.length; y++) {
+                if (withSales[i].equals(withBill[y].getSalesman())) {
+                    forRerurn[count] = withBill[y];
+                }
+            }
+        }
+        return forRerurn;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////FilterByProduct
+    public Bill[] filterByProduct(Bill[] withBill, Product[] withProduct) {
+        Bill[] forRerurn = new Bill[withBill.length];
+        int count = 0;
+        for (int i = 0; i < withProduct.length; i++) {
+            for (int y = 0; y < withBill.length; y++) {
+                if (searchInBillProduct(withBill[y],withProduct[i])) {
+                    forRerurn[count] = withBill[y];
+                    count++;
+                }
+            }
+        }
+        return forRerurn;
+    }
+/////////////////////////////~~~/////////////////////////
+    public boolean searchInBillProduct(Bill bill, Product product) {
+        for (int i = 0; i < bill.getProducts().length; i++) {
+            if (bill.getProducts()[i].equals(product)) return true;
+        }
+        return false;
+    }
+
+
 }

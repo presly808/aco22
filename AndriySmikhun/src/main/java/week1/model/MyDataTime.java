@@ -2,11 +2,11 @@ package week1.model;
 
 public class MyDataTime implements Comparable{
 
-    int second;
-    int minute;
-    int hour;
-    int day;
-    int month;
+    private int second;
+    private int minute;
+    private int hour;
+    private int day;
+    private int month;
 
     public MyDataTime(int second, int minute, int hour, int day, int month) {
         this.second = second;
@@ -49,10 +49,6 @@ public class MyDataTime implements Comparable{
     public int compareTo(Object o) {
         String str = ((MyDataTime) o).toString();
         int count = this.toString().compareTo(str);
-        if (count != 0){
-            count = count / Math.abs(count);
-            return count;
-        }
-        return 0;
+        return count;
     }
 }
