@@ -36,10 +36,7 @@ public class BillTest {
 
 
     }
-    @Test
-    public void getProducts() {
-        Assert.assertEquals(bill1.getProducts(),bill1.getProducts());
-    }
+
 
     @Test
     public void getSalesman() {

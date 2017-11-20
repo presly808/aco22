@@ -69,10 +69,10 @@ public class Salesman {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = fullname.hashCode();
-        result = prime * result + login.hashCode();
-        result = prime * result + password.hashCode();
-        return super.hashCode();
+        result = 31 * result + login.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + (status ? 1 : 0);
+        return result;
     }
 }

@@ -109,15 +109,4 @@ public class Bill implements Comparable {
 
     }
 
-    public static class SortByDateComparator implements Comparator<Bill> {
-        @Override
-        public int compare(Bill o1, Bill o2) {
-            return 0;
-        }
-
-    }
-
-
-
-
 }
