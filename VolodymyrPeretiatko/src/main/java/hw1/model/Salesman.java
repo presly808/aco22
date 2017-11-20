@@ -13,7 +13,6 @@ public class Salesman {
     }
 
     public String getFullName() {
-
         return fullName;
     }
 
