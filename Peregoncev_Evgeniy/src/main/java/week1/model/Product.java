@@ -7,24 +7,24 @@ public class Product {
 
     private String name;
     private double price;
-    private String barcode;
+    private int id;
 
     public Product() {
 
     }
 
-    public Product(String name, double price, String barcode) {
+    public Product(String name, double price, int id) {
         this.name = name;
         this.price = price;
-        this.barcode = barcode;
+        this.id = id;
     }
 
-    public String getBarcode() {
-        return barcode;
+    public int getId() {
+        return id;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getPrice() {
@@ -47,9 +47,9 @@ public class Product {
     //Methods
 
 
-    public String printFullInfo() {
-
-        return String.format("%-15s %-8.2f %s", getName(), getPrice(), getBarcode());
+    @Override
+    public String toString() {
+        return String.format("%-15s %-8.2f %s", getName(), getPrice(), getId());
     }
 
 }

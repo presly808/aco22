@@ -8,6 +8,7 @@ public class Salesman {
     private String fullname;
     private String login;
     private String pass;
+    private int id;
 
     public Salesman() {
 
@@ -43,5 +44,17 @@ public class Salesman {
         this.pass = pass;
     }
 
+    @Override
+    public String toString() {
+        return "Salesman{" +
+                "fullname='" + fullname + '\'' +
+                ", login='" + login + '\'' +
+                ", pass='" + pass + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
 }
 

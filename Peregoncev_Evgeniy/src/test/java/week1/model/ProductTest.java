@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 import org.junit.Test;
 import week1.model.Product;
@@ -18,12 +18,12 @@ public class ProductTest {
 
         testProduct.setName("carrot");
         testProduct.setPrice(4.75);
-        testProduct.setBarcode("001");
+        testProduct.setId(1);
 
-        String expected = String.format("%-15s %-8.2f %s", testProduct.getName(), testProduct.getPrice(), testProduct.getBarcode());
+        String expected = String.format("%-15s %-8.2f %s", testProduct.getName(), testProduct.getPrice(), testProduct.getId());
 
 
-        assertEquals(expected, testProduct.printFullInfo());
+        assertEquals(expected, testProduct.toString());
     }
 
 }

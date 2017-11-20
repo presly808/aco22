@@ -9,11 +9,11 @@ Class Salesman:
         this.password = password;
     }*/
 
-    // Salesman create a new billController at terminal
+    // Salesman create a new billController at ITerminalControllerImpl
 
 
-/*    public void login (Terminal terminal) {
-        if (terminal != null) {
+/*    public void login (Terminal ITerminalControllerImpl) {
+        if (ITerminalControllerImpl != null) {
             Scanner scanner = new Scanner(System.in);
             String login = "";
             do {
@@ -28,7 +28,7 @@ Class Salesman:
 
             if (this.getLogin().equals(login) &&
             this.getPassword().equals(password)) {
-                terminal.login(this);
+                ITerminalControllerImpl.login(this);
             }
         }
     }

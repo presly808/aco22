@@ -1,4 +1,4 @@
-package week1;
+package week1.model;
 
 import org.junit.Test;
 import week1.model.Time;

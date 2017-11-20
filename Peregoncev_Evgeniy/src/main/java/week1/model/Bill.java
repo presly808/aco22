@@ -1,20 +1,24 @@
 package week1.model;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ENIAC on 05.11.2017.
  */
 public class Bill {
 
-    private Product[] products;
+    private List<Product> productList;
+
     private double AmountPrice;
     private Salesman salesman;
     private Time time;
 
-    private int billId = 0;
+    private int id = 0;
 
     private boolean isclosed = false;
 
-    private static final int SIZE_OF_LIST = 10;
 
     private int productsCounter = 0;
 
@@ -22,12 +26,17 @@ public class Bill {
 
     }
 
-    public Bill(double amountPrice, Salesman salesman, Time time, int billId) {
-        this.products = new Product[SIZE_OF_LIST];
+    public Bill(double amountPrice, Salesman salesman, Time time, int id) {
+
+        this.productList = new ArrayList<>();
         this.AmountPrice = amountPrice;
         this.salesman = salesman;
         this.time = time;
-        this.billId = billId;
+        this.id = id;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
     }
 
     public Time getTime() {
@@ -38,16 +47,12 @@ public class Bill {
         this.time = time;
     }
 
-    public static int getSizeOfList() {
-        return SIZE_OF_LIST;
+    public int getId() {
+        return id;
     }
 
-    public int getBillId() {
-        return billId;
-    }
-
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean getIsclosed() {
@@ -66,14 +71,6 @@ public class Bill {
         this.productsCounter = productsCounter;
     }
 
-    public Product[] getProducts() {
-        return products;
-    }
-
-    public void setProducts(Product[] products) {
-        this.products = products;
-    }
-
     public double getAmountPrice() {
         return AmountPrice;
     }
@@ -90,47 +87,43 @@ public class Bill {
         this.salesman = salesman;
     }
 
+    public boolean isClosed() {
+        return isclosed;
+    }
+
 
 //    Methods
 
+//    public double calculateAmountPrice(Bill bill) {
+//        if ((bill == null) || (productsCounter == 0)) {
+//            System.out.println("bill is null or there no one product to calc");
+//        } else
+//            for (int i = 0; i < productsCounter; i++) {
+//                AmountPrice += products[i].getPrice();
+//            }
+//        return AmountPrice;
+//    }
 
-    public void addProduct(Product product) {
-        if (product == null) {
-            System.out.println("product is null");
-        } else {
-            products[productsCounter] = product;
-            productsCounter++;
-        }
-    }
+//    public String printAllProducts() {
+//        String allproducts = "";
+//        if (productsCounter == 0) {
+//            System.out.println("no product to print");
+//        } else
+//            for (int i = 0; i < productsCounter; i++) {
+//                allproducts += products[i].toString() + "\n";
+//            }
+//        return allproducts;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return String.format("              BiLL  \n" +
+//                        "Title           Price    Barcode\n" +
+//                        "--------------------------------\n" +
+//                        "%s\nAmount Price = " + getAmountPrice() + "\nSeller: %s\n%s",
+//                printAllProducts(), salesman.getFullname(), getTime().getCloseTime());
+//    }
 
-    public double calculateAmountPrice(Bill bill) {
-        if ((bill == null) || (productsCounter == 0)) {
-            System.out.println("bill is null or there no one product to calc");
-        } else
-            for (int i = 0; i < productsCounter; i++) {
-                AmountPrice += products[i].getPrice();
-            }
-        return AmountPrice;
-    }
-
-    public String printAllProducts() {
-        String allproducts = "";
-        if (productsCounter == 0) {
-            System.out.println("no product to print");
-        } else
-            for (int i = 0; i < productsCounter; i++) {
-                allproducts += products[i].printFullInfo() + "\n";
-            }
-        return allproducts;
-    }
-
-    public String printBillInfo() {
-        return String.format("              BiLL  \n" +
-                        "Title           Price    Barcode\n" +
-                        "--------------------------------\n" +
-                        "%s\nAmount Price = " + getAmountPrice() + "\nSeller: %s\n%s",
-                printAllProducts(), salesman.getFullname(), getTime().getCloseTime());
-    }
 
 }
 
