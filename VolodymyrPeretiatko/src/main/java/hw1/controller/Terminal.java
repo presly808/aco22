@@ -1,12 +1,11 @@
 package hw1.controller;
 
-import hw1.model.Bill;
-import hw1.model.Product;
-import hw1.model.Salesman;
-import hw1.utils.ILogger;
-import hw1.utils.LogSout;
+import hw1.model.*;
+import hw1.utils.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -47,12 +46,19 @@ public class Terminal implements ITerminal {
         return null;
     }
 
+    public ArrayList<Salesman> getSalesmen() {
+        return (ArrayList<Salesman>) salesmen.clone();
+    }
+
+    public ArrayList<Product> getProducts() {
+        return (ArrayList<Product>) products.clone();
+    }
+
     public boolean addSalesman(Salesman salesman){
         if (log != null)
             log.info(Terminal.class, "add salesman " + salesman);
 
-        if (salesmen.contains(salesman))
-            return false;
+        if (salesmen.contains(salesman)) return false;
 
         return salesmen.add(salesman);
     }
@@ -74,6 +80,7 @@ public class Terminal implements ITerminal {
         Bill b = new Bill(id, salesman);
         if (log != null)
             log.info(Terminal.class, "New bill was created! " + b);
+
         return b;
     }
 
@@ -88,11 +95,9 @@ public class Terminal implements ITerminal {
         return (ArrayList<Bill>)bills.clone();
     }
 
-    public boolean addProduct(Product p){
-        if (products.contains(p))
-            return false;
+    public boolean addProduct(Product p) {
+        return !products.contains(p) && products.add(p);
 
-        return products.add(p);
     }
 
     public Bill findBillById(int id){
@@ -139,6 +144,37 @@ public class Terminal implements ITerminal {
             }
         }
         return sales;
+    }
+
+    public ArrayList<Bill> filter(ArrayList<Salesman> salesmen, ArrayList<Product> products,
+                                  Date startDate, Date endDate, Comparator<Bill> comparator){
+
+        ArrayList<Bill> result = new ArrayList<>();
+        Date BDate;
+
+        for(Bill b : this.bills){
+
+            BDate = b.getCloseTime();
+            if (startDate.compareTo(BDate) > 0 || endDate.compareTo(BDate) < 0){
+                continue;
+            }
+
+            if (salesmen != null && !salesmen.contains(b.getSalesman())){
+                continue;
+            }
+
+            if (products != null
+                    && !Utils.listContainElementsOther(b.getProducts(), products)){
+                continue;
+            }
+
+            result.add(b);
+
+        }
+
+        if(comparator != null && !result.isEmpty()) {result.sort(comparator); result.trimToSize();}
+
+        return result;
     }
 
 }
