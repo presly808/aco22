@@ -1,5 +1,6 @@
 package logictests;
 
+import controllers.BillController;
 import utils.StringGenerator;
 import utils.TerminalUtils;
 import controllers.TerminalController;
@@ -21,7 +22,7 @@ public class TerminalTests {
 
     @Before
     public void prepareData(){
-        this.terminal = new TerminalController();
+        this.terminal = new TerminalController(new BillController());
     }
 
     @After
@@ -114,7 +115,8 @@ public class TerminalTests {
     }
 
     private TerminalController generateBills() {
-        TerminalController terminalController = new TerminalController();
+        TerminalController terminalController =
+                new TerminalController(new BillController());
         for (int i = 0; i < 100; i++) {
             Bill bill = terminalController.createBill(new Bill());
             bill.setSalesman(

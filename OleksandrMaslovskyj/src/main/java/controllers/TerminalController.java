@@ -4,7 +4,6 @@ import interfaces.ITerminal;
 import models.Bill;
 import models.Product;
 import models.Salesman;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,19 +11,21 @@ public class TerminalController implements ITerminal{
 
     private BillController billController;
 
-    public TerminalController() {
-        this.billController = new BillController();
+    public TerminalController(BillController billController) {
+        this.billController = billController;
     }
 
-    //TODO validation
     public Bill createBill(Bill bill) {
+        if (bill == null) {
+            throw new IllegalArgumentException("Bill can not be null");
+        }
         billController.getBillSet().add(bill);
         return bill;
     }
 
     public Product addProduct(Bill bill, String productName) {
         if (bill == null) {
-            throw new IllegalStateException("BillController not created");
+            throw new IllegalArgumentException("BillController not created");
         }
         return billController.addProductToBill(bill, productName);
     }
@@ -33,11 +34,9 @@ public class TerminalController implements ITerminal{
         billController.closeBill(bill);
     }
 
-    //TODO add validation
-    public Bill findBillById(long id) {
+    public Bill findBillById(long id) throws NoSuchElementException{
         return billController.getBillSet().
-                stream().filter(bill -> bill.getId() == id).
-                collect(Collectors.toSet()).iterator().next();
+                stream().filter(bill -> bill.getId() == id).findFirst().get();
     }
 
     public Salesman findSalesmanByLoginOrFullName(String fullName,
@@ -45,55 +44,34 @@ public class TerminalController implements ITerminal{
         Set<Bill> billSet = billController.getBillSet();
         return billSet.stream().filter((Bill bill) -> {
             Salesman salesman = bill.getSalesman();
-            if (salesman == null) {
-                return false;
-            }
             String fullname = salesman.getFullname();
-            String login1 = salesman.getLogin();
-            if (fullname == null && login1 == null ) {
-                return false;
-            }
-            if (fullname.equals(fullName) ||
-                    login1.equals(login)) {
-                return true;
-            }
-            return false;
+            String salesmanLogin = salesman.getLogin();
+
+            return salesman != null && (!(fullname == null
+                    && salesmanLogin == null) && (fullname.equals(fullName) ||
+                    salesmanLogin.equals(login) ? true : false));
         }).collect(Collectors.toList()).get(0).getSalesman();
     }
 
-    //TODO Need to refactor
     public List<Bill> sortBillListByDateCreation() {
         List<Bill> list = new ArrayList<>();
         Set<Bill> set = billController.getBillSet();
         list.addAll(set);
-        Collections.sort(list, (bill, bill1) -> {
-            Date i1 = (bill.getCreationDate());
-            Date i2 = (bill1.getCreationDate());
-            return i1.compareTo(i2);
-        });
+        Collections.sort(list, Comparator.comparing(Bill::getCreationDate));
         return list;
     }
 
     public List<Bill> getBillsByStartAndEndDates(Date startDate, Date endDate) {
-        List<Bill> filteredLIst = new ArrayList<>();
-        for (Bill bill : getBillSet()) {
-            Date creationBillDate = bill.getCreationDate();
-            if (creationBillDate.compareTo(startDate) >= 0
-                    && creationBillDate.compareTo(endDate) <= 0) {
-                filteredLIst.add(bill);
-            }
-        }
-        return filteredLIst;
+        return getBillSet().stream().filter(bill ->
+                bill.getCreationDate().compareTo(startDate) >=0 &&
+                        bill.getCreationDate().compareTo(endDate) <= 0).
+                                collect(Collectors.toList());
     }
 
     public List<Bill> getBillsByCreator(Salesman salesman) {
-        List<Bill> filteredLIst = new ArrayList<>();
-        for (Bill bill : getBillSet()) {
-            if (bill.getSalesman().compareTo(salesman) == 1) {
-                filteredLIst.add(bill);
-            }
-        }
-        return filteredLIst;
+        return getBillSet().stream().filter(bill -> bill.getSalesman().
+                compareTo(salesman) == 1).collect(Collectors.toList());
+
     }
 
     public Set<Bill> getBillSet() {

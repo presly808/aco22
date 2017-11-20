@@ -1,6 +1,6 @@
 package week1.model;
 
-public class Product {
+public class Product implements Comparable<Product>{
 
     private int id;
 
@@ -30,10 +30,6 @@ public class Product {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String showInfo() {
         return toString();
     }
@@ -43,5 +39,24 @@ public class Product {
         return String.format("Product \"%s\", price: %.2f, barcode: %s", name, price, code);
     }
 
+    @Override
+    public boolean equals(Object obj) {
 
+        if (this == obj) return true;
+
+        if (obj == null || obj.getClass() != Product.class) return false;
+
+        Product other = (Product) obj;
+
+        if (id == other.getId() &&
+                (name !=null && name.equals(other.getName())) &&
+                (code != null && code.equals(other.getCode()))) return true;
+
+        return false;
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        return this.id - o.getId();
+    }
 }
