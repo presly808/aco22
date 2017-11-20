@@ -1,6 +1,7 @@
 package ua.artcode.market;
 
 import org.junit.Test;
+import ua.artcode.market.models.Product;
 
 import static org.junit.Assert.*;
 
