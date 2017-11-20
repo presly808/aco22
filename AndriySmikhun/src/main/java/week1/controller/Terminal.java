@@ -6,8 +6,8 @@ import week1.model.Salesman;
 
 public class Terminal implements ITerminal {
 
-    Bill[] bills = new Bill[10];
-    Salesman[] sales = new Salesman[10];
+    private Bill[] bills = new Bill[10];
+    private Salesman[] sales = new Salesman[10];
 
     public Terminal() {
         this.bills = new Bill[20];
@@ -19,10 +19,11 @@ public class Terminal implements ITerminal {
     public boolean login(String login, String password) {
         for (int i = 0; i < sales.length; i++) {
             if (sales[i] == null) break;
-            if (sales[i].getLogin().equals(login)) {
-                if (sales[i].getPassword().equals(password)) {
-                    return true;
-                }
+            if (!sales[i].getLogin().equals(login)) {
+                continue;
+            }
+            if (sales[i].getPassword().equals(password)) {
+                return true;
             }
         }
         return false;

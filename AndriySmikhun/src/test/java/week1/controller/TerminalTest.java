@@ -55,11 +55,6 @@ public class TerminalTest {
 
     }
 
-    @After
-    public void clearData(){
-    terminal.sales = null;
-    terminal.bills = null;
-    }
     @Test
     public void login(){
 
