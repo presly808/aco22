@@ -1,16 +1,17 @@
 package controllers;
 
 import utils.TerminalUtils;
-import interfaces.IBill;
+import interfaces.IBillLogic;
 import models.Bill;
 import models.Product;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class BillController implements IBill{
+public class BillController implements IBillLogic {
 
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     private Set<Bill> billSet;
-    private int amountPrice;
+    private double amountPrice;
 
     public BillController() {
         billSet = new HashSet<>();
@@ -25,41 +26,31 @@ public class BillController implements IBill{
 
     public void closeBill(Bill bill) {
         bill.setCloseTime(new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss.SSS").toString());
+                DATE_FORMAT).toString());
     }
 
     public double calculateAmountPrice(Bill bill) {
-        int amountPrice = 0;
-
         List<Product> products = bill.getProducts();
         if (products.isEmpty()) {
             throw new IllegalStateException("Empty product list");
         }
-
-        for (Product product : products) {
-            amountPrice += product.getPrice();
-        }
+        double amountPrice = products.stream().mapToDouble(Product::getPrice).sum();
         this.amountPrice = amountPrice;
         return amountPrice;
     }
 
-    public int getAmountPrice() {
+    public double getAmountPrice() {
         return amountPrice;
     }
 
-    public void printBill(Bill currentBill) {
-        System.out.println("BillController{" +
-                "id=" + currentBill.getId() +
-                ", products=" + currentBill.getProducts() +
-                ", salesman=" + currentBill.getSalesman() +
-                ", amountPrice=" + getAmountPrice() +
-                ", closeTime='" + currentBill.getCloseTime() + '\'' +
-                '}');
+    public String printBill(Bill currentBill) {
+        return String.format("{id:%d, products:%s, salesman:%s, " +
+                        "amountPrice%d, closeTime%s}" , currentBill.getId(),
+                currentBill.getProducts(), currentBill.getSalesman(),
+                getAmountPrice(), currentBill.getCloseTime());
     }
 
     public Set<Bill> getBillSet() {
         return billSet;
     }
 }
-
-

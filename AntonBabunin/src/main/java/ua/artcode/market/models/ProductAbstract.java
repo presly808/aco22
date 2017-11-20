@@ -9,7 +9,7 @@ public abstract class ProductAbstract {
     private double price;
 
     public ProductAbstract() {
-        this.id = Utils.generateID();
+        this.id = Utils.generateProductID();
         this.name = "RandomProduct";
         this.price = 0.1;
     }

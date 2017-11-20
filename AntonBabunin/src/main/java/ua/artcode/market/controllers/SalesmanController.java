@@ -1,12 +1,18 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.ISalesman;
+import ua.artcode.market.interfaces.SomeStatistics;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Terminal;
 
-public class SalesmanController implements ISalesman{
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+public class SalesmanController implements ISalesman, SomeStatistics{
 
     private TerminalController terminalController;
 
@@ -33,40 +39,48 @@ public class SalesmanController implements ISalesman{
     }
 
     @Override
-    public Salesman login(Terminal terminal, String login, String password) {
-        if (terminal != null && login != null && password != null) {
-            System.out.println(terminal); //unused
-            System.out.println(login); //unused
-            System.out.println(password); //unused
-            return connect(terminal, login, password);
-        }
-        return null;
+    public boolean closeAndSafeBill(Terminal terminal, Bill bill) {
+        return terminal != null && bill != null &&
+                terminalController.closeAndSafeBill(bill);
+
     }
 
-    private Salesman connect(Terminal terminal, String login, String password) {
-        System.out.println(terminal); //unused
-        System.out.println(login); //unused
-        System.out.println(password); //unused
-        /*        for (int i = 0; i < terminal.getSales().size(); i++) {
-            if (login.equals(terminal.getSales().get(i).getLogin()) &&
-                password.equals((terminal.getSales().get(i).getPassword()))){
+    @Override
+    public Salesman login(Terminal terminal, String login, String password) {
+        return terminalController.login(terminal, login, password);
+    }
 
-                return terminal.getSales().get(i);
-            }
+    @Override
+    public Salesman create(String fullName, String login, String password) {
+        return terminalController.create(fullName, login, password);
+    }
+
+    @Override
+    public List<Bill> getSalesmanBills(Salesman salesman) {
+        if (salesman != null) {
+            return terminalController.getSalesmanBills(salesman);
         }
-        return terminal.getSales().get(terminal.getSales().size());*/
         return null;
     }
 
     @Override
-    public boolean closeAndSafeBill(Terminal terminal, Bill bill) {
-        if (terminal == null || bill == null) return false;
-
-        return terminalController.closeAndSafeBill(bill);
+    public Bill findBillById(int id) {
+        return terminalController.findBillById(id);
     }
 
-//    public TerminalController getTerminalController() {
-//        return terminalController;
+    @Override
+    public Set<Bill> filterMethodAll(Salesman salesman, Product product,
+                                     Date startDate, Date endDate,
+                                     Comparator<Bill> billComparator) {
+        return terminalController.filterMethodAll(salesman, product, startDate,
+                endDate,billComparator);
+    }
+
+//    @Override
+//    public List<Bill> filterMethod (Salesman salesman) {
+//        return new ArrayList<>();
 //    }
+
+
 }
 

@@ -49,4 +49,22 @@ public class Seller {
     public String toString() {
         return "Seller: " + name + ", age: " + age + ", sold: " + soldProducts;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) return true;
+
+        if (obj == null || obj.getClass() != Seller.class) return false;
+
+        Seller other = (Seller) obj;
+
+        if ((name != null && name.equals(other.getName())) &&
+                (login != null && login.equals(other.getLogin())) &&
+                (password != null && password.equals(other.getPassword())) &&
+                age == other.getAge() &&
+                soldProducts == other.getSoldProducts()) return true;
+
+        return false;
+    }
 }
