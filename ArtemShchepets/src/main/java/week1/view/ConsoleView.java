@@ -1,16 +1,9 @@
 package week1.view;
 
-import week1.controller.TerminalController;
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Seller;
-
 import java.util.Scanner;
 
-import static week1.view.OutputMessages.*;
-
 public class ConsoleView {
-
+/*
     public void runMenu(TerminalController terminal) {
         do {
             consoleWelcomeMessage();
@@ -203,5 +196,6 @@ public class ConsoleView {
         System.out.println("Want to add another one product? Type \"y\" if you want and anything else - if not.");
         return ("y".equals(scanner.next()));
     }
+    */
 
 }
