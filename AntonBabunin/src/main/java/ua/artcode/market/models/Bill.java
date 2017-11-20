@@ -1,35 +1,31 @@
 package ua.artcode.market.models;
 
-import ua.artcode.market.utils.Utils;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+public class Bill {
 
-public class Bill implements Comparable {
-
-    private int billId;
+    private int id;
     private int terminalId;
-    private Map<Product, Integer> products;
+    private Map<Product, Integer> productsMap;
     private Salesman salesman;
     private double amountPrice;
 
-    private Date openTime;
-    private Date closeTime;
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
 
     public Bill() {
-        this.billId = Utils.generateBillID();
-        this.products = new HashMap<Product, Integer>();
-        this.openTime = Utils.getCurrentTime();
+        this.productsMap = new HashMap<>();
+        this.openTime = LocalDateTime.now();
     }
 
-    public int getBillId() {
-        return billId;
+    public int getId() {
+        return id;
     }
 
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getTerminalId() {
@@ -40,12 +36,12 @@ public class Bill implements Comparable {
         this.terminalId = terminalId;
     }
 
-    public Map<Product, Integer> getProducts() {
-        return products;
+    public Map<Product, Integer> getProductsMap() {
+        return productsMap;
     }
 
-    public void setProducts(Map<Product, Integer> products) {
-        this.products = products;
+    public void setProductsMap(Map<Product, Integer> productsMap) {
+        this.productsMap = productsMap;
     }
 
     public Salesman getSalesman() {
@@ -64,54 +60,47 @@ public class Bill implements Comparable {
         this.amountPrice = amountPrice;
     }
 
-    public Date getOpenTime() {
+    public LocalDateTime getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(Date openTime) {
+    public void setOpenTime(LocalDateTime openTime) {
         this.openTime = openTime;
     }
 
-    public Date getCloseTime() {
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Date closeTime) {
+    public void setCloseTime(LocalDateTime closeTime) {
         this.closeTime = closeTime;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+
+        Bill bill = (Bill) object;
+
+        return id == bill.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @Override
     public String toString() {
         return "Bill{" +
-                "billId=" + billId +
-                ", products=" + products +
+                "billId=" + id +
+                ", terminalId=" + terminalId +
+                ", productsMap=" + productsMap +
                 ", salesman=" + salesman +
                 ", amountPrice=" + amountPrice +
-                ", openTime='" + openTime + '\'' +
-                ", closeTime='" + closeTime + '\'' +
+                ", openTime=" + openTime +
+                ", closeTime=" + closeTime +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) return false;
-
-        if (object instanceof Bill) {
-            Bill bill = (Bill) object;
-            if (this.getBillId() == bill.getBillId() &&
-                    this.getTerminalId() == bill.getTerminalId()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        Bill bill = (Bill) o;
-        if (this.amountPrice == bill.amountPrice) return 0;
-        else if (this.amountPrice < bill.amountPrice) return -10;
-        else return 10;
     }
 }
