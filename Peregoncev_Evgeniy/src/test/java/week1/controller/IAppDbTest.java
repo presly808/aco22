@@ -3,6 +3,7 @@ package week1.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import week1.model.Bill;
 import week1.model.Product;
 
 import static org.junit.Assert.*;
@@ -15,12 +16,25 @@ public class IAppDbTest {
     private IAppDb appDb;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         appDb = new IAppDbImpl();
+    }
+
+    @After
+    public void tearDown(){
+        appDb = null;
     }
 
     @Test
     public void getAllBills() throws Exception {
+        appDb.getAllBills();
+        assertEquals(0, appDb.getAllBills().size());
+    }
+
+    @Test
+    public void getAllSalesMans() throws Exception {
+        appDb.getAllSalesMans();
+        assertEquals(0, appDb.getAllSalesMans().size());
     }
 
     @Test
@@ -31,6 +45,12 @@ public class IAppDbTest {
 
     @Test
     public void findByBillId() throws Exception {
+        Bill saved = appDb.saveBill(new Bill());
+        appDb.findByBillId(saved.getId());
+    }
+
+    @Test
+    public void findBySalesmanId() throws Exception {
 
     }
 
@@ -43,12 +63,14 @@ public class IAppDbTest {
 
     @Test
     public void saveBill() throws Exception {
+        Bill saved = appDb.saveBill(new Bill());
+        assertEquals(0, saved.getId());
     }
 
     @Test
     public void saveProduct() throws Exception {
         Product saved = appDb.saveProduct(new Product());
-        //assertNotEquals(0, saved.getId());
+        assertEquals(0, saved.getId());
     }
 
     @Test
@@ -58,13 +80,15 @@ public class IAppDbTest {
     }
 
     @Test
-    public void removeProduct() throws Exception {
+    public void removeProductFromBill() throws Exception {
+        Bill bill = appDb.saveBill(new Bill());
         Product saved = appDb.saveProduct(new Product());
-        Product removed = appDb.removeProduct(saved.getId());
-        //assertEquals(saved.getId(),removed.getId());
+        Product removed = appDb.removeProductFromBill(bill,saved.getId());
+       assertEquals(saved.getId(),removed.getId());
     }
 
     @Test
     public void update() throws Exception {
+
     }
 }

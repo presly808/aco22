@@ -1,6 +1,5 @@
 package week1.controller;
 
-
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
@@ -14,7 +13,7 @@ public interface IAppDb {
 
     List<Bill> getAllBills();
     List<Product> getAllProducts();
-    List<Salesman> getAllSalesmans();
+    List<Salesman> getAllSalesMans();
 
 
     Bill findByBillId(int billId);
@@ -27,7 +26,7 @@ public interface IAppDb {
     Product saveProduct(Product product);
 
     Bill removeBill(int bill);
-    Product removeProduct(int remove);
+    Product removeProductFromBill(Bill bill, int remove);
 
     Bill update(Bill bill);
 

@@ -115,7 +115,7 @@ public class ITerminalControllerControllerImpl implements ITerminalController {
     @Override
     public Bill closeBill(int id) {
         Bill bill = iAppDb.findByBillId(id);
-        bill.setIsclosed(true);
+        bill.setClosed(true);
         bill.getTime().setCloseTime(bill.getTime().printTime());
 
         iAppDb.update(bill);

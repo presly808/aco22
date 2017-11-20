@@ -132,7 +132,7 @@ public class ITerminalControllerControllerImplTest {
 //
 //        testITerminalControllerImpl.closeAndSaveBill(testBill1);
 //
-//        assertTrue((testBill1.getIsclosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().getCloseTime())));
+//        assertTrue((testBill1.getClosed()) && (testBill1.getTime().printTime().equals(testBill1.getTime().getCloseTime())));
 //
 //    }
 //

@@ -1,6 +1,5 @@
 package week1.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +16,13 @@ public class Bill {
 
     private int id = 0;
 
-    private boolean isclosed = false;
-
+    private boolean isClosed = false;
 
     private int productsCounter = 0;
 
     public Bill() {
-
+        this.productList = new ArrayList<>();
+        this.time = new Time();
     }
 
     public Bill(double amountPrice, Salesman salesman, Time time, int id) {
@@ -55,12 +54,12 @@ public class Bill {
         this.id = id;
     }
 
-    public boolean getIsclosed() {
-        return isclosed;
+    public boolean getClosed() {
+        return isClosed;
     }
 
-    public void setIsclosed(boolean isclosed) {
-        this.isclosed = isclosed;
+    public void setClosed(boolean closed) {
+        this.isClosed = closed;
     }
 
     public int getProductsCounter() {
@@ -88,7 +87,7 @@ public class Bill {
     }
 
     public boolean isClosed() {
-        return isclosed;
+        return isClosed;
     }
 
 

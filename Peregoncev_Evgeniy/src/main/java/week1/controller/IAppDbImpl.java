@@ -37,10 +37,9 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public List<Salesman> getAllSalesmans() {
+    public List<Salesman> getAllSalesMans() {
         return salesmanList;
     }
-
 
     @Override
     public Bill findByBillId(int billId) {
@@ -74,9 +73,6 @@ public class IAppDbImpl implements IAppDb {
         }
         return null;
     }
-
-
-
 
     @Override
     public Bill saveBill(Bill bill) {
@@ -113,7 +109,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product removeProduct(int remove) {
+    public Product removeProductFromBill(Bill bill, int remove) {
+
         return null;
     }
 
