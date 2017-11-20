@@ -20,7 +20,7 @@ public class BillController implements IBill{
                 currentBill.setQuantityGoods((currentBill.getProducts()[i][0] == 0 ? (currentBill.getQuantityGoods() + 1) : currentBill.getQuantityGoods()));
 
                 currentBill.setProducts(i,0, productCode);
-                currentBill.setProducts(i,1, quantity += currentBill.getProducts()[i][1]);
+                currentBill.setProducts(i,1, quantity + currentBill.getProducts()[i][1]);
 
                 currentBill.setAmountPrice(currentBill.getAmountPrice() + Math.rint(Product.findByCode( currentBill.getProductList(), productCode).price*currentBill.getProducts()[i][1]*100)/100);
 

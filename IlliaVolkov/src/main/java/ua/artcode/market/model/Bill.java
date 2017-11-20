@@ -4,6 +4,25 @@ import java.util.Date;
 
 public class Bill {
 
+    private int code;
+    private int[][] products;
+    private int quantityGoods;
+    private double amountPrice;
+    private SalesMan salesMan;
+    public boolean closed;
+    public Date closeTime;
+    final Product[] productList;
+
+    public Bill(int code, int countProducts, String salesManName, Product[] productList){
+
+        this.code = code;
+        this.products = new int[countProducts][2];
+        this.salesMan = new SalesMan(salesManName);
+
+        this.productList = productList;
+
+    }
+
     public int getCode() {
         return code;
     }
@@ -42,25 +61,6 @@ public class Bill {
 
     public void setSalesMan(SalesMan salesMan) {
         this.salesMan = salesMan;
-    }
-
-    private int code;
-    private int[][] products;
-    private int quantityGoods;
-    private double amountPrice;
-    private SalesMan salesMan;
-    public boolean closed;
-    public Date closeTime;
-    final Product[] productList;
-
-    public Bill(int code, int countProducts, String salesManName, Product[] productList){
-
-        this.code = code;
-        this.products = new int[countProducts][2];
-        this.salesMan = new SalesMan(salesManName);
-
-        this.productList = productList;
-
     }
 
     public int getQuantityGoods(){
