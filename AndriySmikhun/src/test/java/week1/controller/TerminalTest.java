@@ -4,9 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.controller.Terminal;
 import week1.model.Bill;
-import week1.model.MyDataTime;
 import week1.model.Product;
 import week1.model.Salesman;
 

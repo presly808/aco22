@@ -3,9 +3,6 @@ package week1.controller;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
-import week1.model.MyDataTime;
-
-import java.util.Comparator;
 
 public class Terminal implements ITerminal {
 

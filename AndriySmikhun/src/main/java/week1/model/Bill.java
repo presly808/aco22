@@ -30,10 +30,6 @@ public class Bill implements Comparable {
         this.id = id;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
-    }
-
     public void setSalesman(Salesman salesman) {
         this.salesman = salesman;
     }
@@ -84,25 +80,26 @@ public class Bill implements Comparable {
     }
 
     // you should not pass prodcuts as arr
-    public double calculateAmountPrice(Product[] product) {
+    public double calculateAmountPrice() {
         double amountPrice = 0.0d;
         for (int i = 0; i < products.length; i++) {
-
-            amountPrice = products[i].getPrice();
+            if (products[i] == null)break;
+            amountPrice = amountPrice + products[i].getPrice();
         }
         return amountPrice;
     }
 
     // ret string or use toStr
-    public void printBill() {
+    public boolean printBill() {
         System.out.println("Bill's number" + id);
         for (int i = 0; i < products.length; i++) {
             if (products[i] == null) break;
             System.out.print("Name " + products[i].getName() + " --------- ");
             System.out.println("Price " + products[i].getPrice());
         }
-        System.out.println("Amount price " + calculateAmountPrice(products));
+        System.out.println("Amount price " + calculateAmountPrice());
         System.out.println("Time: " + dataTime.toString());
+        return true;
 
     }
 
