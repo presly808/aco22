@@ -9,14 +9,14 @@ public class Bill implements Comparable {
     Product[] products = new Product[10];
     Salesman salesman;
     double amountPrice;
-    MyDataTime dataTime = new MyDataTime();
+    String dataTime;
 
-    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, MyDataTime dataTime) {
+    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String dataTime) {
         this.id = id;
         this.products = products;
         this.salesman = salesman;
         this.amountPrice = 0.0;
-        this.dataTime = null;
+        this.dataTime = dataTime;
     }
 
     public Bill() {
@@ -59,7 +59,7 @@ public class Bill implements Comparable {
         return amountPrice;
     }
 
-    public MyDataTime getDataTime() {
+    public String getDataTime() {
         return dataTime;
     }
 
@@ -75,15 +75,10 @@ public class Bill implements Comparable {
 
     public boolean setCloseBill() {
         if (dataTime == null) {
-
-            dataTime.setDay(25);
-            dataTime.setMonth(7);
-            dataTime.setHour(10);
-            dataTime.setMinute(15);
-            dataTime.setSecond(12);
+            dataTime = "20:15:15 25/08";
             return true;
         }
-        System.out.printf("This bill was closed");
+        System.out.println("This bill was closed");
 
         return false;
     }

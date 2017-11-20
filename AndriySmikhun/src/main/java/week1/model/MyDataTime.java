@@ -49,6 +49,10 @@ public class MyDataTime implements Comparable{
     public int compareTo(Object o) {
         String str = ((MyDataTime) o).toString();
         int count = this.toString().compareTo(str);
+        if (count != 0){
+            count = count - Math.abs(count);
+            return count;
+        }
         return count;
     }
 }

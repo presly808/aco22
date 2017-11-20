@@ -14,7 +14,7 @@ public class TerminalTest {
 
 
     Product     product1,       product2;
-    MyDataTime  myDataTime1 ,   myDataTime2;
+    String  myDataTime1 ,   myDataTime2;
     Bill        bill1,          bill2,          bill3;
     Salesman    salesman1,      salesman2;
     Terminal    terminal;
@@ -34,8 +34,8 @@ public class TerminalTest {
         bill2 = new Bill(2,salesman2);
         bill3 = new Bill(3,salesman2);
 
-        myDataTime1 = new MyDataTime(12,15,10,25,7);
-        myDataTime2 = new MyDataTime(11,10,11,28,7);
+        myDataTime1 = "17:10:10 23/7";
+        myDataTime2 = "22:10:10 27/7";
 
         terminal = new Terminal();
 
@@ -109,25 +109,17 @@ public class TerminalTest {
         bill3.setAmountPrice(10.0);
         double everage = terminal.averageBill();
         Assert.assertEquals(everage,10.0,1);
-        System.out.println(everage);
     }
-
-//    @Test
- //   public void filterByParameter(){
-   //     Product[] pr = new Product[2];
-    //    pr[0] = product1;
-      //  pr[1] = product2;
-      //  Bill[] b1 = terminal.filterByParameter(terminal.sales,pr,myDataTime1,myDataTime2);
-      //  Assert.assertEquals(bill1,b1);
-   // }
 
     @Test
-    public void filterByDate(){
-        Product[] testprod = new Product[2];
-        testprod[0] = product2;
+    public void filterByParameter(){
+        Product[] pr = new Product[2];
+        pr[0] = product1;
+        pr[1] = product2;
+        Salesman[] sl = new Salesman[1];
+        sl[0] = salesman1;
+        Bill[] b1 = terminal.filterByParameter(sl,pr,myDataTime1,myDataTime2);
+        Assert.assertEquals(b1[0].getProducts()[0],product1);
 
-        Bill[] btest = terminal.filterByDate(myDataTime1,myDataTime2);
-        Assert.assertEquals(btest[0].getDataTime(),myDataTime1);
     }
-
 }
