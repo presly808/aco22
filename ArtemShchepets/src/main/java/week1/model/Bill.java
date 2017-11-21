@@ -38,10 +38,6 @@ public class Bill {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
     public double getAmountPrice() {
         return amountPrice;
     }
@@ -56,10 +52,6 @@ public class Bill {
 
     public void setOpenTime(LocalDateTime openTime) {
         this.openTime = openTime;
-    }
-
-    public LocalDateTime getCloseTime() {
-        return closeTime;
     }
 
     public void setCloseTime(LocalDateTime closeTime) {
