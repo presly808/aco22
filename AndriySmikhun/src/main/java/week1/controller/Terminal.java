@@ -19,10 +19,27 @@ public class Terminal implements ITerminal {
     public boolean login(String login, String password) {
         for (int i = 0; i < sales.length; i++) {
             if (sales[i] == null) break;
-            if (!sales[i].getLogin().equals(login)) {
-                continue;
+            if (sales[i].getLogin().equals(login) || sales[i].getPassword().equals(password)) {
+                return true;
             }
-            if (sales[i].getPassword().equals(password)) {
+        }
+        return false;
+    }
+
+    public boolean addBill(Bill bill) {
+        for (int i = 0; i < bills.length; i++) {
+            if (bills[i] == null) bills[i] = bill;
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addSalesman(Salesman salesman) {
+        for (int i = 0; i < sales.length; i++) {
+            if (sales[i] == null) sales[i] = salesman;
+            {
                 return true;
             }
         }
@@ -146,9 +163,9 @@ public class Terminal implements ITerminal {
     }
 
     public Bill[] filterByParameter(Salesman[] salesman, Product[] product, String startTime, String endTime) {
-        Bill[] billTime = filterByDate(startTime,endTime);
-        Bill[] bySales = filterBySales(billTime,salesman);
-        Bill[] byProduct = filterByProduct(bySales,product);
+        Bill[] billTime = filterByDate(startTime, endTime);
+        Bill[] bySales = filterBySales(billTime, salesman);
+        Bill[] byProduct = filterByProduct(bySales, product);
         return byProduct;
 
     }
@@ -158,7 +175,7 @@ public class Terminal implements ITerminal {
         Bill[] forRerurn = new Bill[bills.length];
         int count = 0;
         for (int i = 0; i < bills.length; i++) {
-            if (bills[i] == null)break;
+            if (bills[i] == null) break;
             if (((bills[i].getDataTime().compareTo(startTime)) >= 0 &&
                     (bills[i].getDataTime().compareTo((endTime))) <= 0)) {
                 forRerurn[count] = bills[i];
@@ -175,7 +192,7 @@ public class Terminal implements ITerminal {
         int count = 0;
         for (int i = 0; i < withSales.length; i++) {
             for (int y = 0; y < withBill.length; y++) {
-                if (withBill[y] == null)break;
+                if (withBill[y] == null) break;
                 if (withSales[i].equals(withBill[y].getSalesman())) {
                     forRerurn[count] = withBill[y];
                 }
@@ -190,8 +207,8 @@ public class Terminal implements ITerminal {
         int count = 0;
         for (int i = 0; i < withProduct.length; i++) {
             for (int y = 0; y < withBill.length; y++) {
-                if (withBill[y] == null)break;
-                if (searchInBillProduct(withBill[y],withProduct[i])) {
+                if (withBill[y] == null) break;
+                if (searchInBillProduct(withBill[y], withProduct[i])) {
                     forRerurn[count] = withBill[y];
                     count++;
                 }
@@ -199,10 +216,11 @@ public class Terminal implements ITerminal {
         }
         return forRerurn;
     }
-/////////////////////////////~~~/////////////////////////
+
+    /////////////////////////////~~~/////////////////////////
     public boolean searchInBillProduct(Bill bill, Product product) {
         for (int i = 0; i < bill.getProducts().length; i++) {
-            if (bill.getProducts()[i] == null)break;
+            if (bill.getProducts()[i] == null) break;
             if (bill.getProducts()[i].equals(product)) return true;
         }
         return false;

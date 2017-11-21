@@ -5,11 +5,11 @@ import java.util.Comparator;
 
 public class Bill implements Comparable {
 
-    int id;
-    Product[] products = new Product[10];
-    Salesman salesman;
-    double amountPrice;
-    String dataTime;
+    private int id;
+    private Product[] products = new Product[10];
+    private Salesman salesman;
+    private double amountPrice;
+    private String dataTime;
 
     public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String dataTime) {
         this.id = id;

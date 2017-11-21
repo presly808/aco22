@@ -11,11 +11,11 @@ import week1.model.Salesman;
 public class TerminalTest {
 
 
-    Product     product1,       product2;
-    String  myDataTime1 ,   myDataTime2;
-    Bill        bill1,          bill2,          bill3;
-    Salesman    salesman1,      salesman2;
-    Terminal    terminal;
+    private Product     product1,       product2;
+    private String  myDataTime1 ,   myDataTime2;
+    private Bill        bill1,          bill2,          bill3;
+    private Salesman    salesman1,      salesman2;
+    private Terminal    terminal;
 
 
 
@@ -37,12 +37,12 @@ public class TerminalTest {
 
         terminal = new Terminal();
 
-        terminal.sales[0] = salesman2;
-        terminal.sales[1] = salesman1;
+        terminal.addSalesman(salesman1);
+        terminal.addSalesman(salesman2);
 
-        terminal.bills[0] = bill2;
-        terminal.bills[1] = bill1;
-        terminal.bills[2] = bill3;
+        terminal.addBill(bill1);
+        terminal.addBill(bill2);
+        terminal.addBill(bill3);
 
         bill1.addProduct(product1);
         bill1.addProduct(product2);
@@ -93,7 +93,7 @@ public class TerminalTest {
     @Test
     public void getTopNofSalesMan(){
        Salesman s1 = terminal.getTopNofSalesMan();
-       Assert.assertTrue(s1.equals(salesman2));
+       Assert.assertTrue(s1.equals(salesman1));
     }
     @Test
     public void averageBill(){
