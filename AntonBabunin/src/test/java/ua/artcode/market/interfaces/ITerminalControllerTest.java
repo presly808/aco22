@@ -62,7 +62,7 @@ public class ITerminalControllerTest {
     public void closeBill() throws Exception {
         Bill open = terminalController.createBill();
         Bill close = terminalController.closeBill(open.getId());
-        Assert.assertEquals(open, close);
+        assertEquals(open, close);
         assertNotNull(close.getCloseTime());
     }
 

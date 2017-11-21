@@ -21,7 +21,7 @@ public class IAppDbImpl implements IAppDb {
 
     public IAppDbImpl() {
         this.bills = new ArrayList<>();
-        this.products = Generator.randomProducts();
+        this.products = Generator.randomProducts(0);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class IAppDbImpl implements IAppDb {
     @Override
     public Bill saveBill(Bill bill) {
         if (bill != null) {
-            bill.setId(billNextId++);
+            bill.setId(++billNextId);
             bills.add(bill);
             return bill;
         } return null;
@@ -86,8 +86,8 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Product saveProduct(Product product) {
-        product.setId(productNextId++);
-        products.put(product, 0);
+        product.setId(++productNextId);
+        products.putIfAbsent(product, 0);
         return product;
     }
 

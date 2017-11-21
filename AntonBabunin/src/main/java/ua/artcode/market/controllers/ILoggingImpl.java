@@ -15,11 +15,16 @@ public class ILoggingImpl implements ILogging {
 
     private List<Salesman> salesmenList;
 
-    private ILoggingImpl(){
-        this.salesmenList = Generator.generateSalesmanList(10);
+    private ILoggingImpl() throws IOException {
+        this.salesmenList = Generator.generateSalesmanList(0);
+        for (Salesman salesman : salesmenList){
+            write(String.format("Fullname: %s, Login: %s, Password: %s, \r\n",
+                    salesman.getFullName(), salesman.getLogin(),
+                    salesman.getPassword()));
+        }
     }
 
-    public static ILogging getGetInstance() {
+    public static ILogging getGetInstance() throws IOException {
         if (instance == null) {
             synchronized (ILoggingImpl.class) {
                 if (instance == null) {

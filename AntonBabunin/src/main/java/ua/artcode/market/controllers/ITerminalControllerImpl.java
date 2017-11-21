@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ITerminalControllerImpl implements ITerminalController {
 
-    private static int terminalID = 0;
+//    private static int terminalID = 0;
     private IAppDb iAppDb;
 
     public ITerminalControllerImpl(IAppDb iAppDb) {
@@ -25,7 +25,8 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login, String password) throws IOException {
+    public Salesman createSalesman(String fullName, String login,
+                                   String password) throws IOException {
         return iAppDb.createSalesman(fullName, login, password);
     }
 
@@ -81,7 +82,8 @@ public class ITerminalControllerImpl implements ITerminalController {
     public double calculateAmountPrice(Bill bill) {
 
         double amountPrice = 0.0;
-        if (bill == null || bill.getProductsMap() == null || bill.getProductsMap().isEmpty()) return amountPrice;
+        if (bill == null || bill.getProductsMap() == null ||
+                bill.getProductsMap().isEmpty()) return amountPrice;
         for (Map.Entry<Product, Integer> pair :
                 bill.getProductsMap().entrySet()) {
             amountPrice += pair.getKey().getPrice() * pair.getValue();

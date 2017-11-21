@@ -23,7 +23,7 @@ public class Generator {
     private static String generateName(int r){
         StringBuilder name = new StringBuilder();
         for (int i = 0; i < r; i++) {
-            name.append((char) ((int) (Math.random() * 65) + 25));
+            name.append((char) ((int) (Math.random() * 25) + 65));
         }
         return name.toString();
     }
@@ -32,10 +32,12 @@ public class Generator {
         return (int)(Math.random()*300);
     }
 
-    public static Map<Product, Integer> randomProducts(){
+    public static Map<Product, Integer> randomProducts(int n){
         Map<Product, Integer> products = new HashMap<>();
-        for (int i = 0; i < 30; i++) {
-            products.put(Generator.createProduct(), Generator.random());
+        for (int i = 0; i < n; i++) {
+            Product p = Generator.createProduct();
+            p.setId(i);
+            products.put(p, Generator.random());
         }
         return products;
     }

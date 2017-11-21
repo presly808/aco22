@@ -16,7 +16,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
     private ILogging iLogging;
 
 
-    public IAppDbProxy(IAppDb target) {
+    public IAppDbProxy(IAppDb target) throws IOException {
         this.target = target;
         this.iLogging = ILoggingImpl.getGetInstance();
     }
@@ -94,6 +94,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
         String messege = null;
         if (bill1 == null) {
             messege = String.format("Bill %s wasn't saved \r\n", bill1);
+            iLogging.write(messege);
             return null;
         }
         messege = String.format("Bill %s saved \r\n", bill1);
@@ -107,6 +108,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
         String messege = null;
         if (product1 == null) {
             messege = String.format("Product %s wasn't saved \r\n", product1);
+            iLogging.write(messege);
             return null;
         }
         messege = String.format("Product %s saved \r\n", product1);
