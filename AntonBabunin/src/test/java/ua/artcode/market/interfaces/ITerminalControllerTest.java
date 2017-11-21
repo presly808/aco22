@@ -1,7 +1,6 @@
 package ua.artcode.market.interfaces;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.TerminalControllerFactory;
@@ -87,11 +86,13 @@ public class ITerminalControllerTest {
         salesman.getLogin();
         salesman.getFullName();
         salesman.getPassword();
-        salesman.setLogin("1");
-        salesman.setPassword("1");
-        salesman.setFullName("1");
-        salesman.setIsConnected(false);
         salesman.toString();
+        Salesman salesman2 = terminalController.getiAppDb().
+                createSalesman("2", "2", "2");
+        salesman2.setLogin("2");
+        salesman2.setPassword("2");
+        salesman2.setFullName("2");
+        salesman2.setIsConnected(false);
 
         assertFalse(salesman.equals(null));
         assertNotEquals(null, salesman);

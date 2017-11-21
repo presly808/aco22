@@ -67,6 +67,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
         String messege = null;
         if (bill == null) {
             messege = String.format("Bill %s not found \r\n", bill);
+            iLogging.write(messege);
             return null;
         }
         messege = String.format("Bill %s removed \r\n", bill);
@@ -80,12 +81,12 @@ public class IAppDbProxy implements IAppDb, ILogging{
         String messege = null;
         if (product1 == null) {
             messege = String.format("Product %s wasn't removed \r\n", product1);
+            iLogging.write(messege);
             return null;
         }
         messege = String.format("Product %s saved \r\n", product1);
         iLogging.write(messege);
         return product1;
-
     }
 
     @Override
@@ -144,7 +145,6 @@ public class IAppDbProxy implements IAppDb, ILogging{
         if (salesman != null) {
             result = true;
         }
-
         iLogging.write(String.format("Salesman was created: " +
                         "FullName %s login %s and password %s, result %s\r\n",
                 fullName, login, password, result));
@@ -163,7 +163,6 @@ public class IAppDbProxy implements IAppDb, ILogging{
         iLogging.write(String.format("Salesman try connect with login %s " +
                         "and password %s," + "result %s\r\n",
                         login, password, result));
-
         return salesman;
     }
 
@@ -177,8 +176,6 @@ public class IAppDbProxy implements IAppDb, ILogging{
         iLogging.write(String.format("Salesman was logout with login %s " +
                         "and password %s," + "result %s\r\n",
                 salesman1.getLogin(), salesman1.getPassword(), result));
-
-
         return salesman1;
     }
 
