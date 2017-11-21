@@ -7,8 +7,12 @@ import week1.model.Seller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class IAppDBImpl implements IAppDB {
+
+    private final static Logger logger = Logger.getLogger(IAppDBImpl.class.getName());
 
     private int billNextId;
 
@@ -21,7 +25,6 @@ public class IAppDBImpl implements IAppDB {
         this.bills = new ArrayList<>();
         this.sellers = new ArrayList<>();
     }
-
 
     @Override
     public List<Bill> getAllBills() {
@@ -47,26 +50,46 @@ public class IAppDBImpl implements IAppDB {
     public Bill findByBillId(int billId) {
 
         for (Bill bill : bills) {
-            if (billId == bill.getId()) return bill;
+            if (billId == bill.getId()) {
+
+                logger.info("Bill was founded in array list!");
+                return bill;
+            }
         }
+
+        logger.info("Bill wasn't founded!");
         return null;
     }
 
     @Override
     public Seller findBySellerLoginOrFullName(String loginOrFullName) {
+
         for (Seller seller : sellers) {
             if (loginOrFullName.equals(seller.getLogin())
-                    || loginOrFullName.equals(seller.getFullName())) return seller;
+                    || loginOrFullName.equals(seller.getFullName())) {
+
+                logger.info("Seller was founded");
+                return seller;
+            }
         }
+
+        logger.info("Seller wasn't founded!");
         return null;
     }
 
     @Override
     public Seller findBySellerLoginAndPassword(String login, String password) {
+
         for (Seller seller : sellers) {
             if (login.equals(seller.getLogin())
-                    && password.equals(seller.getPassword())) return seller;
+                    && password.equals(seller.getPassword())) {
+
+                logger.info("Seller was founded");
+                return seller;
+            }
         }
+
+        logger.info("Seller wasn't founded!");
         return null;
     }
 
@@ -76,6 +99,7 @@ public class IAppDBImpl implements IAppDB {
         bill.setId(billNextId++);
         bills.add(bill);
 
+        logger.info("Bill was added to arrayList");
         return bill;
     }
 
@@ -83,6 +107,8 @@ public class IAppDBImpl implements IAppDB {
     public Seller saveSeller(Seller seller) {
 
         sellers.add(seller);
+
+        logger.info("Seller was added to arrayList");
         return seller;
     }
 
@@ -92,12 +118,13 @@ public class IAppDBImpl implements IAppDB {
         Bill found = findByBillId(billId);
 
         if (found == null) {
-            System.out.println("Not found bill with such id");
+            logger.warning("Not found bill with such id");
             return null;
         }
 
         bills.remove(found);
 
+        logger.info("Bill was removed.");
         return found;
     }
 
@@ -107,12 +134,13 @@ public class IAppDBImpl implements IAppDB {
         Seller found = findBySellerLoginOrFullName(login);
 
         if (found == null) {
-            System.out.println("Not found seller with such login");
+            logger.warning("Not found seller with such login");
             return null;
         }
 
         sellers.remove(found);
 
+        logger.info("Seller was removed.");
         return found;
     }
 
@@ -121,11 +149,17 @@ public class IAppDBImpl implements IAppDB {
         int index = sellers.indexOf(seller);
 
         if (index == -1) {
-            System.out.println("Not found bill with such id");
+            logger.warning("Not found bill with such id");
             return null;
         }
 
+        logger.info("Seller was updated.");
         return sellers.set(index, seller);
+    }
+
+    @Override
+    public void turnOffLogger() {
+        logger.setLevel(Level.OFF);
     }
 
     @Override
@@ -134,10 +168,11 @@ public class IAppDBImpl implements IAppDB {
         int index = bills.indexOf(bill);
 
         if (index == -1) {
-            System.out.println("Not found bill with such id");
+            logger.warning("Not found bill with such id");
             return null;
         }
 
+        logger.info("Bill was updated.");
         return bills.set(index, bill);
     }
 }

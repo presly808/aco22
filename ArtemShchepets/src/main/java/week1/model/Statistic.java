@@ -2,7 +2,6 @@ package week1.model;
 
 public class Statistic {
 
-
     private double minBillPrice;
     private double maxBillPrice;
     private int soldProducts;

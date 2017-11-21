@@ -12,12 +12,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static week1.utils.TerminalUtils.calculateSumOfSoldProducts;
 import static week1.utils.TerminalUtils.findMaxPriceBill;
 import static week1.utils.TerminalUtils.findMinPriceBill;
 
 public class ITerminalControllerImpl implements ITerminalController {
+
+    private final static Logger logger = Logger.getLogger(ITerminalControllerImpl.class.getName());
 
     private IAppDB iAppDB;
 
@@ -32,17 +36,23 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         if ((login == null || password == null) ||
                 (login.equals("") || password.equals(""))
-                || iAppDB.getAllSellers().size() == 0) return false;
+                || iAppDB.getAllSellers().size() == 0) {
+
+            logger.warning("Login or pass is invalid or sellers is null!");
+            return false;
+        }
 
         int sellerId = iAppDB.getAllSellers().
                 indexOf(iAppDB.findBySellerLoginAndPassword(login, password));
 
         if (sellerId == -1) {
-            System.out.println("There aren't any sellers with such login\\pass!");
+            logger.warning("There aren't any sellers with such login\\pass!");
             return false;
         }
 
         iAppDB.setCurrentSeller(sellerId);
+
+        logger.info("Successfully logged in!");
         return true;
     }
 
@@ -56,6 +66,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Bill billWithId = iAppDB.saveBill(bill);
 
+        logger.info("Method createBill done.");
         return billWithId;
     }
 
@@ -65,7 +76,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         Bill bill = iAppDB.findByBillId(billId);
 
         if (bill == null) {
-            System.out.println("Not found a bill with such id");
+            logger.warning("Not found a bill with such id");
             return null;
         }
 
@@ -76,6 +87,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         iAppDB.updateBill(bill);
 
+        logger.info("Method addProduct done");
         return bill;
     }
 
@@ -86,10 +98,12 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     @Override
     public Bill closeBill(int billId) {
+
+        //TODO ADD SAAAAAAVE OF BILL
         Bill bill = iAppDB.findByBillId(billId);
 
         if (bill == null) {
-            System.out.println("Not found a bill with such id");
+            logger.warning("Not found a bill with such id");
             return null;
         }
 
@@ -98,23 +112,31 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         iAppDB.updateBill(bill);
 
+        logger.info("Bill was closed!");
         return bill;
     }
 
     @Override
     public Bill findBillById(int billId) {
+
+        logger.info("Method findBillById was done.");
         return iAppDB.findByBillId(billId);
     }
 
     @Override
     public Seller findSellerByLoginOrFullName(String loginOrFullName) {
+
+        logger.info("Method findSellerBy... was done.");
         return iAppDB.findBySellerLoginOrFullName(loginOrFullName);
     }
 
     @Override
     public Seller getTopOfSalesman() {
 
-        if (iAppDB.getAllSellers().size() == 0) return null;
+        if (iAppDB.getAllSellers().size() == 0) {
+            logger.warning("Sellers is null");
+            return null;
+        }
 
         for (Seller seller : iAppDB.getAllSellers()) {
             seller = calculateSellerSoldProducts(seller);
@@ -125,6 +147,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         // sort sellers by sold products
         iAppDB.getAllSellers().sort(new SellersSoldProductsComparator());
 
+        logger.info("Method getTopOfSalesman was done.");
         return iAppDB.getAllSellers().get(iAppDB.getAllSellers().size() - 1);
     }
 
@@ -135,6 +158,8 @@ public class ITerminalControllerImpl implements ITerminalController {
                 seller.setSoldProducts(seller.getSoldProducts() + bill.getProductList().size());
             }
         }
+
+        logger.info("Seller sold products were calculated.");
         return seller;
     }
 
@@ -144,7 +169,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         Statistic statistic = new Statistic();
 
         if (iAppDB.getAllSellers() == null || iAppDB.getAllBills() == null) {
-            System.out.println("Sry, we haven't any bills or sellers!");
+            logger.warning("Sry, we haven't any bills or sellers!");
             return null;
         }
 
@@ -153,6 +178,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         statistic.setSoldProducts(calculateSumOfSoldProducts(iAppDB));
         statistic.setBestSalesMan(getTopOfSalesman());
 
+        logger.info("Method doStatisticStuff was done.");
         return statistic;
     }
 
@@ -169,6 +195,12 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         billList.sort(comparator);
 
+        logger.info("Method filter was done.");
         return billList;
+    }
+
+    @Override
+    public void turnOffLogger() {
+        logger.setLevel(Level.OFF);
     }
 }

@@ -8,6 +8,7 @@ import week1.model.Statistic;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public interface ITerminalController {
 
@@ -30,4 +31,6 @@ public interface ITerminalController {
     Statistic doSomeStatisticStuff();
 
     List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator);
+
+    void turnOffLogger();
 }

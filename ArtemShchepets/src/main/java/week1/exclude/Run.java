@@ -1,26 +1,42 @@
 package week1.exclude;
 
+import week1.controller.ITerminalControllerImpl;
+import week1.database.IAppDBImpl;
+import week1.interfaces.IAppDB;
+import week1.interfaces.ITerminalController;
+import week1.model.Seller;
+import week1.utils.TerminalUtils;
 import week1.view.ConsoleView;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Run {
 
     public static void main(String[] args) {
-/*
-        Seller[] sellers = new Seller[5];
 
-        sellers[0] = new Seller("NadyaHoroshun", 22, "worker1", "password1");
-        sellers[1] = new Seller("AntonVorobey", 17, "worker2", "password2");
-        sellers[2] = new Seller("VasyaPupkin", 59, "worker3", "password3");
-        sellers[3] = new Seller("AnyaTupova", 14, "worker4", "password4");
-        sellers[4] = new Seller("ArtemShchepets", 20, "worker5", "password5");
+        IAppDB iAppDB = new IAppDBImpl();
+        ITerminalController terminal = new ITerminalControllerImpl(iAppDB);
 
-        BillController billController = new BillController();
+        terminal.turnOffLogger();
+        TerminalUtils.turnOffLogger();
+        iAppDB.turnOffLogger();
 
-        TerminalController terminal = new TerminalController(billController, sellers);
+        Seller seller1 = new Seller("worker1", "password1", "NadyaHoroshun");
+        Seller seller2 = new Seller("worker2", "password2", "AntonVorobey");
+        Seller seller3 = new Seller("worker3", "password3", "VasyaPupkin");
+        Seller seller4 = new Seller("worker4", "password4", "AnyaTupova");
+        Seller seller5 = new Seller("worker5", "password5", "ArtemShchepets");
+
+        iAppDB.saveSeller(seller1);
+        iAppDB.saveSeller(seller2);
+        iAppDB.saveSeller(seller3);
+        iAppDB.saveSeller(seller4);
+        iAppDB.saveSeller(seller5);
 
         ConsoleView consoleView = new ConsoleView();
 
-        consoleView.runMenu(terminal);*/
+        consoleView.runMenu(terminal);
     }
 }
 
