@@ -27,4 +27,5 @@ public interface ITerminalController {
     Salesman login(String login, String password) throws IOException;
     Salesman logout(Salesman salesman) throws IOException;
     Salesman findSalesmanByLogin(String login);
+
 }

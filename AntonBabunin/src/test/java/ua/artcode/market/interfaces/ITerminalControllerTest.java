@@ -31,7 +31,7 @@ public class ITerminalControllerTest {
         Bill expected = terminalController.createBill();
         assertEquals(0, expected.getProductsMap().size());
         assertNotNull(expected);
-        assertEquals(0, expected.getId());
+        assertEquals(1, expected.getId());
     }
 
     @Test
