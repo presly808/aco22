@@ -94,7 +94,7 @@ public class ITerminalControllerTest {
         salesman2.setFullName("2");
         salesman2.setIsConnected(false);
 
-        assertFalse(salesman.equals(null));
+        assertFalse(salesman.equals(salesman2));
         assertNotEquals(null, salesman);
     }
 
