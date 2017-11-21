@@ -34,21 +34,6 @@ public class Salesman {
         return status;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public void printSalesman(){
         System.out.println("Full name " + fullname);

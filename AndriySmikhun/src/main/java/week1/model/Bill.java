@@ -1,8 +1,5 @@
 package week1.model;
 
-
-import java.util.Comparator;
-
 public class Bill implements Comparable {
 
     private int id;
@@ -11,20 +8,17 @@ public class Bill implements Comparable {
     private double amountPrice;
     private String dataTime;
 
-    public Bill(int id, Product[] products, Salesman salesman, double amountPrice, String dataTime) {
+    public Bill(int id, Salesman salesman) {
         this.id = id;
-        this.products = products;
+        //his.products = products;
         this.salesman = salesman;
         this.amountPrice = 0.0;
-        this.dataTime = dataTime;
+        //this.dataTime = dataTime;
     }
 
     public Bill() {
     }
 
-    public Bill(int i, Salesman salesman) {
-        this.salesman = salesman;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -98,7 +92,7 @@ public class Bill implements Comparable {
             System.out.println("Price " + products[i].getPrice());
         }
         System.out.println("Amount price " + calculateAmountPrice());
-        System.out.println("Time: " + dataTime.toString());
+        System.out.println("Time: " + dataTime);
         return true;
 
     }

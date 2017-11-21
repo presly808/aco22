@@ -118,12 +118,6 @@ public class Terminal implements ITerminal {
         return sales[id];
     }                   //
 
-    public void doSomeStatisticStuff() {
-        System.out.println("Max Bill " + maxBill());
-        System.out.println("Min Bill " + minBill());
-        System.out.println("Average bill " + averageBill());
-
-    }
 
     public int maxBill() {
         int id = 0;

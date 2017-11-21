@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class SalesmanTest {
 
-    Salesman s1, s2, s3;
+    private Salesman s1, s2, s3;
 
     @Before
     public void init(){
