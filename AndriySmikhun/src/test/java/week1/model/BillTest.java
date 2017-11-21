@@ -9,10 +9,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BillTest {
-    Product product1, product2;
-    String myDataTime1, myDataTime2;
-    Bill bill1, bill2, bill3;
-    Salesman salesman1, salesman2;
+    private Product product1, product2;
+    private String myDataTime1, myDataTime2;
+    private Bill bill1, bill2, bill3;
+    private Salesman salesman1, salesman2;
 
 
     @Before
