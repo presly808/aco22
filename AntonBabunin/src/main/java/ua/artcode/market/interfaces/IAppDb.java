@@ -18,13 +18,13 @@ public interface IAppDb {
 
     Product findProductById(int id);
 
-    Bill removeBill(int id);
+    Bill removeBill(int id) throws IOException;
 
-    Product removeProduct(int id);
-    Bill saveBill(Bill bill);
+    Product removeProduct(int id) throws IOException;
+    Bill saveBill(Bill bill) throws IOException;
 
-    Product saveProduct(Product product);
-    Bill update(Bill bill);
+    Product saveProduct(Product product) throws IOException;
+    Bill update(Bill bill) throws IOException;
 
     Salesman createSalesman(String fullName, String login, String password) throws IOException;
     Salesman login(String login, String password) throws IOException;

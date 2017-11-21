@@ -5,9 +5,6 @@ public abstract class AbstractProduct {
     private String name;
     private double price;
 
-    public AbstractProduct() {
-    }
-
     public int getId() {
         return id;
     }

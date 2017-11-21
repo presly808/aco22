@@ -48,11 +48,11 @@ public class ITerminalControllerTest {
 
     @Test
     public void getAllBills() throws Exception {
-        Bill bill1 = terminalController.createBill();
-        Bill bill2 = terminalController.createBill();
-        Bill bill3 = terminalController.createBill();
-        Bill bill4 = terminalController.createBill();
-        Bill bill5 = terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
 
         assertEquals(5, terminalController.getAllBills().size());
 

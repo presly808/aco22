@@ -1,100 +1,78 @@
 /*package ua.artcode.market.view;
 
-import ua.artcode.market.controllers.IAppDbImpl;
-import ua.artcode.market.controllers.TerminalFactory;
-import ua.artcode.market.interfaces.IAppDb;
-import ua.artcode.market.interfaces.ITerminalController;
+import ua.artcode.market.controllers.TerminalControllerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
 
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class MainWindow implements ActionListener, WindowListener{
+public class MainWindow extends JFrame {
 
-    TextField login = new TextField(20);
-    TextField password = new TextField(20);
+    private TextField login = new TextField(20);
+    private TextField password = new TextField(20);
 
-    public MainWindow(String title){
-        super();
-        mainWindow();
+
+    private JTextField textField;
+
+    public MainWindow() {
+        super("Test frame");
+        createGUI();
     }
 
-    public void mainWindow(){
+    public void createGUI() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JFrame frame = new JFrame("MarketApp");
-        frame.setSize(new Dimension(1024, 768));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout((new FlowLayout()));
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        TextField login = new TextField(20);
+        TextField password = new TextField();
+
+        panel.add(login);
+        panel.add(password);
 
 
+        JButton ok = new JButton("OK");
+        ok.setActionCommand(String.valueOf(TerminalControllerFactory.create().getiAppDb().getProducts().size()));
+        panel.add(ok);
 
-        frame.add(login);
-        frame.add(password);
-        JButton ok = new JButton("Connect");
-        frame.add(ok);
-        ok.addActionListener(this);
+        JButton button2 = new JButton("Button 2");
+        button2.setActionCommand("Button 2 was pressed!");
+        panel.add(button2);
 
-        frame.setVisible(true);
+        JButton button3 = new JButton("Button 3");
+        button3.setActionCommand("Button 3 was pressed!");
+        panel.add(button3);
+
+        textField = new JTextField();
+        textField.setColumns(23);
+        panel.add(textField);
+
+        ActionListener actionListener = new TestActionListener();
+
+        ok.addActionListener(actionListener);
+        button2.addActionListener(actionListener);
+
+        button3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textField.setText(e.getActionCommand());
+            }
+        });
+
+        getContentPane().add(panel);
+        setPreferredSize(new Dimension(320, 100));
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        IAppDb iAppDb = new IAppDbImpl();
-        try {
-            iAppDb.login(login.getText(), password.getText());
-        } catch (IOException e1) {
-            e1.printStackTrace();
+    public class TestActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            textField.setText(e.getActionCommand());
         }
-
     }
+}*/
 
-    @Override
-    public void windowOpened(WindowEvent e) {
 
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-        try {
-            dispose();
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        System.exit(0);
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }*//*
-
-}
-*/

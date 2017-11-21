@@ -2,6 +2,7 @@ package ua.artcode.market.utils;
 
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Terminal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,15 +11,14 @@ import java.util.Map;
 
 public class Generator {
     public static Product createProduct() {
-            Product product = new Product();
-            product.setName(generateName(30));
-            product.setPrice(Double.parseDouble(generateProductPrice()));
-
-            return product;
+        Product product = new Product();
+        product.setName(generateName(30));
+        product.setPrice(Double.parseDouble(generateProductPrice()));
+        return product;
     }
 
     private static String generateProductPrice() {
-            return (int)(Math.random()*1000) + "." + (int)(Math.random()*100);
+        return (int)(Math.random()*1000) + "." + (int)(Math.random()*100);
     }
 
     private static String generateName(int r){
@@ -30,7 +30,7 @@ public class Generator {
     }
 
     private static Integer random() {
-            return (int)(Math.random()*300);
+        return (int)(Math.random()*300);
     }
 
     public static Map<Product, Integer> randomProducts(){
@@ -56,5 +56,10 @@ public class Generator {
         salesman.setLogin(generateName(5));
         salesman.setPassword(generateName(6));
         return salesman;
+    }
+
+    public static Terminal createTerminal() {
+        return new Terminal((int)(Math.random()*100));
+
     }
 }

@@ -45,7 +45,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill createBill() {
+    public Bill createBill() throws IOException {
         Bill bill = new Bill();
 
         Bill bill1 = iAppDb.saveBill(bill);
@@ -54,7 +54,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product) throws IOException {
         Bill bill = iAppDb.findBillById(billId);
 
         if (bill == null || product == null) return null;
@@ -91,12 +91,11 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     @Override
     public String prinBill(Bill bill) {
-        ;
         return bill.toString();
     }
 
     @Override
-    public Bill closeBill(int id) {
+    public Bill closeBill(int id) throws IOException {
 
         Bill bill = iAppDb.findBillById(id);
         bill.setCloseTime(LocalDateTime.now());

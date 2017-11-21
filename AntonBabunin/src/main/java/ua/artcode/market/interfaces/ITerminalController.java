@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ITerminalController {
 
-    Bill createBill();
+    Bill createBill() throws IOException;
 
-    Bill addProduct(int billId, Product product);
+    Bill addProduct(int billId, Product product) throws IOException;
 
     List<Bill> getAllBills();
 
@@ -19,7 +19,7 @@ public interface ITerminalController {
 
     String prinBill(Bill bill);
 
-    Bill closeBill(int id);
+    Bill closeBill(int id) throws IOException;
 
     IAppDb getiAppDb();
 

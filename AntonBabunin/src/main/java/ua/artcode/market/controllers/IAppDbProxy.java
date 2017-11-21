@@ -62,7 +62,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Bill removeBill(int id) {
+    public Bill removeBill(int id) throws IOException {
         Bill bill = target.removeBill(id);
         String messege = null;
         if (bill == null) {
@@ -70,12 +70,12 @@ public class IAppDbProxy implements IAppDb, ILogging{
             return null;
         }
         messege = String.format("Bill %s removed", bill);
-
+        iLogging.write(messege);
         return bill;
     }
 
     @Override
-    public Product removeProduct(int id) {
+    public Product removeProduct(int id) throws IOException {
         Product product1 = target.removeProduct(id);
         String messege = null;
         if (product1 == null) {
@@ -83,13 +83,13 @@ public class IAppDbProxy implements IAppDb, ILogging{
             return null;
         }
         messege = String.format("Product %s saved", product1);
-
+        iLogging.write(messege);
         return product1;
 
     }
 
     @Override
-    public Bill saveBill(Bill bill) {
+    public Bill saveBill(Bill bill) throws IOException {
         Bill bill1 = target.saveBill(bill);
         String messege = null;
         if (bill1 == null) {
@@ -97,12 +97,12 @@ public class IAppDbProxy implements IAppDb, ILogging{
             return null;
         }
         messege = String.format("Bill %s saved", bill1);
-
+        iLogging.write(messege);
         return bill1;
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product saveProduct(Product product) throws IOException {
         Product product1 = target.saveProduct(product);
         String messege = null;
         if (product1 == null) {
@@ -110,25 +110,27 @@ public class IAppDbProxy implements IAppDb, ILogging{
             return null;
         }
         messege = String.format("Product %s saved", product1);
-
+        iLogging.write(messege);
         return product1;
     }
 
     @Override
-    public final Bill update(Bill bill) {
+    public final Bill update(Bill bill) throws IOException {
         Bill found = target.update(bill);
         String messege = null;
         if (bill.getCloseTime() != null) {
             messege = String.format("Bill %s is closed ad it can't be updated",
                     bill);
+            iLogging.write(messege);
             return null;
         }
         if (found == null){
             messege = String.format("Bill %s not founcd", bill);
+            iLogging.write(messege);
             return found;
         }
-
         messege = String.format("Bill %s was updated", bill);
+        iLogging.write(messege);
         return found;
     }
 
