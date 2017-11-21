@@ -10,7 +10,6 @@ import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
 import week1.model.Statistic;
-import week1.utils.TerminalUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

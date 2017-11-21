@@ -33,6 +33,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     @Override
     public boolean login(String login, String password) {
 
+        // set current seller in db to "-1", logging out
         iAppDB.setCurrentSeller(-1);
 
         if ((login == null || password == null) ||
@@ -119,6 +120,11 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     @Override
     public Bill findBillById(int billId) {
+
+        if (billId < 0) {
+            logger.info("Bill id is less than 0.");
+            return null;
+        }
 
         logger.info("Method findBillById was done.");
         return iAppDB.findByBillId(billId);

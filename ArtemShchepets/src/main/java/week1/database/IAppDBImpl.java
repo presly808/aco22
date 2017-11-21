@@ -21,8 +21,21 @@ public class IAppDBImpl implements IAppDB {
     private List<Seller> sellers;
 
     public IAppDBImpl() {
+
         this.bills = new ArrayList<>();
         this.sellers = new ArrayList<>();
+
+        // I will delete it when connect some kind of real db to the project
+        // for now Terminal should have some sellers in db to work correctly
+        sellers.add(new Seller(
+                "worker", "password", "Nadya Horoshun"));
+        sellers.add(new Seller(
+                "worker123", "password11", "Vasya Noob"));
+        sellers.add(new Seller(
+                "worker22", "password432", "Annita Volosova"));
+        sellers.add(new Seller(
+                "worker01", "password1111", "Vova Split"));
+
         logger.setLevel(Level.OFF);
     }
 
