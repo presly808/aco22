@@ -2,7 +2,6 @@ package week1.database;
 
 import week1.interfaces.IAppDB;
 import week1.model.Bill;
-import week1.model.Product;
 import week1.model.Seller;
 
 import java.util.ArrayList;

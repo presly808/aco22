@@ -81,7 +81,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         }
 
         product.setId(bill.getNextProductId());
-        boolean add = bill.getProductList().add(product);
+        bill.getProductList().add(product);
         bill.setNextProductId(bill.getNextProductId() + 1);
         bill.setAmountPrice(bill.getAmountPrice() + product.getPrice());
 

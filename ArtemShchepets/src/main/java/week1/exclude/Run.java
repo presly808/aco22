@@ -8,9 +8,6 @@ import week1.model.Seller;
 import week1.utils.TerminalUtils;
 import week1.view.ConsoleView;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class Run {
 
     public static void main(String[] args) {

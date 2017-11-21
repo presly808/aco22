@@ -1,7 +1,6 @@
 package week1.interfaces;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import week1.comparators.CreationDateComparator;
@@ -12,13 +11,9 @@ import week1.model.Product;
 import week1.model.Seller;
 import week1.model.Statistic;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 
@@ -110,35 +105,35 @@ public class ITerminalControllerTest {
         iAppDB.saveSeller(addSeller3);
 
         terminalController.login("worker22", "password432");
-        Bill bill1 = terminalController.createBill();
-        bill1 = terminalController.addProduct(0, new Product("Milk", 2.220));
-        bill1 = terminalController.addProduct(0, new Product("Cheese", 0.30));
-        bill1 = terminalController.addProduct(0, new Product("Milk", 15.50));
-        bill1 = terminalController.addProduct(0, new Product("Milk", 2.220));
-        bill1 = terminalController.addProduct(0, new Product("Milk", 0.010));
-        bill1 = terminalController.addProduct(0, new Product("Milk", 0.010));
-        bill1 = terminalController.addProduct(0, new Product("Milk", 0.010));// 20.27
+        terminalController.createBill();
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Cheese", 0.30));
+        terminalController.addProduct(0, new Product("Milk", 15.50));
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));// 20.27
 
         terminalController.login("worker123", "password11");
-        Bill bill2 = terminalController.createBill();
-        bill2 = terminalController.addProduct(1, new Product("Cake", 27.170));
-        bill2 = terminalController.addProduct(1, new Product("Cheese", 33.30));
-        bill2 = terminalController.addProduct(1, new Product("Water", 15.50));
-        bill2 = terminalController.addProduct(1, new Product("Milk", 2.220)); // 78.19
+        terminalController.createBill();
+        terminalController.addProduct(1, new Product("Cake", 27.170));
+        terminalController.addProduct(1, new Product("Cheese", 33.30));
+        terminalController.addProduct(1, new Product("Water", 15.50));
+        terminalController.addProduct(1, new Product("Milk", 2.220)); // 78.19
 
         terminalController.login("worker", "password");
-        Bill bill3 = terminalController.createBill();
-        bill3 = terminalController.addProduct(2, new Product("Watermelon", 3.990));
-        bill3 = terminalController.addProduct(2, new Product("Cheese", 0.30));
-        bill3 = terminalController.addProduct(2, new Product("Milk", 15.50));
-        bill3 = terminalController.addProduct(2, new Product("Juice", 9.0)); // 28.79
+        terminalController.createBill();
+        terminalController.addProduct(2, new Product("Watermelon", 3.990));
+        terminalController.addProduct(2, new Product("Cheese", 0.30));
+        terminalController.addProduct(2, new Product("Milk", 15.50));
+        terminalController.addProduct(2, new Product("Juice", 9.0)); // 28.79
 
 
         Statistic statistic = terminalController.doSomeStatisticStuff();
 
         assertNotNull(statistic);
-        assertEquals(20.27, statistic.getMinBillPrice(),0.001);
-        assertEquals(78.19, statistic.getMaxBillPrice(),0.001);
+        assertEquals(20.27, statistic.getMinBillPrice(), 0.001);
+        assertEquals(78.19, statistic.getMaxBillPrice(), 0.001);
         assertEquals(15, statistic.getSoldProducts());
         assertEquals(addSeller3, statistic.getBestSalesMan());
 
@@ -165,10 +160,10 @@ public class ITerminalControllerTest {
     @Test
     public void getAllBills() throws Exception {
 
-        Bill bill1 = terminalController.createBill();
-        Bill bill2 = terminalController.createBill();
-        Bill bill3 = terminalController.createBill();
-        Bill bill4 = terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
+        terminalController.createBill();
 
         assertEquals(4, terminalController.getAllBills().size());
     }
@@ -187,15 +182,15 @@ public class ITerminalControllerTest {
 
         Bill bill = new Bill();
         bill.setOpenTime(LocalDateTime.parse("2007-12-01T10:15:30"));
-        bill = iAppDB.saveBill(bill);
+        iAppDB.saveBill(bill);
 
         Bill bill2 = new Bill();
         bill2.setOpenTime(LocalDateTime.parse("2009-10-17T00:15:22"));
-        bill2 = iAppDB.saveBill(bill2);
+        iAppDB.saveBill(bill2);
 
         Bill bill3 = new Bill();
         bill3.setOpenTime(LocalDateTime.parse("2013-03-12T10:22:47"));
-        bill3 = iAppDB.saveBill(bill3);
+        iAppDB.saveBill(bill3);
 
         Bill bill4 = new Bill();
         bill4.setOpenTime(LocalDateTime.parse("2014-12-09T10:15:30"));
@@ -211,7 +206,7 @@ public class ITerminalControllerTest {
 
         Bill bill7 = new Bill();
         bill7.setOpenTime(LocalDateTime.now());
-        bill7 = iAppDB.saveBill(bill7);
+        iAppDB.saveBill(bill7);
 
         List<Bill> expectedList = new ArrayList<>();
 
@@ -222,7 +217,7 @@ public class ITerminalControllerTest {
         LocalDateTime startTime = LocalDateTime.parse("2014-01-01T00:00:00");
         LocalDateTime endTime = LocalDateTime.parse("2016-12-31T23:59:59");
 
-        assertEquals(expectedList,terminalController.filter(startTime,endTime, new CreationDateComparator()));
+        assertEquals(expectedList, terminalController.filter(startTime, endTime, new CreationDateComparator()));
     }
 
 

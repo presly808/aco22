@@ -4,7 +4,6 @@ import week1.model.Bill;
 import week1.model.Seller;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public interface IAppDB {
 

@@ -7,9 +7,6 @@ public class Statistic {
     private int soldProducts;
     private Seller bestSalesMan;
 
-    public Statistic() {
-    }
-
     public double getMinBillPrice() {
         return minBillPrice;
     }
