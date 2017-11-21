@@ -1,3 +1,4 @@
+/*
 package ua.artcode.market.view;
 
 import ua.artcode.market.controllers.TerminalControllerFactory;
@@ -9,8 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import javax.swing.JTextField;*/
+/*
 public class MainWindow extends JFrame {
 
     private TextField login = new TextField(20);
@@ -73,6 +74,6 @@ public class MainWindow extends JFrame {
             textField.setText(e.getActionCommand());
         }
     }
-}
+}*/
 
 

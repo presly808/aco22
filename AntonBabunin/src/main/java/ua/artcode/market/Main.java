@@ -1,4 +1,4 @@
-
+/*
 package ua.artcode.market;
 
 import ua.artcode.market.view.MainWindow;
@@ -18,4 +18,4 @@ public class Main {
             }
         });
     }
-}
+}*/
