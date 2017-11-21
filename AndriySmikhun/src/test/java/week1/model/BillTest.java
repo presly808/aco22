@@ -60,8 +60,8 @@ public class BillTest {
 
     @Test
     public void calculateAmountPrice() {
-        bill1.products[0] = product1;
-        bill1.products[1] = product2;
+        bill1.addProduct(product1);
+        bill1.addProduct(product2);
         double sum = bill1.calculateAmountPrice();
         Assert.assertEquals(60.0,sum,1);
     }
