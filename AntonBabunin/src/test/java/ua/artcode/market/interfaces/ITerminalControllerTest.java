@@ -72,6 +72,9 @@ public class ITerminalControllerTest {
         Product product = Generator.createProduct();
         open = terminalController.addProduct(open.getId(), product);
         double amountPrice = terminalController.calculateAmountPrice(open);
+        product.getPrice();
+        product.getId();
+        product.getName();
         assertNotEquals(0.0, amountPrice);
         assertNotEquals(0.0, open.getAmountPrice());
 
