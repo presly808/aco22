@@ -66,10 +66,10 @@ public class IAppDbProxy implements IAppDb, ILogging{
         Bill bill = target.removeBill(id);
         String messege = null;
         if (bill == null) {
-            messege = String.format("Bill %s not found", bill);
+            messege = String.format("Bill %s not found \r\n", bill);
             return null;
         }
-        messege = String.format("Bill %s removed", bill);
+        messege = String.format("Bill %s removed \r\n", bill);
         iLogging.write(messege);
         return bill;
     }
@@ -79,10 +79,10 @@ public class IAppDbProxy implements IAppDb, ILogging{
         Product product1 = target.removeProduct(id);
         String messege = null;
         if (product1 == null) {
-            messege = String.format("Product %s wasn't removed", product1);
+            messege = String.format("Product %s wasn't removed \r\n", product1);
             return null;
         }
-        messege = String.format("Product %s saved", product1);
+        messege = String.format("Product %s saved \r\n", product1);
         iLogging.write(messege);
         return product1;
 
@@ -93,10 +93,10 @@ public class IAppDbProxy implements IAppDb, ILogging{
         Bill bill1 = target.saveBill(bill);
         String messege = null;
         if (bill1 == null) {
-            messege = String.format("Bill %s wasn't saved", bill1);
+            messege = String.format("Bill %s wasn't saved \r\n", bill1);
             return null;
         }
-        messege = String.format("Bill %s saved", bill1);
+        messege = String.format("Bill %s saved \r\n", bill1);
         iLogging.write(messege);
         return bill1;
     }
@@ -106,10 +106,10 @@ public class IAppDbProxy implements IAppDb, ILogging{
         Product product1 = target.saveProduct(product);
         String messege = null;
         if (product1 == null) {
-            messege = String.format("Product %s wasn't saved", product1);
+            messege = String.format("Product %s wasn't saved \r\n", product1);
             return null;
         }
-        messege = String.format("Product %s saved", product1);
+        messege = String.format("Product %s saved \r\n", product1);
         iLogging.write(messege);
         return product1;
     }
@@ -119,17 +119,17 @@ public class IAppDbProxy implements IAppDb, ILogging{
         Bill found = target.update(bill);
         String messege = null;
         if (bill.getCloseTime() != null) {
-            messege = String.format("Bill %s is closed ad it can't be updated",
-                    bill);
+            messege = String.format("Bill %s is closed ad it can't be " +
+                            "updated \r\n", bill);
             iLogging.write(messege);
             return null;
         }
         if (found == null){
-            messege = String.format("Bill %s not founcd", bill);
+            messege = String.format("Bill %s not found \r\n", bill);
             iLogging.write(messege);
             return found;
         }
-        messege = String.format("Bill %s was updated", bill);
+        messege = String.format("Bill %s was updated \r\n", bill);
         iLogging.write(messege);
         return found;
     }

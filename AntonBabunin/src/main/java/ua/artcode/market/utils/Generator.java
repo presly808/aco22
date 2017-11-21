@@ -2,7 +2,6 @@ package ua.artcode.market.utils;
 
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
-import ua.artcode.market.models.Terminal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +57,8 @@ public class Generator {
         return salesman;
     }
 
-    public static Terminal createTerminal() {
+    /*public static Terminal createTerminal() {
         return new Terminal((int)(Math.random()*100));
 
-    }
+    }*/
 }

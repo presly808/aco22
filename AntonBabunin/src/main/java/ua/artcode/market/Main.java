@@ -1,4 +1,3 @@
-/*
 
 package ua.artcode.market;
 
@@ -20,4 +19,3 @@ public class Main {
         });
     }
 }
-*/

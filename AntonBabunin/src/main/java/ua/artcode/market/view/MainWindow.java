@@ -1,4 +1,4 @@
-/*package ua.artcode.market.view;
+package ua.artcode.market.view;
 
 import ua.artcode.market.controllers.TerminalControllerFactory;
 
@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
         panel.add(password);
 
 
-        JButton ok = new JButton("OK");
+        JButton ok = new JButton("");
         ok.setActionCommand(String.valueOf(TerminalControllerFactory.create().getiAppDb().getProducts().size()));
         panel.add(ok);
 
@@ -73,6 +73,6 @@ public class MainWindow extends JFrame {
             textField.setText(e.getActionCommand());
         }
     }
-}*/
+}
 
 
