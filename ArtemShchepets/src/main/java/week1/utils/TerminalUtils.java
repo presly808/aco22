@@ -3,16 +3,7 @@ package week1.utils;
 import week1.interfaces.IAppDB;
 import week1.model.Bill;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class TerminalUtils {
-
-    private final static Logger logger = Logger.getLogger(TerminalUtils.class.getName());
-
-    public static void turnOffLogger() {
-        logger.setLevel(Level.OFF);
-    }
 
     public static int calculateSumOfSoldProducts(IAppDB iAppDB) {
         int soldProducts = 0;
@@ -21,7 +12,7 @@ public class TerminalUtils {
             soldProducts += bill.getNextProductId();
         }
 
-        logger.info("SumOfSoldProducts was calculated");
+        //logger.info("SumOfSoldProducts was calculated");
         return soldProducts;
     }
 
@@ -34,7 +25,7 @@ public class TerminalUtils {
                 maxPriceBill = bill.getAmountPrice();
         }
 
-        logger.info("maxPriceBill was found");
+        //logger.info("maxPriceBill was found");
         return maxPriceBill;
     }
 
@@ -47,7 +38,7 @@ public class TerminalUtils {
                 minPriceBill = bill.getAmountPrice();
         }
 
-        logger.info("minPriceBill was found.");
+        //logger.info("minPriceBill was found.");
         return minPriceBill;
     }
 

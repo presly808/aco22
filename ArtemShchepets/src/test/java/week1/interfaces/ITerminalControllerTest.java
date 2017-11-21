@@ -10,6 +10,7 @@ import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
 import week1.model.Statistic;
+import week1.utils.TerminalUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class ITerminalControllerTest {
     public void setUp() throws Exception {
         iAppDB = new IAppDBImpl();
         terminalController = new ITerminalControllerImpl(iAppDB);
+        terminalController.turnOnDatabaseLogger();
+        terminalController.turnOnTerminalLogger();
     }
 
     @After

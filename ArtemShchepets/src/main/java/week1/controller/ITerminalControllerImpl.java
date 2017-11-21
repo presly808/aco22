@@ -27,6 +27,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     public ITerminalControllerImpl(IAppDB iAppDB) {
         this.iAppDB = iAppDB;
+        logger.setLevel(Level.OFF);
     }
 
     @Override
@@ -200,7 +201,12 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public void turnOffLogger() {
-        logger.setLevel(Level.OFF);
+    public void turnOnDatabaseLogger() {
+        iAppDB.getLogger().setLevel(Level.INFO);
+    }
+
+    @Override
+    public void turnOnTerminalLogger() {
+        logger.setLevel(Level.INFO);
     }
 }

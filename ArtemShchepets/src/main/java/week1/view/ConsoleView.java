@@ -20,7 +20,7 @@ public class ConsoleView {
         do {
             consoleWelcomeMessage();
 
-            String choice = scanner.nextLine();
+            String choice = scanner.next();
 
             switch (choice) {
                 case "1":

@@ -31,5 +31,7 @@ public interface ITerminalController {
 
     List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator);
 
-    void turnOffLogger();
+    void turnOnTerminalLogger();
+
+    void turnOnDatabaseLogger();
 }

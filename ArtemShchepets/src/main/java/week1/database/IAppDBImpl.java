@@ -23,6 +23,12 @@ public class IAppDBImpl implements IAppDB {
     public IAppDBImpl() {
         this.bills = new ArrayList<>();
         this.sellers = new ArrayList<>();
+        logger.setLevel(Level.OFF);
+    }
+
+    @Override
+    public Logger getLogger() {
+        return logger;
     }
 
     @Override
@@ -154,11 +160,6 @@ public class IAppDBImpl implements IAppDB {
 
         logger.info("Seller was updated.");
         return sellers.set(index, seller);
-    }
-
-    @Override
-    public void turnOffLogger() {
-        logger.setLevel(Level.OFF);
     }
 
     @Override
