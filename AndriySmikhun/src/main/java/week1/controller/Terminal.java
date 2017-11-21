@@ -26,6 +26,7 @@ public class Terminal implements ITerminal {
         return false;
     }
 
+    @Override
     public boolean addBill(Bill bill) {
         for (int i = 0; i < bills.length; i++) {
             if (bills[i] == null) bills[i] = bill;
@@ -36,6 +37,7 @@ public class Terminal implements ITerminal {
         return false;
     }
 
+    @Override
     public boolean addSalesman(Salesman salesman) {
         for (int i = 0; i < sales.length; i++) {
             if (sales[i] == null) sales[i] = salesman;
@@ -201,7 +203,7 @@ public class Terminal implements ITerminal {
         return forRerurn;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////FilterByProduct
+    /////////////////////////////////////////////////////////////////////FilterByProduct
     public Bill[] filterByProduct(Bill[] withBill, Product[] withProduct) {
         Bill[] forRerurn = new Bill[withBill.length];
         int count = 0;
