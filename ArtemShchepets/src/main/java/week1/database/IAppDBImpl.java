@@ -11,30 +11,21 @@ import java.util.List;
 public class IAppDBImpl implements IAppDB {
 
     private int billNextId;
-    private int productNextId;
 
     private int currentSeller = -1;
 
     private List<Bill> bills;
-    private List<Product> products;
     private List<Seller> sellers;
 
     public IAppDBImpl() {
         this.bills = new ArrayList<>();
-        this.products = new ArrayList<>();
         this.sellers = new ArrayList<>();
     }
-
 
 
     @Override
     public List<Bill> getAllBills() {
         return bills;
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return products;
     }
 
     @Override
@@ -57,14 +48,6 @@ public class IAppDBImpl implements IAppDB {
 
         for (Bill bill : bills) {
             if (billId == bill.getId()) return bill;
-        }
-        return null;
-    }
-
-    @Override
-    public Product findByProductId(int productId) {
-        for (Product product : products) {
-            if (productId == product.getId()) return product;
         }
         return null;
     }
@@ -97,15 +80,6 @@ public class IAppDBImpl implements IAppDB {
     }
 
     @Override
-    public Product saveProduct(Product product) {
-
-        product.setId(productNextId++);
-        products.add(product);
-
-        return product;
-    }
-
-    @Override
     public Seller saveSeller(Seller seller) {
 
         sellers.add(seller);
@@ -123,21 +97,6 @@ public class IAppDBImpl implements IAppDB {
         }
 
         bills.remove(found);
-
-        return found;
-    }
-
-    @Override
-    public Product removeProduct(int productId) {
-
-        Product found = findByProductId(productId);
-
-        if (found == null) {
-            System.out.println("Not found product with such id");
-            return null;
-        }
-
-        products.remove(found);
 
         return found;
     }
@@ -166,7 +125,7 @@ public class IAppDBImpl implements IAppDB {
             return null;
         }
 
-        return sellers.set(index,seller);
+        return sellers.set(index, seller);
     }
 
     @Override
@@ -179,6 +138,6 @@ public class IAppDBImpl implements IAppDB {
             return null;
         }
 
-        return bills.set(index,bill);
+        return bills.set(index, bill);
     }
 }

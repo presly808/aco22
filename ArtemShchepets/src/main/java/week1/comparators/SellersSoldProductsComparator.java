@@ -9,8 +9,7 @@ public class SellersSoldProductsComparator implements Comparator<Seller>{
 
     @Override
     public int compare(Seller o1, Seller o2) {
-        return 0;
-       // return o1.getSoldProducts() - o2.getSoldProducts();
+        return o1.getSoldProducts() - o2.getSoldProducts();
     }
 
 }

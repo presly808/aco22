@@ -6,12 +6,20 @@ import java.util.List;
 
 public class Bill {
 
-    private int id;
     private List<Product> productList;
+
+    private int id;
+
     private double amountPrice;
+
     private LocalDateTime openTime;
     private LocalDateTime closeTime;
+
     private boolean isClosed;
+
+    private Seller seller;
+
+    private int nextProductId;
 
     public Bill() {
         this.productList = new ArrayList<>();
@@ -66,6 +74,22 @@ public class Bill {
         isClosed = closed;
     }
 
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public int getNextProductId() {
+        return nextProductId;
+    }
+
+    public void setNextProductId(int nextProductId) {
+        this.nextProductId = nextProductId;
+    }
+
     @Override
     public String toString() {
         return "Bill{" +
@@ -76,6 +100,4 @@ public class Bill {
                 ", closeTime=" + closeTime +
                 '}';
     }
-
-
 }

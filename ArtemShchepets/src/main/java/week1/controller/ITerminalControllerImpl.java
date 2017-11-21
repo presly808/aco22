@@ -1,5 +1,6 @@
 package week1.controller;
 
+import week1.comparators.SellersSoldProductsComparator;
 import week1.interfaces.IAppDB;
 import week1.interfaces.ITerminalController;
 import week1.model.Bill;
@@ -8,7 +9,13 @@ import week1.model.Seller;
 import week1.model.Statistic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import static week1.utils.TerminalUtils.calculateSumOfSoldProducts;
+import static week1.utils.TerminalUtils.findMaxPriceBill;
+import static week1.utils.TerminalUtils.findMinPriceBill;
 
 public class ITerminalControllerImpl implements ITerminalController {
 
@@ -44,6 +51,9 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Bill bill = new Bill();
 
+        if (iAppDB.getCurrentSellerId() != -1)
+            bill.setSeller(iAppDB.getAllSellers().get(iAppDB.getCurrentSellerId()));
+
         Bill billWithId = iAppDB.saveBill(bill);
 
         return billWithId;
@@ -59,7 +69,11 @@ public class ITerminalControllerImpl implements ITerminalController {
             return null;
         }
 
+        product.setId(bill.getNextProductId());
         boolean add = bill.getProductList().add(product);
+        bill.setNextProductId(bill.getNextProductId() + 1);
+        bill.setAmountPrice(bill.getAmountPrice() + product.getPrice());
+
         iAppDB.updateBill(bill);
 
         return bill;
@@ -98,12 +112,63 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Seller[] getTopNOfSalesman(int quantityOfBestSellers) {
-        return new Seller[0];
+    public Seller getTopOfSalesman() {
+
+        if (iAppDB.getAllSellers().size() == 0) return null;
+
+        for (Seller seller : iAppDB.getAllSellers()) {
+            seller = calculateSellerSoldProducts(seller);
+
+            iAppDB.updateSeller(seller);
+        }
+
+        // sort sellers by sold products
+        iAppDB.getAllSellers().sort(new SellersSoldProductsComparator());
+
+        return iAppDB.getAllSellers().get(iAppDB.getAllSellers().size() - 1);
+    }
+
+    private Seller calculateSellerSoldProducts(Seller seller) {
+        for (Bill bill : iAppDB.getAllBills()) {
+            if (seller.getFullName() != null && seller.getSoldProducts() == 00
+                    && seller.getFullName().equals(bill.getSeller().getFullName())) {
+                seller.setSoldProducts(seller.getSoldProducts() + bill.getProductList().size());
+            }
+        }
+        return seller;
     }
 
     @Override
     public Statistic doSomeStatisticStuff() {
-        return null;
+
+        Statistic statistic = new Statistic();
+
+        if (iAppDB.getAllSellers() == null || iAppDB.getAllBills() == null) {
+            System.out.println("Sry, we haven't any bills or sellers!");
+            return null;
+        }
+
+        statistic.setMaxBillPrice(findMaxPriceBill(iAppDB));
+        statistic.setMinBillPrice(findMinPriceBill(iAppDB));
+        statistic.setSoldProducts(calculateSumOfSoldProducts(iAppDB));
+        statistic.setBestSalesMan(getTopOfSalesman());
+
+        return statistic;
+    }
+
+    @Override
+    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator) {
+
+        List<Bill> billList = new ArrayList<>();
+
+        for (Bill bill : iAppDB.getAllBills()) {
+            if (bill.getOpenTime().compareTo(startTime) > 0 &&
+                    bill.getOpenTime().compareTo(endTime) < 0)
+                billList.add(bill);
+        }
+
+        billList.sort(comparator);
+
+        return billList;
     }
 }

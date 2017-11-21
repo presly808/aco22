@@ -5,6 +5,8 @@ import week1.model.Product;
 import week1.model.Seller;
 import week1.model.Statistic;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 public interface ITerminalController {
@@ -23,7 +25,9 @@ public interface ITerminalController {
 
     Seller findSellerByLoginOrFullName(String loginOrFullName);
 
-    Seller[] getTopNOfSalesman(int quantityOfBestSellers);
+    Seller getTopOfSalesman();
 
     Statistic doSomeStatisticStuff();
+
+    List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator);
 }
