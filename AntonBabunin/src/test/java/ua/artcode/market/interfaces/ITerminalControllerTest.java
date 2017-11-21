@@ -84,7 +84,16 @@ public class ITerminalControllerTest {
     public void createSalesman() throws Exception {
         Salesman salesman = terminalController.getiAppDb().
                 createSalesman("1", "1", "1");
+        salesman.getLogin();
+        salesman.getFullName();
+        salesman.getPassword();
+        salesman.setLogin("1");
+        salesman.setPassword("1");
+        salesman.setFullName("1");
+        salesman.setIsConnected(false);
+        salesman.toString();
 
+        assertFalse(salesman.equals(null));
         assertNotEquals(null, salesman);
     }
 
