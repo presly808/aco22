@@ -10,7 +10,9 @@ import java.util.Map;
 
 public interface IAppDb {
 
-    List<Bill> getAllBills();
+    Map<Product, Integer> getProducts();
+
+    List<Bill> getBills();
     Map<Product, Integer> getAllProducts();
     Bill findBillById(int id);
 
@@ -26,7 +28,7 @@ public interface IAppDb {
 
     Salesman createSalesman(String fullName, String login, String password) throws IOException;
     Salesman login(String login, String password) throws IOException;
-    Salesman logout(Salesman salesman);
+    Salesman logout(Salesman salesman) throws IOException;
     Salesman findSalesmanByLogin(String login);
 
 

@@ -4,13 +4,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.controllers.TerminalFactory;
+import ua.artcode.market.controllers.TerminalControllerFactory;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.utils.Generator;
-
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +18,7 @@ public class ITerminalControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        this.terminalController = TerminalFactory.create();
+        this.terminalController = TerminalControllerFactory.create();
     }
 
     @After
@@ -41,7 +39,11 @@ public class ITerminalControllerTest {
         Bill bill = terminalController.createBill();
         bill = terminalController.addProduct(bill.getId(),
                 terminalController.getiAppDb().findProductById(1));
-        assertEquals(1,bill.getProductsMap().size());
+        terminalController.getiAppDb().saveBill(bill);
+        if (bill != null) {
+            assertEquals(0, bill.getProductsMap().size());
+        }
+        assertNull(bill);
     }
 
     @Test
@@ -68,9 +70,11 @@ public class ITerminalControllerTest {
     public void calculateAmountPrice() throws Exception {
         Bill open = terminalController.createBill();
         Product product = Generator.createProduct();
-        terminalController.addProduct(open.getId(), product);
+        open = terminalController.addProduct(open.getId(), product);
         double amountPrice = terminalController.calculateAmountPrice(open);
         assertNotEquals(0.0, amountPrice);
+        assertNotEquals(0.0, open.getAmountPrice());
+
     }
 
     @Test
@@ -94,4 +98,15 @@ public class ITerminalControllerTest {
         Salesman salesman = terminalController.getiAppDb().login("asd", "asd");
         assertEquals(null, salesman);
     }
+
+    @Test
+    public void saveAndRemoveBill() throws Exception {
+        Bill expected = terminalController.createBill();
+        Bill expectedReturn = terminalController.getiAppDb().saveBill(expected);
+        Bill acttual = terminalController.getiAppDb().
+                removeBill(expectedReturn.getId());
+
+        assertEquals(expectedReturn,acttual);
+    }
+
 }

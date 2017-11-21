@@ -12,6 +12,6 @@ public interface ILogging {
     List<Salesman> getAllSalesmans();
     Salesman createSalesman(String fullName, String login, String password) throws IOException;
     Salesman login(String login, String password) throws IOException;
-    Salesman logout(Salesman salesman);
+    Salesman logout(Salesman salesman) throws IOException;
     Salesman findSalesmanByLogin(String login);
 }

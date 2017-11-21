@@ -1,11 +1,10 @@
+/*
 package ua.artcode.market.models;
 
 public class Terminal {
     private int id;
 
-    public Terminal(int id) {
-        this.id = id;
-    }
+    public Terminal(int id) { this.id = id; }
 
     public int getId() {
         return id;
@@ -37,3 +36,4 @@ public class Terminal {
                 '}';
     }
 }
+*/

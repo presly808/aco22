@@ -27,8 +27,13 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public List<Bill> getAllBills() {
-        return target.getAllBills();
+    public Map<Product, Integer> getProducts() {
+        return target.getProducts();
+    }
+
+    @Override
+    public List<Bill> getBills() {
+        return target.getBills();
     }
 
     @Override
@@ -58,27 +63,73 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public Bill removeBill(int id) {
-        return target.removeBill(id);
+        Bill bill = target.removeBill(id);
+        String messege = null;
+        if (bill == null) {
+            messege = String.format("Bill %s not found", bill);
+            return null;
+        }
+        messege = String.format("Bill %s removed", bill);
+
+        return bill;
     }
 
     @Override
     public Product removeProduct(int id) {
-        return target.removeProduct(id);
+        Product product1 = target.removeProduct(id);
+        String messege = null;
+        if (product1 == null) {
+            messege = String.format("Product %s wasn't removed", product1);
+            return null;
+        }
+        messege = String.format("Product %s saved", product1);
+
+        return product1;
+
     }
 
     @Override
     public Bill saveBill(Bill bill) {
-        return target.saveBill(bill);
+        Bill bill1 = target.saveBill(bill);
+        String messege = null;
+        if (bill1 == null) {
+            messege = String.format("Bill %s wasn't saved", bill1);
+            return null;
+        }
+        messege = String.format("Bill %s saved", bill1);
+
+        return bill1;
     }
 
     @Override
     public Product saveProduct(Product product) {
-        return target.saveProduct(product);
+        Product product1 = target.saveProduct(product);
+        String messege = null;
+        if (product1 == null) {
+            messege = String.format("Product %s wasn't saved", product1);
+            return null;
+        }
+        messege = String.format("Product %s saved", product1);
+
+        return product1;
     }
 
     @Override
-    public Bill update(Bill bill) {
-        return target.update(bill);
+    public final Bill update(Bill bill) {
+        Bill found = target.update(bill);
+        String messege = null;
+        if (bill.getCloseTime() != null) {
+            messege = String.format("Bill %s is closed ad it can't be updated",
+                    bill);
+            return null;
+        }
+        if (found == null){
+            messege = String.format("Bill %s not founcd", bill);
+            return found;
+        }
+
+        messege = String.format("Bill %s was updated", bill);
+        return found;
     }
 
     @Override
@@ -90,8 +141,8 @@ public class IAppDbProxy implements IAppDb, ILogging{
             result = true;
         }
 
-        write(String.format("Salesman was created: FullName %s login %s " +
-                        "and password %s," + "result %s\r\n",
+        iLogging.write(String.format("Salesman was created: " +
+                        "FullName %s login %s and password %s, result %s\r\n",
                 fullName, login, password, result));
 
         return salesman;
@@ -113,8 +164,18 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Salesman logout(Salesman salesman) {
-        return iLogging.logout(salesman);
+    public Salesman logout(Salesman salesman) throws IOException {
+        boolean result = false;
+        Salesman salesman1 = iLogging.logout(salesman);
+        if (salesman1 != null) {
+            result = true;
+        }
+        iLogging.write(String.format("Salesman was logout with login %s " +
+                        "and password %s," + "result %s\r\n",
+                salesman1.getLogin(), salesman1.getPassword(), result));
+
+
+        return salesman1;
     }
 
 

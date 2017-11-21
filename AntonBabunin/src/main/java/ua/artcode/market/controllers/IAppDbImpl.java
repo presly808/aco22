@@ -18,16 +18,19 @@ public class IAppDbImpl implements IAppDb {
 
     private List<Bill> bills;
     private Map<Product,Integer> products;
-    private List<Salesman> salesmens;
 
     public IAppDbImpl() {
         this.bills = new ArrayList<>();
         this.products = Generator.randomProducts();
-        this.salesmens = new ArrayList<>();
     }
 
     @Override
-    public List<Bill> getAllBills() {
+    public Map<Product, Integer> getProducts() {
+        return products;
+    }
+
+    @Override
+    public List<Bill> getBills() {
         return bills;
     }
 
@@ -74,9 +77,11 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Bill saveBill(Bill bill) {
-        bill.setId(billNextId++);
-        bills.add(bill);
-        return bill;
+        if (bill != null) {
+            bill.setId(billNextId++);
+            bills.add(bill);
+            return bill;
+        } return null;
     }
 
     @Override

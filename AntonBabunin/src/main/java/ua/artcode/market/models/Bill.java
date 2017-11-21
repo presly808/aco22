@@ -7,7 +7,7 @@ import java.util.Map;
 public class Bill {
 
     private int id;
-    private int terminalId;
+//    private int terminalId;
     private Map<Product, Integer> productsMap;
     private Salesman salesman;
     private double amountPrice;
@@ -28,13 +28,13 @@ public class Bill {
         this.id = id;
     }
 
-    public int getTerminalId() {
-        return terminalId;
-    }
-
-    public void setTerminalId(int terminalId) {
-        this.terminalId = terminalId;
-    }
+//    public int getTerminalId() {
+//        return terminalId;
+//    }
+//
+//    public void setTerminalId(int terminalId) {
+//        this.terminalId = terminalId;
+//    }
 
     public Map<Product, Integer> getProductsMap() {
         return productsMap;
@@ -95,7 +95,7 @@ public class Bill {
     public String toString() {
         return "Bill{" +
                 "billId=" + id +
-                ", terminalId=" + terminalId +
+//                ", terminalId=" + terminalId +
                 ", productsMap=" + productsMap +
                 ", salesman=" + salesman +
                 ", amountPrice=" + amountPrice +
