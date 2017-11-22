@@ -1,9 +1,7 @@
 package week1.model;
 
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 
 
@@ -11,7 +9,6 @@ import org.junit.Test;
 public class BillTest {
     private Product product1, product2;
     private Bill bill1;
-    private Salesman salesman1;
 
 
     @Before
@@ -21,8 +18,6 @@ public class BillTest {
         product2 = new Product(2,"juse", 20.00);
 
 
-        salesman1 = new Salesman("Marusia", "maria", "pass", true);
-        bill1 = new Bill(1, salesman1);
 
 
 

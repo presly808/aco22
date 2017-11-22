@@ -1,9 +1,7 @@
 package week1.controller;
 
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
@@ -14,7 +12,7 @@ public class TerminalTest {
     private Product     product1,       product2;
     private String  myDataTime1 ,   myDataTime2;
     private Bill        bill1,          bill2,          bill3;
-    private Salesman    salesman1,      salesman2;
+    private Salesman    salesman1;
     private Terminal    terminal;
 
 
@@ -26,11 +24,11 @@ public class TerminalTest {
         product2 = new Product(2,"juse", 20.00);
 
         salesman1 = new Salesman("Marusia", "maria", "pass", true);
-        salesman2 = new Salesman("Oleg","oleg","pass",true);
+        //salesman2 = new Salesman("Oleg","oleg","pass",true);
 
         bill1 = new Bill(1,salesman1);
-        bill2 = new Bill(2,salesman2);
-        bill3 = new Bill(3,salesman2);
+        bill2 = new Bill(2,salesman1);
+        bill3 = new Bill(3,salesman1);
 
         myDataTime1 = "17:10:10 23/7";
         myDataTime2 = "22:10:10 27/7";
@@ -38,9 +36,9 @@ public class TerminalTest {
         terminal = new Terminal();
 
         terminal.addSalesman(salesman1);
-        terminal.addSalesman(salesman2);
+        terminal.addSalesman(salesman1);
 
-        terminal.createBill(0,salesman2);
+        terminal.createBill(0,salesman1);
 
         terminal.addBill(bill1);
         terminal.addBill(bill2);
@@ -94,8 +92,7 @@ public class TerminalTest {
     }
     @Test
     public void getTopNofSalesMan(){
-       Salesman s1 = terminal.getTopNofSalesMan();
-       Assert.assertTrue(s1.equals(salesman1));
+       Assert.assertEquals(salesman1,terminal.getTopNofSalesMan());
     }
     @Test
     public void averageBill(){

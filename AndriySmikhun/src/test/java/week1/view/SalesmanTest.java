@@ -1,8 +1,7 @@
 package week1.view;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+
 import week1.model.Salesman;
 
 import static org.junit.Assert.*;
