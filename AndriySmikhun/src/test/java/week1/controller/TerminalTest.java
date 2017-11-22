@@ -26,7 +26,7 @@ public class TerminalTest {
         product2 = new Product(2,"juse", 20.00);
 
         salesman1 = new Salesman("Marusia", "maria", "pass", true);
-        salesman2 = new Salesman("Oleg","oleg","pass",false);
+        salesman2 = new Salesman("Oleg","oleg","pass",true);
 
         bill1 = new Bill(1,salesman1);
         bill2 = new Bill(2,salesman2);
@@ -39,6 +39,8 @@ public class TerminalTest {
 
         terminal.addSalesman(salesman1);
         terminal.addSalesman(salesman2);
+
+        terminal.createBill(0,salesman2);
 
         terminal.addBill(bill1);
         terminal.addBill(bill2);
