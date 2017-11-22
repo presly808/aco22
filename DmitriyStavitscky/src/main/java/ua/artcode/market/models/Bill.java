@@ -1,18 +1,15 @@
 package ua.artcode.market.models;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class Bill implements Comparable<Bill> {
 
-    private static final int MAX_COUNT_OF_PRODUCTS_IN_BILL = 10;
-
-    private Product[] products = new Product[MAX_COUNT_OF_PRODUCTS_IN_BILL];
+    private List<Product> products = new ArrayList<>();
     private int productsCount;
     private int id;
     private double amountPrice;
-
-    private boolean isClosed;
 
     private Salesman salesman;
 
@@ -23,44 +20,28 @@ public class Bill implements Comparable<Bill> {
         this.id = idOfBill;
     }
 
-    public void addProduct(String name, int id, double price) {
-        if (productsCount == MAX_COUNT_OF_PRODUCTS_IN_BILL) {
-            System.out.println("sorry, max count of products in bill");
+    public void calculateAmountPrice() {
 
-        } else if (name == null || id == 0 || price == 0.0) {
-            System.out.println("wrong data");
-
-        } else if (isClosed) {
-            System.out.println("sorry, bill is closed");
-
-        } else {
-            products[productsCount++] = new Product(name, id, price);
-            calculateAmountPrice();
-        }
-    }
-
-    private void calculateAmountPrice() {
-        for (int i = 0; i < productsCount; i++) {
-            amountPrice += products[i].getPrice();
+        for (Product product : products) {
+            amountPrice += product.getPrice();
         }
     }
 
     public void closeBill(int hours, int minutes, int seconds) {
-        isClosed = true;
+
         time = new Time(hours, minutes, seconds);
-        salesman.setSumOfAllSales(amountPrice);
+        salesman.setSumOfAllSales(salesman.getSumOfAllSales() + amountPrice);
     }
 
     @Override
     public String toString() {
         return "Bill{" +
-                "products=" + Arrays.toString(products) +
+                "products=" + products +
                 ", productsCount=" + productsCount +
                 ", id=" + id +
                 ", amountPrice=" + amountPrice +
-                ", isClosed=" + isClosed +
-                ", salesman=" + salesman.toString() +
-                ", time=" + time.toString() +
+                ", salesman=" + salesman +
+                ", time=" + time +
                 '}';
     }
 
@@ -76,11 +57,10 @@ public class Bill implements Comparable<Bill> {
 
         Bill other = (Bill) obj;
 
-        return (products != null && Arrays.equals(products, other.products)) &&
+        return (products != null && products.equals(other.products)) &&
                 (productsCount == other.productsCount) &&
                 id == other.id &&
                 amountPrice == other.amountPrice &&
-                isClosed == other.isClosed &&
                 salesman.equals(other.salesman) &&
                 time.equals(other.time);
 
@@ -94,11 +74,7 @@ public class Bill implements Comparable<Bill> {
     }
 
     public void setProductsCount(int productsCount) {
-        this.productsCount = productsCount;
-    }
-
-    public boolean getIsClosed() {
-        return isClosed;
+        this.productsCount += productsCount;
     }
 
     public int getId() {
@@ -109,11 +85,11 @@ public class Bill implements Comparable<Bill> {
         return amountPrice;
     }
 
-    public Product[] getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Product[] products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
@@ -121,9 +97,11 @@ public class Bill implements Comparable<Bill> {
         return time;
     }
 
-    public boolean isClosed() {
-        return isClosed;
+    public void setTime(Time time) {
+        this.time = time;
     }
+
+    ;
 
     public Salesman getSalesman() {
         return salesman;
@@ -151,7 +129,7 @@ class BillProductsCountComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return o1.getProductsCount() - o2.getProductsCount();
+        return o1.getProducts().size() - o2.getProducts().size();
     }
 }
 

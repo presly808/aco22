@@ -1,14 +1,14 @@
 package ua.artcode.market.models;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.controller.TerminalController;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ua.artcode.market.controller.TerminalController.MAX_COUNT_OF_SALESMANS;
 
 public class TerminalControllerTest {
 
@@ -26,34 +26,37 @@ public class TerminalControllerTest {
     private static int pass2 = 456;
     private static int pass3 = 789;
 
-    private static Salesman[] salesmans = new Salesman[MAX_COUNT_OF_SALESMANS];
+    @Before
+    public void before() {
 
-    @BeforeClass
-    public static void beforeClass() {
+        terminal = new TerminalController(new AppDB());
 
-        terminal = new TerminalController();
+        terminal.getAppDB().addProductToDataBase("Milk", 100);
+        terminal.getAppDB().addProductToDataBase("Apple", 70);
+        terminal.getAppDB().addProductToDataBase("Meat", 10);
 
-        terminal.addSalesman(name1, login1, pass1);
-        terminal.addSalesman(name2, login2, pass2);
-        terminal.addSalesman(name3, login3, pass3);
-
-        salesmans = terminal.getSalesmans();
+        terminal.addSalesman(name1, login1, pass1, terminal.getAppDB().genId());
+        terminal.addSalesman(name2, login2, pass2, terminal.getAppDB().genId());
+        terminal.addSalesman(name3, login3, pass3, terminal.getAppDB().genId());
 
         terminal.signIn(true, login3, pass3);
-        terminal.createBill(1);
-        terminal.addProduct("Milk", 19, 100);
+        terminal.createBill();
+        terminal.addProductToBill(1);
+        terminal.addProductToBill(2);
+        terminal.addProductToBill(3);
         terminal.closeAndSaveBill(23, 58, 59);
         terminal.logOut();
 
         terminal.signIn(false, name1, pass1);
-        terminal.createBill(2);
-        terminal.addProduct("Fish", 8, 70);
+        terminal.createBill();
+        terminal.addProductToBill(1);
+        terminal.addProductToBill(2);
         terminal.closeAndSaveBill(13, 13, 13);
         terminal.logOut();
 
         terminal.signIn(true, login2, pass2);
-        terminal.createBill(3);
-        terminal.addProduct("Apple", 7, 10);
+        terminal.createBill();
+        terminal.addProductToBill(1);
         terminal.closeAndSaveBill(1, 1, 1);
         terminal.logOut();
     }
@@ -77,26 +80,25 @@ public class TerminalControllerTest {
     public void closeAndSaveBill() {
 
         terminal.signIn(false, name1, pass1);
-        terminal.createBill(5);
-        terminal.addProduct("Fanta", 15, 9.50);
+        terminal.createBill();
+        terminal.addProductToBill(1);
         terminal.closeAndSaveBill(10, 20, 30);
-        assertEquals("10:20:30", terminal.getBills()[terminal.getCountOfBills() - 1].getTime().toString());
+        assertEquals("10:20:30", terminal.getAppDB().getBills().get(3).getTime().toString());
     }
 
     @Test
     public void findBillById() throws Exception {
 
-        Bill[] bills = terminal.getBills();
-        Bill excpectedBill = terminal.findBillById(2);
+        Bill excpectedBill = terminal.getAppDB().findBillById(7);
 
-        assertEquals(excpectedBill, bills[1]);
+        assertEquals(excpectedBill, terminal.getBills().get(0));
     }
 
     @Test
     public void findSalesman() throws Exception {
 
         // salerman search
-        Salesman findSalesman = terminal.findSalesman(login2, true);
+        Salesman findSalesman = terminal.getAppDB().findSalesman(login2, true);
 
         assertEquals(findSalesman.getFullName(), name2);
         assertEquals(findSalesman.getLogin(), login2);
@@ -107,19 +109,20 @@ public class TerminalControllerTest {
     public void getTopNofSalesMan() throws Exception {
 
         // search top salesman
-        salesmans[0].setSumOfAllSales(150);
-        salesmans[1].setSumOfAllSales(200);
-        salesmans[2].setSumOfAllSales(100);
+        terminal.getAppDB().getSalesmans().get(0).setSumOfAllSales(150);
+        terminal.getAppDB().getSalesmans().get(1).setSumOfAllSales(200);
+        terminal.getAppDB().getSalesmans().get(2).setSumOfAllSales(100);
 
         Salesman topSalesman = terminal.getTopNofSalesMan();
 
-        assertEquals(topSalesman.getSumOfAllSales(), salesmans[1].getSumOfAllSales(), 1);
+        assertEquals(topSalesman.getSumOfAllSales(),
+                terminal.getAppDB().getSalesmans().get(1).getSumOfAllSales(), 1);
     }
 
     @Test
     public void filterAndSortWitIdCompar() throws Exception {
 
-        Bill[] billsFilter = terminal.filter(terminal.getBills(),
+        List <Bill> billsFilter = terminal.filterByTime(terminal.getBills(),
                 new Time(0, 0, 0),
                 new Time(23, 59, 59),
                 new BillIdComparator());
@@ -130,66 +133,57 @@ public class TerminalControllerTest {
     @Test
     public void sortByAmountPrice() throws Exception {
 
-        Bill[] bills = Arrays.copyOf(terminal.getBills(), terminal.getCountOfBills());
-        Arrays.sort(bills, new BillAmountPriceComparator());
+        terminal.getAppDB().getBills().sort(new BillAmountPriceComparator());
 
-        assertEquals(10, bills[0].getAmountPrice(), 1);
-        assertEquals(70, bills[1].getAmountPrice(), 1);
-        assertEquals(100, bills[2].getAmountPrice(), 1);
+        assertEquals(100, terminal.getAppDB().getBills().get(0).getAmountPrice(), 1);
+        assertEquals(170, terminal.getAppDB().getBills().get(1).getAmountPrice(), 1);
+        assertEquals(180, terminal.getAppDB().getBills().get(2).getAmountPrice(), 1);
     }
 
     @Test
     public void makeStatistics() throws Exception {
         Statistics statistics = terminal.makeStatistics();
-        Statistics expStat = new Statistics(100,
-                terminal.findSalesman(login3, true),
-                10,
-                terminal.findSalesman(login2, true),
-                60,
-                180);
+        Statistics expStat = new Statistics(180,
+                terminal.getAppDB().findSalesman(login3, true),
+                100,
+                terminal.getAppDB().findSalesman(login2, true),
+                150,
+                450);
         assertEquals(statistics, expStat);
-
-
     }
 
     @Test
     public void sortByProductsCount() throws Exception {
 
-        Bill[] bills = Arrays.copyOf(terminal.getBills(), terminal.getCountOfBills());
-        bills[0].setProductsCount(5);
-        bills[1].setProductsCount(3);
+        terminal.getAppDB().getBills().sort(new BillProductsCountComparator());
 
-        Arrays.sort(bills, new BillProductsCountComparator());
-
-        assertEquals(1, bills[0].getProductsCount());
-        assertEquals(3, bills[1].getProductsCount());
-        assertEquals(5, bills[2].getProductsCount());
+        assertEquals(1, terminal.getAppDB().getBills().get(0).getProducts().size());
+        assertEquals(2, terminal.getAppDB().getBills().get(1).getProducts().size());
+        assertEquals(3, terminal.getAppDB().getBills().get(2).getProducts().size());
     }
 
     @Test
     public void sortBySalesman() throws Exception {
 
-        Bill[] bills = Arrays.copyOf(terminal.getBills(), terminal.getCountOfBills());
-        Arrays.sort(bills, new BillSalesmanComparator());
+        terminal.getAppDB().getBills().sort(new BillSalesmanComparator());
 
-        assertEquals(name1, bills[0].getSalesman().getFullName());
-        assertEquals(name2, bills[1].getSalesman().getFullName());
-        assertEquals(name3, bills[2].getSalesman().getFullName());
+        assertEquals(name1, terminal.getAppDB().getBills().get(0).getSalesman().getFullName());
+        assertEquals(name2, terminal.getAppDB().getBills().get(1).getSalesman().getFullName());
+        assertEquals(name3, terminal.getAppDB().getBills().get(2).getSalesman().getFullName());
     }
 
     @Test
     public void sortByTime() throws Exception {
 
-        Bill[] bills = Arrays.copyOf(terminal.getBills(), terminal.getCountOfBills());
-        Arrays.sort(bills, new BillTimeComparator());
+        terminal.getAppDB().getBills().sort(new BillTimeComparator());
 
         assertTrue(new Time(1, 1, 1).
-                compareTo(bills[0].getTime()) == 0);
+                compareTo(terminal.getAppDB().getBills().get(0).getTime()) == 0);
 
         assertTrue(new Time(13, 13, 13).
-                compareTo(bills[1].getTime()) == 0);
+                compareTo(terminal.getAppDB().getBills().get(1).getTime()) == 0);
 
         assertTrue(new Time(23, 58, 59).
-                compareTo(bills[2].getTime()) == 0);
+                compareTo(terminal.getAppDB().getBills().get(2).getTime()) == 0);
     }
 }
