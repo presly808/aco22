@@ -1,5 +1,6 @@
 package ua.artcode.market.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,11 +14,14 @@ public class Bill implements Comparable<Bill> {
 
     private Salesman salesman;
 
-    private Time time;
+    private LocalDateTime openTime;
+
+    private Time closeTime;
 
     public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
         this.id = idOfBill;
+        this.openTime = LocalDateTime.now();
     }
 
     public void calculateAmountPrice() {
@@ -29,7 +33,7 @@ public class Bill implements Comparable<Bill> {
 
     public void closeBill(int hours, int minutes, int seconds) {
 
-        time = new Time(hours, minutes, seconds);
+        closeTime = new Time(hours, minutes, seconds);
         salesman.setSumOfAllSales(salesman.getSumOfAllSales() + amountPrice);
     }
 
@@ -41,7 +45,7 @@ public class Bill implements Comparable<Bill> {
                 ", id=" + id +
                 ", amountPrice=" + amountPrice +
                 ", salesman=" + salesman +
-                ", time=" + time +
+                ", closeTime=" + closeTime +
                 '}';
     }
 
@@ -62,7 +66,7 @@ public class Bill implements Comparable<Bill> {
                 id == other.id &&
                 amountPrice == other.amountPrice &&
                 salesman.equals(other.salesman) &&
-                time.equals(other.time);
+                closeTime.equals(other.closeTime);
 
     }
 
@@ -93,15 +97,11 @@ public class Bill implements Comparable<Bill> {
         this.products = products;
     }
 
-    public Time getTime() {
-        return time;
-    }
+    public Time getCloseTime() { return closeTime; }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setCloseTime(Time closeTime) {
+        this.closeTime = closeTime;
     }
-
-    ;
 
     public Salesman getSalesman() {
         return salesman;
@@ -113,6 +113,10 @@ public class Bill implements Comparable<Bill> {
 
         return res > 0 ? 1 :
                 res < 0 ? -1 : 0;
+    }
+
+    public LocalDateTime getOpenTime() {
+        return openTime;
     }
 }
 
@@ -158,7 +162,7 @@ class BillTimeComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return o1.getTime().compareTo(o2.getTime());
+        return o1.getCloseTime().compareTo(o2.getCloseTime());
     }
 }
 

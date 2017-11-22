@@ -1,18 +1,20 @@
 package ua.artcode.market.interf;
 
-import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.*;
+
+import java.util.List;
 
 public interface IAppDB {
 
     int genId();
 
+    void addActionToHistory(String message);
+
     Salesman findSalesman(String loginOrName, boolean isLogin);
 
     void addProductToDataBase(String name, double price);
 
-    Bill getAll();
+    List<Bill> getAllBills();
 
     Bill findBillById(int id);
 
@@ -20,7 +22,13 @@ public interface IAppDB {
 
     Product findProductById(int id);
 
-    void update(Object obj, int id);
+    Bill removeBill (int id);
+
+    Product removeProduct (int id);
+
+    Salesman removeSalesman (int id);
+
+    Bill update(Bill bill);
 
 
     /*getAll()

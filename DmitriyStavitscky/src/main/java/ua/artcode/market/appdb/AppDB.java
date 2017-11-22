@@ -16,6 +16,8 @@ public class AppDB implements IAppDB {
 
     private List<Product> products = new ArrayList<>();
 
+    private List<String> historyOfActions = new ArrayList<>();
+
     private int countOdId;
 
     @Override
@@ -25,6 +27,10 @@ public class AppDB implements IAppDB {
         return countOdId;
     }
 
+    @Override
+    public void addActionToHistory(String message) {
+        this.historyOfActions.add(message);
+    }
 
     @Override
     public void addProductToDataBase(String name, double price) {
@@ -43,8 +49,9 @@ public class AppDB implements IAppDB {
     // ctrl + D - copy at new line
 
     @Override
-    public Bill getAll() {
-        return null;
+    public List<Bill> getAllBills() {
+
+        return bills;
     }
 
     @Override
@@ -116,13 +123,36 @@ public class AppDB implements IAppDB {
     }
 
     @Override
-    public void update(Object obj, int id) {
+    public Bill removeBill(int id) {
+        return bills.remove(bills.indexOf(findBillById(id)));
 
     }
 
-    public List<Bill> getBills() {
-        return bills;
+    @Override
+    public Product removeProduct(int id) {
+        return products.remove(products.indexOf(findProductById(id)));
     }
+
+    @Override
+    public Salesman removeSalesman(int id) {
+        return salesmans.remove(salesmans.indexOf(findSalesmanById(id)));
+    }
+
+
+    @Override
+    public Bill update(Bill bill) {
+        int index = bills.indexOf(bill);
+
+        if(index == -1){
+            System.out.println("bill with id not found" + bill);
+            return null;
+        }
+
+        return bills.set(index, bill);
+
+    }
+
+    public List<Bill> getBills() { return bills; }
 
     public void setBills(List<Bill> bills) {
         this.bills = bills;
@@ -140,8 +170,22 @@ public class AppDB implements IAppDB {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(List<Product> products) { this.products = products; }
+
+    public List<String> getHistoryOfActions() {
+        return historyOfActions;
+    }
+
+    public void setHistoryOfActions(List<String> historyOfActions) {
+        this.historyOfActions = historyOfActions;
+    }
+
+    public int getCountOdId() {
+        return countOdId;
+    }
+
+    public void setCountOdId(int countOdId) {
+        this.countOdId = countOdId;
     }
 }
 

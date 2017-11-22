@@ -24,4 +24,8 @@ public interface ITerminal {
     Statistics makeStatistics();
 
     List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator);
+
+    void rememberActionAndPrint();
+
+    List <Bill> getAllBills();
 }

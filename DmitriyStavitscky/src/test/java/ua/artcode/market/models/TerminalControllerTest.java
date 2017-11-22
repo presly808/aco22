@@ -83,7 +83,7 @@ public class TerminalControllerTest {
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.closeAndSaveBill(10, 20, 30);
-        assertEquals("10:20:30", terminal.getAppDB().getBills().get(3).getTime().toString());
+        assertEquals("10:20:30", terminal.getAllBills().get(3).getCloseTime().toString());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class TerminalControllerTest {
 
         Bill excpectedBill = terminal.getAppDB().findBillById(7);
 
-        assertEquals(excpectedBill, terminal.getBills().get(0));
+        assertEquals(excpectedBill, terminal.getAllBills().get(0));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class TerminalControllerTest {
     @Test
     public void filterAndSortWitIdCompar() throws Exception {
 
-        List <Bill> billsFilter = terminal.filterByTime(terminal.getBills(),
+        List <Bill> billsFilter = terminal.filterByTime(terminal.getAllBills(),
                 new Time(0, 0, 0),
                 new Time(23, 59, 59),
                 new BillIdComparator());
@@ -133,11 +133,11 @@ public class TerminalControllerTest {
     @Test
     public void sortByAmountPrice() throws Exception {
 
-        terminal.getAppDB().getBills().sort(new BillAmountPriceComparator());
+        terminal.getAllBills().sort(new BillAmountPriceComparator());
 
-        assertEquals(100, terminal.getAppDB().getBills().get(0).getAmountPrice(), 1);
-        assertEquals(170, terminal.getAppDB().getBills().get(1).getAmountPrice(), 1);
-        assertEquals(180, terminal.getAppDB().getBills().get(2).getAmountPrice(), 1);
+        assertEquals(100, terminal.getAllBills().get(0).getAmountPrice(), 1);
+        assertEquals(170, terminal.getAllBills().get(1).getAmountPrice(), 1);
+        assertEquals(180, terminal.getAllBills().get(2).getAmountPrice(), 1);
     }
 
     @Test
@@ -155,35 +155,35 @@ public class TerminalControllerTest {
     @Test
     public void sortByProductsCount() throws Exception {
 
-        terminal.getAppDB().getBills().sort(new BillProductsCountComparator());
+        terminal.getAllBills().sort(new BillProductsCountComparator());
 
-        assertEquals(1, terminal.getAppDB().getBills().get(0).getProducts().size());
-        assertEquals(2, terminal.getAppDB().getBills().get(1).getProducts().size());
-        assertEquals(3, terminal.getAppDB().getBills().get(2).getProducts().size());
+        assertEquals(1, terminal.getAllBills().get(0).getProducts().size());
+        assertEquals(2, terminal.getAllBills().get(1).getProducts().size());
+        assertEquals(3, terminal.getAllBills().get(2).getProducts().size());
     }
 
     @Test
     public void sortBySalesman() throws Exception {
 
-        terminal.getAppDB().getBills().sort(new BillSalesmanComparator());
+        terminal.getAllBills().sort(new BillSalesmanComparator());
 
-        assertEquals(name1, terminal.getAppDB().getBills().get(0).getSalesman().getFullName());
-        assertEquals(name2, terminal.getAppDB().getBills().get(1).getSalesman().getFullName());
-        assertEquals(name3, terminal.getAppDB().getBills().get(2).getSalesman().getFullName());
+        assertEquals(name1, terminal.getAllBills().get(0).getSalesman().getFullName());
+        assertEquals(name2, terminal.getAllBills().get(1).getSalesman().getFullName());
+        assertEquals(name3, terminal.getAllBills().get(2).getSalesman().getFullName());
     }
 
     @Test
     public void sortByTime() throws Exception {
 
-        terminal.getAppDB().getBills().sort(new BillTimeComparator());
+        terminal.getAllBills().sort(new BillTimeComparator());
 
         assertTrue(new Time(1, 1, 1).
-                compareTo(terminal.getAppDB().getBills().get(0).getTime()) == 0);
+                compareTo(terminal.getAllBills().get(0).getCloseTime()) == 0);
 
         assertTrue(new Time(13, 13, 13).
-                compareTo(terminal.getAppDB().getBills().get(1).getTime()) == 0);
+                compareTo(terminal.getAllBills().get(1).getCloseTime()) == 0);
 
         assertTrue(new Time(23, 58, 59).
-                compareTo(terminal.getAppDB().getBills().get(2).getTime()) == 0);
+                compareTo(terminal.getAllBills().get(2).getCloseTime()) == 0);
     }
 }

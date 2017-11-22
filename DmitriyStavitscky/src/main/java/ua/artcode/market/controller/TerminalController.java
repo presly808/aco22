@@ -5,6 +5,7 @@ import ua.artcode.market.models.*;
 import ua.artcode.market.utils.TerminalUtils;
 import ua.artcode.market.appdb.AppDB;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TerminalController implements ITerminal {
@@ -15,6 +16,8 @@ public class TerminalController implements ITerminal {
     private boolean logged;
 
     private Bill newBill;
+
+    private String action;
 
     public TerminalController(AppDB appDB) { this.appDB = appDB; }
 
@@ -37,12 +40,18 @@ public class TerminalController implements ITerminal {
         } else {
             this.loggedSalesman = appDB.findSalesman(loginOrName, isLogin);
             logged = true;
+
+            action = "Saleman " + loggedSalesman.getFullName() + " logged.";
+            rememberActionAndPrint();
         }
     }
 
     public void logOut() {
         logged = false;
         loggedSalesman = null;
+
+        action = "You are logged out at " + LocalDateTime.now();
+        rememberActionAndPrint();
     }
 
     @Override
@@ -53,6 +62,9 @@ public class TerminalController implements ITerminal {
 
         } else {
             newBill = new Bill(loggedSalesman, appDB.genId());
+
+            action = String.format("Salesman %s created a new bill at %s ", loggedSalesman.getFullName(), newBill.getOpenTime().toString());
+            rememberActionAndPrint();
         }
     }
 
@@ -64,9 +76,11 @@ public class TerminalController implements ITerminal {
 
         } else {
             newBill.calculateAmountPrice();
-            newBill.setTime(new Time(hours, minutes, seconds));
+            newBill.setCloseTime(new Time(hours, minutes, seconds));
             appDB.getBills().add(newBill);
 
+            action = "bill closed. " + newBill.toString();
+            rememberActionAndPrint();
         }
 
         newBill = null;
@@ -76,6 +90,7 @@ public class TerminalController implements ITerminal {
     public void addProductToBill(int id) {
         if (logged && appDB.findProductById(id) != null) {
             newBill.getProducts().add(appDB.findProductById(id));
+            System.out.println("Added product: " + appDB.findProductById(id).toString());
 
         } else {
             System.out.println("please log in");
@@ -135,8 +150,8 @@ public class TerminalController implements ITerminal {
 
         for (Bill bill : bills) {
 
-            if (bill.getTime().compareTo(startTime) > 0 &&
-                    bill.getTime().compareTo(endTime) < 0) {
+            if (bill.getCloseTime().compareTo(startTime) > 0 &&
+                    bill.getCloseTime().compareTo(endTime) < 0) {
                 billsFilt.add(bill);
             }
         }
@@ -145,7 +160,16 @@ public class TerminalController implements ITerminal {
         return billsFilt;
     }
 
-    public List<Bill> getBills() {
+    @Override
+    public void rememberActionAndPrint () {
+        appDB.addActionToHistory(action);
+        System.out.println(action);
+        action = null;
+    }
+
+    @Override
+    public List<Bill> getAllBills() {
+
         return appDB.getBills();
     }
 
@@ -163,9 +187,7 @@ public class TerminalController implements ITerminal {
 
     public boolean getIsLogged() { return logged; }
 
-    public AppDB getAppDB() {
-        return appDB;
-    }
+    public AppDB getAppDB() { return appDB; }
 
     public Bill getNewBill() {
         return newBill;
