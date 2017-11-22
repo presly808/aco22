@@ -3,6 +3,7 @@ package ua.artcode.market.controller;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.*;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -148,14 +149,7 @@ public class TerminalController implements ITerminal {
 
     public Statistic doSomeStatisticStuff() {
 
-        Statistic s = new Statistic();
-
-        s.setMaxAmountofBill(getMax());
-        s.setMinAmountofBill(getMin());
-        s.setAverageAmountofBill(getAverage());
-        s.setCountSoldProducts(countSoldProducts());
-
-        return s;
+        return new Statistic(getMax(),getMin(),getAverage(),countSoldProducts());
     }
 
     public double getMax() {
@@ -293,6 +287,7 @@ public class TerminalController implements ITerminal {
 
             if (addBill) resBill[index++] = appDB.getBills()[i];
 
+            Arrays.sort(resBill,comparator);
 
         }
 
