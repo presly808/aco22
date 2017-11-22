@@ -140,8 +140,8 @@ public class ITerminalControllerImpl implements ITerminalController {
     @Override
     public Seller getTopOfSalesman() {
 
-        if (iAppDB.getAllSellers().size() == 0) {
-            logger.warning("Sellers is null");
+        if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0) {
+            logger.warning("Sellers or bills are null");
             return null;
         }
 
@@ -160,9 +160,9 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     private Seller calculateSellerSoldProducts(Seller seller) {
         for (Bill bill : iAppDB.getAllBills()) {
-            if (seller.getFullName() != null && seller.getSoldProducts() == 00
-                    && seller.getFullName().equals(bill.getSeller().getFullName())) {
-                seller.setSoldProducts(seller.getSoldProducts() + bill.getProductList().size());
+            if (seller.getFullName() != null && seller.getSoldProducts() == 0) {
+                if (seller.getFullName().equals(bill.getSeller().getFullName()))
+                    seller.setSoldProducts(seller.getSoldProducts() + bill.getProductList().size());
             }
         }
 
@@ -175,7 +175,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Statistic statistic = new Statistic();
 
-        if (iAppDB.getAllSellers() == null || iAppDB.getAllBills() == null) {
+        if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0) {
             logger.warning("Sry, we haven't any bills or sellers!");
             return null;
         }

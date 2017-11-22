@@ -84,10 +84,12 @@ public class ITerminalControllerTest {
         addSeller3.setSoldProducts(344);
         addSeller4.setSoldProducts(15);
 
-        iAppDB.saveSeller(addSeller1);
-        iAppDB.saveSeller(addSeller2);
-        iAppDB.saveSeller(addSeller3);
-        iAppDB.saveSeller(addSeller4);
+        iAppDB.updateSeller(addSeller1);
+        iAppDB.updateSeller(addSeller2);
+        iAppDB.updateSeller(addSeller3);
+        iAppDB.updateSeller(addSeller4);
+
+        iAppDB.saveBill(new Bill());
 
         assertEquals(addSeller3, terminalController.getTopOfSalesman());
     }
