@@ -104,9 +104,9 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
 
     @Override
     public void turnOnTerminalLogger() {
-       System.out.println("[" + LocalTime.now() + "]: Terminal logger is on.");
+        System.out.println("[" + LocalTime.now() + "]: Terminal logger is on.");
 
-       terminalController.turnOnTerminalLogger();
+        terminalController.turnOnTerminalLogger();
     }
 
     @Override
