@@ -15,34 +15,28 @@ public class BillTest {
 
         product1 = new Product(1,"Grecha", 40.00);
         product2 = new Product(2,"juse", 20.00);
-
-
-
-
-
-
-
+        bill1 = new Bill();
     }
 
 
     @Test
     public void getSalesman() {
-        Assert.assertEquals(bill1.getSalesman(),bill1.getSalesman());
+        assertEquals(bill1.getSalesman(),bill1.getSalesman());
     }
 
     @Test
     public void getAmountPrice() {
-        Assert.assertEquals(bill1.getAmountPrice(),bill1.getAmountPrice(),1);
+        assertEquals(bill1.getAmountPrice(),bill1.getAmountPrice(),1);
     }
 
     @Test
     public void getDataTime() {
-        Assert.assertEquals(bill1.getDataTime(),bill1.getDataTime());
+        assertEquals(bill1.getDataTime(),bill1.getDataTime());
     }
 
     @Test
     public void addProduct1(){
-        Assert.assertTrue(bill1.addProduct(product1));
+        assertTrue(bill1.addProduct(product1));
     }
 
     @Test
@@ -50,7 +44,7 @@ public class BillTest {
         bill1.addProduct(product1);
         bill1.addProduct(product2);
         double sum = bill1.calculateAmountPrice();
-        Assert.assertEquals(60.0,sum,1);
+        assertEquals(60.0,sum,1);
     }
 
     @Test
@@ -60,7 +54,7 @@ public class BillTest {
 
     @Test
     public void compareTo()  {
-        Assert.assertEquals(product1.compareTo(product1),0);
+        assertEquals(product1.compareTo(product1),0);
 
     }
 

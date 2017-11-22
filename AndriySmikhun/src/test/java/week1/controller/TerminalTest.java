@@ -77,12 +77,6 @@ public class TerminalTest {
     }
 
     @Test
-    public void getBillById() {
-        Bill b1 = terminal.getBillById(0);
-        Assert.assertTrue(b1.getId() == 0);
-    }
-
-    @Test
     public void getSalemanByName() {
 
         Salesman s1 = terminal.getSalemanByName("Marusia");
