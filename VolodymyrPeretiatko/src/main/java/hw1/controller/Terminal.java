@@ -3,36 +3,14 @@ package hw1.controller;
 import hw1.model.*;
 import hw1.utils.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class Terminal implements ITerminal {
 
-    private static Terminal uniqueInstance;
+    private IAppDB appDB = new IAppDBImpl();
 
-    private ArrayList<Bill> bills;
-    private ArrayList<Salesman> salesmen;
-    private ArrayList<Product> products;
-
-    private ILogger log = new LogSout();
-
-    public static synchronized Terminal getInstance(){
-        if (uniqueInstance == null){
-            uniqueInstance = new Terminal();
-        }
-        return uniqueInstance;
-    }
-
-    private Terminal(){
-        bills = new ArrayList<>();
-        salesmen = new ArrayList<>();
-        products = new ArrayList<>();
-    }
-
-    public static Salesman getSalesmanByName(ArrayList<Salesman> salesmen, String name){
+    public static Salesman getSalesmanByName(List<Salesman> salesmen, String name){
 
         if (name == null){
             return null;
@@ -46,8 +24,8 @@ public class Terminal implements ITerminal {
         return null;
     }
 
-    public ArrayList<Salesman> getSalesmen() {
-        return (ArrayList<Salesman>) salesmen.clone();
+    public List<Salesman> getSalesmen() {
+        return appDB.getSalesmen();
     }
 
     public ArrayList<Product> getProducts() {
@@ -55,48 +33,36 @@ public class Terminal implements ITerminal {
     }
 
     public boolean addSalesman(Salesman salesman){
-        if (log != null)
-            log.info(Terminal.class, "add salesman " + salesman);
-
-        if (salesmen.contains(salesman)) return false;
-
-        return salesmen.add(salesman);
+        return appDB.addSalesman(salesman);
     }
 
     public Salesman login(String name, String pass){
-        Salesman salesman = getSalesmanByName(salesmen, name);
+        Salesman salesman = getSalesmanByName(appDB.getSalesmen(), name);
         if (salesman != null && pass.equals(salesman.getPass())){
-            if (log != null)
-                log.info(Terminal.class, "Salesman logged in " + salesman);
             return salesman;
         }
-        if (log != null)
-            log.error(Terminal.class, "Wrong authentification data" + name);
-
         return null;
     }
 
-    public Bill createBill(int id, Salesman salesman){
+    public Bill createBill(Salesman salesman){
         Bill b = new Bill(id, salesman);
-        if (log != null)
-            log.info(Terminal.class, "New bill was created! " + b);
-
         return b;
     }
 
     public boolean closeAndSaveBill(Bill bill){
-        if (log != null)
-            log.info(Terminal.class, "Bill was closed " + bill);
-
         return bills.add(bill.closeBill());
     }
 
-    public ArrayList<Bill> getBills() {
+    public List<Bill> getBills() {
         return (ArrayList<Bill>)bills.clone();
     }
 
     public boolean addProduct(Product p) {
-        return !products.contains(p) && products.add(p);
+
+        if (!products.contains(p))
+            return products.add(p);
+
+        return false;
 
     }
 
@@ -111,7 +77,7 @@ public class Terminal implements ITerminal {
 
     public Salesman getTopNofSalesMan(){
 
-        HashMap<Salesman, Double> sales = getSalesAmountBySalesman();
+        Map<Salesman, Double> sales = getSalesAmountBySalesman();
 
         Salesman topSalesman = null;
         Double amount = 0.0;
@@ -131,7 +97,7 @@ public class Terminal implements ITerminal {
         return topSalesman;
     }
 
-    public HashMap<Salesman, Double> getSalesAmountBySalesman(){
+    public Map<Salesman, Double> getSalesAmountBySalesman(){
 
         HashMap<Salesman, Double> sales = new HashMap<>();
         Salesman salesman;

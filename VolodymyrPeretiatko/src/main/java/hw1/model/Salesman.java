@@ -1,6 +1,6 @@
 package hw1.model;
 
-public class Salesman {
+public class Salesman extends DBItem{
 
     private String fullName;
     private String name;
@@ -10,6 +10,10 @@ public class Salesman {
         this.fullName = fullName;
         this.name = name;
         this.pass = pass;
+    }
+
+    public Salesman(int id) {
+        super.id = id;
     }
 
     public String getFullName() {

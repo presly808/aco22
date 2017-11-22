@@ -38,7 +38,7 @@ public class TestTerminal {
         b2.addProduct(p1);
         b2.addProduct(p2);
 
-        terminal = Terminal.getInstance();
+        terminal = new Terminal();
 
         terminal.addProduct(p1);
         terminal.addProduct(p2);
@@ -58,13 +58,6 @@ public class TestTerminal {
         s2 = null;
         p1 = null;
         p2 = null;
-    }
-
-    @Test
-    public void testSingletone(){
-        Terminal terminal1 = Terminal.getInstance();
-        Terminal terminal2 = Terminal.getInstance();
-        Assert.assertTrue(terminal1 == terminal2);
     }
 
     @Test
@@ -89,7 +82,7 @@ public class TestTerminal {
 
     @Test
     public void testCreateBill(){
-        Bill b = terminal.createBill(3, s2);
+        Bill b = terminal.createBill(s2);
         Assert.assertTrue(b.getCloseTime() == null);
     }
 

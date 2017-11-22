@@ -1,8 +1,21 @@
 package hw1.utils;
 
+import hw1.controller.ProxyLoggerTerminal;
+
 import java.util.Date;
 
-public class LogSout implements ILogger {
+public class LogSOut implements ILogger {
+
+    private static LogSOut uniqueInstance;
+
+    public static synchronized LogSOut getInstance(){
+        if (uniqueInstance == null){
+            uniqueInstance = new LogSOut();
+        }
+        return uniqueInstance;
+    }
+
+    private LogSOut(){}
 
     private void log(String action, Class c, String msg){
 
