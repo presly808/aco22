@@ -2,8 +2,7 @@ package week1.model;
 
 
 import org.junit.*;
-
-
+import static org.junit.Assert.*;
 
 
 public class BillTest {
@@ -56,7 +55,7 @@ public class BillTest {
 
     @Test
     public void printBill()  {
-        Assert.assertTrue(bill1.setCloseBill());
+        assertTrue(bill1.setCloseBill());
     }
 
     @Test
@@ -67,7 +66,7 @@ public class BillTest {
 
     @Test
     public void setCloseBill() {
-        Assert.assertTrue(bill1.setCloseBill());
+        assertTrue(bill1.setCloseBill());
     }
 
 }

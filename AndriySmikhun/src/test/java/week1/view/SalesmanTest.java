@@ -21,15 +21,15 @@ public class SalesmanTest {
 
     @Test
     public void testEquals(){
-        Assert.assertEquals(s1,s3);
-        Assert.assertNotEquals(s1,s2);
+        assertEquals(s1,s3);
+        assertNotEquals(s1,s2);
 
     }
 
     @Test
     public void testHashCode(){
-        Assert.assertEquals(s1.hashCode(),s3.hashCode());
-        Assert.assertNotEquals(s1.hashCode(),s2.hashCode());
+        assertEquals(s1.hashCode(),s3.hashCode());
+        assertNotEquals(s1.hashCode(),s2.hashCode());
     }
 
 }
