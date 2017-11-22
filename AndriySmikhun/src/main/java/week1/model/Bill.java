@@ -77,7 +77,7 @@ public class Bill implements Comparable {
     public double calculateAmountPrice() {
         double amountPrice = 0.0d;
         for (int i = 0; i < products.length; i++) {
-            if (products[i] == null)break;
+            if (products[i] == null) break;
             amountPrice = amountPrice + products[i].getPrice();
         }
         return amountPrice;
