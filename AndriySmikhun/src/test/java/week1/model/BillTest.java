@@ -1,18 +1,17 @@
 package week1.model;
 
-import org.junit.After;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 
-import static org.junit.Assert.*;
+
 
 public class BillTest {
     private Product product1, product2;
-    private String myDataTime1, myDataTime2;
-    private Bill bill1, bill2, bill3;
-    private Salesman salesman1, salesman2;
+    private Bill bill1;
+    private Salesman salesman1;
 
 
     @Before
@@ -23,14 +22,8 @@ public class BillTest {
 
 
         salesman1 = new Salesman("Marusia", "maria", "pass", true);
-        salesman2 = new Salesman("Oleg", "oleg", "pass", false);
-
         bill1 = new Bill(1, salesman1);
-        bill2 = new Bill(2, salesman2);
-        bill3 = new Bill(3, salesman2);
 
-        myDataTime1 = "17:10:10 23/7";
-        myDataTime2 = "22:10:10 27/7";
 
 
 
