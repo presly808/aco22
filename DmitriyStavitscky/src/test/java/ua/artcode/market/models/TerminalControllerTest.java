@@ -2,17 +2,17 @@ package ua.artcode.market.models;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ua.artcode.market.controller.Terminal;
+import ua.artcode.market.controller.TerminalController;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ua.artcode.market.controller.Terminal.MAX_COUNT_OF_SALESMANS;
+import static ua.artcode.market.controller.TerminalController.MAX_COUNT_OF_SALESMANS;
 
-public class TerminalTest {
+public class TerminalControllerTest {
 
-    private static Terminal terminal;
+    private static TerminalController terminal;
 
     private static String name1 = "Dima Stavitscky";
     private static String name2 = "Ivan Raskolnikov";
@@ -31,7 +31,7 @@ public class TerminalTest {
     @BeforeClass
     public static void beforeClass() {
 
-        terminal = new Terminal();
+        terminal = new TerminalController();
 
         terminal.addSalesman(name1, login1, pass1);
         terminal.addSalesman(name2, login2, pass2);
@@ -47,7 +47,7 @@ public class TerminalTest {
 
         terminal.signIn(false, name1, pass1);
         terminal.createBill(2);
-        terminal.addProduct("Fish", 8, 50);
+        terminal.addProduct("Fish", 8, 70);
         terminal.closeAndSaveBill(13, 13, 13);
         terminal.logOut();
 
@@ -134,8 +134,22 @@ public class TerminalTest {
         Arrays.sort(bills, new BillAmountPriceComparator());
 
         assertEquals(10, bills[0].getAmountPrice(), 1);
-        assertEquals(50, bills[1].getAmountPrice(), 1);
+        assertEquals(70, bills[1].getAmountPrice(), 1);
         assertEquals(100, bills[2].getAmountPrice(), 1);
+    }
+
+    @Test
+    public void makeStatistics() throws Exception {
+        Statistics statistics = terminal.makeStatistics();
+        Statistics expStat = new Statistics(100,
+                terminal.findSalesman(login3, true),
+                10,
+                terminal.findSalesman(login2, true),
+                60,
+                180);
+        assertEquals(statistics, expStat);
+
+
     }
 
     @Test
