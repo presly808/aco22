@@ -7,10 +7,8 @@ import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 
 import java.io.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class IAppDbProxy implements IAppDb, ILogging{
 
@@ -64,11 +62,19 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Set<Bill> filter(Salesman salesman, Product product, Date startDate,
-                            Date endDate, Comparable<Bill> billComparable) {
+    public Set<Bill> filter(Salesman salesman, Product product,
+                            LocalDateTime startDate, LocalDateTime endDate,
+                            Comparator<Bill> billComparator) {
         return target.filter(salesman, product, startDate, endDate,
-                billComparable);
+                billComparator);
     }
+
+//    @Override
+//    public Set<Bill> filter(Salesman salesman, Product product, Date startDate,
+//                            Date endDate, Comparable<Bill> billComparable) {
+//        return target.filter(salesman, product, startDate, endDate,
+//                billComparable);
+//    }
 
     @Override
     public Bill removeBill(int id) throws IOException {
