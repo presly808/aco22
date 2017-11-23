@@ -122,16 +122,16 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Set<Bill> filter(Salesman salesman, Product product,
+    public List<Bill> filter(Salesman salesman, Product product,
                             LocalDateTime startDate, LocalDateTime endDate,
                             Comparator<Bill> billComparator) {
         if (getBills() == null) return null;
 
-        Set<Bill> filtered = new HashSet<>();
+        List<Bill> filtered = new ArrayList<>();
         filtered.addAll(getBills());
 
 
-        if (salesman == null)
+        if (salesman != null)
             filtered = addToListBySeller(filtered, salesman);
 
         if (product != null)
@@ -144,73 +144,74 @@ public class IAppDbImpl implements IAppDb {
             filtered = addToListByEndDate(filtered, endDate);
 
         if (billComparator != null) {
-            Set<Bill> sorted = new TreeSet<>();
-            sorted.addAll(filtered);
-            return sorted;
+
+            filtered.sort(billComparator.reversed());
+
         }
         return filtered;
-
-
-
     }
 
-    private Set<Bill> addToListByProduct (Set<Bill> set, Product product) {
-        Set<Bill> setBills = new HashSet<>();
+    private List<Bill> addToListByProduct (List<Bill> listBills,
+                                           Product product) {
+        List<Bill> list = new ArrayList<>();
 
-        if (product == null) return set;
+        if (product == null) return listBills;
 
-        if (set != null)
-            for (Bill bill : set) {
+        if (listBills != null)
+            for (Bill bill : listBills) {
                 if ((bill.getProductsMap().containsKey(product))) {
-                    setBills.add(bill);
+                    list.add(bill);
                 }
             }
-        return setBills;
+        return list;
     }
 
-    private Set<Bill> addToListBySeller (Set<Bill> set, Salesman salesman) {
-        Set<Bill> setBills = new HashSet<>();
+    private List<Bill> addToListBySeller (List<Bill> listBills,
+                                          Salesman salesman) {
+        List<Bill> list = new ArrayList<>();
 
-        if (salesman == null) return set;
+        if (salesman == null) return listBills;
 
-        if (set != null) {
-            for (Bill bill : set) {
+        if (listBills != null) {
+            for (Bill bill : listBills) {
                 if ((salesman.equals(bill.getSalesman()))) {
-                    setBills.add(bill);
+                    list.add(bill);
                 }
             }
         }
-        return setBills;
+        return list;
     }
 
-    private Set<Bill> addToListByStartDate(Set<Bill> set, LocalDateTime date) {
-        Set<Bill> setBills = new HashSet<>();
+    private List<Bill> addToListByStartDate(List<Bill> listBills,
+                                            LocalDateTime date) {
+        List<Bill> list = new ArrayList<>();
 
-        if (date == null) return set;
+        if (date == null) return listBills;
 
-        if (set != null) {
-            for (Bill bill : set) {
-                if ((date.compareTo(bill.getOpenTime())) >=0 ) {
-                    setBills.add(bill);
+        if (listBills != null) {
+            for (Bill bill : listBills) {
+                if ((date.compareTo(bill.getOpenTime())) >= 0 ) {
+                    list.add(bill);
                 }
             }
         }
-        return setBills;
+        return list;
     }
 
-    private Set<Bill> addToListByEndDate(Set<Bill> set, LocalDateTime date) {
-        Set<Bill> setBills = new HashSet<>();
+    private List<Bill> addToListByEndDate(List<Bill> listBills,
+                                          LocalDateTime date) {
+        List<Bill> list = new ArrayList<>();
 
-        if (date == null) return set;
+        if (date == null) return listBills;
 
-        if (set != null ) {
-            for (Bill bill : set) {
-                if ((date.compareTo(bill.getCloseTime())) < 0 ) {
-                    setBills.add(bill);
+        if (listBills != null ) {
+            for (Bill bill : listBills) {
+                if ((date.compareTo(bill.getCloseTime())) <= 0 ) {
+                    list.add(bill);
                 }
             }
         }
-        return setBills;
+        return list;
     }
 
 

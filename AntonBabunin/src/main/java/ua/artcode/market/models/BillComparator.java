@@ -4,12 +4,14 @@ package ua.artcode.market.models;
 
 import java.util.Comparator;
 
-public class BillComparator  extends Bill implements Comparator<Bill> {
+public class BillComparator implements Comparator<Bill> {
 
+    public static BillComparator billComparator = new BillComparator();
+    public static BillComparator other = new BillComparator();
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return (int)((o1.getAmountPrice() - o2.getAmountPrice())*100);
+        return (int)((o2.getAmountPrice() - o1.getAmountPrice())*1000);
     }
 
     @Override
@@ -22,13 +24,6 @@ public class BillComparator  extends Bill implements Comparator<Bill> {
         };
     }
 
-//    class SalesmanComprator extends BillComparators {
-//
-//        @Override
-//        public int compare(Bill o1, Bill o2) {
-//            return compare(o1.getSalesman().getFullName(), o2.getSalesman());
-//        }
-//    }
 
 }
 //return (int)((this.getAmountPrice() - o.getAmountPrice())*100);

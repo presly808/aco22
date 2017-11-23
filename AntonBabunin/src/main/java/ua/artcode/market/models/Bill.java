@@ -1,10 +1,13 @@
 package ua.artcode.market.models;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bill {
+public class Bill implements Comparable<Bill> {
+
+    public static BillComparator billComparator = new BillComparator();
 
     private int id;
 //    private int terminalId;
@@ -40,9 +43,9 @@ public class Bill {
         return productsMap;
     }
 
-    public void setProductsMap(Map<Product, Integer> productsMap) {
-        this.productsMap = productsMap;
-    }
+//    public void setProductsMap(Map<Product, Integer> productsMap) {
+//        this.productsMap = productsMap;
+//    }
 
     public Salesman getSalesman() {
         return salesman;
@@ -112,4 +115,28 @@ public class Bill {
                 ", closeTime=" + closeTime +
                 '}';
     }
+
+    @Override
+    public int compareTo(Bill o) {
+        if (o == null) return 1;
+        if (((o.getAmountPrice()-this.getAmountPrice()) * 100) > 0) return -1;
+        else if (((o.getAmountPrice()-this.getAmountPrice()) * 100) == 0)
+            return 0;
+        else return 1;
+    }
+//
+//    @Override
+//    public int compare(Bill o1, Bill o2) {
+//        return (int)((o1.getAmountPrice() - o2.getAmountPrice())*100);
+//    }
+//
+//    @Override
+//    public Comparator<Bill> thenComparing(Comparator<? super Bill> other) {
+//        return new Comparator<Bill>() {
+//            @Override
+//            public int compare(Bill o1, Bill o2) {
+//                return o1.getCloseTime().compareTo(o2.getCloseTime());
+//            }
+//        };
+//    }
 }

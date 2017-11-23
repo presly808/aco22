@@ -33,7 +33,7 @@ public interface IAppDb {
     Salesman logout(Salesman salesman) throws IOException;
     Salesman findSalesmanByLogin(String login);
 
-     Set<Bill> filter(Salesman salesman, Product product,
+    List<Bill> filter(Salesman salesman, Product product,
                       LocalDateTime startDate, LocalDateTime endDate,
                       Comparator<Bill> billComparator);
 

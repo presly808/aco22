@@ -62,19 +62,12 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Set<Bill> filter(Salesman salesman, Product product,
+    public List<Bill> filter(Salesman salesman, Product product,
                             LocalDateTime startDate, LocalDateTime endDate,
                             Comparator<Bill> billComparator) {
         return target.filter(salesman, product, startDate, endDate,
                 billComparator);
     }
-
-//    @Override
-//    public Set<Bill> filter(Salesman salesman, Product product, Date startDate,
-//                            Date endDate, Comparable<Bill> billComparable) {
-//        return target.filter(salesman, product, startDate, endDate,
-//                billComparable);
-//    }
 
     @Override
     public Bill removeBill(int id) throws IOException {

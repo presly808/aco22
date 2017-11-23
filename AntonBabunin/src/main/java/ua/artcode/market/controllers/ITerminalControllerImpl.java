@@ -48,7 +48,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     @Override
     public Bill createBill() throws IOException {
         Bill bill = new Bill();
-
+        bill.setOpenTime(LocalDateTime.now());
         Bill bill1 = iAppDb.saveBill(bill);
 
         return bill1;
