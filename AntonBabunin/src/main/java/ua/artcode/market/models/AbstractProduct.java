@@ -30,26 +30,11 @@ public abstract class AbstractProduct {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-
-        AbstractProduct that = (AbstractProduct) object;
-
-        return id == that.id;
-    }
+    public abstract boolean equals(Object object);
 
     @Override
-    public int hashCode() {
-        return 0;
-    }
+    public abstract int hashCode();
 
     @Override
-    public String toString() {
-        return "AbstractProduct{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
-    }
+    public abstract String toString();
 }

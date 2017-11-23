@@ -7,6 +7,7 @@ import ua.artcode.market.utils.Generator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class ILoggingImpl implements ILogging {
@@ -38,7 +39,10 @@ public class ILoggingImpl implements ILogging {
     @Override
     public void write(String messege)
             throws IOException {
-        File file = new File("C:\\Projects\\Java\\Gesserok\\aco22\\logs.txt");
+        File file = new File("log.txt");
+        if (!file.exists()) {
+        file.createNewFile();
+        }
         FileWriter fileWriter = new FileWriter(file,true);
         fileWriter.write(messege);
         fileWriter.flush();

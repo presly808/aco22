@@ -1,6 +1,8 @@
 package ua.artcode.market.models;
 
-public class Salesman {
+import java.util.Comparator;
+
+public class Salesman implements Comparator<Salesman> {
 
     private String fullName;
     private String login;
@@ -48,8 +50,6 @@ public class Salesman {
         this.isConnected = isConnected;
     }
 
-
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -59,6 +59,21 @@ public class Salesman {
 
         return login != null ? login.equals(salesman.login) :
                 salesman.login == null;
+    }
+
+    @Override
+    public int compare(Salesman o1, Salesman o2) {
+        return o1.getFullName().compareTo(o2.getFullName());
+    }
+
+    @Override
+    public Comparator<Salesman> thenComparing(Comparator<? super Salesman> other) {
+        return new Comparator<Salesman>() {
+            @Override
+            public int compare(Salesman o1, Salesman o2) {
+                return o1.getLogin().compareTo(o2.getLogin());
+            }
+        };
     }
 
     @Override

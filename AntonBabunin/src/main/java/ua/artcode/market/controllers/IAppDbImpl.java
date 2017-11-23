@@ -7,9 +7,8 @@ import ua.artcode.market.models.Salesman;
 import ua.artcode.market.utils.Generator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class IAppDbImpl implements IAppDb {
 
@@ -18,6 +17,7 @@ public class IAppDbImpl implements IAppDb {
 
     private List<Bill> bills;
     private Map<Product,Integer> products;
+
 
     public IAppDbImpl() {
         this.bills = new ArrayList<>();
@@ -101,7 +101,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login, String password) throws IOException {
+    public Salesman createSalesman(String fullName, String login,
+                                   String password) throws IOException {
         return null;
     }
 
@@ -118,6 +119,98 @@ public class IAppDbImpl implements IAppDb {
     @Override
     public Salesman findSalesmanByLogin(String login) {
         return null;
+    }
+
+    @Override
+    public Set<Bill> filter(Salesman salesman, Product product,
+                            LocalDateTime startDate, LocalDateTime endDate,
+                            Comparator<Bill> billComparator) {
+        if (getBills() == null) return null;
+
+        Set<Bill> filtered = new HashSet<>();
+        filtered.addAll(getBills());
+
+
+        if (salesman == null)
+            filtered = addToListBySeller(filtered, salesman);
+
+        if (product != null)
+            filtered = addToListByProduct(filtered, product);
+
+        if (startDate != null)
+            filtered = addToListByStartDate(filtered, startDate);
+
+        if (endDate != null)
+            filtered = addToListByEndDate(filtered, endDate);
+
+        if (billComparator != null) {
+            Set<Bill> sorted = new TreeSet<>();
+            sorted.addAll(filtered);
+            return sorted;
+        }
+        return filtered;
+
+
+
+    }
+
+    private Set<Bill> addToListByProduct (Set<Bill> set, Product product) {
+        Set<Bill> setBills = new HashSet<>();
+
+        if (product == null) return set;
+
+        if (set != null)
+            for (Bill bill : set) {
+                if ((bill.getProductsMap().containsKey(product))) {
+                    setBills.add(bill);
+                }
+            }
+        return setBills;
+    }
+
+    private Set<Bill> addToListBySeller (Set<Bill> set, Salesman salesman) {
+        Set<Bill> setBills = new HashSet<>();
+
+        if (salesman == null) return set;
+
+        if (set != null) {
+            for (Bill bill : set) {
+                if ((salesman.equals(bill.getSalesman()))) {
+                    setBills.add(bill);
+                }
+            }
+        }
+        return setBills;
+    }
+
+    private Set<Bill> addToListByStartDate(Set<Bill> set, LocalDateTime date) {
+        Set<Bill> setBills = new HashSet<>();
+
+        if (date == null) return set;
+
+        if (set != null) {
+            for (Bill bill : set) {
+                if ((date.compareTo(bill.getOpenTime())) >=0 ) {
+                    setBills.add(bill);
+                }
+            }
+        }
+        return setBills;
+    }
+
+    private Set<Bill> addToListByEndDate(Set<Bill> set, LocalDateTime date) {
+        Set<Bill> setBills = new HashSet<>();
+
+        if (date == null) return set;
+
+        if (set != null ) {
+            for (Bill bill : set) {
+                if ((date.compareTo(bill.getCloseTime())) < 0 ) {
+                    setBills.add(bill);
+                }
+            }
+        }
+        return setBills;
     }
 
 

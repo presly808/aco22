@@ -62,12 +62,16 @@ public class ITerminalControllerImpl implements ITerminalController {
         if (!bill.getProductsMap().containsKey(product)) {
             bill.getProductsMap().put(product, 1);
             bill.setAmountPrice(calculateAmountPrice(bill));
+            iAppDb.getAllProducts().replace(product,
+                    iAppDb.getAllProducts().get(product) - 1);
             return bill;
         }
 
         bill.getProductsMap().replace(product,
                 bill.getProductsMap().get(product) + 1);
         bill.setAmountPrice(calculateAmountPrice(bill));
+        iAppDb.getAllProducts().replace(product,
+                iAppDb.getAllProducts().get(product) - 1);
         iAppDb.update(bill);
 
         return bill;

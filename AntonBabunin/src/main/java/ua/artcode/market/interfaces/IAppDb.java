@@ -5,8 +5,8 @@ import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public interface IAppDb {
 
@@ -26,11 +26,16 @@ public interface IAppDb {
     Product saveProduct(Product product) throws IOException;
     Bill update(Bill bill) throws IOException;
 
-    Salesman createSalesman(String fullName, String login, String password) throws IOException;
+    Salesman createSalesman(String fullName, String login, String password)
+            throws IOException;
+
     Salesman login(String login, String password) throws IOException;
     Salesman logout(Salesman salesman) throws IOException;
     Salesman findSalesmanByLogin(String login);
 
+     Set<Bill> filter(Salesman salesman, Product product,
+                      LocalDateTime startDate, LocalDateTime endDate,
+                      Comparator<Bill> billComparator);
 
 
 

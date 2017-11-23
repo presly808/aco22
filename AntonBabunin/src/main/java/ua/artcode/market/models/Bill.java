@@ -88,7 +88,16 @@ public class Bill {
 
     @Override
     public int hashCode() {
-        return 0;
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (productsMap != null ? productsMap.hashCode() : 0);
+        result = 31 * result + (salesman != null ? salesman.hashCode() : 0);
+        temp = Double.doubleToLongBits(amountPrice);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (openTime != null ? openTime.hashCode() : 0);
+        result = 31 * result + (closeTime != null ? closeTime.hashCode() : 0);
+        return result;
     }
 
     @Override

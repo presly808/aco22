@@ -7,8 +7,10 @@ import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class IAppDbProxy implements IAppDb, ILogging{
 
@@ -59,6 +61,13 @@ public class IAppDbProxy implements IAppDb, ILogging{
     @Override
     public Salesman findSalesmanByLogin(String login) {
         return iLogging.findSalesmanByLogin(login);
+    }
+
+    @Override
+    public Set<Bill> filter(Salesman salesman, Product product, Date startDate,
+                            Date endDate, Comparable<Bill> billComparable) {
+        return target.filter(salesman, product, startDate, endDate,
+                billComparable);
     }
 
     @Override
