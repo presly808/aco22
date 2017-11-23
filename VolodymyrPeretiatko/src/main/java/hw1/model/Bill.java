@@ -3,21 +3,26 @@ package hw1.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 
-public class Bill implements Comparable {
+public class Bill extends DBItem implements Comparable {
 
-    private int id;
-    private ArrayList<Product> products;
+    private List<Product> products;
     private Salesman salesman;
     private Double amountPrice;
     private Date closeTime;
 
     public Bill(int id, Salesman salesman) {
-        this.id = id;
+        super.id = id;
         this.salesman = salesman;
         this.products = new ArrayList<>(10);
         this.amountPrice = 0.0;
+    }
+
+    public Bill(int i) {
+        this.id = id;
+        this.products = new ArrayList<>(10);
     }
 
     public Bill closeBill(){
@@ -59,13 +64,9 @@ public class Bill implements Comparable {
     public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public ArrayList<Product> getProducts() {
-        return (ArrayList<Product>) products.clone();
+    
+    public List<Product> getProducts() {
+        return (List<Product>) products;
     }
 
     public Salesman getSalesman() {

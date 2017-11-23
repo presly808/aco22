@@ -1,116 +1,92 @@
 package hw1.controller;
 
-import hw1.model.Bill;
-import hw1.model.Product;
-import hw1.model.Salesman;
-import hw1.utils.ILogger;
-import hw1.utils.LogSout;
+import hw1.model.*;
+import hw1.utils.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class Terminal implements ITerminal {
 
-    private static Terminal uniqueInstance;
+    private IAppDB appDB = new IAppDBImpl();
+    private Salesman currentUser;
 
-    private ArrayList<Bill> bills;
-    private ArrayList<Salesman> salesmen;
-    private ArrayList<Product> products;
 
-    private ILogger log = new LogSout();
-
-    public static synchronized Terminal getInstance(){
-        if (uniqueInstance == null){
-            uniqueInstance = new Terminal();
+    public List<Salesman> getSalesmen() {
+        List<DBItem> items = appDB.getAll(Salesman.class);
+        List<Salesman> salesmen = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            salesmen.add((Salesman) i);
         }
-        return uniqueInstance;
+        return salesmen;
     }
 
-    private Terminal(){
-        bills = new ArrayList<>();
-        salesmen = new ArrayList<>();
-        products = new ArrayList<>();
+    public List<Product> getProducts() {
+        List<DBItem> items = appDB.getAll(Product.class);
+        List<Product> products = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            products.add((Product) i);
+        }
+        return products;
     }
 
-    public static Salesman getSalesmanByName(ArrayList<Salesman> salesmen, String name){
-
-        if (name == null){
-            return null;
+    public List<Bill> getBills() {
+        List<DBItem> items = appDB.getAll(Bill.class);
+        List<Bill> bills = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            bills.add((Bill) i);
         }
-
-        for (Salesman s : salesmen){
-            if(name.equals(s.getName())){
-                return  s;
-            }
-        }
-        return null;
+        return bills;
     }
+
 
     public boolean addSalesman(Salesman salesman){
-        if (log != null)
-            log.info(Terminal.class, "add salesman " + salesman);
-
-        if (salesmen.contains(salesman))
-            return false;
-
-        return salesmen.add(salesman);
+        return appDB.save(salesman) != null;
     }
 
-    public Salesman login(String name, String pass){
-        Salesman salesman = getSalesmanByName(salesmen, name);
-        if (salesman != null && pass.equals(salesman.getPass())){
-            if (log != null)
-                log.info(Terminal.class, "Salesman logged in " + salesman);
-            return salesman;
+    public boolean login(String name, String pass){
+
+        List<DBItem> salesmen = appDB.getAll(Salesman.class);
+        for (DBItem s : salesmen) {
+            if (name.equals(((Salesman)s).getName()))
+                if (pass.equals(((Salesman)s).getPass())){
+                    this.currentUser = (Salesman) s;
+                    return true;
+                }
         }
-        if (log != null)
-            log.error(Terminal.class, "Wrong authentification data" + name);
-
-        return null;
+        return false;
     }
 
-    public Bill createBill(int id, Salesman salesman){
-        Bill b = new Bill(id, salesman);
-        if (log != null)
-            log.info(Terminal.class, "New bill was created! " + b);
+    @Override
+    public Bill createBill(){
+        Bill b = (Bill) appDB.create(Bill.class);
+        b.setSalesman(currentUser);
         return b;
     }
 
+    @Override
     public boolean closeAndSaveBill(Bill bill){
-        if (log != null)
-            log.info(Terminal.class, "Bill was closed " + bill);
-
-        return bills.add(bill.closeBill());
+        bill.closeBill();
+        return appDB.save(bill) != null;
     }
 
-    public ArrayList<Bill> getBills() {
-        return (ArrayList<Bill>)bills.clone();
-    }
-
-    public boolean addProduct(Product p){
-        if (products.contains(p))
-            return false;
-
-        return products.add(p);
+    public boolean addProduct(Product p) {
+        return appDB.save(p) != null;
     }
 
     public Bill findBillById(int id){
-        for (Bill b : bills){
-            if(b.getId() == id){
-                return b;
-            }
-        }
-        return null;
+        return (Bill) appDB.findById(id, Bill.class);
     }
 
     public Salesman getTopNofSalesMan(){
 
-        HashMap<Salesman, Double> sales = getSalesAmountBySalesman();
+        Map<Salesman, Double> sales = getSalesAmountBySalesman();
 
         Salesman topSalesman = null;
         Double amount = 0.0;
         Double currentAmount;
+
+        List<Salesman> salesmen = getSalesmen();
 
         for (Salesman s : salesmen){
 
@@ -126,10 +102,11 @@ public class Terminal implements ITerminal {
         return topSalesman;
     }
 
-    public HashMap<Salesman, Double> getSalesAmountBySalesman(){
+    public Map<Salesman, Double> getSalesAmountBySalesman(){
 
         HashMap<Salesman, Double> sales = new HashMap<>();
         Salesman salesman;
+        List<Bill> bills = getBills();
         for (Bill b : bills){
             salesman = b.getSalesman();
             if (sales.get(salesman) == null){
@@ -139,6 +116,37 @@ public class Terminal implements ITerminal {
             }
         }
         return sales;
+    }
+
+    public ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products,
+                                  Date startDate, Date endDate, Comparator<Bill> comparator){
+
+        ArrayList<Bill> result = new ArrayList<>();
+        Date BDate;
+        List<Bill> bills = getBills();
+        for(Bill b : bills){
+
+            BDate = b.getCloseTime();
+            if (startDate.compareTo(BDate) > 0 || endDate.compareTo(BDate) < 0){
+                continue;
+            }
+
+            if (salesmen != null && !salesmen.contains(b.getSalesman())){
+                continue;
+            }
+
+            if (products != null
+                    && !Utils.listContainElementsOther(b.getProducts(), products)){
+                continue;
+            }
+
+            result.add(b);
+
+        }
+
+        if(comparator != null && !result.isEmpty()) {result.sort(comparator); result.trimToSize();}
+
+        return result;
     }
 
 }
