@@ -1,60 +1,80 @@
-package main.java.controllers;
+package controllers;
 
-import main.java.interfaces.ITerminal;
-import main.java.models.Product;
-import main.java.models.Salesman;
-
-import java.util.HashSet;
-import java.util.Set;
+import interfaces.ITerminal;
+import models.Bill;
+import models.Product;
+import models.Salesman;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class TerminalController implements ITerminal {
+public class TerminalController implements ITerminal{
 
-    private BillController currentBill;
-    private Set<BillController> billSet;
+    private BillController billController;
 
-    public TerminalController() {
-        this.billSet = new HashSet<>();
+    public TerminalController(BillController billController) {
+        this.billController = billController;
     }
 
-    //TODO should be implemented
-    public boolean login() {
-        return false;
-    }
-
-    public BillController createBill() {
-        this.currentBill = new BillController();
-        billSet.add(currentBill);
-        return currentBill;
-    }
-
-    public Product addProduct(String productName) {
-        if (currentBill == null) {
-            throw new IllegalStateException("BillController not created");
+    public Bill createBill(Bill bill) {
+        if (bill == null) {
+            throw new IllegalArgumentException("Bill can not be null");
         }
-        return currentBill.addProduct(productName);
+        billController.getBillSet().add(bill);
+        return bill;
     }
 
-    public void closeAndSaveBill(BillController bill) {
-        this.currentBill = null;
-        bill.closeBill();
+    public Product addProduct(Bill bill, String productName) {
+        if (bill == null) {
+            throw new IllegalArgumentException("BillController not created");
+        }
+        return billController.addProductToBill(bill, productName);
     }
 
-    //TODO add validation
-    public BillController findBillById(long id) {
-        return billSet.stream().filter(bill -> bill.getId() == id).collect(Collectors.toSet()).iterator().next();
+    public void closeAndSaveBill(Bill bill) {
+        billController.closeBill(bill);
     }
 
-    public Salesman findSalesmanByLoginOrFullName(String fullName) {
-        return billSet.stream().filter(bill -> bill.getSalesman().getFullname().equals(fullName)
-                                                    || bill.getSalesman().getLogin().equals(fullName)).
-                                                        collect(Collectors.toSet()).iterator().next().getSalesman();
+    public Bill findBillById(long id) throws NoSuchElementException{
+        return billController.getBillSet().
+                stream().filter(bill -> bill.getId() == id).findFirst().get();
     }
 
-    //TODO should be implemented
-    public Salesman getTopOnSalesMan() {
-        return null;
+    public Salesman findSalesmanByLoginOrFullName(String fullName,
+                                                    String login) {
+        Set<Bill> billSet = billController.getBillSet();
+        return billSet.stream().filter((Bill bill) -> {
+            Salesman salesman = bill.getSalesman();
+            String fullname = salesman.getFullname();
+            String salesmanLogin = salesman.getLogin();
+
+            return salesman != null && (!(fullname == null
+                    && salesmanLogin == null) && (fullname.equals(fullName) ||
+                    salesmanLogin.equals(login) ? true : false));
+        }).collect(Collectors.toList()).get(0).getSalesman();
     }
 
-    //TODO UI should be implemented
+    public List<Bill> sortBillListByDateCreation() {
+        List<Bill> list = new ArrayList<>();
+        Set<Bill> set = billController.getBillSet();
+        list.addAll(set);
+        Collections.sort(list, Comparator.comparing(Bill::getCreationDate));
+        return list;
+    }
+
+    public List<Bill> getBillsByStartAndEndDates(Date startDate, Date endDate) {
+        return getBillSet().stream().filter(bill ->
+                bill.getCreationDate().compareTo(startDate) >=0 &&
+                        bill.getCreationDate().compareTo(endDate) <= 0).
+                                collect(Collectors.toList());
+    }
+
+    public List<Bill> getBillsByCreator(Salesman salesman) {
+        return getBillSet().stream().filter(bill -> bill.getSalesman().
+                compareTo(salesman) == 1).collect(Collectors.toList());
+
+    }
+
+    public Set<Bill> getBillSet() {
+        return billController.getBillSet();
+    }
 }

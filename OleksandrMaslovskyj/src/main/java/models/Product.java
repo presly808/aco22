@@ -1,4 +1,4 @@
-package main.java.models;
+package models;
 
 
 public class Product {
@@ -20,8 +20,9 @@ public class Product {
         this.price = price;
     }
 
-    public void printFullInfo(){
-        System.out.println("id: " + getId() + "; name: " + getName());
+    public String printFullInfo(){
+        return String.format("id:%d , name:%s, price:%f" ,
+                getId(), getName(), getPrice());
     }
 
     public long getId() {
