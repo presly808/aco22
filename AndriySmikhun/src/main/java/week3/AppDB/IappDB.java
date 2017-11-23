@@ -6,7 +6,7 @@ import week3.model.Salesman;
 
 import java.util.List;
 
-public interface IAppDB {
+public interface IappDB {
 
     List<Bill> getAllBill();
     List<Salesman> getAllSalesman();
@@ -16,7 +16,7 @@ public interface IAppDB {
     Bill updateDill();
     Bill removeBill();
     Bill findeBillByID();
-    Bill saveBill();
+    Bill saveBill(Bill bill); //return bill in array with id
 
 
     Salesman getSaleman();
