@@ -1,6 +1,7 @@
 package logictests;
 
 import controllers.BillController;
+import factory.TerminalFactory;
 import utils.StringGenerator;
 import utils.TerminalUtils;
 import controllers.TerminalController;
@@ -11,7 +12,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class TerminalTests {
 
     @Before
     public void prepareData(){
-        this.terminal = new TerminalController(new BillController());
+        this.terminal = TerminalFactory.create(new BillController());
     }
 
     @After
