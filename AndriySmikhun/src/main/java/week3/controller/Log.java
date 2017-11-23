@@ -1,13 +1,27 @@
 package week3.controller;
 
-public class Log {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Log implements ILog{
+    private List<String> eventlog = new ArrayList<>();
     private static Log log = new Log();
 
-    public void eroor(String show){
-        System.out.println("Error : " + show);
+    public Log() {
+        this.eventlog = eventlog;
     }
 
-    public void info(String show){
-        System.out.println("Event : " + show);
+    public Log getLog(){
+        return log;
+    }
+
+    @Override
+    public void error(String str){
+        eventlog.add("Error : " + str);
+    }
+
+    @Override
+    public void event(String str){
+        eventlog.add("Event : " + str);
     }
 }
