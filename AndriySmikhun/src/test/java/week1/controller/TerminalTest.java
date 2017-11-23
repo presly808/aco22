@@ -84,6 +84,8 @@ public class TerminalTest {
 
     }
 
+    
+
     @Test
     public void getTopNofSalesMan() {
         Assert.assertEquals(salesman1, terminal.getTopNofSalesMan());
