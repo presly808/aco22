@@ -11,9 +11,14 @@ import java.util.List;
  */
 public interface ITerminalController {
 
-    boolean login(String login, String pass);
+    void login(String login, String pass);
 
     Bill createBill();
+
+    Bill findBillById(int billId);
+
+    Salesman findSalesmanByLogin(String Login);
+
 
     Bill addProduct(int billId, Product product);
 
@@ -21,7 +26,7 @@ public interface ITerminalController {
 
     Bill closeBill(int id);
 
-
+    List<Product> getAllProducts();
 
 
 }

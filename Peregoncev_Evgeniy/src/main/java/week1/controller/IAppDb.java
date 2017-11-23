@@ -12,24 +12,31 @@ import java.util.List;
 public interface IAppDb {
 
     List<Bill> getAllBills();
-    List<Product> getAllProducts();
-    List<Salesman> getAllSalesMans();
-
 
     Bill findByBillId(int billId);
-    Product findByProductId(int billId);
-    Salesman findBySalesmanId(int billId);
-
-
-
-    Bill saveBill(Bill bill);
-    Product saveProduct(Product product);
-
-    Bill removeBill(int bill);
-    Product removeProductFromBill(Bill bill, int remove);
 
     Bill update(Bill bill);
 
+    Bill saveBill(Bill bill);
+
+    Bill removeBill(int bill);
 
 
+    List<Salesman> getAllSalesMans();
+
+    Salesman findSalesmanByLogin(String login);
+
+    List<Product> getAllProducts();
+
+    Product findByProductId(int productId);
+
+
+
+
+
+
+//    List<Product> getAllProducts();
+//    Product saveProduct(Product product);
+//    Product findByProductId(int billId);
+//    Product removeProductFromBill(int billid, int productId);
 }

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.Salesman;
 
 import static org.junit.Assert.*;
 
@@ -34,31 +35,14 @@ public class IAppDbTest {
     @Test
     public void getAllSalesMans() throws Exception {
         appDb.getAllSalesMans();
-        assertEquals(0, appDb.getAllSalesMans().size());
-    }
-
-    @Test
-    public void getAllProducts() throws Exception {
-        appDb.getAllProducts();
-        assertEquals(0, appDb.getAllProducts().size());
+        assertEquals(3, appDb.getAllSalesMans().size());
     }
 
     @Test
     public void findByBillId() throws Exception {
         Bill saved = appDb.saveBill(new Bill());
         appDb.findByBillId(saved.getId());
-    }
-
-    @Test
-    public void findBySalesmanId() throws Exception {
-
-    }
-
-    @Test
-    public void findByProductId() throws Exception {
-
-        Product saved = appDb.saveProduct(new Product());
-        appDb.findByProductId(saved.getId());
+        assertSame(appDb.findByBillId(saved.getId()),saved);
     }
 
     @Test
@@ -68,23 +52,9 @@ public class IAppDbTest {
     }
 
     @Test
-    public void saveProduct() throws Exception {
-        Product saved = appDb.saveProduct(new Product());
-        assertEquals(0, saved.getId());
-    }
-
-    @Test
     public void removeBill() throws Exception {
 
 
-    }
-
-    @Test
-    public void removeProductFromBill() throws Exception {
-        Bill bill = appDb.saveBill(new Bill());
-        Product saved = appDb.saveProduct(new Product());
-        Product removed = appDb.removeProductFromBill(bill,saved.getId());
-       assertEquals(saved.getId(),removed.getId());
     }
 
     @Test

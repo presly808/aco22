@@ -49,7 +49,11 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("%-15s %-8.2f %s", getName(), getPrice(), getId());
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", id=" + id +
+                '}';
     }
 
 }

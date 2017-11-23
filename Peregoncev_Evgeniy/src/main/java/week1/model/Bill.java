@@ -18,7 +18,6 @@ public class Bill {
 
     private boolean isClosed = false;
 
-    private int productsCounter = 0;
 
     public Bill() {
         this.productList = new ArrayList<>();
@@ -34,6 +33,7 @@ public class Bill {
         this.id = id;
     }
 
+    
     public List<Product> getProductList() {
         return productList;
     }
@@ -54,20 +54,8 @@ public class Bill {
         this.id = id;
     }
 
-    public boolean getClosed() {
-        return isClosed;
-    }
-
     public void setClosed(boolean closed) {
         this.isClosed = closed;
-    }
-
-    public int getProductsCounter() {
-        return productsCounter;
-    }
-
-    public void setProductsCounter(int productsCounter) {
-        this.productsCounter = productsCounter;
     }
 
     public double getAmountPrice() {
@@ -90,38 +78,17 @@ public class Bill {
         return isClosed;
     }
 
-
-//    Methods
-
-//    public double calculateAmountPrice(Bill bill) {
-//        if ((bill == null) || (productsCounter == 0)) {
-//            System.out.println("bill is null or there no one product to calc");
-//        } else
-//            for (int i = 0; i < productsCounter; i++) {
-//                AmountPrice += products[i].getPrice();
-//            }
-//        return AmountPrice;
-//    }
-
-//    public String printAllProducts() {
-//        String allproducts = "";
-//        if (productsCounter == 0) {
-//            System.out.println("no product to print");
-//        } else
-//            for (int i = 0; i < productsCounter; i++) {
-//                allproducts += products[i].toString() + "\n";
-//            }
-//        return allproducts;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return String.format("              BiLL  \n" +
-//                        "Title           Price    Barcode\n" +
-//                        "--------------------------------\n" +
-//                        "%s\nAmount Price = " + getAmountPrice() + "\nSeller: %s\n%s",
-//                printAllProducts(), salesman.getFullname(), getTime().getCloseTime());
-//    }
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "productList=" + productList +
+                ", AmountPrice=" + AmountPrice +
+                ", salesman=" + salesman +
+                ", time=" + time +
+                ", id=" + id +
+                ", isClosed=" + isClosed +
+                '}';
+    }
 
 
 }

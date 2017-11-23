@@ -5,56 +5,58 @@ package week1.model;
  */
 public class Salesman {
 
-    private String fullname;
+    private String Name;
     private String login;
     private String pass;
-    private int id;
+
+    private int countSoldProduct;
+
+    private  int id;
 
     public Salesman() {
 
     }
 
-    public Salesman(String fullname, String login, String pass) {
-        this.fullname = fullname;
+    public Salesman(String Name, String login, String pass, int id) {
+        this.Name = Name;
         this.login = login;
         this.pass = pass;
+        this.id = id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public int getCountSoldProduct() {
+        return countSoldProduct;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setCountSoldProduct(int countSoldProduct) {
+        this.countSoldProduct = countSoldProduct;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return Name;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPass() {
         return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 
     @Override
     public String toString() {
         return "Salesman{" +
-                "fullname='" + fullname + '\'' +
+                "Name='" + Name + '\'' +
                 ", login='" + login + '\'' +
                 ", pass='" + pass + '\'' +
+                ", countSoldProduct=" + countSoldProduct +
+                ", id=" + id +
                 '}';
-    }
-
-    public int getId() {
-        return id;
     }
 }
 

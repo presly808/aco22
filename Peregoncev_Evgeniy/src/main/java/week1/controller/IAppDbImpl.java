@@ -1,7 +1,7 @@
 package week1.controller;
 
-
 import week1.model.Bill;
+
 import week1.model.Product;
 import week1.model.Salesman;
 
@@ -14,16 +14,27 @@ import java.util.List;
 public class IAppDbImpl implements IAppDb {
 
     private int billNextId;
-    private int productNextId;
 
-    private List<Product> productList;
     private List<Bill> billList;
     private List<Salesman> salesmanList;
+    private List<Product> productList;
 
     public IAppDbImpl() {
-        this.productList = new ArrayList<>();
         this.billList = new ArrayList<>();
+
         this.salesmanList = new ArrayList<>();
+
+        salesmanList.add(new Salesman("Inna", "login", "pass", 0));
+        salesmanList.add(new Salesman("Zina", "login1", "pass", 1));
+        salesmanList.add(new Salesman("1", "2", "3", 2));
+
+        this.productList = new ArrayList<>();
+
+        productList.add(new Product("apricot", 16.5, 1));
+        productList.add(new Product("banana", 20.0, 2));
+        productList.add(new Product("watermelon", 50.5, 3));
+        productList.add(new Product("apple", 8.5, 4));
+
     }
 
     @Override
@@ -32,13 +43,36 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
+    public List<Salesman> getAllSalesMans() {
+        return salesmanList;
+    }
+
+    @Override
+    public Salesman findSalesmanByLogin(String login) {
+
+        for (Salesman salesman : salesmanList) {
+            if (salesman.getLogin().equals(login)) {
+                return salesman;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return productList;
     }
 
     @Override
-    public List<Salesman> getAllSalesMans() {
-        return salesmanList;
+    public Product findByProductId(int productId) {
+        for (Product product : productList) {
+            if (productId == product.getId()) {
+                return product;
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -47,28 +81,6 @@ public class IAppDbImpl implements IAppDb {
         for (Bill bill : billList) {
             if (billId == bill.getId()) {
                 return bill;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Product findByProductId(int billId) {
-
-        for (Product product : productList) {
-            if (billId == product.getId()) {
-                return product;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Salesman findBySalesmanId(int billId) {
-
-        for (Salesman salesman : salesmanList) {
-            if (billId == salesman.getId()) {
-                return salesman;
             }
         }
         return null;
@@ -85,33 +97,18 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        product.setId(productNextId++);
+    public Bill removeBill(int billId) {
 
-        productList.add(product);
-
-        return product;
-    }
-
-    @Override
-    public Bill removeBill(int bill) {
-
-        Bill found = findByBillId(bill);
+        Bill found = findByBillId(billId);
 
         if (found == null) {
-            System.out.println("Not found with id " + bill);
+            System.out.println("Not found with id " + billId);
             return null;
         }
 
         billList.remove(found);
 
         return found;
-    }
-
-    @Override
-    public Product removeProductFromBill(Bill bill, int remove) {
-
-        return null;
     }
 
     @Override

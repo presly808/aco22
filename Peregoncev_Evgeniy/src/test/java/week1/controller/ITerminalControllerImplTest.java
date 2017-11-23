@@ -2,9 +2,6 @@ package week1.controller;
 
 import org.junit.Before;
 import org.junit.Test;
-import week1.controller.IAppDbImpl;
-import week1.controller.ITerminalController;
-import week1.controller.ITerminalControllerControllerImpl;
 import week1.model.Bill;
 import week1.model.Product;
 
@@ -16,12 +13,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by ENIAC on 11.11.2017.
  */
-public class ITerminalControllerControllerImplTest {
+public class ITerminalControllerImplTest {
     private ITerminalController terminalController;
 
     @Before
     public void setUp(){
-        this.terminalController = new ITerminalControllerControllerImpl(new IAppDbImpl());
+        this.terminalController = new ITerminalControllerImpl(new IAppDbImpl());
     }
 
     @Test

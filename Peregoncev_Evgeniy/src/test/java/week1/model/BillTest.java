@@ -33,7 +33,7 @@ public class BillTest {
 
         testTime = new Time();
 
-        testSalesMan = new Salesman("Izolda", "isoldaLog", "IsoldaPass");
+
         testBill = new Bill(testAmountPrice, testSalesMan, testTime, 1);
 
         testProduct1 = new Product("apricot", 16.5, 1);
