@@ -1,40 +1,33 @@
 package ua.artcode.market.models;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Bill {
 
-    private static final int DEFAULT_AMOUNT_PRODUCTS = 100;
-
-    private static int seqId;
     private int id;
-    private Product[] products;
+    private List<Product> products;
     private Salesman salesMan;
     private double amountPrice;
-    private Date closeTime;
-    private boolean isOpen = true;
-    private int numProd;
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
+    private boolean closed;
 
     public Bill(Salesman salesMan) {
-        seqId++;
-        id = seqId;
         this.salesMan = salesMan;
-        products = new Product[DEFAULT_AMOUNT_PRODUCTS];
+        openTime = LocalDateTime.now();
+        products = new ArrayList<>();
     }
 
-    public Bill(Salesman salesMan, int amountProd) {
-        seqId++;
-        id = seqId;
-        this.salesMan = salesMan;
-        products = new Product[amountProd];
-    }
 
     public int getId() {
         return id;
     }
 
-    public int getNumProd() {
-        return numProd;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public Salesman getSalesMan() {
@@ -45,54 +38,55 @@ public class Bill {
         return amountPrice;
     }
 
-    public Date getCloseTime() {
+    public LocalDateTime getOpenTime() {
+        return openTime;
+    }
+
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
-    public boolean addProduct(Product p) {
-
-        if ((isOpen) && (p != null) && (numProd < products.length)) {
-
-            products[numProd++] = p;
-
-            return true;
-        }
-        return false;
+    public boolean isClosed() {
+        return closed;
     }
 
-    public void calculateAmountPrice() {
-
-        amountPrice = 0;
-
-        for (int i = 0; i < numProd; i++) {
-            amountPrice += products[i].getPrice();
-        }
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean closeBill() {
-
-        if (numProd > 0) {
-
-            calculateAmountPrice();
-            closeTime = new Date();
-            isOpen = false;
-
-            return true;
-
-        }
-
-        return false;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
-    public boolean hasProducts(Product[] p) {
+    public void setSalesMan(Salesman salesMan) {
+        this.salesMan = salesMan;
+    }
+
+    public void setAmountPrice(double amountPrice) {
+        this.amountPrice = amountPrice;
+    }
+
+    public void setOpenTime(LocalDateTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public void setCloseTime(LocalDateTime closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public boolean hasProducts(ArrayList<Product> arrProduct) {
 
 
-        for (int i=0; i<p.length; i++) {
+        for (Product inProduct : arrProduct) {
 
             boolean hasProd = false;
 
-            for (int j=0; j<products.length; j++) {
-                if (products[j].equals(p[i])) {
+            for (Product product : products) {
+                if (products.equals(inProduct)) {
                     hasProd = true;
                     break;
                 }
@@ -111,10 +105,10 @@ public class Bill {
 
         String str = "Чек№" + id + "\n";
 
-        if (!isOpen) {
+        if (closed) {
 
-            for (int i = 0; i < numProd; i++) {
-                str += products[i].toString();
+            for (Product product : products) {
+                str += product.toString();
             }
 
             str += String.format("Saler: %s; Time: %s; Sum: %.2f .",

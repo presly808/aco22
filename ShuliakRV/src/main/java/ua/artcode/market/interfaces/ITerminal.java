@@ -22,6 +22,7 @@ public interface ITerminal {
     public double getMin();
     public double getAverage();
     public int countSoldProducts();
+    public Bill calculateAmountPrice(Bill bill);
 
     Bill[] filter(Salesman[] sales,Product[] products, Date startTime, Date endTime, Comparator<Bill> comparator);
 }

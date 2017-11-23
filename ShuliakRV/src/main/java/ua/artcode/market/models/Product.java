@@ -1,16 +1,22 @@
 package ua.artcode.market.models;
 
 public class Product {
-    private static int seqId;
+
     private int id;
     private String name;
     private double price;
 
     public Product(String name, double price) {
-        seqId++;
-        id = seqId;
         this.name = name;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getPrice() {

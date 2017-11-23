@@ -1,5 +1,6 @@
 package ua.artcode.market.exclude;
 
+import ua.artcode.market.controller.AppDB;
 import ua.artcode.market.controller.TerminalController;
 import ua.artcode.market.models.*;
 

@@ -232,6 +232,21 @@ public class TerminalController implements ITerminal {
         return result;
     }
 
+    public Bill calculateAmountPrice(Bill bill) {
+
+        if (bill == null) return false;
+
+        double amount = 0;
+
+        for (Product product : bill.getProducts()) {
+            amount += product.getPrice();
+        }
+
+        bill.amountPrice = amount;
+
+        return bill;
+    }
+
     @Override
     public Bill[] filter(Salesman[] sales, Product[] products, Date startTime,
                          Date endTime, Comparator<Bill> comparator) {
