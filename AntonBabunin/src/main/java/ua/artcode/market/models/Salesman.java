@@ -2,7 +2,7 @@ package ua.artcode.market.models;
 
 import java.util.Comparator;
 
-public class Salesman implements Comparator<Salesman> {
+public class Salesman implements Comparable<Salesman> {
 
     private String fullName;
     private String login;
@@ -61,20 +61,21 @@ public class Salesman implements Comparator<Salesman> {
                 salesman.login == null;
     }
 
-    @Override
-    public int compare(Salesman o1, Salesman o2) {
-        return o1.getFullName().compareTo(o2.getFullName());
-    }
-
-    @Override
-    public Comparator<Salesman> thenComparing(Comparator<? super Salesman> other) {
-        return new Comparator<Salesman>() {
-            @Override
-            public int compare(Salesman o1, Salesman o2) {
-                return o1.getLogin().compareTo(o2.getLogin());
-            }
-        };
-    }
+//    @Override
+//    public int compare(Salesman o1, Salesman o2) {
+//        return o1.getFullName().compareTo(o2.getFullName());
+//    }
+//
+//    @Override
+//    public Comparator<Salesman> thenComparing(Comparator<?
+//          super Salesman> other) {
+//        return new Comparator<Salesman>() {
+//            @Override
+//            public int compare(Salesman o1, Salesman o2) {
+//                return o1.getLogin().compareTo(o2.getLogin());
+//            }
+//        };
+//    }
 
     @Override
     public int hashCode() {
@@ -88,5 +89,10 @@ public class Salesman implements Comparator<Salesman> {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Salesman o) {
+        return this.getLogin().compareTo(o.getLogin());
     }
 }
