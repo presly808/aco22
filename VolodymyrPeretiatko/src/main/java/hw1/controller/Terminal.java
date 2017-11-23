@@ -9,70 +9,73 @@ import java.util.*;
 public class Terminal implements ITerminal {
 
     private IAppDB appDB = new IAppDBImpl();
+    private Salesman currentUser;
 
-    public static Salesman getSalesmanByName(List<Salesman> salesmen, String name){
-
-        if (name == null){
-            return null;
-        }
-
-        for (Salesman s : salesmen){
-            if(name.equals(s.getName())){
-                return  s;
-            }
-        }
-        return null;
-    }
 
     public List<Salesman> getSalesmen() {
-        return appDB.getSalesmen();
-    }
-
-    public ArrayList<Product> getProducts() {
-        return (ArrayList<Product>) products.clone();
-    }
-
-    public boolean addSalesman(Salesman salesman){
-        return appDB.addSalesman(salesman);
-    }
-
-    public Salesman login(String name, String pass){
-        Salesman salesman = getSalesmanByName(appDB.getSalesmen(), name);
-        if (salesman != null && pass.equals(salesman.getPass())){
-            return salesman;
+        List<DBItem> items = appDB.getAll(Salesman.class);
+        List<Salesman> salesmen = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            salesmen.add((Salesman) i);
         }
-        return null;
+        return salesmen;
     }
 
-    public Bill createBill(Salesman salesman){
-        Bill b = new Bill(id, salesman);
-        return b;
-    }
-
-    public boolean closeAndSaveBill(Bill bill){
-        return bills.add(bill.closeBill());
+    public List<Product> getProducts() {
+        List<DBItem> items = appDB.getAll(Product.class);
+        List<Product> products = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            products.add((Product) i);
+        }
+        return products;
     }
 
     public List<Bill> getBills() {
-        return (ArrayList<Bill>)bills.clone();
+        List<DBItem> items = appDB.getAll(Bill.class);
+        List<Bill> bills = new ArrayList<>(items.size());
+        for(DBItem i : items){
+            bills.add((Bill) i);
+        }
+        return bills;
+    }
+
+
+    public boolean addSalesman(Salesman salesman){
+        return appDB.save(salesman) != null;
+    }
+
+    public boolean login(String name, String pass){
+
+        List<DBItem> salesmen = appDB.getAll(Salesman.class);
+        for (DBItem s : salesmen) {
+            if (name.equals(((Salesman)s).getName()))
+                if (pass.equals(((Salesman)s).getPass())){
+                    this.currentUser = (Salesman) s;
+                    return true;
+                }
+        }
+        return false;
+    }
+
+    @Override
+    public Bill createBill(){
+        Bill b = (Bill) appDB.create(Bill.class);
+        b.setSalesman(currentUser);
+        return b;
+    }
+
+    @Override
+    public boolean closeAndSaveBill(Bill bill){
+        bill.closeBill();
+        return appDB.save(bill) != null;
     }
 
     public boolean addProduct(Product p) {
-
-        if (!products.contains(p))
-            return products.add(p);
-
-        return false;
-
+        return appDB.save(p) != null;
     }
 
     public Bill findBillById(int id){
-        for (Bill b : bills){
-            if(b.getId() == id){
-                return b;
-            }
-        }
-        return null;
+        return (Bill) appDB.findById(id, Bill.class);
     }
 
     public Salesman getTopNofSalesMan(){
@@ -82,6 +85,8 @@ public class Terminal implements ITerminal {
         Salesman topSalesman = null;
         Double amount = 0.0;
         Double currentAmount;
+
+        List<Salesman> salesmen = getSalesmen();
 
         for (Salesman s : salesmen){
 
@@ -101,6 +106,7 @@ public class Terminal implements ITerminal {
 
         HashMap<Salesman, Double> sales = new HashMap<>();
         Salesman salesman;
+        List<Bill> bills = getBills();
         for (Bill b : bills){
             salesman = b.getSalesman();
             if (sales.get(salesman) == null){
@@ -112,13 +118,13 @@ public class Terminal implements ITerminal {
         return sales;
     }
 
-    public ArrayList<Bill> filter(ArrayList<Salesman> salesmen, ArrayList<Product> products,
+    public ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products,
                                   Date startDate, Date endDate, Comparator<Bill> comparator){
 
         ArrayList<Bill> result = new ArrayList<>();
         Date BDate;
-
-        for(Bill b : this.bills){
+        List<Bill> bills = getBills();
+        for(Bill b : bills){
 
             BDate = b.getCloseTime();
             if (startDate.compareTo(BDate) > 0 || endDate.compareTo(BDate) < 0){

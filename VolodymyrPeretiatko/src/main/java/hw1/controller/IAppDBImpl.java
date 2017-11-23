@@ -1,13 +1,9 @@
 package hw1.controller;
 
-import hw1.model.Bill;
-import hw1.model.DBItem;
-import hw1.model.Product;
-import hw1.model.Salesman;
+import hw1.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class IAppDBImpl implements IAppDB {
 
@@ -25,73 +21,100 @@ public class IAppDBImpl implements IAppDB {
         products = new ArrayList<>();
     }
 
-
     @Override
-    public Bill createBill() {
-        return new Bill(++indexBill);
-    }
-
-    @Override
-    public Product createProduct() {
-        return new Product(++indexSalesman);
-    }
-
-    @Override
-    public Salesman createSalesman() {
-        return new Salesman(++indexProduct);
-    }
-
-    @Override
-    public Bill findBillById(int id) {
-        return (Bill) findItemById(id, bills);
-    }
-
-    @Override
-    public Product findProductById(int id) {
-        return (Product) findItemById(id, products);
-    }
-
-    @Override
-    public Salesman findSalesmanById(int id) {
-        return (Salesman) findItemById(id, salesmen);
-    }
-
-    private DBItem findItemById(int id, List<DBItem> list){
-        for (DBItem item : list){
-            if(item.getId() == id){
-                return item;
-            }
+    public DBItem create(Class c){
+        if(c == Bill.class){
+            return new Bill(++indexBill);
+        }
+        if (c == Product.class){
+            return new Product(++indexSalesman);
+        }
+        if (c == Salesman.class){
+            return new Salesman(++indexProduct);
         }
         return null;
     }
 
     @Override
-    public Bill updateBill(Bill b) {
+    public DBItem save(DBItem item) {
+        if (item instanceof Bill) {
+            bills.add((Bill) item);
+        } else if (item instanceof Product){
+            products.add((Product) item);
+        } else if (item instanceof Salesman){
+            salesmen.add((Salesman) item);
+        } else {
+            return null;
+        }
+        return item;
+    }
+
+    @Override
+    public DBItem update(DBItem item) {
+        int index;
+        if (item instanceof Bill) {
+            index = bills.indexOf(findById(item.getId(), Bill.class));
+            if(index == -1){
+                return null;
+            }
+            return bills.set(index, (Bill) item);
+        } else if (item instanceof Product){
+            index = products.indexOf(findById(item.getId(), Product.class));
+            if(index == -1){
+                return null;
+            }
+            return products.set(index, (Product) item);
+        } else if (item instanceof Salesman){
+            index = bills.indexOf(findById(item.getId(), Salesman.class));
+            if(index == -1){
+                return null;
+            }
+            return salesmen.set(index, (Salesman) item);
+        }
+
         return null;
     }
 
     @Override
-    public Product updateProduct(Product p) {
+    public DBItem findById(int id, Class c) {
+
+        if(c == Bill.class){
+            for (Bill item : bills){
+                if(item.getId() == id){
+                    return item;
+                }
+            }
+        }
+        if (c == Product.class){
+            for (Product item : products){
+                if(item.getId() == id){
+                    return item;
+                }
+            }
+        }
+        if (c == Salesman.class){
+            for (Salesman item : salesmen){
+                if(item.getId() == id){
+                    return item;
+                }
+            }
+        }
         return null;
+
     }
 
     @Override
-    public Salesman updateSalesman(Salesman s) {
+    public List<DBItem> getAll(Class c) {
+        if(c == Bill.class){
+            return new ArrayList<>(bills);
+        }
+        if (c == Product.class){
+            return new ArrayList<>(products);
+        }
+        if (c == Salesman.class){
+            return new ArrayList<>(salesmen);
+        }
         return null;
     }
 
-    @Override
-    public List<Bill> getBills() {
-        return null;
-    }
-
-    @Override
-    public List<Salesman> getSalesmen() {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProducts() {
-        return null;
-    }
 }

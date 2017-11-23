@@ -1,28 +1,20 @@
 package hw1.controller;
 
-import hw1.model.Bill;
-import hw1.model.Product;
-import hw1.model.Salesman;
+import hw1.model.*;
 
 import java.util.List;
 import java.util.Map;
 
 public interface IAppDB {
 
-    Bill createBill();
-    Product createProduct();
-    Salesman createSalesman();
+    DBItem create(Class c);
 
-    Bill findBillById(int id);
-    Product findProductById(int id);
-    Salesman findSalesmanById(int id);
+    DBItem save(DBItem item);
 
-    Bill updateBill(Bill b);
-    Product updateProduct(Product p);
-    Salesman updateSalesman(Salesman s);
+    DBItem update(DBItem item);
 
-    List<Bill> getBills();
-    List<Salesman> getSalesmen();
-    List<Product> getProducts();
+    DBItem findById(int id, Class c);
+
+    List<DBItem> getAll(Class c);
 
 }

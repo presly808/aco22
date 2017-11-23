@@ -8,15 +8,15 @@ import java.util.Date;
 
 public class TestTerminal {
 
-    private static Terminal terminal;
+    private ITerminal terminal;
 
-    private static Bill b1, b2;
-    private static Product p1, p2;
-    private static Salesman s1, s2;
+    private Bill b1, b2;
+    private Product p1, p2;
+    private Salesman s1, s2;
 
 
-    @BeforeClass
-    public static void initTestData(){
+    @Before
+    public void initTestData(){
 
         s1 = new Salesman("Jhon Lohan",    "Jhon",  "qwerty");
         s2 = new Salesman("Frank Sinatra", "Frank", "qwerty");
@@ -38,7 +38,7 @@ public class TestTerminal {
         b2.addProduct(p1);
         b2.addProduct(p2);
 
-        terminal = new Terminal();
+        terminal = new ProxyLoggerTerminal();
 
         terminal.addProduct(p1);
         terminal.addProduct(p2);
@@ -52,19 +52,11 @@ public class TestTerminal {
         b2.setCloseTime(new Date(1510842400777L));
     }
 
-    @AfterClass
-    public static void clearTestData(){
-        s1 = null;
-        s2 = null;
-        p1 = null;
-        p2 = null;
-    }
-
     @Test
     public void testLogin(){
-        Assert.assertEquals(s1, terminal.login("Jhon", "qwerty"));
-        Assert.assertEquals(s2, terminal.login("Frank", "qwerty"));
-        Assert.assertTrue(terminal.login("HuiChi", "qwerty") == null);
+        Assert.assertTrue(terminal.login("Jhon", "qwerty"));
+        Assert.assertTrue(terminal.login("Frank", "qwerty"));
+        Assert.assertFalse(terminal.login("HuiChi", "qwerty"));
     }
 
     @Test
@@ -82,13 +74,14 @@ public class TestTerminal {
 
     @Test
     public void testCreateBill(){
-        Bill b = terminal.createBill(s2);
+        Bill b = terminal.createBill();
+        b.setSalesman(s2);
         Assert.assertTrue(b.getCloseTime() == null);
     }
 
     @Test
     public void testAddSalesman(){
-        Assert.assertFalse(terminal.addSalesman(s1));
+        Assert.assertTrue(terminal.addSalesman(s1));
     }
 
     @Test
