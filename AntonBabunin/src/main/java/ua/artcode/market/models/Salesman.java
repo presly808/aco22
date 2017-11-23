@@ -1,7 +1,5 @@
 package ua.artcode.market.models;
 
-import java.util.Comparator;
-
 public class Salesman implements Comparable<Salesman> {
 
     private String fullName;

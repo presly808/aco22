@@ -83,9 +83,8 @@ public class ITerminalControllerTest {
         product.getId();
         product.getName();
 
-
-            assertNotEquals(0.0, amountPrice);
-            assertNotEquals(0.0, open.getAmountPrice());
+        assertNotEquals(0.0, amountPrice);
+        assertNotEquals(0.0, open.getAmountPrice());
 
 
 

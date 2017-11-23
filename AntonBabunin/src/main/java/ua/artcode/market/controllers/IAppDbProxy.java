@@ -18,7 +18,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     public IAppDbProxy(IAppDb target) throws IOException {
         this.target = target;
-        this.iLogging = ILoggingImpl.getGetInstance();
+        this.iLogging = ILoggingImpl.getInstance();
     }
 
     @Override

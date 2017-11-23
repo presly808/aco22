@@ -7,7 +7,6 @@ import ua.artcode.market.utils.Generator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class ILoggingImpl implements ILogging {
@@ -25,7 +24,7 @@ public class ILoggingImpl implements ILogging {
         }
     }
 
-    public static ILogging getGetInstance() throws IOException {
+    public static ILogging getInstance() throws IOException {
         if (instance == null) {
             synchronized (ILoggingImpl.class) {
                 if (instance == null) {
@@ -41,7 +40,7 @@ public class ILoggingImpl implements ILogging {
             throws IOException {
         File file = new File("log.txt");
         if (!file.exists()) {
-        file.createNewFile();
+            file.createNewFile();
         }
         FileWriter fileWriter = new FileWriter(file,true);
         fileWriter.write(messege);

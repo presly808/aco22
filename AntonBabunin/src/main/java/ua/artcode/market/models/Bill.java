@@ -1,13 +1,11 @@
 package ua.artcode.market.models;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Bill implements Comparable<Bill> {
 
-    public static BillComparator billComparator = new BillComparator();
 
     private int id;
 //    private int terminalId;
@@ -91,16 +89,7 @@ public class Bill implements Comparable<Bill> {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + (productsMap != null ? productsMap.hashCode() : 0);
-        result = 31 * result + (salesman != null ? salesman.hashCode() : 0);
-        temp = Double.doubleToLongBits(amountPrice);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (openTime != null ? openTime.hashCode() : 0);
-        result = 31 * result + (closeTime != null ? closeTime.hashCode() : 0);
-        return result;
+        return 0;
     }
 
     @Override
