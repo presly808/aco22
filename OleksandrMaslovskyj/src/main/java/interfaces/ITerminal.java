@@ -1,23 +1,28 @@
-package main.java.interfaces;
+package interfaces;
 
-import main.java.controllers.BillController;
-import main.java.models.Product;
-import main.java.models.Salesman;
+import models.Bill;
+import models.Product;
+import models.Salesman;
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface ITerminal {
 
-    boolean login();
+    Bill createBill(Bill bill);
 
-    BillController createBill();
+    Product addProduct(Bill bill, String productName);
 
-    Product addProduct(String productName);
+    void closeAndSaveBill(Bill bill);
 
-    void closeAndSaveBill(BillController bill);
+    Bill findBillById(long id) throws NoSuchElementException;
 
-    BillController findBillById(long id);
+    Salesman findSalesmanByLoginOrFullName(String fullname, String login) throws NoSuchElementException;
 
-    Salesman findSalesmanByLoginOrFullName(String fullname);
+    List<Bill> sortBillListByDateCreation();
 
-    Salesman getTopOnSalesMan();
+    List<Bill> getBillsByStartAndEndDates(Date startDate, Date endDate);
+
+    List<Bill> getBillsByCreator(Salesman salesman);
 
 }

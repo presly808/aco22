@@ -1,105 +1,56 @@
-package main.java.controllers;
+package controllers;
 
-import main.java.Utils.*;
-import main.java.interfaces.IBill;
-import main.java.models.Product;
-import main.java.models.Salesman;
-
+import utils.TerminalUtils;
+import interfaces.IBillLogic;
+import models.Bill;
+import models.Product;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+public class BillController implements IBillLogic {
 
-public class BillController implements IBill {
-
-    private long id;
-    private List<Product> products;
-    private Salesman salesman;
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
+    private Set<Bill> billSet;
     private double amountPrice;
 
-    private String closeTime;
-
     public BillController() {
-        this.id = TerminalUtils.longIdGenerator();
-        this.products = new ArrayList();
-        this.salesman = new Salesman(StringGenerator.generateName(), StringGenerator.generateName());
+        billSet = new HashSet<>();
     }
 
-    public Product addProduct(String name){
-        Product product = new Product(TerminalUtils.longIdGenerator(), name, new Random().nextDouble());
-        products.add(product);
+    public Product addProductToBill(Bill bill, String productName){
+        Product product = new Product(TerminalUtils.longIdGenerator(),
+                            productName, new Random().nextDouble());
+        bill.setProducts(product);
         return product;
     }
 
-    public void closeBill() {
-        this.closeTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString();
-        products = null;
+    public void closeBill(Bill bill) {
+        bill.setCloseTime(new SimpleDateFormat(
+                DATE_FORMAT).toString());
     }
 
-    public double calculateAmountPrice() {
-        amountPrice = 0;
-
+    public double calculateAmountPrice(Bill bill) {
+        List<Product> products = bill.getProducts();
         if (products.isEmpty()) {
             throw new IllegalStateException("Empty product list");
         }
-
-        for (Product product : products) {
-            amountPrice += product.getPrice();
-        }
-
+        double amountPrice = products.stream().mapToDouble(Product::getPrice).sum();
+        this.amountPrice = amountPrice;
         return amountPrice;
-    }
-
-    public void printBill() {
-        System.out.println("BillController{" +
-                "id=" + id +
-                ", products=" + products +
-                ", salesman=" + salesman.toString() +
-                ", amountPrice=" + amountPrice +
-                ", closeTime='" + closeTime + '\'' +
-                '}');
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public Salesman getSalesman() {
-        return salesman;
-    }
-
-    public void setSalesman(Salesman salesman) {
-        this.salesman = salesman;
     }
 
     public double getAmountPrice() {
         return amountPrice;
     }
 
-    public void setAmountPrice(double amountPrice) {
-        this.amountPrice = amountPrice;
+    public String printBill(Bill currentBill) {
+        return String.format("{id:%d, products:%s, salesman:%s, " +
+                        "amountPrice%d, closeTime%s}" , currentBill.getId(),
+                currentBill.getProducts(), currentBill.getSalesman(),
+                getAmountPrice(), currentBill.getCloseTime());
     }
 
-    public String getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(String closeTime) {
-        this.closeTime = closeTime;
+    public Set<Bill> getBillSet() {
+        return billSet;
     }
 }
-
-
