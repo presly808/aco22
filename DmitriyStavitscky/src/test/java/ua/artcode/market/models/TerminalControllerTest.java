@@ -122,7 +122,7 @@ public class TerminalControllerTest {
     @Test
     public void filterAndSortWitIdCompar() throws Exception {
 
-        List<Bill> billsFilter = terminal.filterByTime(terminal.getAllBills(),
+        terminal.filterByTime(terminal.getAllBills(),
                 new Time(0, 0, 0),
                 new Time(23, 59, 59),
                 new BillIdComparator());

@@ -21,8 +21,6 @@ public class TerminalController implements ITerminal {
 
     private Bill newBill;
 
-    private String action;
-
     public TerminalController(AppDB appDB) {
         this.appDB = appDB;
     }
