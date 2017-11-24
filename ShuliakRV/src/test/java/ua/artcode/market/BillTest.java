@@ -1,51 +1,53 @@
 package ua.artcode.market;
 
-import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.models.*;
 
 import static org.junit.Assert.*;
 
 public class BillTest {
-
-    private static final int DEFAULT_COUNT_PRODUCTS = 100;
-
-    private Product[] p;
-    private Bill b;
-    private Salesman s;
-
-    @Before
-    public void setUp() throws Exception {
-        p = new Product[DEFAULT_COUNT_PRODUCTS];
-        s = new Salesman("Andry1", "Andry", "1234567");
-        b = new Bill(s);
-        for (int i = 0; i < p.length; i++) {
-            p[i] = Utils.generateProduct();
-        }
+    @Test
+    public void addProduct() throws Exception {
+        AppDB appDB = new AppDB();
+        Bill b = new Bill(appDB.getSales()[0]);
+        assertTrue(b.addProduct(appDB.getProducts()[0]));
     }
 
     @Test
     public void getId() throws Exception {
-        assertNotEquals(0, b.getId());
+        AppDB appDB = new AppDB();
+        Bill b = new Bill(appDB.getSales()[0]);
+        b.addProduct(appDB.getProducts()[0]);
+        b.addProduct(appDB.getProducts()[1]);
+        b.closeBill();
+        assertTrue(b.closeBill());
     }
 
     @Test
     public void getNumProd() throws Exception {
-        b.addProduct(p[0]);
-        b.addProduct(p[1]);
+        AppDB appDB = new AppDB();
+        Bill b = new Bill(appDB.getSales()[0]);
+        b.addProduct(appDB.getProducts()[0]);
+        b.addProduct(appDB.getProducts()[1]);
         b.closeBill();
         assertEquals(2, b.getNumProd());
     }
 
     @Test
     public void getAmountPrice() throws Exception {
-
-        assertNotEquals(0, b.getAmountPrice());
+        AppDB appDB = new AppDB();
+        Bill b = new Bill(appDB.getSales()[0]);
+        b.addProduct(appDB.getProducts()[0]);
+        b.closeBill();
+        assertEquals(appDB.getProducts()[0].getPrice(), b.getAmountPrice(), 0.1);
     }
 
     @Test
     public void closeBill() throws Exception {
-        b.addProduct(p[0]);
-        b.addProduct(p[1]);
+        AppDB appDB = new AppDB();
+        Bill b = new Bill(appDB.getSales()[0]);
+        b.addProduct(appDB.getProducts()[0]);
+        b.addProduct(appDB.getProducts()[1]);
         assertTrue(b.closeBill());
     }
 
