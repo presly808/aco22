@@ -59,19 +59,10 @@ public class TestIAppDBImpl {
         Assert.assertTrue(appDB.getAll(Product.class).contains(productExp));
 
         Assert.assertTrue(null == appDB.save(new DBItem()));
-
-
-
-    }
-
-    @Test
-    public void testUpdate(){
-
     }
 
     @Test
     public void testFindById(){
-
         appDB.save(billExp);
         Assert.assertEquals(billExp, (Bill) appDB.findById(1, Bill.class));
 
@@ -80,7 +71,6 @@ public class TestIAppDBImpl {
 
         appDB.save(productExp);
         Assert.assertEquals(productExp, (Product) appDB.findById(1, Product.class));
-
     }
 
 

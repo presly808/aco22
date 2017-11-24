@@ -3,7 +3,6 @@ package hw1.controller;
 import hw1.model.*;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IAppDB {
 

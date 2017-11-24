@@ -1,7 +1,6 @@
 package hw1.controller;
 
 import hw1.model.Bill;
-import hw1.model.DBItem;
 import hw1.model.Product;
 import hw1.model.Salesman;
 
