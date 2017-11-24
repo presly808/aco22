@@ -33,7 +33,7 @@ public class Bill {
         this.id = id;
     }
 
-    
+
     public List<Product> getProductList() {
         return productList;
     }
@@ -77,6 +77,7 @@ public class Bill {
     public boolean isClosed() {
         return isClosed;
     }
+
 
     @Override
     public String toString() {

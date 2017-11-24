@@ -1,9 +1,10 @@
-package week1.controller;
+package week1.interfaceses;
 
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,19 +16,21 @@ public interface ITerminalController {
 
     Bill createBill();
 
-    Bill findBillById(int billId);
-
-    Salesman findSalesmanByLogin(String Login);
-
+    List<Bill> getAllBills();
 
     Bill addProduct(int billId, Product product);
 
-    List<Bill> getAllBills();
-
     Bill closeBill(int id);
+
+    Bill findBillById(int billId);
+
+    List<Bill> filterForBills(String start, String end, Comparator<Bill> comparator);
 
     List<Product> getAllProducts();
 
+    Salesman findSalesmanByLogin(String Login);
+
+    Salesman getTopOfSalesmans();
 
 }
 

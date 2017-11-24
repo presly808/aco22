@@ -1,9 +1,7 @@
 package week1.exclude;
 
-import week1.controller.IAppDb;
-import week1.controller.IAppDbImpl;
-import week1.controller.ITerminalControllerImpl;
-import week1.model.Product;
+import week1.controllers.IAppDbImpl;
+import week1.controllers.ITerminalControllerImpl;
 import week1.view.View;
 
 /**

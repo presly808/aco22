@@ -1,7 +1,8 @@
-package week1.controller;
+package week1.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
+import week1.interfaceses.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 
@@ -90,14 +91,14 @@ public class ITerminalControllerImplTest {
 //
 //        testITerminalControllerImpl.login("IzoldaLog", "IzoldaPass");
 //
-//        assertEquals(2, testITerminalControllerImpl.getCurrentSallerIndex());
+//        assertEquals(2, testITerminalControllerImpl.getCurrentSalesmanIndex());
 //
 //    }
 //
 //    @Test
 //    public void createBill() throws Exception {
 //
-//        testITerminalControllerImpl.setCurrentSallerIndex(1);
+//        testITerminalControllerImpl.setCurrentSalesmanIndex(1);
 //
 //        testITerminalControllerImpl.createBill(testBill1);
 //        testITerminalControllerImpl.createBill(testBill2);

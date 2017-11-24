@@ -2,7 +2,7 @@ package week1;
 
 
 import org.junit.*;
-import week1.controller.Terminal;
+import week1.controllers.Terminal;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;

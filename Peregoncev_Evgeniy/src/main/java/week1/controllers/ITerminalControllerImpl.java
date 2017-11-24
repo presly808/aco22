@@ -1,9 +1,14 @@
-package week1.controller;
+package week1.controllers;
 
+import week1.comparators.SalesmanSoldProductComparator;
+import week1.interfaceses.IAppDb;
+import week1.interfaceses.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -17,14 +22,14 @@ public class ITerminalControllerImpl implements ITerminalController {
         this.iAppDb = iAppDb;
     }
 
-    private int currentSallerIndex = -1;
+    private int currentSalesmanIndex = -1;
 
-    public int getCurrentSallerIndex() {
-        return currentSallerIndex;
+    public int getCurrentSalesmanIndex() {
+        return currentSalesmanIndex;
     }
 
-    public void setCurrentSallerIndex(int currentSallerIndex) {
-        this.currentSallerIndex = currentSallerIndex;
+    public void setCurrentSalesmanIndex(int currentSalesmanIndex) {
+        this.currentSalesmanIndex = currentSalesmanIndex;
     }
 
     //Methods
@@ -40,11 +45,11 @@ public class ITerminalControllerImpl implements ITerminalController {
         for (Salesman salesman : iAppDb.getAllSalesMans()) {
 
             if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
-                setCurrentSallerIndex(salesman.getId());
+                setCurrentSalesmanIndex(salesman.getId());
                 System.out.println("Hello " + salesman.getName());
             }
         }
-        if (currentSallerIndex == -1) System.out.println("wrong login/pass");
+        if (currentSalesmanIndex == -1) System.out.println("wrong login/pass");
     }
 
     @Override
@@ -52,7 +57,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Bill bill = new Bill();
 
-        bill.setSalesman(iAppDb.getAllSalesMans().get(getCurrentSallerIndex()));
+        bill.setSalesman(iAppDb.getAllSalesMans().get(getCurrentSalesmanIndex()));
 
         Bill billWithId = iAppDb.saveBill(bill);
 
@@ -69,6 +74,12 @@ public class ITerminalControllerImpl implements ITerminalController {
     public Salesman findSalesmanByLogin(String login) {
 
         return iAppDb.findSalesmanByLogin(login);
+    }
+
+    @Override
+    public Salesman getTopOfSalesmans() {
+        iAppDb.getAllSalesMans().sort(new SalesmanSoldProductComparator());
+        return iAppDb.getAllSalesMans().get(iAppDb.getAllSalesMans().size() - 1);
     }
 
     @Override
@@ -98,7 +109,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         Bill bill = iAppDb.findByBillId(id);
         bill.getTime().setCloseTime(bill.getTime().printTime());
         bill.setClosed(true);
-
+        System.out.println(bill.getTime().getCloseTime());
         bill.getSalesman().setCountSoldProduct(bill.getSalesman().getCountSoldProduct() + (bill.getProductList().size()));
         iAppDb.update(bill);
 
@@ -108,6 +119,21 @@ public class ITerminalControllerImpl implements ITerminalController {
     @Override
     public List<Product> getAllProducts() {
         return iAppDb.getAllProducts();
+    }
+
+    @Override
+    public List<Bill> filterForBills(String start, String end, Comparator<Bill> comparator) {
+
+        List<Bill> billList = new ArrayList<>();
+
+        for (Bill bill : iAppDb.getAllBills()) {
+            if (bill.getTime().getCloseTime().compareTo(start) > 0 &&
+                    bill.getTime().getCloseTime().compareTo(end) < 0) {
+                billList.add(bill);
+            }
+        }
+        billList.sort(comparator);
+        return billList;
     }
 
 

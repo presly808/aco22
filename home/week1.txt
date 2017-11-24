@@ -8,7 +8,7 @@
     Classes:
         Salesman:
             fields:
-                fullname
+                name
                 login
                 pass
         ua.artcode.market.models.Product

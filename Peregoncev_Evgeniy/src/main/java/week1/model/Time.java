@@ -20,7 +20,7 @@ public class Time {
 
     public String printTime() {
         Date timeNow = new Date();
-        SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");
+        SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss' Date: 'yyyy.MM.dd");
         return (time.format(timeNow));
     }
 

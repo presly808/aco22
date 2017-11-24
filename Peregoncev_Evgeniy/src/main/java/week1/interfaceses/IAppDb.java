@@ -1,4 +1,4 @@
-package week1.controller;
+package week1.interfaceses;
 
 import week1.model.Bill;
 import week1.model.Product;
@@ -21,22 +21,13 @@ public interface IAppDb {
 
     Bill removeBill(int bill);
 
+    List<Product> getAllProducts();
+
+    Product findByProductId(int productId);
 
     List<Salesman> getAllSalesMans();
 
     Salesman findSalesmanByLogin(String login);
 
-    List<Product> getAllProducts();
 
-    Product findByProductId(int productId);
-
-
-
-
-
-
-//    List<Product> getAllProducts();
-//    Product saveProduct(Product product);
-//    Product findByProductId(int billId);
-//    Product removeProductFromBill(int billid, int productId);
 }

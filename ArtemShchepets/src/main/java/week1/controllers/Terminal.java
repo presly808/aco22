@@ -1,4 +1,4 @@
-package week1.controller;
+package week1.controllers;
 
 import week1.model.*;
 
