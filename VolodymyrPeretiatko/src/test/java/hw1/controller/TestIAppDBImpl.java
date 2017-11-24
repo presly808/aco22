@@ -10,11 +10,11 @@ import org.junit.Test;
 
 public class TestIAppDBImpl {
 
-    IAppDB appDB;
+    private IAppDB appDB;
 
-    Bill billExp;
-    Salesman salesmanExp;
-    Product productExp;
+    private Bill billExp;
+    private Salesman salesmanExp;
+    private Product productExp;
 
     @Before
     public void init(){

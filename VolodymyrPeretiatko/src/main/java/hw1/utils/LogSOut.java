@@ -1,7 +1,5 @@
 package hw1.utils;
 
-import hw1.controller.ProxyLoggerTerminal;
-
 import java.util.Date;
 
 public class LogSOut implements ILogger {
