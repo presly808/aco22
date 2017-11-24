@@ -20,8 +20,8 @@ public class Bill extends DBItem implements Comparable {
         this.amountPrice = 0.0;
     }
 
-    public Bill(int i) {
-        this.id = id;
+    public Bill(int id) {
+        super.id = id;
         this.products = new ArrayList<>(10);
     }
 
