@@ -63,7 +63,9 @@ public class Salesman {
         return sumOfAllSales;
     }
 
-    public void setSumOfAllSales(double sumOfAllSales) { this.sumOfAllSales = sumOfAllSales; }
+    public void setSumOfAllSales(double sumOfAllSales) {
+        this.sumOfAllSales = sumOfAllSales;
+    }
 
     public int getId() {
         return id;

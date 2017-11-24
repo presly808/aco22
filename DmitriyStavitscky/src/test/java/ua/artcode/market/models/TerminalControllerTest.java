@@ -2,8 +2,7 @@ package ua.artcode.market.models;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.appdb.AppDB;
-import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.factory.TerminalFactory;
 import ua.artcode.market.proxy.TerminalControllerProxy;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 public class TerminalControllerTest {
 
-    private static TerminalController realTerminal;
     private static TerminalControllerProxy terminal;
 
     private static String name1 = "Dima Stavitscky";
@@ -31,8 +29,7 @@ public class TerminalControllerTest {
     @Before
     public void before() {
 
-        realTerminal = new TerminalController(new AppDB());
-        terminal = new TerminalControllerProxy(realTerminal);
+        terminal = TerminalFactory.create();
 
         terminal.getAppDB().addProductToDataBase("Milk", 100);
         terminal.getAppDB().addProductToDataBase("Apple", 70);
