@@ -2,7 +2,7 @@ package week1.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
-import week1.interfaceses.ITerminalController;
+import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 

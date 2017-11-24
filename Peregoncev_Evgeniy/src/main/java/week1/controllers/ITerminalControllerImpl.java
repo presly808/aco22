@@ -1,8 +1,8 @@
 package week1.controllers;
 
 import week1.comparators.SalesmanSoldProductComparator;
-import week1.interfaceses.IAppDb;
-import week1.interfaceses.ITerminalController;
+import week1.interfaces.IAppDb;
+import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
@@ -35,7 +35,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     //Methods
 
     @Override
-    public void login(String login, String pass) {
+    public boolean login(String login, String pass) {
         if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
             System.out.println("write true login/pass");
         } else if (iAppDb == null) {
@@ -50,6 +50,7 @@ public class ITerminalControllerImpl implements ITerminalController {
             }
         }
         if (currentSalesmanIndex == -1) System.out.println("wrong login/pass");
+        return Boolean.parseBoolean(null);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package week1.view;
 
+import week1.ProxyTerminalController.ProxyTerminalControllerImpl;
 import week1.comparators.BillComparatorForSorting;
 import week1.controllers.ITerminalControllerImpl;
+import week1.interfaces.ITerminalController;
 
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ import java.util.Scanner;
  */
 public class View {
 
-    public void run(ITerminalControllerImpl terminal) {
+    public void run(ITerminalController terminal) {
 
         System.out.println("\nHello. write login/pass to sign in");
         Scanner scanner = new Scanner(System.in);
@@ -19,9 +21,8 @@ public class View {
 
         terminal.login(login, pass);
 
-        menu();
-
         if (terminal.getCurrentSalesmanIndex() != -1) {
+            menu();
             do {
 
                 String choice = scanner.next();
@@ -70,13 +71,13 @@ public class View {
 
     // Methods
 
-    private void menuCreateBill(ITerminalControllerImpl terminal) {
+    private void menuCreateBill(ITerminalController terminal) {
         terminal.createBill();
         int index = terminal.getAllBills().size() - 1;
         System.out.println("bill was created with id " + index);
     }
 
-    private void menuAddProduct(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuAddProduct(Scanner scanner, ITerminalController terminal) {
         System.out.println("write bill id to add product");
         int id = scanner.nextInt();
         System.out.println("write index of product you want to add");
@@ -87,32 +88,32 @@ public class View {
 
     }
 
-    private void menuCloseAndSaveBill(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuCloseAndSaveBill(Scanner scanner, ITerminalController terminal) {
         System.out.println("write bill id to close");
         int billId = scanner.nextInt();
         terminal.closeBill(billId);
         System.out.println("bill " + billId + " now is closed");
     }
 
-    private void menuFindBillById(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuFindBillById(Scanner scanner, ITerminalController terminal) {
         System.out.println("write id of search bill");
         int billId = scanner.nextInt();
 
         System.out.println(terminal.findBillById(billId).toString());
     }
 
-    private void menuFindSellerByLogin(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuFindSellerByLogin(Scanner scanner, ITerminalController terminal) {
         System.out.println("Write login of seller, which you want to find");
         String login = scanner.next();
         System.out.println(terminal.findSalesmanByLogin(login).toString());
     }
 
-    private void menuGetTopSalesman(ITerminalControllerImpl terminal) {
+    private void menuGetTopSalesman(ITerminalController terminal) {
 
         System.out.println("top saller is " + terminal.getTopOfSalesmans().getName());
     }
 
-    private void menuFilterForBills(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuFilterForBills(Scanner scanner, ITerminalController terminal) {
         System.out.println("write left limit of time in case like *Time: 9:15:09 Date: 2017.11.24*");
         String tryToFIx = scanner.nextLine();  //this is needed to take empty string(enter from println)
         String start = scanner.nextLine();
@@ -122,7 +123,7 @@ public class View {
         System.out.println(terminal.filterForBills(start, end, new BillComparatorForSorting()).toString());
     }
 
-    private void menuLogOut(Scanner scanner, ITerminalControllerImpl terminal) {
+    private void menuLogOut(Scanner scanner, ITerminalController terminal) {
         terminal.setCurrentSalesmanIndex(-1);
         System.out.println("write login");
         String login1 = scanner.next();
@@ -130,7 +131,10 @@ public class View {
         String pass1 = scanner.next();
 
         terminal.login(login1, pass1);
-        menu();
+
+        if (terminal.getCurrentSalesmanIndex() != -1) {
+            menu();
+        }
     }
 
     private void menu() {

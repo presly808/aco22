@@ -3,7 +3,7 @@ package week1.controllers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import week1.interfaceses.IAppDb;
+import week1.interfaces.IAppDb;
 import week1.model.Bill;
 
 import static org.junit.Assert.*;

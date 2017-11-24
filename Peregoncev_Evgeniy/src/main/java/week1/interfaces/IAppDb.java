@@ -1,4 +1,4 @@
-package week1.interfaceses;
+package week1.interfaces;
 
 import week1.model.Bill;
 import week1.model.Product;

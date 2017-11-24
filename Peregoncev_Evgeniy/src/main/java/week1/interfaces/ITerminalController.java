@@ -1,4 +1,4 @@
-package week1.interfaceses;
+package week1.interfaces;
 
 import week1.model.Bill;
 import week1.model.Product;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ITerminalController {
 
-    void login(String login, String pass);
+    boolean login(String login, String pass);
 
     Bill createBill();
 
@@ -32,5 +32,8 @@ public interface ITerminalController {
 
     Salesman getTopOfSalesmans();
 
+    int getCurrentSalesmanIndex();
+
+    void setCurrentSalesmanIndex(int i);
 }
 

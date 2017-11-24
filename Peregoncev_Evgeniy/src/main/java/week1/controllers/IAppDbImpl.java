@@ -1,6 +1,6 @@
 package week1.controllers;
 
-import week1.interfaceses.IAppDb;
+import week1.interfaces.IAppDb;
 import week1.model.Bill;
 
 import week1.model.Product;

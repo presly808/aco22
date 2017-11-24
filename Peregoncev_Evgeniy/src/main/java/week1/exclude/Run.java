@@ -1,7 +1,7 @@
 package week1.exclude;
 
-import week1.controllers.IAppDbImpl;
-import week1.controllers.ITerminalControllerImpl;
+import week1.ProxyTerminalController.ProxyTerminalControllerImpl;
+import week1.interfaces.ITerminalController;
 import week1.view.View;
 
 /**
@@ -11,7 +11,7 @@ public class Run {
 
     public static void main(String[] args) {
 
-        ITerminalControllerImpl terminal = new ITerminalControllerImpl(new IAppDbImpl());
+        ITerminalController terminal = ProxyTerminalControllerImpl.getInstance();
 
         View view = new View();
 
