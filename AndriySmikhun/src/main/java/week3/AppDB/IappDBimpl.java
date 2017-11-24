@@ -1,7 +1,5 @@
 package week3.AppDB;
 
-import com.sun.org.apache.regexp.internal.RE;
-import week3.controller.Log;
 import week3.model.Bill;
 import week3.model.Product;
 import week3.model.Salesman;

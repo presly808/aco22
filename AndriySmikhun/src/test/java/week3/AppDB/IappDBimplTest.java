@@ -6,6 +6,46 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class IappDBimplTest {
+    @Test
+    public void getBill1() throws Exception {
+    }
+
+    @Test
+    public void updateBill() throws Exception {
+    }
+
+    @Test
+    public void removeBill1() throws Exception {
+    }
+
+    @Test
+    public void findeBillByID1() throws Exception {
+    }
+
+    @Test
+    public void saveBill1() throws Exception {
+    }
+
+    @Test
+    public void findSalemanById() throws Exception {
+    }
+
+    @Test
+    public void saveSaleman1() throws Exception {
+    }
+
+    @Test
+    public void findSalemanByName() throws Exception {
+    }
+
+    @Test
+    public void removeSaleman1() throws Exception {
+    }
+
+    @Test
+    public void updateSalemen1() throws Exception {
+    }
+
     @Before
     public void setUp() throws Exception {
     }
