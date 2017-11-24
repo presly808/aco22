@@ -80,13 +80,14 @@ public class Bill {
 
     public boolean hasProducts(ArrayList<Product> arrProduct) {
 
+        if (arrProduct == null || arrProduct.size() == 0 || products.size() == 0) return false;
 
         for (Product inProduct : arrProduct) {
 
             boolean hasProd = false;
 
             for (Product product : products) {
-                if (products.equals(inProduct)) {
+                if (product.getId() == inProduct.getId()) {
                     hasProd = true;
                     break;
                 }
@@ -98,7 +99,6 @@ public class Bill {
         return true;
 
     }
-
 
     @Override
     public String toString() {

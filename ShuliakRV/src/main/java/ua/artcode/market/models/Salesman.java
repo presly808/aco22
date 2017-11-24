@@ -1,6 +1,6 @@
 package ua.artcode.market.models;
 
-public class Salesman {
+public class Salesman{
 
     private String fullname;
     private String login;

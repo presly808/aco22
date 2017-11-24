@@ -68,18 +68,8 @@ public class TerminalController implements ITerminal {
         return null;
     }
 
-    public Bill findBillById(int id) {
 
-        for (int i = 0; i < appDB.getCountBill(); i++) {
-            if (appDB.getBills()[i] != null &&
-                    appDB.getBills()[i].getId() == id)
-                return appDB.getBills()[i];
-        }
-
-        return null;
-    }
-
-    public Salesman[] findSalesmanByLoginOrFullname(String loginOrFullname) {
+    public Salesman findSalesmanByLoginAndPassword(String login, String password) {
 
         Salesman[] s = new Salesman[appDB.getSales().length];
         int index = 0;
@@ -96,18 +86,6 @@ public class TerminalController implements ITerminal {
         if (index > 0) return s;
 
         return null;
-    }
-
-    public int getIndexSales(Salesman s) {
-
-        if (s != null) {
-
-            for (int i = 0; i < appDB.getSales().length; i++) {
-                if (appDB.getSales()[i] == s) return i;
-            }
-        }
-
-        return -1;
     }
 
     public Salesman[] getTopNofSalesMan(int n) {
@@ -234,7 +212,7 @@ public class TerminalController implements ITerminal {
 
     public Bill calculateAmountPrice(Bill bill) {
 
-        if (bill == null) return false;
+        if (bill == null) return null;
 
         double amount = 0;
 
@@ -242,7 +220,7 @@ public class TerminalController implements ITerminal {
             amount += product.getPrice();
         }
 
-        bill.amountPrice = amount;
+        bill.setAmountPrice(amount);
 
         return bill;
     }
