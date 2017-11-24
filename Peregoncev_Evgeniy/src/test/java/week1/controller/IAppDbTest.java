@@ -1,4 +1,4 @@
-package week1.controllers;
+package week1.controller;
 
 import org.junit.After;
 import org.junit.Before;

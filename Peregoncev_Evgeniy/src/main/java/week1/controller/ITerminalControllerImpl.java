@@ -1,4 +1,4 @@
-package week1.controllers;
+package week1.controller;
 
 import week1.comparators.SalesmanSoldProductComparator;
 import week1.interfaces.IAppDb;

@@ -1,8 +1,6 @@
 package week1.view;
 
-import week1.ProxyTerminalController.ProxyTerminalControllerImpl;
 import week1.comparators.BillComparatorForSorting;
-import week1.controllers.ITerminalControllerImpl;
 import week1.interfaces.ITerminalController;
 
 import java.util.Scanner;

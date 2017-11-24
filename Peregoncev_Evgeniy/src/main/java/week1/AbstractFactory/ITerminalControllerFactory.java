@@ -1,7 +1,7 @@
 package week1.AbstractFactory;
 
-import week1.controllers.IAppDbImpl;
-import week1.controllers.ITerminalControllerImpl;
+import week1.controller.IAppDbImpl;
+import week1.controller.ITerminalControllerImpl;
 import week1.interfaces.ITerminalController;
 
 /**
