@@ -5,8 +5,6 @@ import org.junit.Test;
 import ua.artcode.market.factory.TerminalFactory;
 import ua.artcode.market.proxy.TerminalControllerProxy;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
