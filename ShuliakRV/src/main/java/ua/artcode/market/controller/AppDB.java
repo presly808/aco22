@@ -65,10 +65,8 @@ public class AppDB implements IAppDb {
     }
 
     @Override
-    public Salesman findSalesmanByLoginOrFullname(String loginOrFullname) {
+    public Salesman findSalesmanByLoginAndPassword(String login, String password) {
 
-        Salesman[] s = new Salesman[appDB.getSales().length];
-        int index = 0;
 
         if ((loginOrFullname == null || loginOrFullname.isEmpty()) ||
                 (appDB.getSales().length == 0)) return null;

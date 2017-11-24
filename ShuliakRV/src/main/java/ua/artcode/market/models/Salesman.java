@@ -44,4 +44,16 @@ public class Salesman{
     public void setLogged(boolean logged) {
         isLogged = logged;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Salesman salesman = (Salesman) o;
+
+        if (login != null ? !login.equals(salesman.login) : salesman.login != null) return false;
+        return password != null ? password.equals(salesman.password) : salesman.password == null;
+    }
+
 }

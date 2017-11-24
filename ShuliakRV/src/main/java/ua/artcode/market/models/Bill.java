@@ -80,7 +80,7 @@ public class Bill {
 
     public boolean hasProducts(ArrayList<Product> arrProduct) {
 
-        if (arrProduct == null || arrProduct.size() == 0 || products.size() == 0) return false;
+        if (arrProduct == null || arrProduct.isEmpty() || products.isEmpty()) return false;
 
         for (Product inProduct : arrProduct) {
 
