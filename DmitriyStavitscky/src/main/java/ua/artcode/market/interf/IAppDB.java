@@ -1,6 +1,8 @@
 package ua.artcode.market.interf;
 
-import ua.artcode.market.models.*;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
 
 import java.util.List;
 
@@ -22,11 +24,11 @@ public interface IAppDB {
 
     Product findProductById(int id);
 
-    Bill removeBill (int id);
+    Bill removeBill(int id);
 
-    Product removeProduct (int id);
+    Product removeProduct(int id);
 
-    Salesman removeSalesman (int id);
+    Salesman removeSalesman(int id);
 
     Bill update(Bill bill);
 

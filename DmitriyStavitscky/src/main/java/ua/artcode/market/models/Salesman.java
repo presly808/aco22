@@ -19,6 +19,10 @@ public class Salesman {
         this.id = id;
     }
 
+    public void addSum(double sum) {
+        this.sumOfAllSales += sum;
+    }
+
     @Override
     public String toString() {
         return String.format("name: %s, sum of all sales: %.2f", fullName, sumOfAllSales);
@@ -43,7 +47,6 @@ public class Salesman {
                 sumOfAllSales == other.sumOfAllSales;
     }
 
-
     public int getPass() {
         return pass;
     }
@@ -60,9 +63,7 @@ public class Salesman {
         return sumOfAllSales;
     }
 
-    public void setSumOfAllSales(double sumOfAllSales) {
-        this.sumOfAllSales = sumOfAllSales;
-    }
+    public void setSumOfAllSales(double sumOfAllSales) { this.sumOfAllSales = sumOfAllSales; }
 
     public int getId() {
         return id;

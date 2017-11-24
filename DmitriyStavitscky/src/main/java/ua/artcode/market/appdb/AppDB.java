@@ -141,18 +141,19 @@ public class AppDB implements IAppDB {
 
     @Override
     public Bill update(Bill bill) {
-        int index = bills.indexOf(bill);
+        int index = bills.indexOf(findBillById(bill.getId()));
 
-        if(index == -1){
+        if (index == -1) {
             System.out.println("bill with id not found" + bill);
             return null;
         }
 
         return bills.set(index, bill);
-
     }
 
-    public List<Bill> getBills() { return bills; }
+    public List<Bill> getBills() {
+        return bills;
+    }
 
     public void setBills(List<Bill> bills) {
         this.bills = bills;
@@ -170,7 +171,9 @@ public class AppDB implements IAppDB {
         return products;
     }
 
-    public void setProducts(List<Product> products) { this.products = products; }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public List<String> getHistoryOfActions() {
         return historyOfActions;

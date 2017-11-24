@@ -97,7 +97,9 @@ public class Bill implements Comparable<Bill> {
         this.products = products;
     }
 
-    public Time getCloseTime() { return closeTime; }
+    public Time getCloseTime() {
+        return closeTime;
+    }
 
     public void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;

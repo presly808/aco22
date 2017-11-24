@@ -1,6 +1,7 @@
 package ua.artcode.market.interf;
 
 import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
 
@@ -9,9 +10,11 @@ import java.util.List;
 
 public interface ITerminal {
 
-    void addSalesman(String fullName, String login, int pass, int id);
+    void addSalesman(String fullName, String login, int pass);
 
     void signIn(boolean isLogin, String loginOrName, int password);
+
+    void logOut();
 
     void createBill();
 
@@ -19,13 +22,11 @@ public interface ITerminal {
 
     void addProductToBill(int id);
 
-    Object getTopNofSalesMan();
+    Salesman getTopNofSalesMan();
 
     Statistics makeStatistics();
 
     List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator);
 
-    void rememberActionAndPrint();
-
-    List <Bill> getAllBills();
+    List<Bill> getAllBills();
 }

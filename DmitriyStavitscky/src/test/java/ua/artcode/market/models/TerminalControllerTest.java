@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.proxy.TerminalControllerProxy;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ import static org.junit.Assert.assertTrue;
 
 public class TerminalControllerTest {
 
-    private static TerminalController terminal;
+    private static TerminalController realTerminal;
+    private static TerminalControllerProxy terminal;
 
     private static String name1 = "Dima Stavitscky";
     private static String name2 = "Ivan Raskolnikov";
@@ -29,15 +31,16 @@ public class TerminalControllerTest {
     @Before
     public void before() {
 
-        terminal = new TerminalController(new AppDB());
+        realTerminal = new TerminalController(new AppDB());
+        terminal = new TerminalControllerProxy(realTerminal);
 
         terminal.getAppDB().addProductToDataBase("Milk", 100);
         terminal.getAppDB().addProductToDataBase("Apple", 70);
         terminal.getAppDB().addProductToDataBase("Meat", 10);
 
-        terminal.addSalesman(name1, login1, pass1, terminal.getAppDB().genId());
-        terminal.addSalesman(name2, login2, pass2, terminal.getAppDB().genId());
-        terminal.addSalesman(name3, login3, pass3, terminal.getAppDB().genId());
+        terminal.addSalesman(name1, login1, pass1);
+        terminal.addSalesman(name2, login2, pass2);
+        terminal.addSalesman(name3, login3, pass3);
 
         terminal.signIn(true, login3, pass3);
         terminal.createBill();
@@ -122,7 +125,7 @@ public class TerminalControllerTest {
     @Test
     public void filterAndSortWitIdCompar() throws Exception {
 
-        List <Bill> billsFilter = terminal.filterByTime(terminal.getAllBills(),
+        List<Bill> billsFilter = terminal.filterByTime(terminal.getAllBills(),
                 new Time(0, 0, 0),
                 new Time(23, 59, 59),
                 new BillIdComparator());
@@ -185,5 +188,13 @@ public class TerminalControllerTest {
 
         assertTrue(new Time(23, 58, 59).
                 compareTo(terminal.getAllBills().get(2).getCloseTime()) == 0);
+    }
+
+    @Test
+    public void appDBUpdate() throws Exception {
+        Bill newBill = new Bill(terminal.getAppDB().findSalesmanById(5), 8);
+        terminal.getAppDB().update(newBill);
+
+        assertEquals(newBill, terminal.getAllBills().get(1));
     }
 }

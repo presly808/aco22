@@ -1,12 +1,16 @@
 package ua.artcode.market.controller;
 
-import ua.artcode.market.interf.ITerminal;
-import ua.artcode.market.models.*;
-import ua.artcode.market.utils.TerminalUtils;
 import ua.artcode.market.appdb.AppDB;
+import ua.artcode.market.interf.ITerminal;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Statistics;
+import ua.artcode.market.models.Time;
+import ua.artcode.market.utils.TerminalUtils;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class TerminalController implements ITerminal {
 
@@ -19,70 +23,38 @@ public class TerminalController implements ITerminal {
 
     private String action;
 
-    public TerminalController(AppDB appDB) { this.appDB = appDB; }
+    public TerminalController(AppDB appDB) {
+        this.appDB = appDB;
+    }
 
     @Override
-    public void addSalesman(String fullName, String login, int pass, int id) {
-
-        if (fullName.isEmpty() || login.isEmpty() || pass <= 0 || id <= 0) {
-            System.out.println("wrong data");
-        } else {
-            appDB.getSalesmans().add(new Salesman(fullName, login, pass, id));
-        }
+    public void addSalesman(String fullName, String login, int pass) {
+        appDB.getSalesmans().add(new Salesman(fullName, login, pass, appDB.genId()));
     }
 
     @Override
     public void signIn(boolean isLogin, String loginOrName, int password) {
-        if (appDB.findSalesman(loginOrName, isLogin) == null ||
-                appDB.findSalesman(loginOrName, isLogin).getPass() != password) {
-            System.out.println("wrong data");
-
-        } else {
-            this.loggedSalesman = appDB.findSalesman(loginOrName, isLogin);
-            logged = true;
-
-            action = "Saleman " + loggedSalesman.getFullName() + " logged.";
-            rememberActionAndPrint();
-        }
+        this.loggedSalesman = appDB.findSalesman(loginOrName, isLogin);
+        logged = true;
     }
 
+    @Override
     public void logOut() {
         logged = false;
         loggedSalesman = null;
-
-        action = "You are logged out at " + LocalDateTime.now();
-        rememberActionAndPrint();
     }
 
     @Override
     public void createBill() {
-
-        if (!logged) {
-            System.out.println("please log in");
-
-        } else {
-            newBill = new Bill(loggedSalesman, appDB.genId());
-
-            action = String.format("Salesman %s created a new bill at %s ", loggedSalesman.getFullName(), newBill.getOpenTime().toString());
-            rememberActionAndPrint();
-        }
+        newBill = new Bill(loggedSalesman, appDB.genId());
     }
 
     @Override
     public void closeAndSaveBill(int hours, int minutes, int seconds) {
-
-        if (newBill.getProducts().size() == 0) {
-            System.out.println("you did not make a single sale, the bill wil be deleted");
-
-        } else {
-            newBill.calculateAmountPrice();
-            newBill.setCloseTime(new Time(hours, minutes, seconds));
-            appDB.getBills().add(newBill);
-
-            action = "bill closed. " + newBill.toString();
-            rememberActionAndPrint();
-        }
-
+        newBill.calculateAmountPrice();
+        newBill.setCloseTime(new Time(hours, minutes, seconds));
+        appDB.getBills().add(newBill);
+        newBill.getSalesman().addSum(newBill.getAmountPrice());
         newBill = null;
     }
 
@@ -94,35 +66,6 @@ public class TerminalController implements ITerminal {
 
         } else {
             System.out.println("please log in");
-        }
-    }
-
-    @Override
-    public Statistics makeStatistics() {
-        if (appDB.getBills().size() == 0) {
-            System.out.println("count of bills = 0");
-            return null;
-        } else {
-
-            //search average amount and sum of all sales
-            double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
-
-            for (int i = 1; i < appDB.getBills().size(); i++) {
-                sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
-            }
-
-            double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
-
-            // search bil with max and min amount
-            Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(appDB.getBills());
-            Bill billWithMinAmount = TerminalUtils.billWithMinAmount(appDB.getBills());
-
-            return new Statistics(billWithMaxAmount.getAmountPrice(),
-                    billWithMaxAmount.getSalesman(),
-                    billWithMinAmount.getAmountPrice(),
-                    billWithMinAmount.getSalesman(),
-                    averageAmountInOneChek,
-                    sumOfAllSalles);
         }
     }
 
@@ -145,6 +88,30 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
+    public Statistics makeStatistics() {
+
+        //search average amount and sum of all sales
+        double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
+
+        for (int i = 1; i < appDB.getBills().size(); i++) {
+            sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
+        }
+
+        double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
+
+        // search bil with max and min amount
+        Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(appDB.getBills());
+        Bill billWithMinAmount = TerminalUtils.billWithMinAmount(appDB.getBills());
+
+        return new Statistics(billWithMaxAmount.getAmountPrice(),
+                billWithMaxAmount.getSalesman(),
+                billWithMinAmount.getAmountPrice(),
+                billWithMinAmount.getSalesman(),
+                averageAmountInOneChek,
+                sumOfAllSalles);
+    }
+
+    @Override
     public List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
         List<Bill> billsFilt = new ArrayList<>();
 
@@ -158,13 +125,6 @@ public class TerminalController implements ITerminal {
 
         appDB.getBills().sort(comparator);
         return billsFilt;
-    }
-
-    @Override
-    public void rememberActionAndPrint () {
-        appDB.addActionToHistory(action);
-        System.out.println(action);
-        action = null;
     }
 
     @Override
@@ -185,9 +145,13 @@ public class TerminalController implements ITerminal {
         return loggedSalesman;
     }
 
-    public boolean getIsLogged() { return logged; }
+    public boolean getIsLogged() {
+        return logged;
+    }
 
-    public AppDB getAppDB() { return appDB; }
+    public AppDB getAppDB() {
+        return appDB;
+    }
 
     public Bill getNewBill() {
         return newBill;
