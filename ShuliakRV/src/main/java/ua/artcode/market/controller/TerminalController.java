@@ -7,16 +7,15 @@ import ua.artcode.market.models.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static ua.artcode.market.utils.Utils.*;
+
 public class TerminalController implements ITerminal {
 
     private AppDB appDB;
 
-    private int currentBill;
-
     public TerminalController(AppDB appDB) {
         this.appDB = appDB;
     }
-
 
     public Salesman logIn(String login, String password) {
 
@@ -98,67 +97,8 @@ public class TerminalController implements ITerminal {
 
     public Statistic doSomeStatisticStuff() {
 
-        return new Statistic(getMax(), getMin(),
-                getAverage(), countSoldProducts());
-    }
-
-    public double getMax() {
-
-        if (appDB.getAllBills().size() == 0) return 0;
-
-        double max = appDB.getAllBills().get(0).getAmountPrice();
-
-        for (int i = 1; i < appDB.getAllBills().size(); i++) {
-            if (max < appDB.getAllBills().get(i).getAmountPrice()) {
-                max = appDB.getAllBills().get(i).getAmountPrice();
-            }
-        }
-
-        return max;
-
-    }
-
-    public double getMin() {
-
-        if (appDB.getAllBills().size() == 0) return 0;
-
-        double min = appDB.getAllBills().get(0).getAmountPrice();
-
-
-        for (int i = 1; i < appDB.getAllBills().size(); i++) {
-            if (min > appDB.getAllBills().get(i).getAmountPrice()) {
-                min = appDB.getAllBills().get(i).getAmountPrice();
-            }
-        }
-
-        return min;
-    }
-
-    public double getAverage() {
-
-        if (appDB.getAllBills().size() == 0) return 0;
-
-        double result = appDB.getAllBills().get(0).getAmountPrice();
-
-        for (int i = 1; i < appDB.getAllBills().size(); i++) {
-            result += appDB.getAllBills().get(i).getAmountPrice();
-        }
-
-        result /= appDB.getAllBills().size();
-
-        return result;
-    }
-
-    public int countSoldProducts() {
-
-        int result = 0;
-
-        for (int i = 0; i < appDB.getAllBills().size(); i++) {
-            result += appDB.getAllBills().get(i).getProducts().size();
-
-        }
-
-        return result;
+        return new Statistic(getMax(appDB), getMin(appDB),
+                getAverage(appDB), countSoldProducts(appDB));
     }
 
     @Override

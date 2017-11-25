@@ -93,7 +93,8 @@ public class Bill {
 
     public boolean hasProducts(List<Product> arrProduct) {
 
-        if (arrProduct == null || arrProduct.isEmpty() || products.isEmpty()) return false;
+        if (arrProduct == null || arrProduct.isEmpty() ||
+                products.isEmpty()) return false;
 
         for (Product inProduct : arrProduct) {
 

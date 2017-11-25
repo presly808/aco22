@@ -24,14 +24,6 @@ public interface ITerminal {
 
     Statistic doSomeStatisticStuff();
 
-    double getMax();
-
-    double getMin();
-
-    double getAverage();
-
-    int countSoldProducts();
-
     List<Bill> filter(List<Salesman> salesmen, List<Product> products,
                       LocalDateTime startTime, LocalDateTime endTime,
                       Comparator<Bill> comparator);

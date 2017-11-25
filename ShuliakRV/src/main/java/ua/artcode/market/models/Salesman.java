@@ -1,6 +1,6 @@
 package ua.artcode.market.models;
 
-public class Salesman{
+public class Salesman {
 
     private String fullname;
     private String login;
@@ -61,8 +61,11 @@ public class Salesman{
 
         Salesman salesman = (Salesman) o;
 
-        if (login != null ? !login.equals(salesman.login) : salesman.login != null) return false;
-        return password != null ? password.equals(salesman.password) : salesman.password == null;
+        if (login != null ? !login.equals(salesman.login) :
+                salesman.login != null)
+            return false;
+        return password != null ? password.equals(salesman.password) :
+                salesman.password == null;
     }
 
 }
