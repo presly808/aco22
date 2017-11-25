@@ -18,7 +18,7 @@ public class TerminalController implements ITerminal {
     }
 
 
-    public Salesman login(String login, String password) {
+    public Salesman signIn(String login, String password) {
 
         if (appDB.getSales() == null) return null;
         else {

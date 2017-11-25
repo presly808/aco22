@@ -46,7 +46,7 @@ public class AppDB implements IAppDb {
     public Bill findByBillId(int billId) {
 
         for (Bill bill : bills) {
-            if (bill.getId()==billId)
+            if (bill.getId() == billId)
                 return bill;
         }
 
@@ -57,7 +57,7 @@ public class AppDB implements IAppDb {
     public Product findByProductId(int productId) {
 
         for (Product product : products) {
-            if (product.getId()==productId)
+            if (product.getId() == productId)
                 return product;
         }
 
@@ -65,25 +65,41 @@ public class AppDB implements IAppDb {
     }
 
     @Override
-    public Salesman findSalesmanByLoginAndPassword(String login, String password) {
+    public Salesman findSalesmanByLoginOrFullname(String loginOrFullname) {
 
 
-        if ((loginOrFullname == null || loginOrFullname.isEmpty()) ||
-                (appDB.getSales().length == 0)) return null;
+        if (loginOrFullname == null || loginOrFullname.isEmpty()) return null;
 
-        for (int i = 0; i < appDB.getSales().length; i++) {
-            if (appDB.getSales()[i].getLogin().equals(loginOrFullname) ||
-                    appDB.getSales()[i].getFullname().equals(loginOrFullname))
-                s[index++] = appDB.getSales()[i];
+        for (Salesman salesman : salesmen) {
+            if (salesman.getLogin().equals(loginOrFullname) ||
+                    salesman.getFullname().equals(loginOrFullname)) {
+                return salesman;
+            }
         }
-
-        if (index > 0) return s;
 
         return null;
     }
 
     @Override
-    public Bill saveBill (Bill bill) {
+    public Salesman findSalesmanByLoginOAndPassword(String login,
+                                                    String password) {
+
+
+        if (login == null || password == null ||
+                login.isEmpty() || password.isEmpty()) return null;
+
+        for (Salesman salesman : salesmen) {
+            if (salesman.getLogin().equals(login) ||
+                    salesman.getPassword().equals(password)) {
+                return salesman;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Bill saveBill(Bill bill) {
 
         bill.setId(nextBillId++);
         bills.add(bill);
@@ -108,15 +124,27 @@ public class AppDB implements IAppDb {
     }
 
     @Override
-    public boolean removeBill(Bill bill) {
+    public Bill removeBill(int billId) {
 
-        return bills.remove(bill);
+        Bill bill = findByBillId(billId);
+
+        if (bill == null) return null;
+
+        bills.remove(bill);
+
+        return bill;
     }
 
     @Override
-    public boolean removeProduct(Product product) {
+    public Product removeProduct(int productId) {
 
-        return products.remove(product);
+        Product product = findByProductId(productId);
+
+        if (product == null) return null;
+
+        products.remove(product);
+
+        return product;
     }
 
     @Override
@@ -126,8 +154,34 @@ public class AppDB implements IAppDb {
     }
 
     @Override
-    public Bill update(Bill bill) {
+    public Bill updateBill(Bill bill) {
 
-        return null;
+        int index = bills.indexOf(bill);
+
+        if (index == -1) return null;
+
+        return bills.set(index, bill);
     }
+
+    @Override
+    public Product updateProduct(Product product) {
+
+        int index = products.indexOf(product);
+
+        if (index == -1) return null;
+
+        return products.set(index,product);
+    }
+
+    public Salesman updateSalesman(Salesman salesman) {
+
+        int index = salesmen.indexOf(salesman);
+
+        if (index==-1) return null;
+
+        return salesmen.set(index,salesman);
+
+    }
+
+
 }

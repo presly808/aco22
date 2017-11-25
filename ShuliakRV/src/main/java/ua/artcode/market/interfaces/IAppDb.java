@@ -18,13 +18,27 @@ public interface IAppDb {
 
     Product findByProductId(int billId);
 
+    Salesman findSalesmanByLoginOrFullname(String loginOrFullname);
+
+    Salesman findSalesmanByLoginOAndPassword(String login,
+                                             String password);
+
     Bill saveBill(Bill bill);
 
     Product saveProduct(Product product);
+
+    Salesman saveSalesman(Salesman salesman);
 
     Bill removeBill(int bill);
 
     Product removeProduct(int remove);
 
-    Bill update(Bill bill);
+    boolean removeSalesman(Salesman salesman);
+
+    Bill updateBill(Bill bill);
+
+    Product updateProduct(Product product);
+
+    Salesman updateSalesman (Salesman salesman);
+
 }
