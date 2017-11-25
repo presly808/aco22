@@ -1,10 +1,10 @@
-package week1.proxyTerminalController;
+package week1.controllers;
 
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Salesman;
+import week1.models.Bill;
+import week1.models.Product;
+import week1.models.Salesman;
 
 import java.util.Comparator;
 import java.util.List;

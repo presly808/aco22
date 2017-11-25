@@ -1,11 +1,11 @@
-package week1.controller;
+package week1.controllers;
 
 import week1.comparators.SalesmanSoldProductComparator;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Salesman;
+import week1.models.Bill;
+import week1.models.Product;
+import week1.models.Salesman;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,11 +18,12 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     private IAppDb iAppDb;
 
+    private int currentSalesmanIndex = -1;
+
     public ITerminalControllerImpl(IAppDb iAppDb) {
         this.iAppDb = iAppDb;
     }
 
-    private int currentSalesmanIndex = -1;
 
     public int getCurrentSalesmanIndex() {
         return currentSalesmanIndex;
@@ -66,7 +67,7 @@ public class ITerminalControllerImpl implements ITerminalController {
                 System.out.println("Hello " + salesman.getName());
             }
         }
-        if (currentSalesmanIndex == -1){
+        if (currentSalesmanIndex == -1) {
             System.out.println("wrong login/pass");
             Runtime.getRuntime().exit(0);
         }
@@ -124,8 +125,7 @@ public class ITerminalControllerImpl implements ITerminalController {
             bill.getTime().setCloseTime(bill.getTime().printTime());
             bill.setClosed(true);
             bill.getSalesman().setCountSoldProduct
-                    (bill.getSalesman().getCountSoldProduct() +
-                            (bill.getProductList().size()));
+                    (bill.getSalesman().getCountSoldProduct() + (bill.getProductList().size()));
 
             iAppDb.update(bill);
 

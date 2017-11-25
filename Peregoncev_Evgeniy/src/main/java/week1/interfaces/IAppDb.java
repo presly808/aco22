@@ -1,8 +1,8 @@
 package week1.interfaces;
 
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Salesman;
+import week1.models.Bill;
+import week1.models.Product;
+import week1.models.Salesman;
 
 import java.util.List;
 

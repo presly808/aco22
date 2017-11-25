@@ -1,7 +1,6 @@
-package week1.model;
+package week1.models;
 
 import org.junit.Test;
-import week1.model.Time;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

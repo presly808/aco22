@@ -1,16 +1,14 @@
-package week1.ProxyTerminalController;
+package week1.controllers;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.AbstractFactory.ITerminalControllerFactory;
+import week1.factories.ITerminalControllerFactory;
 import week1.comparators.BillComparatorForSorting;
-import week1.controller.IAppDbImpl;
-import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 
 import static org.junit.Assert.*;
+import static week1.utils.TerminalUtils.fillListOfProductsAndSalesmans;
 
 /**
  * Created by ENIAC on 24.11.2017.
@@ -24,38 +22,50 @@ public class ProxyTerminalControllerImplTest {
     public void setUp() throws Exception {
 
         testTerminal = new ProxyTerminalControllerImpl(ITerminalControllerFactory.create());
+        fillListOfProductsAndSalesmans(testTerminal.getDb());
     }
 
     @After
     public void tearDown() throws Exception {
 
-        testTerminal.getAllBills().clear();
+        testTerminal = null;
 
-                testTerminal = null;
     }
+
 
     @Test
     public void login() throws Exception {
+
         String login = "2";
         String pass = "3";
         testTerminal.login(login, pass);
 
-        Assert.assertEquals(2, testTerminal.getCurrentSalesmanIndex());
+        assertEquals(2, testTerminal.getCurrentSalesmanIndex());
 
     }
 
     @Test
     public void createBill() throws Exception {
+
         testTerminal.login("2", "3");
         testTerminal.createBill();
         assertEquals(1, testTerminal.getAllBills().size());
 
-
     }
 
+    @Test
+    public void addProduct() throws Exception {
+
+        testTerminal.login("2", "3");
+        testTerminal.createBill();
+        testTerminal.addProduct(0, testTerminal.getAllProducts().get(1));
+
+        assertEquals(1, testTerminal.getAllBills().get(0).getProductList().size());
+    }
 
     @Test
     public void closeBill() throws Exception {
+
         testTerminal.login("2", "3");
         testTerminal.createBill();
         testTerminal.closeBill(0);
@@ -66,6 +76,7 @@ public class ProxyTerminalControllerImplTest {
 
     @Test
     public void filterForBills() throws Exception {
+
         testTerminal.login("2", "3");
 
         testTerminal.createBill();
@@ -87,14 +98,6 @@ public class ProxyTerminalControllerImplTest {
 
     }
 
-    @Test
-    public void findSalesmanByLogin() throws Exception {
-        testTerminal.login("2", "3");
-        testTerminal.createBill();
-
-        assertSame(testTerminal.getAllBills().get(0).getSalesman(), testTerminal.findSalesmanByLogin("2"));
-
-    }
 
     @Test
     public void getTopOfSalesmans() throws Exception {
@@ -110,18 +113,21 @@ public class ProxyTerminalControllerImplTest {
     }
 
     @Test
+    public void findSalesmanByLogin() throws Exception {
+
+        testTerminal.login("2", "3");
+        testTerminal.createBill();
+
+        assertSame(testTerminal.getAllBills().get(0).getSalesman(), testTerminal.findSalesmanByLogin("2"));
+
+    }
+
+    @Test
     public void setCurrentSalesmanIndex() throws Exception {
+
         testTerminal.setCurrentSalesmanIndex(0);
         assertEquals(0, testTerminal.getCurrentSalesmanIndex());
     }
 
-    @Test
-    public void addProduct() throws Exception {
-        testTerminal.login("2", "3");
-        testTerminal.createBill();
-        testTerminal.addProduct(0, testTerminal.getAllProducts().get(1));
-
-        assertEquals(1, testTerminal.findBillById(0).getProductList().size());
-    }
 
 }

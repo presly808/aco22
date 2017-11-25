@@ -1,6 +1,6 @@
 package week1.comparators;
 
-import week1.model.Salesman;
+import week1.models.Salesman;
 
 import java.util.Comparator;
 

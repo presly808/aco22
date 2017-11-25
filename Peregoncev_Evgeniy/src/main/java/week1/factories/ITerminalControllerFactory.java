@@ -1,7 +1,7 @@
-package week1.AbstractFactory;
+package week1.factories;
 
-import week1.controller.IAppDbImpl;
-import week1.controller.ITerminalControllerImpl;
+import week1.controllers.IAppDbImpl;
+import week1.controllers.ITerminalControllerImpl;
 import week1.interfaces.ITerminalController;
 
 /**
@@ -10,8 +10,11 @@ import week1.interfaces.ITerminalController;
 public class ITerminalControllerFactory {
 
     public static ITerminalController create(){
+
         return new ITerminalControllerImpl(new IAppDbImpl());
     }
+
+
 
 
 }

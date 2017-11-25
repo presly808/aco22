@@ -2,8 +2,8 @@ package week1.view;
 
 import week1.comparators.BillComparatorForSorting;
 import week1.interfaces.ITerminalController;
-import week1.model.Bill;
-import week1.model.Salesman;
+import week1.models.Bill;
+import week1.models.Salesman;
 
 import java.util.List;
 import java.util.Scanner;
@@ -181,7 +181,7 @@ public class View {
 
     private void menuFilterForBills(Scanner scanner, ITerminalController terminal) {
         System.out.println("write left limit of time in case like *Time: 9:15:09 Date: 2017.11.24*");
-        String IDKHToFIx = scanner.nextLine();  //this is needed to take empty string(enter from println)
+        scanner.nextLine();  //this is needed to take empty string(enter from println)
         String start = scanner.nextLine();
 
         System.out.println("write right limit of time in case like *Time: 9:15:09 Date: 2017.11.24*");
