@@ -23,7 +23,6 @@ public class AppDB implements IAppDb {
         salesmen = new ArrayList<>();
         bills = new ArrayList<>();
 
-
     }
 
 
@@ -45,6 +44,8 @@ public class AppDB implements IAppDb {
     @Override
     public Bill findByBillId(int billId) {
 
+        if (billId<=0) return null;
+
         for (Bill bill : bills) {
             if (bill.getId() == billId)
                 return bill;
@@ -55,6 +56,8 @@ public class AppDB implements IAppDb {
 
     @Override
     public Product findByProductId(int productId) {
+
+        if (productId<=0) return null;
 
         for (Product product : products) {
             if (product.getId() == productId)
@@ -126,6 +129,8 @@ public class AppDB implements IAppDb {
     @Override
     public Bill removeBill(int billId) {
 
+        if (billId<=0) return null;
+
         Bill bill = findByBillId(billId);
 
         if (bill == null) return null;
@@ -137,6 +142,8 @@ public class AppDB implements IAppDb {
 
     @Override
     public Product removeProduct(int productId) {
+
+        if (productId<=0) return null;
 
         Product product = findByProductId(productId);
 

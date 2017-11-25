@@ -5,6 +5,7 @@ public class Salesman{
     private String fullname;
     private String login;
     private String password;
+    private int soldProducts;
     private boolean isLogged;
 
     public Salesman(String fullname, String login, String password) {
@@ -25,6 +26,10 @@ public class Salesman{
         return password;
     }
 
+    public int getSoldProducts() {
+        return soldProducts;
+    }
+
     public boolean isLogged() {
         return isLogged;
     }
@@ -39,6 +44,10 @@ public class Salesman{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setSoldProducts(int soldProducts) {
+        this.soldProducts = soldProducts;
     }
 
     public void setLogged(boolean logged) {

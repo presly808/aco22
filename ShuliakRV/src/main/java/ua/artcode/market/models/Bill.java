@@ -78,7 +78,20 @@ public class Bill {
         this.closed = closed;
     }
 
-    public boolean hasProducts(ArrayList<Product> arrProduct) {
+
+    public void calculateAmountPrice() {
+
+        double amount = 0;
+
+        for (Product product : getProducts()) {
+            amount += product.getPrice();
+        }
+
+        amountPrice = amount;
+
+    }
+
+    public boolean hasProducts(List<Product> arrProduct) {
 
         if (arrProduct == null || arrProduct.isEmpty() || products.isEmpty()) return false;
 

@@ -5,36 +5,34 @@ import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public interface ITerminal {
 
-    public Salesman login(String login, String password);
+    Salesman logIn(String login, String password);
 
-    public boolean createBill(Salesman s);
+    Bill createBill(Salesman s);
 
-    public boolean addProduct(Product p);
+    Bill addProduct(int billId, Product product);
 
-    public Bill closeAndSaveBill();
+    Bill closeAndSaveBill(int billId);
 
-    public Bill findBillById(int id);
+    List<Salesman> getTopNOfSalesMen(int n);
 
-    public Salesman[] findSalesmanByLoginOrFullname(String loginOrFullname);
+    Statistic doSomeStatisticStuff();
 
-    public Salesman[] getTopNofSalesMan(int n);
+    double getMax();
 
-    public Statistic doSomeStatisticStuff();
+    double getMin();
 
-    public double getMax();
+    double getAverage();
 
-    public double getMin();
+    int countSoldProducts();
 
-    public double getAverage();
-
-    public int countSoldProducts();
-
-    public Bill calculateAmountPrice(Bill bill);
-
-    Bill[] filter(Salesman[] sales, Product[] products, Date startTime, Date endTime, Comparator<Bill> comparator);
+    List<Bill> filter(List<Salesman> salesmen, List<Product> products,
+                      LocalDateTime startTime, LocalDateTime endTime,
+                      Comparator<Bill> comparator);
 }
