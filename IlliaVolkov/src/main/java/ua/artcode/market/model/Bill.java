@@ -1,11 +1,13 @@
 package ua.artcode.market.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Bill {
 
     private int code;
-    private int[][] products;
+    //private int[][] products;
+    private ArrayList<ProductBill>  productsBill;
     private int quantityGoods;
     private double amountPrice;
     private SalesMan salesMan;
@@ -13,26 +15,36 @@ public class Bill {
     public Date closeTime;
     final Product[] productList;
 
-    public Bill(int code, int countProducts, String salesManName, Product[] productList){
+
+    //public Bill(int code, int countProducts, String salesManName, Product[] productList){
+    public Bill(int code, String salesManName, Product[] productList){
 
         this.code = code;
-        this.products = new int[countProducts][2];
+        //this.products = new int[countProducts][2];
+        this.productsBill = new ArrayList<>();
         this.salesMan = new SalesMan(salesManName);
 
         this.productList = productList;
-
     }
 
     public int getCode() {
         return code;
     }
 
-    public int[][] getProducts() {
+    /*public int[][] getProducts() {
         return products;
+    }*/
+
+    public ArrayList<ProductBill> getProductsBill() {
+        return productsBill;
     }
 
-    public void setProducts(int s, int c, int num) {
+    /*public void setProducts(int s, int c, int num) {
         this.products[s][c] = num;
+    }*/
+
+    public void setProductsBill(ProductBill productsBill) {
+        this.productsBill.add(productsBill);
     }
 
     public void setQuantityGoods(int quantityGoods) {

@@ -5,10 +5,12 @@ import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.view.InterfaceServices;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Terminal implements ITerminal{
 
     private Bill[] bills;
+    private ArrayList<Bill> billsTerminal;
     public final BillController billController;
     //private SalesMan[] sales;
 
@@ -16,12 +18,18 @@ public class Terminal implements ITerminal{
 
         this.billController = billController;
 
-        bills = new Bill[100];
+        //this.bills = new Bill[100];
+        this.billsTerminal = new ArrayList<>();
     }
 
     public Bill[] getBills() {
 
         return bills;
+    }
+
+    public ArrayList<Bill> getBillsTerminal() {
+
+        return billsTerminal;
     }
 
     @Override
@@ -33,18 +41,17 @@ public class Terminal implements ITerminal{
     @Override
     public Bill createBill(String nameSaler, Product[] productsList) {
 
-        for (int i = 0; i < this.bills.length; i++) {
+        /*for (int i = 0; i < this.bills.length; i++) {
             if (this.bills[i] == null) {
-
-                Bill currentBill = new Bill(i+1, 100, nameSaler, productsList);
-
+                Bill currentBill = new Bill(i+1, nameSaler, productsList);
                 return currentBill;
             }
         }
-
         System.out.println("The terminal is full, it is necessary to remove I report!");
+        return new Bill(0,"", productsList);
+        */
 
-        return new Bill(0,0, "", productsList);
+        return new Bill(this.billsTerminal.size()+1, nameSaler, productsList);
     }
 
     public static void runTerminal(){
@@ -54,14 +61,17 @@ public class Terminal implements ITerminal{
     public void saveBill(Bill currentBill) {
 
         if (currentBill.closed) {
-
-            for (int i = 0; i < this.bills.length; i++) {
+            //Matrix
+           /* for (int i = 0; i < this.bills.length; i++) {
                 if (this.bills[i] == null) {
                     this.bills[i] = currentBill;
 
                     break;
                 }
-            }
+            }*/
+
+            //ArrayList
+            this.billsTerminal.add(currentBill);
         }
     }
 
@@ -70,27 +80,35 @@ public class Terminal implements ITerminal{
     public static void showInfo(Terminal myTerminal){
 
         System.out.println("\n\n\n STATISTICS OF THE WORK OF THE STORE");
-
-        for (int i = 0; i < myTerminal.bills.length; i++) {
+        //Matrix
+        /*for (int i = 0; i < myTerminal.bills.length; i++) {
 
             if (myTerminal.bills[i] != null) {
 
                 InterfaceServices.printBill(myTerminal.bills[i]);
             }
+        }*/
+
+        for (int i = 0; i < myTerminal.billsTerminal.size(); i++) {
+            InterfaceServices.printBill(myTerminal.billsTerminal.get(i));
         }
     }
 
     public int countQuontityBills(){
 
-        int quontuty = 0;
+        int quontity = 0;
 
-        for (int i = 0; i < this.bills.length; i++) {
+        //Matrix
+        /*for (int i = 0; i < this.bills.length; i++) {
             if (this.bills[i] != null) {
                 quontuty ++;
             }
-        }
+        }*/
 
-        return quontuty;
+        //ArrayList
+        quontity = this.billsTerminal.size();
+
+        return quontity;
     }
 
 }
