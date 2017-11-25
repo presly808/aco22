@@ -6,29 +6,27 @@ import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
 
 import java.util.Comparator;
+import java.util.List;
 
 public interface ITerminal {
-
-    int MAX_COUNT_OF_BILLS = 10;
-    int MAX_COUNT_OF_SALESMANS = 10;
 
     void addSalesman(String fullName, String login, int pass);
 
     void signIn(boolean isLogin, String loginOrName, int password);
 
-    void createBill(int id);
+    void logOut();
+
+    void createBill();
 
     void closeAndSaveBill(int hours, int minutes, int seconds);
 
-    void addProduct(String name, int id, double price);
+    void addProductToBill(int id);
 
-    Bill findBillById(int id);
-
-    Salesman findSalesman(String loginOrName, boolean isLogin);
-
-    Object getTopNofSalesMan();
+    Salesman getTopNofSalesMan();
 
     Statistics makeStatistics();
 
-    Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator);
+    List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator);
+
+    List<Bill> getAllBills();
 }

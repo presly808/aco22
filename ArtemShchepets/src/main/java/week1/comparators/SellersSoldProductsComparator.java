@@ -11,4 +11,5 @@ public class SellersSoldProductsComparator implements Comparator<Seller>{
     public int compare(Seller o1, Seller o2) {
         return o1.getSoldProducts() - o2.getSoldProducts();
     }
+
 }

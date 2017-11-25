@@ -8,6 +8,6 @@ public class CreationDateComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return o1.getCreationDate().compareTo(o2.getCloseTime());
+        return o1.getOpenTime().compareTo(o2.getOpenTime());
     }
 }
