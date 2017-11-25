@@ -1,5 +1,6 @@
 package ua.artcode.market.controller;
 
+import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.interf.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -7,143 +8,62 @@ import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
 import ua.artcode.market.utils.TerminalUtils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class TerminalController implements ITerminal {
 
-    private Bill[] bills = new Bill[MAX_COUNT_OF_BILLS];
-    private int countOfBills;
-
-    private Salesman[] salesmans = new Salesman[MAX_COUNT_OF_SALESMANS];
-    private int countOfSalesman;
+    private AppDB appDB;
 
     private Salesman loggedSalesman;
     private boolean logged;
 
+    private Bill newBill;
+
+    public TerminalController(AppDB appDB) {
+        this.appDB = appDB;
+    }
+
     @Override
     public void addSalesman(String fullName, String login, int pass) {
-
-        if (countOfSalesman == MAX_COUNT_OF_SALESMANS) {
-            System.out.println("Sorry, maximum number of checks");
-        } else if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
-            System.out.println("wrong data");
-        } else {
-            salesmans[countOfSalesman++] = new Salesman(fullName, login, pass);
-        }
+        appDB.getSalesmans().add(new Salesman(fullName, login, pass, appDB.genId()));
     }
 
     @Override
     public void signIn(boolean isLogin, String loginOrName, int password) {
-        if (findSalesman(loginOrName, isLogin) == null ||
-                findSalesman(loginOrName, isLogin).getPass() != password) {
-            System.out.println("wrong data");
-        } else {
-            this.loggedSalesman = findSalesman(loginOrName, isLogin);
-            logged = true;
-        }
+        this.loggedSalesman = appDB.findSalesman(loginOrName, isLogin);
+        logged = true;
     }
-
-    public void logOut() {
-        setLogged(false);
-    }
-
 
     @Override
-    public void createBill(int id) {
+    public void logOut() {
+        logged = false;
+        loggedSalesman = null;
+    }
 
-        if (!logged) {
-            System.out.println("please log in");
-
-        } else if (countOfBills == MAX_COUNT_OF_BILLS) {
-            System.out.println("Sorry, maximum number of checks");
-
-        } else {
-            bills[countOfBills] = new Bill(loggedSalesman, id);
-        }
+    @Override
+    public void createBill() {
+        newBill = new Bill(loggedSalesman, appDB.genId());
     }
 
     @Override
     public void closeAndSaveBill(int hours, int minutes, int seconds) {
+        newBill.calculateAmountPrice();
+        newBill.setCloseTime(new Time(hours, minutes, seconds));
+        appDB.getBills().add(newBill);
+        newBill.getSalesman().addSum(newBill.getAmountPrice());
+        newBill = null;
+    }
 
-        if (!logged) {
+    @Override
+    public void addProductToBill(int id) {
+        if (logged && appDB.findProductById(id) != null) {
+            newBill.getProducts().add(appDB.findProductById(id));
+            System.out.println("Added product: " + appDB.findProductById(id).toString());
+
+        } else {
             System.out.println("please log in");
-        } else if (bills[countOfBills].getProducts() == null) {
-            System.out.println("you did not make a single sale");
-        } else {
-            bills[countOfBills++].closeBill(hours, minutes, seconds);
-        }
-    }
-
-    @Override
-    public void addProduct(String name, int id, double price) {
-        if (logged) {
-            bills[countOfBills].addProduct(name, id, price);
-        } else {
-            System.out.println("please log in");
-        }
-    }
-
-    @Override
-    public Bill findBillById(int id) {
-        if (id == 0) return null;
-
-        for (int i = 0; i < countOfBills; i++) {
-            if (bills[i].getId() == id) {
-                return bills[i];
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public Salesman findSalesman(String loginOrName, boolean isLogin) {
-        if (loginOrName == null || loginOrName.isEmpty()) return null;
-
-        if (isLogin) {
-            for (int i = 0; i < countOfSalesman; i++) {
-                if (salesmans[i].getLogin().equals(loginOrName)) {
-                    return salesmans[i];
-                }
-            }
-        } else {
-            for (int i = 0; i < countOfSalesman; i++) {
-                if (salesmans[i].getFullName().equals(loginOrName)) {
-                    return salesmans[i];
-                }
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public Statistics makeStatistics() {
-        if (countOfBills == 0) {
-            System.out.println("count of bills = 0");
-            return null;
-        } else {
-
-            //search average amount and sum of all sales
-            double sumOfAllSalles = bills[0].getAmountPrice();
-
-            for (int i = 1; i < countOfBills; i++) {
-                sumOfAllSalles += bills[i].getAmountPrice();
-            }
-
-            double averageAmountInOneChek = sumOfAllSalles / countOfBills;
-
-            // search bil with max and min amount
-            Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(bills);
-            Bill billWithMinAmount = TerminalUtils.billWithMinAmount(bills);
-
-            return new Statistics(billWithMaxAmount.getAmountPrice(),
-                    billWithMaxAmount.getSalesman(),
-                    billWithMinAmount.getAmountPrice(),
-                    billWithMinAmount.getSalesman(),
-                    averageAmountInOneChek,
-                    sumOfAllSalles);
         }
     }
 
@@ -151,80 +71,91 @@ public class TerminalController implements ITerminal {
     public Salesman getTopNofSalesMan() {
         int topSalemanId = 0;
 
-        if (countOfSalesman == 0) return null;
+        if (appDB.getSalesmans().size() == 0 || appDB.getBills().size() == 0) return null;
 
-        double max = salesmans[0].getSumOfAllSales();
-        for (int i = 1; i < countOfSalesman; i++) {
-            if (salesmans[i].getSumOfAllSales() > max) {
-                max = salesmans[i].getSumOfAllSales();
+        double max = appDB.getSalesmans().get(0).getSumOfAllSales();
+        for (int i = 0; i < appDB.getSalesmans().size(); i++) {
+
+            if (appDB.getSalesmans().get(i).getSumOfAllSales() > max) {
+                max = appDB.getSalesmans().get(i).getSumOfAllSales();
                 topSalemanId = i;
             }
         }
 
-        return salesmans[topSalemanId];
+        return appDB.getSalesmans().get(topSalemanId);
     }
 
     @Override
-    public Bill[] filter(Bill[] bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
-        Bill[] billsFilt = new Bill[bills.length];
-        int countFiltBills = 0;
+    public Statistics makeStatistics() {
 
-        for (int i = 0; i < countOfBills; i++) {
-            if (bills[i].getTime().compareTo(startTime) > 0 &&
-                    bills[i].getTime().compareTo(endTime) < 0) {
-                billsFilt[countFiltBills++] = bills[i];
+        //search average amount and sum of all sales
+        double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
+
+        for (int i = 1; i < appDB.getBills().size(); i++) {
+            sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
+        }
+
+        double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
+
+        // search bil with max and min amount
+        Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(appDB.getBills());
+        Bill billWithMinAmount = TerminalUtils.billWithMinAmount(appDB.getBills());
+
+        return new Statistics(billWithMaxAmount.getAmountPrice(),
+                billWithMaxAmount.getSalesman(),
+                billWithMinAmount.getAmountPrice(),
+                billWithMinAmount.getSalesman(),
+                averageAmountInOneChek,
+                sumOfAllSalles);
+    }
+
+    @Override
+    public List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
+        List<Bill> billsFilt = new ArrayList<>();
+
+        for (Bill bill : bills) {
+
+            if (bill.getCloseTime().compareTo(startTime) > 0 &&
+                    bill.getCloseTime().compareTo(endTime) < 0) {
+                billsFilt.add(bill);
             }
         }
 
-        Arrays.sort(TerminalUtils.splitBillArr(billsFilt, countFiltBills), comparator);
+        appDB.getBills().sort(comparator);
         return billsFilt;
     }
 
-    public Bill[] getBills() {
-        return bills;
-    }
+    @Override
+    public List<Bill> getAllBills() {
 
-    public void setBills(Bill[] bills) {
-        this.bills = bills;
+        return appDB.getBills();
     }
 
     public int getCountOfBills() {
-        return countOfBills;
-    }
-
-    public void setCountOfBills(int countOfBills) {
-        this.countOfBills = countOfBills;
-    }
-
-    public Salesman[] getSalesmans() {
-        return salesmans;
-    }
-
-    public void setSalesmans(Salesman[] salesmans) {
-        this.salesmans = salesmans;
+        return appDB.getBills().size();
     }
 
     public int getCountOfSalesman() {
-        return countOfSalesman;
-    }
-
-    public void setCountOfSalesman(int countOfSalesman) {
-        this.countOfSalesman = countOfSalesman;
+        return appDB.getSalesmans().size();
     }
 
     public Salesman getLoggedSalesman() {
         return loggedSalesman;
     }
 
-    public void setLoggedSalesman(Salesman loggedSalesman) {
-        this.loggedSalesman = loggedSalesman;
-    }
-
     public boolean getIsLogged() {
         return logged;
     }
 
-    private void setLogged(boolean logged) {
-        this.logged = logged;
+    public AppDB getAppDB() {
+        return appDB;
+    }
+
+    public Bill getNewBill() {
+        return newBill;
+    }
+
+    public List<Salesman> getSalesmans() {
+        return appDB.getSalesmans();
     }
 }
