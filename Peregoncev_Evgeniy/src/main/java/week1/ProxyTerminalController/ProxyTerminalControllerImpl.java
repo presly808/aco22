@@ -1,13 +1,10 @@
-package week1.ProxyTerminalController;
+package week1.proxyTerminalController;
 
-import week1.AbstractFactory.ITerminalControllerFactory;
-import week1.controller.IAppDbImpl;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
-import week1.model.Time;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,18 +16,16 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
     private ITerminalController terminalController;
 
-//    private static ProxyTerminalControllerImpl instance = new ProxyTerminalControllerImpl();
-
     public ProxyTerminalControllerImpl(ITerminalController terminalController) {
         this.terminalController = terminalController;
     }
 
 
     @Override
-    public boolean login(String login, String pass) {
+    public void login(String login, String pass) {
 
         System.out.println("Logg: login attempt");
-        return terminalController.login(login, pass);
+        terminalController.login(login, pass);
     }
 
     @Override

@@ -24,28 +24,12 @@ public class Bill {
         this.time = new Time();
     }
 
-    public Bill(double amountPrice, Salesman salesman, Time time, int id) {
-
-        this.productList = new ArrayList<>();
-        this.AmountPrice = amountPrice;
-        this.salesman = salesman;
-        this.time = time;
-        this.id = id;
-    }
-
-
-
-
     public List<Product> getProductList() {
         return productList;
     }
 
     public Time getTime() {
         return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
     }
 
     public int getId() {
@@ -92,7 +76,6 @@ public class Bill {
                 ", isClosed=" + isClosed +
                 '}';
     }
-
 
 }
 

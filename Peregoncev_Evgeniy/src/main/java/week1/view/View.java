@@ -2,7 +2,10 @@ package week1.view;
 
 import week1.comparators.BillComparatorForSorting;
 import week1.interfaces.ITerminalController;
+import week1.model.Bill;
+import week1.model.Salesman;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -53,6 +56,7 @@ public class View {
                     case "7":
                         menuFilterForBills(scanner, terminal);
                         break;
+
                     case "8":
                         menuLogOut(scanner, terminal);
                         break;
@@ -68,7 +72,9 @@ public class View {
         }
     }
 
+
     // Methods
+
 
     private void menuCreateBill(ITerminalController terminal) {
         terminal.createBill();
@@ -79,47 +85,116 @@ public class View {
     private void menuAddProduct(Scanner scanner, ITerminalController terminal) {
 
         System.out.println("write bill id to add product");
-        int id = scanner.nextInt();
-        System.out.println("write index of product you want to add");
-        int productId = scanner.nextInt();
-        terminal.addProduct(id, terminal.getAllProducts().get(productId));
+        int billId;
+        if (scanner.hasNextInt()) {
+            billId = scanner.nextInt();
+        } else {
+            System.out.println("you wrote non integer number");
+            return;
+        }
 
+        System.out.println("write index of product you want to add");
+
+        int productId;
+        if (scanner.hasNextInt()) {
+            productId = scanner.nextInt();
+
+        } else {
+            System.out.println("you wrote non integer number");
+            return;
+        }
+
+
+        if (billId > terminal.getAllBills().size() || (billId < 0)) {
+
+            System.out.println("There no bill with this id");
+        } else if (productId > terminal.getAllProducts().size() || (productId < 0)) {
+
+            System.out.println("There no product with this id");
+        } else {
+            terminal.addProduct(billId, terminal.getAllProducts().get(productId));
+        }
 
     }
 
     private void menuCloseAndSaveBill(Scanner scanner, ITerminalController terminal) {
         System.out.println("write bill id to close");
-        int billId = scanner.nextInt();
+        int billId;
+        if (scanner.hasNextInt()) {
+            billId = scanner.nextInt();
+        } else {
+            System.out.println("you wrote non integer number");
+            return;
+        }
         terminal.closeBill(billId);
-        System.out.println("bill " + billId + " now is closed");
+
     }
 
     private void menuFindBillById(Scanner scanner, ITerminalController terminal) {
         System.out.println("write id of search bill");
-        int billId = scanner.nextInt();
+        int billId;
+        if (scanner.hasNextInt()) {
 
-        System.out.println(terminal.findBillById(billId).toString());
+            billId = scanner.nextInt();
+        } else {
+
+            System.out.println("you wrote non integer number");
+            return;
+
+        }
+        if (billId > terminal.getAllBills().size() || (billId < 0)) {
+
+            System.out.println("There no bill with this id");
+            return;
+        }
+
+        Bill bill = terminal.findBillById(billId);
+
+        if (bill == null) {
+            return;
+        }
+
+        System.out.println(bill.toString());
     }
 
     private void menuFindSellerByLogin(Scanner scanner, ITerminalController terminal) {
-        System.out.println("Write login of seller, which you want to find");
+        System.out.println("Write login of salesman, which you want to find");
         String login = scanner.next();
-        System.out.println(terminal.findSalesmanByLogin(login).toString());
+
+        Salesman salesman = terminal.findSalesmanByLogin(login);
+        if (salesman == null) {
+            return;
+        }
+        System.out.println(salesman.toString());
     }
 
     private void menuGetTopSalesman(ITerminalController terminal) {
 
-        System.out.println("top saller is " + terminal.getTopOfSalesmans().getName());
+        Salesman salesman = terminal.getTopOfSalesmans();
+
+        if (salesman==null){
+            return;
+        }
+
+        System.out.println("top saller is " + salesman.getName());
     }
 
     private void menuFilterForBills(Scanner scanner, ITerminalController terminal) {
         System.out.println("write left limit of time in case like *Time: 9:15:09 Date: 2017.11.24*");
-        String tryToFIx = scanner.nextLine();  //this is needed to take empty string(enter from println)
+        String IDKHToFIx = scanner.nextLine();  //this is needed to take empty string(enter from println)
         String start = scanner.nextLine();
 
         System.out.println("write right limit of time in case like *Time: 9:15:09 Date: 2017.11.24*");
         String end = scanner.nextLine();
-        System.out.println(terminal.filterForBills(start, end, new BillComparatorForSorting()).toString());
+
+        List<Bill> billList = terminal.filterForBills(start, end, new BillComparatorForSorting());
+
+        if (billList == null||billList.isEmpty()){
+            System.out.println("something gone wrong. Maybe you wrote wrong input data");
+            return;
+        }
+
+        System.out.println(billList.toString());
     }
 
     private void menuLogOut(Scanner scanner, ITerminalController terminal) {

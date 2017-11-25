@@ -13,9 +13,6 @@ public class Salesman {
 
     private  int id;
 
-    public Salesman() {
-
-    }
 
     public Salesman(String Name, String login, String pass, int id) {
         this.Name = Name;
@@ -48,6 +45,7 @@ public class Salesman {
         return pass;
     }
 
+
     @Override
     public String toString() {
         return "Salesman{" +
@@ -58,5 +56,6 @@ public class Salesman {
                 ", id=" + id +
                 '}';
     }
+
 }
 

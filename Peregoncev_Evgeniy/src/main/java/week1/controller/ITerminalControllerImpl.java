@@ -32,25 +32,45 @@ public class ITerminalControllerImpl implements ITerminalController {
         this.currentSalesmanIndex = currentSalesmanIndex;
     }
 
+
     //Methods
 
+
     @Override
-    public boolean login(String login, String pass) {
+    public IAppDb getDb() {
+        return iAppDb;
+    }
+
+    @Override
+    public List<Bill> getAllBills() {
+        return iAppDb.getAllBills();
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return iAppDb.getAllProducts();
+    }
+
+    @Override
+    public void login(String login, String pass) {
         if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
             System.out.println("write true login/pass");
         } else if (iAppDb == null) {
             System.out.println("wrong salesman database");
         }
 
-            for (Salesman salesman : iAppDb.getAllSalesMans()) {
+        for (Salesman salesman : iAppDb.getAllSalesMans()) {
 
             if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
                 setCurrentSalesmanIndex(salesman.getId());
                 System.out.println("Hello " + salesman.getName());
             }
         }
-        if (currentSalesmanIndex == -1) System.out.println("wrong login/pass");
-        return Boolean.parseBoolean(null);
+        if (currentSalesmanIndex == -1){
+            System.out.println("wrong login/pass");
+            Runtime.getRuntime().exit(0);
+        }
+
     }
 
     @Override
@@ -66,38 +86,17 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public IAppDb getDb() {
-        return iAppDb;
-    }
-
-    @Override
-    public Bill findBillById(int billId) {
-
-        return iAppDb.findByBillId(billId);
-    }
-
-    @Override
-    public Salesman findSalesmanByLogin(String login) {
-
-        return iAppDb.findSalesmanByLogin(login);
-    }
-
-    @Override
-    public Salesman getTopOfSalesmans() {
-        iAppDb.getAllSalesMans().sort(new SalesmanSoldProductComparator());
-        return iAppDb.getAllSalesMans().get(iAppDb.getAllSalesMans().size() - 1);
-    }
-
-    @Override
     public Bill addProduct(int billId, Product product) {
         Bill bill = iAppDb.findByBillId(billId);
 
         if (bill == null) {
             System.out.println("no bill found");
             return null;
+
         } else if (bill.isClosed()) {
             System.out.println("bill is closed. cant add product to closed bill.");
             return null;
+
         } else {
 
             bill.getProductList().add(product);
@@ -112,27 +111,73 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public List<Bill> getAllBills() {
-        return iAppDb.getAllBills();
-    }
-
-    @Override
     public Bill closeBill(int id) {
-        Bill bill = iAppDb.findByBillId(id);
-        bill.getTime().setCloseTime(bill.getTime().printTime());
-        bill.setClosed(true);
-        bill.getSalesman().setCountSoldProduct
-                (bill.getSalesman().getCountSoldProduct() +
-                (bill.getProductList().size()));
 
-        iAppDb.update(bill);
+        if (id < getAllBills().size()) {
+            Bill bill = iAppDb.findByBillId(id);
 
-        return bill;
+            if (bill.isClosed()) {
+                System.out.println("bill is already closed");
+                return null;
+            }
+
+            bill.getTime().setCloseTime(bill.getTime().printTime());
+            bill.setClosed(true);
+            bill.getSalesman().setCountSoldProduct
+                    (bill.getSalesman().getCountSoldProduct() +
+                            (bill.getProductList().size()));
+
+            iAppDb.update(bill);
+
+            System.out.println("bill " + id + " now is closed");
+            return bill;
+        } else {
+            System.out.println("There no bill with this id");
+        }
+        return null;
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return iAppDb.getAllProducts();
+    public Bill findBillById(int billId) {
+
+        Bill bill = iAppDb.findByBillId(billId);
+
+        if (!bill.isClosed()) {
+
+            System.out.println("bill is NOT closed. cant show non closed bill.");
+            return null;
+
+        } else {
+
+            return bill;
+        }
+    }
+
+    @Override
+    public Salesman findSalesmanByLogin(String login) {
+
+        Salesman salesman = iAppDb.findSalesmanByLogin(login);
+        if (salesman == null) {
+            System.out.println("there no one salesman with login " + login);
+            return null;
+        } else {
+            return salesman;
+        }
+    }
+
+    @Override
+    public Salesman getTopOfSalesmans() {
+        int sumOfAllSoldProduct = 0;
+        for (Salesman salesman : iAppDb.getAllSalesMans()) {
+            sumOfAllSoldProduct += salesman.getCountSoldProduct();
+        }
+        if (sumOfAllSoldProduct == 0) {
+            System.out.println("Still no one sold anything.");
+            return null;
+        }
+
+        iAppDb.getAllSalesMans().sort(new SalesmanSoldProductComparator());
+        return iAppDb.getAllSalesMans().get(iAppDb.getAllSalesMans().size() - 1);
     }
 
     @Override
@@ -149,6 +194,5 @@ public class ITerminalControllerImpl implements ITerminalController {
         billList.sort(comparator);
         return billList;
     }
-
 
 }

@@ -10,6 +10,7 @@ public class Time {
 
     private String closeTime;
 
+
     public String getCloseTime() {
         return closeTime;
     }
@@ -18,12 +19,12 @@ public class Time {
         this.closeTime = closeTime;
     }
 
+
     public String printTime() {
         Date timeNow = new Date();
         SimpleDateFormat time = new SimpleDateFormat("'Date: 'yyyy.MM.dd' Time: 'H:mm:ss");
         return (time.format(timeNow));
     }
-
 
 }
 

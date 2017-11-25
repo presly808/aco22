@@ -12,13 +12,15 @@ import java.util.List;
  */
 public interface ITerminalController {
 
-    boolean login(String login, String pass);
-
-    Bill createBill();
-
     IAppDb getDb();
 
     List<Bill> getAllBills();
+
+    List<Product> getAllProducts();
+
+    void login(String login, String pass);
+
+    Bill createBill();
 
     Bill addProduct(int billId, Product product);
 
@@ -26,13 +28,11 @@ public interface ITerminalController {
 
     Bill findBillById(int billId);
 
-    List<Bill> filterForBills(String start, String end, Comparator<Bill> comparator);
-
-    List<Product> getAllProducts();
-
     Salesman findSalesmanByLogin(String Login);
 
     Salesman getTopOfSalesmans();
+
+    List<Bill> filterForBills(String start, String end, Comparator<Bill> comparator);
 
     int getCurrentSalesmanIndex();
 

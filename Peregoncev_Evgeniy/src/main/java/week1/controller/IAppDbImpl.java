@@ -21,33 +21,14 @@ public class IAppDbImpl implements IAppDb {
     private List<Product> productList;
 
     public IAppDbImpl() {
+
         this.billList = new ArrayList<>();
-
         this.salesmanList = new ArrayList<>();
-
-        salesmanList.add(new Salesman("Inna", "login", "pass", 0));
-        salesmanList.add(new Salesman("Zina", "login1", "pass", 1));
-        salesmanList.add(new Salesman("1", "2", "3", 2));
-
         this.productList = new ArrayList<>();
 
-        productList.add(new Product("apricot", 16.5, 1));
-        productList.add(new Product("banana", 20.0, 2));
-        productList.add(new Product("watermelon", 50.5, 3));
-        productList.add(new Product("apple", 8.5, 4));
-
     }
 
-
-    public int getBillNextId() {
-        return billNextId;
-    }
-
-    @Override
-    public int setBillNextId(int i) {
-        return setBillNextId(i);
-    }
-
+    //Methods
 
 
     @Override
@@ -61,6 +42,11 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
+    public List<Product> getAllProducts() {
+        return productList;
+    }
+
+    @Override
     public Salesman findSalesmanByLogin(String login) {
 
         for (Salesman salesman : salesmanList) {
@@ -68,13 +54,7 @@ public class IAppDbImpl implements IAppDb {
                 return salesman;
             }
         }
-
         return null;
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return productList;
     }
 
     @Override
@@ -84,7 +64,6 @@ public class IAppDbImpl implements IAppDb {
                 return product;
             }
         }
-
         return null;
     }
 
@@ -132,7 +111,7 @@ public class IAppDbImpl implements IAppDb {
             System.out.println("Not found with id " + bill);
             return null;
         }
-
         return billList.set(index, bill);
     }
+
 }
