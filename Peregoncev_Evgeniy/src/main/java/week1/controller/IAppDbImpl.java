@@ -38,6 +38,18 @@ public class IAppDbImpl implements IAppDb {
 
     }
 
+
+    public int getBillNextId() {
+        return billNextId;
+    }
+
+    @Override
+    public int setBillNextId(int i) {
+        return setBillNextId(i);
+    }
+
+
+
     @Override
     public List<Bill> getAllBills() {
         return billList;
@@ -106,8 +118,8 @@ public class IAppDbImpl implements IAppDb {
             System.out.println("Not found with id " + billId);
             return null;
         }
-
         billList.remove(found);
+        billNextId--;
 
         return found;
     }

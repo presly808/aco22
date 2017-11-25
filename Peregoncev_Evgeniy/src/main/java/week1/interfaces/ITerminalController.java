@@ -16,6 +16,8 @@ public interface ITerminalController {
 
     Bill createBill();
 
+    IAppDb getDb();
+
     List<Bill> getAllBills();
 
     Bill addProduct(int billId, Product product);

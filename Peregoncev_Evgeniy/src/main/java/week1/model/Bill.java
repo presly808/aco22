@@ -34,6 +34,8 @@ public class Bill {
     }
 
 
+
+
     public List<Product> getProductList() {
         return productList;
     }

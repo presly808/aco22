@@ -29,5 +29,7 @@ public interface IAppDb {
 
     Salesman findSalesmanByLogin(String login);
 
+    int getBillNextId();
+    int setBillNextId(int i);
 
 }

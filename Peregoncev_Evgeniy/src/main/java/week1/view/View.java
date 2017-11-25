@@ -56,6 +56,7 @@ public class View {
                     case "8":
                         menuLogOut(scanner, terminal);
                         break;
+
                     case "q":
                         return;
 
@@ -76,13 +77,13 @@ public class View {
     }
 
     private void menuAddProduct(Scanner scanner, ITerminalController terminal) {
+
         System.out.println("write bill id to add product");
         int id = scanner.nextInt();
         System.out.println("write index of product you want to add");
         int productId = scanner.nextInt();
         terminal.addProduct(id, terminal.getAllProducts().get(productId));
-        System.out.println("product " + terminal.getAllProducts().get(productId).getName()
-                + " was added to bill with id " + id);
+
 
     }
 

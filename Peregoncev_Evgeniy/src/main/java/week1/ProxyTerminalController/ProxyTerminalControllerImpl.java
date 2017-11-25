@@ -1,10 +1,13 @@
 package week1.ProxyTerminalController;
 
 import week1.AbstractFactory.ITerminalControllerFactory;
+import week1.controller.IAppDbImpl;
+import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Salesman;
+import week1.model.Time;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,27 +19,29 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
     private ITerminalController terminalController;
 
-    private static ProxyTerminalControllerImpl instance = new ProxyTerminalControllerImpl();
+//    private static ProxyTerminalControllerImpl instance = new ProxyTerminalControllerImpl();
 
-    private ProxyTerminalControllerImpl() {
-        this.terminalController = ITerminalControllerFactory.create();
+    public ProxyTerminalControllerImpl(ITerminalController terminalController) {
+        this.terminalController = terminalController;
     }
 
-
-    public static ProxyTerminalControllerImpl getInstance() {
-        return instance;
-    }
 
     @Override
     public boolean login(String login, String pass) {
 
-        System.out.println("logger message");
+        System.out.println("Logg: login attempt");
         return terminalController.login(login, pass);
     }
 
     @Override
     public Bill createBill() {
+        System.out.println("Logg: create bill attempt");
         return terminalController.createBill();
+    }
+
+    @Override
+    public IAppDb getDb() {
+        return terminalController.getDb();
     }
 
     @Override
@@ -46,21 +51,25 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
     @Override
     public Bill addProduct(int billId, Product product) {
+        System.out.println("Logg: add product attempt");
         return terminalController.addProduct(billId, product);
     }
 
     @Override
     public Bill closeBill(int id) {
+        System.out.println("Logg: close bill attempt");
         return terminalController.closeBill(id);
     }
 
     @Override
     public Bill findBillById(int billId) {
+        System.out.println("Logg: find bill by id attempt");
         return terminalController.findBillById(billId);
     }
 
     @Override
     public List<Bill> filterForBills(String start, String end, Comparator<Bill> comparator) {
+        System.out.println("Logg: filter for bills attempt");
         return terminalController.filterForBills(start, end, comparator);
     }
 
@@ -71,11 +80,13 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
     @Override
     public Salesman findSalesmanByLogin(String login) {
+        System.out.println("Logg: find salesman by login attempt");
         return terminalController.findSalesmanByLogin(login);
     }
 
     @Override
     public Salesman getTopOfSalesmans() {
+        System.out.println("Logg: get top of salesmans attempt");
         return terminalController.getTopOfSalesmans();
     }
 

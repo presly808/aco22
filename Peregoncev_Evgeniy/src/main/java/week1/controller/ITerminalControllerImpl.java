@@ -42,7 +42,7 @@ public class ITerminalControllerImpl implements ITerminalController {
             System.out.println("wrong salesman database");
         }
 
-        for (Salesman salesman : iAppDb.getAllSalesMans()) {
+            for (Salesman salesman : iAppDb.getAllSalesMans()) {
 
             if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
                 setCurrentSalesmanIndex(salesman.getId());
@@ -63,6 +63,11 @@ public class ITerminalControllerImpl implements ITerminalController {
         Bill billWithId = iAppDb.saveBill(bill);
 
         return billWithId;
+    }
+
+    @Override
+    public IAppDb getDb() {
+        return iAppDb;
     }
 
     @Override
@@ -90,14 +95,20 @@ public class ITerminalControllerImpl implements ITerminalController {
         if (bill == null) {
             System.out.println("no bill found");
             return null;
+        } else if (bill.isClosed()) {
+            System.out.println("bill is closed. cant add product to closed bill.");
+            return null;
+        } else {
+
+            bill.getProductList().add(product);
+            bill.setAmountPrice(bill.getAmountPrice() + product.getPrice());
+
+            iAppDb.update(bill);
+
+            System.out.println("product " + product.getName()
+                    + " was added to bill with id " + product.getId());
+            return bill;
         }
-
-        bill.getProductList().add(product);
-        bill.setAmountPrice(bill.getAmountPrice() + product.getPrice());
-
-        iAppDb.update(bill);
-
-        return bill;
     }
 
     @Override
@@ -110,8 +121,10 @@ public class ITerminalControllerImpl implements ITerminalController {
         Bill bill = iAppDb.findByBillId(id);
         bill.getTime().setCloseTime(bill.getTime().printTime());
         bill.setClosed(true);
-        System.out.println(bill.getTime().getCloseTime());
-        bill.getSalesman().setCountSoldProduct(bill.getSalesman().getCountSoldProduct() + (bill.getProductList().size()));
+        bill.getSalesman().setCountSoldProduct
+                (bill.getSalesman().getCountSoldProduct() +
+                (bill.getProductList().size()));
+
         iAppDb.update(bill);
 
         return bill;
