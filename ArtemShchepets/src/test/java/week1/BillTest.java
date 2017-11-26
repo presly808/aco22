@@ -4,10 +4,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.model.Bill;
-import week1.model.Product;
-import week1.model.Seller;
-import week1.model.Time;
+import week1.models.Bill;
+import week1.models.Product;
+import week1.models.Seller;
+import week1.models.Time;
 
 public class BillTest {
 

@@ -2,7 +2,7 @@ package week1;
 
 import org.junit.Test;
 import org.junit.Assert;
-import week1.model.Product;
+import week1.models.Product;
 
 public class ProductTest {
 
