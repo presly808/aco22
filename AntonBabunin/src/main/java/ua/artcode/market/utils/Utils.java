@@ -1,16 +1,25 @@
 package ua.artcode.market.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
-    public static int generateID() {
-        return (int)(Math.random()*10000);
+
+    private static int billId;
+    private static int terminalId;
+
+    public static int generateBillID() {
+        return ++billId;
+    }
+    public static int generateTerminalID() {
+        return ++terminalId;
+    }
+    public static int generateProductID() {
+        return (int)(Math.random()*100000);
     }
 
-    public static String getCurrentTime() {
-        SimpleDateFormat dF =
-                new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss");
-        return (dF.format(new Date()));
+    public static Date getCurrentTime() {
+        return new Date();
     }
+
+
 }

@@ -1,13 +1,12 @@
 package ua.artcode.market.models;
 
 
-
 public class Salesman{
     private String fullName;
     private String login;
     private String password;
 
-    public Salesman() {
+    private Salesman() {
         this.fullName = fullName;
         this.login = login;
         this.password = password;
@@ -35,9 +34,9 @@ public class Salesman{
 //        this.login = login;
 //    }
 
-//    public String getPassword() {
-//        return password;
-//    }
+    public String getPassword() {
+        return password;
+    }
 
 //    public void setPassword(String password) {
 //        this.password = password;

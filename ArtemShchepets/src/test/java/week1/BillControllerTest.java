@@ -4,12 +4,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.models.Bill;
-import week1.models.Product;
-import week1.models.Seller;
-import week1.models.Time;
+import week1.controller.BillController;
+import week1.model.Bill;
+import week1.model.Product;
+import week1.model.Seller;
 
-public class BillTest {
+import static week1.utils.Utils.getCurrentDate;
+
+public class BillControllerTest {
 
     Product testProduct1;
     Product testProduct2;
@@ -19,10 +21,13 @@ public class BillTest {
     Product[] testProductList;
 
     Seller testSeller;
-    Time testTime;
 
     Bill testBill;
-    Bill testBill2;
+
+    Bill[] testBills = new Bill[1];
+
+    BillController billController = new BillController();
+
 
     @Before
     public void setUp() {
@@ -37,9 +42,7 @@ public class BillTest {
 
         testProductList = new Product[testBill.getDefaultSizeOfList()];
 
-        testTime = new Time(12, 33, 50);
-
-
+        testBills[0] = testBill;
     }
 
     @After
@@ -52,14 +55,15 @@ public class BillTest {
         Product[] testProductList = null;
 
         Seller testSeller = null;
-        Time testTime = null;
 
         Bill testBill = null;
     }
+
     @Test
     public void testAddProducts() {
 
         testProductList[0] = testProduct1;
+
         testProductList[1] = testProduct2;
         testProductList[2] = testProduct3;
         testProductList[3] = testProduct4;
@@ -100,8 +104,6 @@ public class BillTest {
         testBill.addProduct(testProduct3);
         testBill.addProduct(testProduct4);
 
-        testBill.setTime(testTime);
-
         testBill.setClosed(false);
 
         String expected = "***BILL***\n"
@@ -109,19 +111,20 @@ public class BillTest {
                 + testProduct2.showInfo() + "\n"
                 + testProduct3.showInfo() + "\n"
                 + testProduct4.showInfo() + "\n"
-                + "12:33:50\n" + "Seller: Valya, age: 22" + ", sold: 0" +"\n***BILL IS OPENED***";
+                + getCurrentDate() + "\n" + "Seller: Valya, age: 22" + ", sold: 0" + "\n***BILL IS OPENED***";
 
         String actual = testBill.showInfo();
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testCloseBill() {
 
-        testBill.closeBill(testTime);
+        billController.setBills(testBills);
+        billController.closeAndSaveBill();
 
-        Assert.assertEquals(true, testBill.isClosed());
+        Assert.assertEquals(true, billController.getBills()[billController.getCurrentBillIndex()].isClosed());
     }
 }
 

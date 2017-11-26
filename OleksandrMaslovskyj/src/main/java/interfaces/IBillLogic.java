@@ -3,7 +3,7 @@ package interfaces;
 import models.Bill;
 import models.Product;
 
-public interface IBill {
+public interface IBillLogic {
 
     Product addProductToBill(Bill bill, String name);
 
@@ -11,6 +11,6 @@ public interface IBill {
 
     double calculateAmountPrice(Bill bill);
 
-    void printBill(Bill bill);
+    String printBill(Bill bill);
 
 }

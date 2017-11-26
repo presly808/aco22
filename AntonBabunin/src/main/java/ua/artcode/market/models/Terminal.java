@@ -11,7 +11,7 @@ public class Terminal {
     private List<Salesman> sales;
 
     public Terminal() {
-        this.id = Utils.generateID();
+        this.id = Utils.generateTerminalID();
         this.bills = new ArrayList<Bill>();
         this.sales = new ArrayList<Salesman>();
     }
