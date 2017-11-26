@@ -53,25 +53,35 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public void login(String login, String pass) {
-        if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
-            System.out.println("write true login/pass");
-        } else if (iAppDb == null) {
-            System.out.println("wrong salesman database");
-        }
+    public boolean login(String login, String pass) {
+        boolean isLoginned = false;
 
-        for (Salesman salesman : iAppDb.getAllSalesMans()) {
+        currentSalesmanIndex = -1;
 
-            if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
-                setCurrentSalesmanIndex(salesman.getId());
-                System.out.println("Hello " + salesman.getName());
+        do {
+
+            if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
+                System.out.println("write true login/pass");
+            } else if (iAppDb == null) {
+                System.out.println("wrong salesman database");
             }
-        }
-        if (currentSalesmanIndex == -1) {
-            System.out.println("wrong login/pass");
-            Runtime.getRuntime().exit(0);
-        }
 
+            for (Salesman salesman : iAppDb.getAllSalesMans()) {
+
+                if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
+                    setCurrentSalesmanIndex(salesman.getId());
+                    System.out.println("Hello " + salesman.getName());
+                }
+            }
+
+            if (currentSalesmanIndex == -1) {
+                System.out.println("wrong login/pass");
+            } else {
+                isLoginned = true;
+            }
+        } while (!isLoginned);
+
+        return false;
     }
 
     @Override
@@ -124,8 +134,8 @@ public class ITerminalControllerImpl implements ITerminalController {
 
             bill.getTime().setCloseTime(bill.getTime().printTime());
             bill.setClosed(true);
-            bill.getSalesman().setCountSoldProduct
-                    (bill.getSalesman().getCountSoldProduct() + (bill.getProductList().size()));
+            Salesman salesman = bill.getSalesman();
+            salesman.setCountSoldProduct(salesman.getCountSoldProduct() + (bill.getProductList().size()));
 
             iAppDb.update(bill);
 

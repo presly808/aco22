@@ -22,10 +22,11 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
 
     @Override
-    public void login(String login, String pass) {
+    public boolean login(String login, String pass) {
 
         System.out.println("Logg: login attempt");
         terminalController.login(login, pass);
+        return false;
     }
 
     @Override

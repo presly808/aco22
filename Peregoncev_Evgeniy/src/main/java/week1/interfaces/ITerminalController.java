@@ -18,7 +18,7 @@ public interface ITerminalController {
 
     List<Product> getAllProducts();
 
-    void login(String login, String pass);
+    boolean login(String login, String pass);
 
     Bill createBill();
 
