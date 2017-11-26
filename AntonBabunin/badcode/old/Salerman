@@ -1,0 +1,56 @@
+
+Class Salesman:
+    /*
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }*/
+
+    // Salesman create a new billController at ITerminalControllerImpl
+
+
+/*    public void login (Terminal ITerminalControllerImpl) {
+        if (ITerminalControllerImpl != null) {
+            Scanner scanner = new Scanner(System.in);
+            String login = "";
+            do {
+                System.out.println("Enter your login:");
+                login = scanner.nextLine();
+            } while (login.isEmpty());
+            String password = "";
+            do {
+                System.out.println("Enter your password:");
+                password = scanner.nextLine();
+            } while (password.isEmpty());
+
+            if (this.getLogin().equals(login) &&
+            this.getPassword().equals(password)) {
+                ITerminalControllerImpl.login(this);
+            }
+        }
+    }
+
+*/
+
+________________________________________________________________________
+
+Class SalesManCreator
+/*    public static Salesman salesmanCreate() throws IOException {
+        BufferedReader reader =
+        new BufferedReader(new InputStreamReader(System.in));
+        String fullName = "";
+        do {
+            fullName = reader.readLine();
+        } while (fullName.isEmpty());
+        String login = fullName;
+        String password = "";
+        do {
+            password = reader.readLine();
+        } while (password.isEmpty());
+
+        return new Salesman(fullName, login, password);
+    }
+*/

@@ -1,4 +1,4 @@
-package week1;
+package week1.models;
 
 import java.util.Date;
 import java.text.*;
@@ -10,6 +10,7 @@ public class Time {
 
     private String closeTime;
 
+
     public String getCloseTime() {
         return closeTime;
     }
@@ -18,12 +19,12 @@ public class Time {
         this.closeTime = closeTime;
     }
 
+
     public String printTime() {
         Date timeNow = new Date();
-        SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");
+        SimpleDateFormat time = new SimpleDateFormat("'Date: 'yyyy.MM.dd' Time: 'H:mm:ss");
         return (time.format(timeNow));
     }
-
 
 }
 

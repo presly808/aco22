@@ -13,14 +13,14 @@
                 pass
         ua.artcode.market.models.Product
             fields:
-                billId
+                id
                 name
             methods:
                 printFullInfo
 
         Bill
             fields:
-                billId
+                id
                 products[]
                 salesman
                 amountPrice

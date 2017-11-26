@@ -1,4 +1,4 @@
-package week1.model;
+package week1.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
