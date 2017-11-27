@@ -13,10 +13,9 @@ public class MiniMarket implements IMiniMarket {
     }
 
     @Override
-    public boolean startMarket() {
+    public void startMarket() {
 
-        Terminal.runTerminal();
-
-        return true;
+        InterfaceServices.runTerminal();
     }
+
 }

@@ -2,69 +2,58 @@ package ua.artcode.market.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Bill {
 
     private int code;
     //private int[][] products;
-    private ArrayList<ProductBill>  productsBill;
+    private List<ProductBill>  productsBill;
     private int quantityGoods;
     private double amountPrice;
     private SalesMan salesMan;
     public boolean closed;
+    public Date createTime;
     public Date closeTime;
-    final Product[] productList;
+    final List<Product> productsPrice;
 
 
     //public Bill(int code, int countProducts, String salesManName, Product[] productList){
-    public Bill(int code, String salesManName, Product[] productList){
+    public Bill(int code, SalesMan salesMan, List<Product> productsPrice){
 
         this.code = code;
-        //this.products = new int[countProducts][2];
+        this.createTime = new Date();
         this.productsBill = new ArrayList<>();
-        this.salesMan = new SalesMan(salesManName);
-
-        this.productList = productList;
+        this.salesMan = salesMan;
+        this.productsPrice = productsPrice;
     }
 
     public int getCode() {
         return code;
     }
 
-    /*public int[][] getProducts() {
-        return products;
-    }*/
+    public List<ProductBill> getProductsBill() { return productsBill; }
 
-    public ArrayList<ProductBill> getProductsBill() {
-        return productsBill;
+    public void setProductsBill(ProductBill productsBill) { this.productsBill.add(productsBill); }
+
+    public List<Product> getProductsPrice() { return productsPrice; }
+
+    public int getSizeProductsBill(){
+        return this.productsBill.size();
     }
 
-    /*public void setProducts(int s, int c, int num) {
-        this.products[s][c] = num;
-    }*/
-
-    public void setProductsBill(ProductBill productsBill) {
-        this.productsBill.add(productsBill);
+    public int getQuantityGoods(){
+        return this.quantityGoods;
     }
 
     public void setQuantityGoods(int quantityGoods) {
         this.quantityGoods = quantityGoods;
     }
 
-    public int getQuantityGoods(int quantityGoods) {
-        return quantityGoods;
-    }
-
-    public double getAmountPrice(double amountPrice) {
-        return amountPrice;
-    }
+    public double getAmountPrice(){ return this.amountPrice; }
 
     public void setAmountPrice(double amountPrice) {
         this.amountPrice = amountPrice;
-    }
-
-    public Product[] getProductList() {
-        return productList;
     }
 
     public SalesMan getSalesMan() {
@@ -73,13 +62,5 @@ public class Bill {
 
     public void setSalesMan(SalesMan salesMan) {
         this.salesMan = salesMan;
-    }
-
-    public int getQuantityGoods(){
-        return this.quantityGoods;
-    }
-
-    public double getAmountPrice(){
-        return this.amountPrice;
     }
 }

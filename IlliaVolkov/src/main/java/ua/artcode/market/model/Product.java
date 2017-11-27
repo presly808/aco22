@@ -1,5 +1,8 @@
 package ua.artcode.market.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Product {
 
     public int code;
@@ -22,22 +25,25 @@ public class Product {
 
     }
 
-    public static Product[] initProductsList(int countProducts){
+    public static List<Product> initProductsPrice(int countProducts){
 
-        Product[] productsList = new Product[countProducts];
+        List<Product> productsPrice =new  ArrayList<Product>();
 
-        for (int i = 0; i < productsList.length; i++) {
-            productsList[i] = Product.createProduct(i+1, "Goods"+(i+1), Math.rint((Math.random()*10)*100)/100);
+        for (int i = 0; i < countProducts; i++) {
+            productsPrice.add(Product.createProduct(i+1,
+                    "Goods"+(i+1),
+                    Math.rint((Math.random()*10)*100)/100));
         }
 
-        return productsList;
+        return productsPrice;
     }
 
-    public static Product findByCode(Product[] productslist, int productCode) {
+    public static Product findByCode(List<Product> productsPrice, int productCode) {
 
-        for (int i = 0; i < productslist.length; i++) {
-            if (productslist[i].code == productCode) {
-                return productslist[i];
+        for (Product itemProduct: productsPrice) {
+
+            if (itemProduct.code == productCode) {
+                return itemProduct;
             }
         }
 
@@ -47,21 +53,22 @@ public class Product {
         return new Product(0,"", 0);
     }
 
-    public static void printFullInfo(Product[] productslist){
+    public static void printFullInfo(List<Product> productsPrice){
 
-        System.out.println("\n" + fulInfoOfProdukts(productslist));
+        System.out.println("\n" + fulInfoOfProdukts(productsPrice));
     }
 
-    public static String fulInfoOfProdukts(Product[] productslist) {
+    public static String fulInfoOfProdukts(List<Product> productsPrice) {
 
         String textMessage = "";
 
         textMessage += "\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price";
 
-        for (int i = 0; i < productslist.length; i++) {
+        for (Product itemProduct: productsPrice) {
 
-            textMessage += "\n" + productslist[i].code + "\t\t" + productslist[i].name + "\t\t" + productslist[i].price;
-
+            textMessage += "\n" + itemProduct.code +
+                    "\t\t" + itemProduct.name +
+                    "\t\t" + itemProduct.price;
         }
 
         return textMessage+"\n";
