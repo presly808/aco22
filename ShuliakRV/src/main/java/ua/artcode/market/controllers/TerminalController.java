@@ -1,4 +1,4 @@
-package ua.artcode.market.controller;
+package ua.artcode.market.controllers;
 
 import ua.artcode.market.comparators.SalesmenSoldProductsComparator;
 import ua.artcode.market.interfaces.ITerminal;

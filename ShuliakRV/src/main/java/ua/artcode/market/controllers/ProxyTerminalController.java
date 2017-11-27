@@ -1,4 +1,4 @@
-package ua.artcode.market.controller;
+package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
@@ -15,29 +15,42 @@ public class ProxyTerminalController implements ITerminal {
 
     private ITerminal terminalController;
 
+    private Salesman loggedSalesman;
+
+    private boolean isLoggedUser;
+
     public ProxyTerminalController(ITerminal terminalController) {
+
         this.terminalController = terminalController;
     }
 
 
     @Override
-    public Salesman logIn(String login, String password) {
+    public boolean logIn(String login, String password) {
+
         Logger.getInstance().log(String.format("Time : %t  User is logging " +
                         "with login: %s and password: %s",
-                        LocalDateTime.now(), login, password));
-        Salesman salesman = terminalController.logIn(login, password);
+                LocalDateTime.now(), login, password));
 
-        if (salesman!=null) {
+        loggedSalesman = terminalController.logIn(login, password);
+
+        if (loggedSalesman != null) {
+
+            isLoggedUser = true;
+
             Logger.getInstance().log(String.format("Time : %t  User is logged " +
                             "with login: %s and password: %s",
                     LocalDateTime.now(), login, password));
         } else {
+
+            isLoggedUser = false;
+
             Logger.getInstance().log(String.format("Time : %t  User isn't logged " +
                             "with login: %s and password: %s",
                     LocalDateTime.now(), login, password));
         }
 
-        return  salesman;
+        return isLoggedUser;
     }
 
     @Override
@@ -68,7 +81,7 @@ public class ProxyTerminalController implements ITerminal {
                 format("Time : %t  User is trying to add a product",
                         LocalDateTime.now()));
 
-        Bill bill = terminalController.addProduct(billId,product);
+        Bill bill = terminalController.addProduct(billId, product);
 
         if (bill != null) {
             Logger.getInstance().log(String.

@@ -1,10 +1,7 @@
 package ua.artcode.market;
 
-import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.controller.TerminalController;
-import ua.artcode.market.models.*;
-import ua.artcode.market.utils.Utils;
+import ua.artcode.market.controllers.TerminalController;
 
 import static org.junit.Assert.*;
 
