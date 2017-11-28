@@ -125,7 +125,7 @@ public class Bill {
                 str += product.toString();
             }
 
-            str += String.format("Saler: %s; Time: %s; Sum: %.2f .",
+            str += String.format("Saler: %s; Time: %s; Sum: %.2f . \n",
                     salesMan.getFullname(), closeTime.toString(), amountPrice);
 
         } else str = "Чек не закрыт!";
