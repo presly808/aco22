@@ -17,8 +17,6 @@ public class ProxyTerminalController implements ITerminal {
 
     private Salesman loggedSalesman;
 
-    private boolean isLoggedUser;
-
     public ProxyTerminalController(ITerminal terminalController) {
 
         this.terminalController = terminalController;
@@ -26,95 +24,88 @@ public class ProxyTerminalController implements ITerminal {
 
 
     @Override
-    public boolean logIn(String login, String password) {
+    public Salesman logIn(String login, String password) {
 
-        Logger.getInstance().log(String.format("Time : %t  User is logging " +
+        Logger.getInstance().log(String.format("Time : %s  User is logging " +
                         "with login: %s and password: %s",
-                LocalDateTime.now(), login, password));
+                LocalDateTime.now().toString(), login, password));
 
         loggedSalesman = terminalController.logIn(login, password);
 
         if (loggedSalesman != null) {
 
-            isLoggedUser = true;
-
-            Logger.getInstance().log(String.format("Time : %t  User is logged " +
+            Logger.getInstance().log(String.format("Time : %s  User is logged " +
                             "with login: %s and password: %s",
-                    LocalDateTime.now(), login, password));
+                    LocalDateTime.now().toString(), login, password));
         } else {
 
-            isLoggedUser = false;
-
-            Logger.getInstance().log(String.format("Time : %t  User isn't logged " +
+            Logger.getInstance().log(String.format("Time : %s  User isn't logged " +
                             "with login: %s and password: %s",
-                    LocalDateTime.now(), login, password));
+                    LocalDateTime.now().toString(), login, password));
         }
 
-        return isLoggedUser;
+        return loggedSalesman;
     }
 
     @Override
     public Bill createBill(Salesman salesmen) {
         Logger.getInstance().log(String.
-                format("Time : %t  User %s is trying to create a bill",
-                        LocalDateTime.now(), salesmen.getLogin()));
-        Bill bill = terminalController.createBill(salesmen);
+                format("Time : %s  User %s is trying to create a bill",
+                        LocalDateTime.now().toString(), loggedSalesman.getLogin()));
 
-        if (bill != null) {
-            Logger.getInstance().log(String.
-                    format("Time : %t  bill ID: %d is created",
-                            LocalDateTime.now(), bill.getId()));
-        } else {
-            Logger.getInstance().log(String.
-                    format("Time : %t  bill isn't created",
-                            LocalDateTime.now()));
-        }
-
-        return bill;
+        return terminalController.createBill(salesmen);
 
     }
 
     @Override
     public Bill addProduct(int billId, Product product) {
-
         Logger.getInstance().log(String.
-                format("Time : %t  User is trying to add a product",
-                        LocalDateTime.now()));
+                format("Time : %s  User %s is trying to add a product",
+                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
 
-        Bill bill = terminalController.addProduct(billId, product);
-
-        if (bill != null) {
-            Logger.getInstance().log(String.
-                    format("Time : %t  bill ID: %d is created",
-                            LocalDateTime.now(), bill.getId()));
-        } else {
-            Logger.getInstance().log(String.
-                    format("Time : %t  bill isn't created",
-                            LocalDateTime.now()));
-        }
-
-        return null;
+        return terminalController.addProduct(billId, product);
     }
 
     @Override
     public Bill closeAndSaveBill(int billId) {
-        return null;
+
+        Logger.getInstance().log(String.
+                format("Time : %s  User %s is trying to close adn save bill",
+                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+
+        return terminalController.closeAndSaveBill(billId);
     }
 
     @Override
     public List<Salesman> getTopNOfSalesMen(int n) {
-        return null;
+        Logger.getInstance().log(String.
+                format("Time : %s  User %s is trying to get top N of salesmen",
+                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+
+        return terminalController.getTopNOfSalesMen(n);
     }
 
     @Override
     public Statistic doSomeStatisticStuff() {
-        return null;
+
+        Logger.getInstance().log(String.
+                format("Time : %s  User %s is trying to do some statistics stuff",
+                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+
+
+        return terminalController.doSomeStatisticStuff();
     }
 
     @Override
     public List<Bill> filter(List<Salesman> salesmen, List<Product> products,
                              LocalDateTime startTime, LocalDateTime endTime,
                              Comparator<Bill> comparator) {
-        return null;
+
+        Logger.getInstance().log(String.
+                format("Time : %s  User %s is trying to filter some bills",
+                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+
+
+        return terminalController.filter(salesmen,products,startTime,endTime,comparator);
     }
 }
