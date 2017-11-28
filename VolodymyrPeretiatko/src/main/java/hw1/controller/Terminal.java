@@ -11,7 +11,7 @@ public class Terminal implements ITerminal {
     private IAppDB appDB = new IAppDBImpl();
     private Salesman currentUser;
 
-
+    @Override
     public List<Salesman> getSalesmen() {
         List<DBItem> items = appDB.getAll(Salesman.class);
         List<Salesman> salesmen = new ArrayList<>(items.size());
@@ -21,6 +21,7 @@ public class Terminal implements ITerminal {
         return salesmen;
     }
 
+    @Override
     public List<Product> getProducts() {
         List<DBItem> items = appDB.getAll(Product.class);
         List<Product> products = new ArrayList<>(items.size());
@@ -30,6 +31,7 @@ public class Terminal implements ITerminal {
         return products;
     }
 
+    @Override
     public List<Bill> getBills() {
         List<DBItem> items = appDB.getAll(Bill.class);
         List<Bill> bills = new ArrayList<>(items.size());
@@ -39,11 +41,12 @@ public class Terminal implements ITerminal {
         return bills;
     }
 
-
+    @Override
     public boolean addSalesman(Salesman salesman){
         return appDB.save(salesman) != null;
     }
 
+    @Override
     public boolean login(String name, String pass){
 
         List<DBItem> salesmen = appDB.getAll(Salesman.class);
@@ -75,14 +78,17 @@ public class Terminal implements ITerminal {
         return appDB.save(bill) != null;
     }
 
+    @Override
     public boolean addProduct(Product p) {
         return appDB.save(p) != null;
     }
 
+    @Override
     public Bill findBillById(int id){
         return (Bill) appDB.findById(id, Bill.class);
     }
 
+    @Override
     public Salesman getTopNofSalesMan(){
 
         Map<Salesman, Double> sales = getSalesAmountBySalesman();
@@ -107,6 +113,7 @@ public class Terminal implements ITerminal {
         return topSalesman;
     }
 
+    @Override
     public Map<Salesman, Double> getSalesAmountBySalesman(){
 
         HashMap<Salesman, Double> sales = new HashMap<>();
@@ -123,6 +130,7 @@ public class Terminal implements ITerminal {
         return sales;
     }
 
+    @Override
     public ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products,
                                   Date startDate, Date endDate, Comparator<Bill> comparator){
 

@@ -4,14 +4,14 @@ import hw1.model.Bill;
 import hw1.model.Product;
 import hw1.model.Salesman;
 import hw1.utils.ILogger;
-import hw1.utils.LogSOut;
+import hw1.utils.LogerPrntln;
 
 import java.util.*;
 
 public class ProxyLoggerTerminal implements ITerminal {
 
     private ITerminal realTerminal;
-    private ILogger logger = LogSOut.getInstance();
+    private ILogger logger = LogerPrntln.getInstance();
 
     public ProxyLoggerTerminal(){
         realTerminal = new Terminal();

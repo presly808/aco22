@@ -2,18 +2,18 @@ package hw1.utils;
 
 import java.util.Date;
 
-public class LogSOut implements ILogger {
+public class LogerPrntln implements ILogger {
 
-    private static LogSOut uniqueInstance;
+    private static LogerPrntln uniqueInstance;
 
-    public static synchronized LogSOut getInstance(){
+    public static synchronized LogerPrntln getInstance(){
         if (uniqueInstance == null){
-            uniqueInstance = new LogSOut();
+            uniqueInstance = new LogerPrntln();
         }
         return uniqueInstance;
     }
 
-    private LogSOut(){}
+    private LogerPrntln(){}
 
     private void log(String action, String msg){
 
