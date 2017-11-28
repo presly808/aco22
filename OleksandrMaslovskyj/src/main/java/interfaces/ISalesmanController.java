@@ -9,6 +9,6 @@ public interface ISalesmanController {
 
     int calculateSalaryForWorker(Salesman salesman);
 
-    int calculateDepartmentCostsToSalary(List<Salesman> salesmanList);
+    double calculateDepartmentCostsToSalary(List<Salesman> salesmanList);
 
 }

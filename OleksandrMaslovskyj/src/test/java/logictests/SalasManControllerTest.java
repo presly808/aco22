@@ -27,7 +27,7 @@ public class SalasManControllerTest {
     public void prepareData(){
         list = new ArrayList<>();
         this.list = generateSalesManList
-                (list, SALASMAN_QUANTITY);
+                (SALASMAN_QUANTITY);
     }
 
     @Test
@@ -42,11 +42,17 @@ public class SalasManControllerTest {
 
     @Test
     public void calculateDepartmentCostsToSalary() throws Exception {
+        ISalesmanController iSalesmanController =
+                                    new SalesmanController();
+        List<Salesman> salesmanList = generateSalesManList(SALASMAN_QUANTITY);
 
+        double calculatedDepartmentCost = iSalesmanController.calculateDepartmentCostsToSalary(salesmanList);
+        Assert.assertNotNull(calculatedDepartmentCost);
+        Assert.assertTrue(calculatedDepartmentCost == calculateCost(salesmanList));
     }
 
-    private List<Salesman> generateSalesManList(List<Salesman> list,
-                                                int quantity){
+    private List<Salesman> generateSalesManList(int quantity){
+        List<Salesman> list = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             Salesman salesman = new Salesman(
                     StringGenerator.generateName(),
@@ -67,6 +73,10 @@ public class SalasManControllerTest {
             billList.add(bill);
         }
         return billList;
+    }
+
+    private double calculateCost(List<Salesman> salesmanList){
+        return salesmanList.stream().mapToDouble(Salesman::getSalary).sum();
     }
 
 }

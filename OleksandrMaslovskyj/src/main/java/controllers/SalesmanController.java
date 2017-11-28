@@ -12,7 +12,7 @@ public class SalesmanController implements ISalesmanController {
         return 0;
     }
 
-    public int calculateDepartmentCostsToSalary(List<Salesman> salesmanList) {
+    public double calculateDepartmentCostsToSalary(List<Salesman> salesmanList) {
         return 0;
     }
 }
