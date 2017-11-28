@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ISalesmanController {
 
-    int calculateSalaryForWorker(Salesman salesman);
+    double calculateSalaryForWorker(Salesman salesman);
 
     double calculateDepartmentCostsToSalary(List<Salesman> salesmanList);
 

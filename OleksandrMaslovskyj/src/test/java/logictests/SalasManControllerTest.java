@@ -14,8 +14,6 @@ import utils.StringGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 
 public class SalasManControllerTest {
 
@@ -35,7 +33,7 @@ public class SalasManControllerTest {
         ISalesmanController iSalesmanController =
                                     new SalesmanController();
         Salesman salesman = list.get(SALESMAN_INDEX);
-        int salary = iSalesmanController.
+        double salary = iSalesmanController.
                                 calculateSalaryForWorker(salesman);
         Assert.assertTrue(salesman.getSalary() == salary);
     }
@@ -46,7 +44,8 @@ public class SalasManControllerTest {
                                     new SalesmanController();
         List<Salesman> salesmanList = generateSalesManList(SALASMAN_QUANTITY);
 
-        double calculatedDepartmentCost = iSalesmanController.calculateDepartmentCostsToSalary(salesmanList);
+        double calculatedDepartmentCost =
+                iSalesmanController.calculateDepartmentCostsToSalary(salesmanList);
         Assert.assertNotNull(calculatedDepartmentCost);
         Assert.assertTrue(calculatedDepartmentCost == calculateCost(salesmanList));
     }

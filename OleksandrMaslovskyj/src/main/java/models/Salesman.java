@@ -7,7 +7,7 @@ public class Salesman implements Comparable<Salesman>{
     private String fullname;
     private String login;
     private String pass;
-    private int salary;
+    private double salary;
 
     private List<Salesman> salesmanList;
     private List<Bill> bills;
@@ -30,18 +30,6 @@ public class Salesman implements Comparable<Salesman>{
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
     public String toString() {
         return "Salesman{" +
                 "fullname='" + fullname + '\'' +
@@ -50,7 +38,7 @@ public class Salesman implements Comparable<Salesman>{
                 '}';
     }
 
-    public int getSalary() {
+    public double getSalary() {
         return salary;
     }
 
@@ -58,7 +46,7 @@ public class Salesman implements Comparable<Salesman>{
         return salesmanList;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
