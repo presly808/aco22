@@ -1,150 +1,95 @@
 package week1.model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bill {
 
-    private static final int DEFAULT_SIZE_OF_LIST = 20;
-
-    private Product[] billList;
-    private int actualSizeOfList = 0;
+    private List<Product> productList;
 
     private int id;
 
-    private double billCost = 0;
-    private Time time;
+    private double amountPrice;
+
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
+
+    private boolean isClosed;
+
     private Seller seller;
 
-    private boolean isClosed = false;
+    private int nextProductId;
 
     public Bill() {
-    }
-
-    public Bill(Seller seller, Time time) {
-        this.billList = new Product[DEFAULT_SIZE_OF_LIST];
-        this.time = time;
-        this.seller = seller;
-        isClosed = true;
-    }
-
-    public Bill(Seller seller) {
-        this.billList = new Product[DEFAULT_SIZE_OF_LIST];
-        this.time = new Time(00, 00, 00);
-        this.seller = seller;
-    }
-
-
-    public void calculateBill() {
-
-
-        if (billList != null && actualSizeOfList > 0) {
-
-            for (int i = 0; i < actualSizeOfList; i++) {
-                billCost += billList[i].getPrice();
-            }
-
-
-        }
-    }
-
-    public boolean isClosed() {
-        return isClosed;
-    }
-
-    public Product[] getBillList() {
-        return billList;
-    }
-
-    public double getBillCost() {
-        return billCost;
-    }
-
-    public Seller getSeller() {
-        return seller;
+        this.productList = new ArrayList<>();
+        this.openTime = LocalDateTime.now();
     }
 
     public int getId() {
         return id;
     }
 
-    public Time getTime() {
-        return time;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public static int getDefaultSizeOfList() {
-        return DEFAULT_SIZE_OF_LIST;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public int getActualSizeOfList() {
-        return actualSizeOfList;
+    public double getAmountPrice() {
+        return amountPrice;
     }
 
-    public void setActualSizeOfList(int actualSizeOfList) {
-        this.actualSizeOfList = actualSizeOfList;
+    public void setAmountPrice(double amountPrice) {
+        this.amountPrice = amountPrice;
+    }
+
+    public LocalDateTime getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(LocalDateTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public void setCloseTime(LocalDateTime closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
     }
 
     public void setClosed(boolean closed) {
         isClosed = closed;
     }
 
-    public void setTime(Time time) {
-        if (!isClosed) {
-            this.time = time;
-            this.isClosed = true;
-        } else System.out.println("Sorry, bill is closed!");
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Seller getSeller() {
+        return seller;
     }
 
     public void setSeller(Seller seller) {
-        if (!isClosed) {
-            this.seller = seller;
-        } else System.out.println("Sorry, bill is closed!");
+        this.seller = seller;
     }
 
-    public boolean addProduct(Product product) {
-
-        if (!isClosed) {
-            if (product == null) {
-                System.out.println("ENTER REAL PRODUCT!");
-                return false;
-            } else {
-
-                billList[actualSizeOfList] = product;
-                actualSizeOfList++;
-                return true;
-            }
-        } else  {
-            System.out.println("Sorry, bill is closed!");
-            return false;
-        }
+    public int getNextProductId() {
+        return nextProductId;
     }
 
-    public String showInfo() {
-
-        String resultString = "***BILL***\n";
-
-        for (int i = 0; i < actualSizeOfList; i++) {
-            resultString += billList[i].showInfo() + "\n";
-        }
-
-        resultString += time.toString() + "\n" + seller.toString();
-
-        return isClosed ? resultString + "\n***BILL IS CLOSED***" : resultString + "\n***BILL IS OPENED***";
+    public void setNextProductId(int nextProductId) {
+        this.nextProductId = nextProductId;
     }
 
-    public boolean closeBill(Time closeTime) {
-
-        if (closeTime == null ||
-                (closeTime.getHours() < 0 || closeTime.getHours() > 24)
-                || (closeTime.getMinutes() < 0 || closeTime.getMinutes() > 60)
-                || (closeTime.getSeconds() < 0 || closeTime.getSeconds() > 60)) {
-            System.out.println("Time is invalid!");
-            return false;
-        } else {
-            time = closeTime;
-            isClosed = true;
-            return true;
-        }
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", productList=" + productList +
+                ", amountPrice=" + amountPrice +
+                ", openTime=" + openTime +
+                ", closeTime=" + closeTime +
+                '}';
     }
 }

@@ -1,16 +1,13 @@
 package ua.artcode.market.models;
 
+public class Salesman implements Comparable<Salesman> {
 
-
-public class Salesman{
     private String fullName;
     private String login;
     private String password;
+    private boolean isConnected;
 
     public Salesman() {
-        this.fullName = fullName;
-        this.login = login;
-        this.password = password;
     }
 
     public Salesman(String fullName, String login, String password) {
@@ -23,37 +20,77 @@ public class Salesman{
         return fullName;
     }
 
-//    public void setFullName(String fullName) {
-//        this.fullName = fullName;
-//    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-//    public String getLogin() {
-//        return login;
-//    }
+    public String getLogin() {
+        return login;
+    }
 
-//    public void setLogin(String login) {
-//        this.login = login;
-//    }
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-//    public String getPassword() {
-//        return password;
-//    }
+    public String getPassword() {
+        return password;
+    }
 
-//    public void setPassword(String password) {
-//        this.password = password;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setIsConnected(boolean isConnected) {
+        this.isConnected = isConnected;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+
+        Salesman salesman = (Salesman) object;
+
+        return login != null ? login.equals(salesman.login) :
+                salesman.login == null;
+    }
+
+//    @Override
+//    public int compare(Salesman o1, Salesman o2) {
+//        return o1.getFullName().compareTo(o2.getFullName());
+//    }
+//
+//    @Override
+//    public Comparator<Salesman> thenComparing(Comparator<?
+//          super Salesman> other) {
+//        return new Comparator<Salesman>() {
+//            @Override
+//            public int compare(Salesman o1, Salesman o2) {
+//                return o1.getLogin().compareTo(o2.getLogin());
+//            }
+//        };
 //    }
 
     @Override
-    public boolean equals (Object object) {
-        return object != null && object instanceof Salesman &&
-                this.getFullName().equals(((Salesman) object).getFullName());
+    public int hashCode() {
+        return 0;
     }
 
     @Override
     public String toString() {
         return "Salesman{" +
-                "fullName='" + this.getFullName() + '\'' +
+                "fullName='" + fullName + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Salesman o) {
+        return this.getLogin().compareTo(o.getLogin());
+    }
 }
-// ----------------------------------------------------------------------------

@@ -1,50 +1,49 @@
 package ua.artcode.market.models;
 
-import ua.artcode.market.utils.Utils;
-
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bill {
+public class Bill implements Comparable<Bill> {
 
-    private int billId;
-    private int terminalId;
-    private Map<Product, Integer> products;
+
+    private int id;
+//    private int terminalId;
+    private Map<Product, Integer> productsMap;
     private Salesman salesman;
     private double amountPrice;
 
-    private String openTime;
-    private String closeTime;
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
 
     public Bill() {
-        this.billId = Utils.generateID();
-        this.products = new HashMap<Product, Integer>();
-        this.openTime = Utils.getCurrentTime();
+        this.productsMap = new HashMap<>();
+        this.openTime = LocalDateTime.now();
     }
 
-    public int getBillId() {
-        return billId;
+    public int getId() {
+        return id;
     }
 
-    public void setBillId(int billId) {
-        this.billId = billId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getTerminalId() {
-        return terminalId;
+//    public int getTerminalId() {
+//        return terminalId;
+//    }
+//
+//    public void setTerminalId(int terminalId) {
+//        this.terminalId = terminalId;
+//    }
+
+    public Map<Product, Integer> getProductsMap() {
+        return productsMap;
     }
 
-    public void setTerminalId(int terminalId) {
-        this.terminalId = terminalId;
-    }
-
-    public Map<Product, Integer> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Map<Product, Integer> products) {
-        this.products = products;
-    }
+//    public void setProductsMap(Map<Product, Integer> productsMap) {
+//        this.productsMap = productsMap;
+//    }
 
     public Salesman getSalesman() {
         return salesman;
@@ -62,46 +61,71 @@ public class Bill {
         this.amountPrice = amountPrice;
     }
 
-    public String getOpenTime() {
+    public LocalDateTime getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(String openTime) {
+    public void setOpenTime(LocalDateTime openTime) {
         this.openTime = openTime;
     }
 
-    public String getCloseTime() {
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    public void setCloseTime(LocalDateTime closeTime) {
         this.closeTime = closeTime;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+
+        Bill bill = (Bill) object;
+
+        return id == bill.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @Override
     public String toString() {
         return "Bill{" +
-                "billId=" + billId +
-                ", products=" + products +
+                "billId=" + id +
+//                ", terminalId=" + terminalId +
+                ", productsMap=" + productsMap +
                 ", salesman=" + salesman +
                 ", amountPrice=" + amountPrice +
-                ", openTime='" + openTime + '\'' +
-                ", closeTime='" + closeTime + '\'' +
+                ", openTime=" + openTime +
+                ", closeTime=" + closeTime +
                 '}';
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null) return false;
-
-        if (object instanceof Bill) {
-            Bill bill = (Bill) object;
-            if (this.getBillId() == bill.getBillId() &&
-                    this.getTerminalId() == bill.getTerminalId()) {
-                return true;
-            }
-        }
-
-        return false;
+    public int compareTo(Bill o) {
+        if (o == null) return 1;
+        if (((o.getAmountPrice()-this.getAmountPrice()) * 100) > 0) return -1;
+        else if (((o.getAmountPrice()-this.getAmountPrice()) * 100) == 0)
+            return 0;
+        else return 1;
     }
+//
+//    @Override
+//    public int compare(Bill o1, Bill o2) {
+//        return (int)((o1.getAmountPrice() - o2.getAmountPrice())*100);
+//    }
+//
+//    @Override
+//    public Comparator<Bill> thenComparing(Comparator<? super Bill> other) {
+//        return new Comparator<Bill>() {
+//            @Override
+//            public int compare(Bill o1, Bill o2) {
+//                return o1.getCloseTime().compareTo(o2.getCloseTime());
+//            }
+//        };
+//    }
 }

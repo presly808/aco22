@@ -2,31 +2,20 @@ package week1.model;
 
 public class Seller {
 
-    private String name;
-
     private String login;
     private String password;
 
-    private int age;
+    private String fullName;
 
     private int soldProducts;
 
     public Seller() {
     }
 
-    public Seller(String name, int age, String login, String password) {
-        this.name = name;
-        this.age = age;
+    public Seller(String login, String password, String fullName) {
         this.login = login;
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
+        this.fullName = fullName;
     }
 
     public String getLogin() {
@@ -35,6 +24,10 @@ public class Seller {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public int getSoldProducts() {
@@ -47,6 +40,23 @@ public class Seller {
 
     @Override
     public String toString() {
-        return "Seller: " + name + ", age: " + age + ", sold: " + soldProducts;
+        return "Seller{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", soldProducts=" + soldProducts +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Seller seller = (Seller) o;
+
+        if (login != null ? !login.equals(seller.login) : seller.login != null) return false;
+        if (password != null ? !password.equals(seller.password) : seller.password != null) return false;
+        return fullName != null ? fullName.equals(seller.fullName) : seller.fullName == null;
     }
 }
