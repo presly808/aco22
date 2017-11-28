@@ -1,8 +1,7 @@
-package ua.artcode.market.model;
+package ua.artcode.market.models;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ua.artcode.market.model.Product;
 
 /**
  * Created by serhii on 07.11.17.
