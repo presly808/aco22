@@ -31,10 +31,9 @@ public class SalasManControllerTest {
         list = new ArrayList<>();
         this.list = generateSalesManList
                 (SALASMAN_QUANTITY);
-
          iSalesmanController = new SalesmanController();
          salesman = new Salesman(StringGenerator.generateName(),
-                                    StringGenerator.generateName());
+                                                StringGenerator.generateName());
     }
 
     @Test
