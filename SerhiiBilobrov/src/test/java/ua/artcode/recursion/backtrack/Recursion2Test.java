@@ -1,6 +1,5 @@
 package ua.artcode.recursion.backtrack;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,7 +36,7 @@ public class Recursion2Test {
 
         List<Integer> list= Arrays.asList(10,1,2);
 
-        Recursion2.doubling(list);
+        assertNotNull(Recursion2.doubling(list));
     }
 
 }
