@@ -34,7 +34,7 @@ public class SalasManControllerTest {
 
          iSalesmanController = new SalesmanController();
          salesman = new Salesman(StringGenerator.generateName(),
-                StringGenerator.generateName());
+                                    StringGenerator.generateName());
     }
 
     @Test
@@ -47,8 +47,6 @@ public class SalasManControllerTest {
 
     @Test
     public void calculateDepartmentCostsToSalary() throws Exception {
-        ISalesmanController iSalesmanController =
-                                    new SalesmanController();
         List<Salesman> salesmanList = generateSalesManList(SALASMAN_QUANTITY);
 
         double calculatedDepartmentCost =

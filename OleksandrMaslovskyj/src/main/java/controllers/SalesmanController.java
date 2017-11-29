@@ -5,7 +5,6 @@ import models.Bill;
 import models.Product;
 import models.Salesman;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SalesmanController implements ISalesmanController {
