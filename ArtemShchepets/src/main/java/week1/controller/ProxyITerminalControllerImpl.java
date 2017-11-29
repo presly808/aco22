@@ -15,14 +15,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
 
     private ITerminalController terminalController;
 
-    private static ProxyITerminalControllerImpl instance = new ProxyITerminalControllerImpl();
-
-    private ProxyITerminalControllerImpl() {
-        this.terminalController = ITerminalControllerFactory.create();
-    }
-
-    public static ProxyITerminalControllerImpl getInstance() {
-        return instance;
+    public ProxyITerminalControllerImpl(ITerminalController terminalController) {
+        this.terminalController = terminalController;
     }
 
     @Override

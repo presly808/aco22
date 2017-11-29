@@ -18,7 +18,7 @@ public class ProxyITerminalControllerImplTest {
 
     @Before
     public void setUp() throws Exception {
-        terminalController = ProxyITerminalControllerImpl.getInstance();
+        terminalController = new ProxyITerminalControllerImpl(ITerminalControllerFactory.create());
     }
 
     @After

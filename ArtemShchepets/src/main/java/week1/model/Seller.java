@@ -1,5 +1,8 @@
 package week1.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Seller {
 
     private String login;
@@ -9,13 +12,28 @@ public class Seller {
 
     private int soldProducts;
 
+    private double salary;
+
+    private List<Seller> subsellers;
+
+    private List<Bill> bills;
+
     public Seller() {
+        this.subsellers = new ArrayList<>();
     }
 
     public Seller(String login, String password, String fullName) {
         this.login = login;
         this.password = password;
         this.fullName = fullName;
+    }
+
+    public Seller(String login, String password, String fullName, List<Bill> bills) {
+        this.login = login;
+        this.password = password;
+        this.fullName = fullName;
+        this.bills = bills;
+        subsellers = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -36,6 +54,34 @@ public class Seller {
 
     public void setSoldProducts(int soldProducts) {
         this.soldProducts = soldProducts;
+    }
+
+    public List<Seller> getSubsellers() {
+        return subsellers;
+    }
+
+    public void setSubsellers(List<Seller> subsellers) {
+        this.subsellers = subsellers;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public void addSubSeller(Seller subSeller){
+        subsellers.add(subSeller);
     }
 
     @Override
