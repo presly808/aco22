@@ -10,10 +10,6 @@ public class SellersController {
     private static final double PERCENT_FROM_BILL = 0.2;
     private static final double PERCENT_FROM_SUBSELLER = 0.3;
 
-
-    public SellersController() {
-    }
-
     public double calculateAllSellerSalary( Seller seller) {
 
         if (seller == null) {

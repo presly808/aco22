@@ -5,9 +5,6 @@ public class IncomeExpenses {
     private double income;
     private double expenses;
 
-    public IncomeExpenses() {
-    }
-
     public double getIncome() {
         return income;
     }
