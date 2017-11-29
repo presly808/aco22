@@ -1,5 +1,6 @@
 package ua.artcode.recursion.backtrack;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,6 +30,14 @@ public class Recursion2Test {
         assertTrue(res.containsAll(expected));
 
 
+    }
+
+    @Test
+    public void verificationForTravis() throws Exception {
+
+        List<Integer> list= Arrays.asList(10,1,2);
+
+        Recursion2.doubling(list);
     }
 
 }
