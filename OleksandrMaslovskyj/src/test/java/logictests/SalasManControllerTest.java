@@ -29,8 +29,7 @@ public class SalasManControllerTest {
     @Before
     public void prepareData(){
         list = new ArrayList<>();
-        this.list = generateSalesManList
-                (SALASMAN_QUANTITY);
+        this.list = generateSalesManList(SALASMAN_QUANTITY);
          iSalesmanController = new SalesmanController();
          salesman = new Salesman(StringGenerator.generateName(),
                                                 StringGenerator.generateName());
