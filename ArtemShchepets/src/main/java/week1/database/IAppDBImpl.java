@@ -1,6 +1,5 @@
 package week1.database;
 
-import week1.interfaces.IAppDB;
 import week1.model.Bill;
 import week1.model.Seller;
 
@@ -15,8 +14,6 @@ public class IAppDBImpl implements IAppDB {
 
     private int billNextId;
 
-    private int currentSeller = -1;
-
     private List<Bill> bills;
     private List<Seller> sellers;
 
@@ -24,17 +21,6 @@ public class IAppDBImpl implements IAppDB {
 
         this.bills = new ArrayList<>();
         this.sellers = new ArrayList<>();
-
-        // I will delete it when connect some kind of real db to the project
-        // for now Terminal should have some sellers in db to work correctly
-        sellers.add(new Seller(
-                "worker", "password", "Nadya Horoshun"));
-        sellers.add(new Seller(
-                "worker123", "password11", "Vasya Noob"));
-        sellers.add(new Seller(
-                "worker22", "password432", "Annita Volosova"));
-        sellers.add(new Seller(
-                "worker01", "password1111", "Vova Split"));
 
         logger.setLevel(Level.OFF);
     }
@@ -52,16 +38,6 @@ public class IAppDBImpl implements IAppDB {
     @Override
     public List<Seller> getAllSellers() {
         return sellers;
-    }
-
-    @Override
-    public int getCurrentSellerId() {
-        return this.currentSeller;
-    }
-
-    @Override
-    public void setCurrentSeller(int currentSellerId) {
-        this.currentSeller = currentSellerId;
     }
 
     @Override

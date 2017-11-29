@@ -1,5 +1,7 @@
 package week1.utils;
 
+import week1.database.IAppDB;
+import week1.database.IAppDBImpl;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
@@ -8,6 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitUtils {
+
+    public static IAppDB initSellerDb() {
+
+        IAppDB db = new IAppDBImpl();
+
+        db.getAllSellers().add(new Seller(
+                "worker", "password", "Nadya Horoshun"));
+        db.getAllSellers().add(new Seller(
+                "worker123", "password11", "Vasya Noob"));
+        db.getAllSellers().add(new Seller(
+                "worker22", "password432", "Annita Volosova"));
+        db.getAllSellers().add(new Seller(
+                "worker01", "password1111", "Vova Split"));
+
+        return db;
+    }
 
     public static Seller createDepartment() {
 
@@ -52,7 +70,7 @@ public class InitUtils {
 
     private static Bill generateSimpleBill() {
 
-        Bill bill= new Bill();
+        Bill bill = new Bill();
         Product testProduct = new Product("testProduct", 1.00);
 
         for (int i = 0; i < 5; i++) {

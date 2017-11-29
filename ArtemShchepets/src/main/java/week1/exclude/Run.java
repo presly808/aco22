@@ -1,7 +1,7 @@
 package week1.exclude;
 
 import week1.controller.ITerminalControllerFactory;
-import week1.interfaces.ITerminalController;
+import week1.controller.ITerminalController;
 import week1.view.ConsoleView;
 
 public class Run {

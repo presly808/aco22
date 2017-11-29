@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import week1.comparators.CreationDateComparator;
-import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 

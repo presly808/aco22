@@ -1,10 +1,9 @@
 package week1.controller;
 
-import week1.interfaces.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.SalesStatistic;
 import week1.model.Seller;
-import week1.model.Statistic;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -41,6 +40,16 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
         System.out.println("[" + LocalTime.now() + "]: User is trying to add a product.");
 
         return terminalController.addProduct(billId, product);
+    }
+
+    @Override
+    public int getCurrentSellerId() {
+        return terminalController.getCurrentSellerId();
+    }
+
+    @Override
+    public void setCurrentSeller(int currentSellerId) {
+        terminalController.setCurrentSeller(currentSellerId);
     }
 
     @Override
@@ -81,7 +90,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Statistic doSomeStatisticStuff() {
+    public SalesStatistic doSomeStatisticStuff() {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to get some statistic.");
 
