@@ -1,14 +1,15 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.IAppDb;
-import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.*;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.utils.Generator;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static ua.artcode.market.models.BillComparator.billComparator;
 
 public class IAppDbImpl implements IAppDb {
 
@@ -16,12 +17,17 @@ public class IAppDbImpl implements IAppDb {
     private int productNextId;
 
     private List<Bill> bills;
+    private List<Employee> employeeList;
     private Map<Product,Integer> products;
 
 
     public IAppDbImpl() {
         this.bills = new ArrayList<>();
         this.products = Generator.randomProducts(0);
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 
     @Override
@@ -35,8 +41,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Map<Product, Integer> getAllProducts() {
-        return products;
+    public List<Employee> getEmployee() {
+        return null;
     }
 
     @Override
@@ -101,30 +107,15 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login,
-                                   String password) throws IOException {
-        return null;
+    public Employee createSalesman(String fullName, String login,
+                                   String password) {
+        return new Salesman();
     }
 
     @Override
-    public Salesman login(String login, String password) throws IOException {
-        return null;
-    }
-
-    @Override
-    public Salesman logout(Salesman salesman) {
-        return null;
-    }
-
-    @Override
-    public Salesman findSalesmanByLogin(String login) {
-        return null;
-    }
-
-    @Override
-    public List<Bill> filter(Salesman salesman, Product product,
-                            LocalDateTime startDate, LocalDateTime endDate,
-                            Comparator<Bill> billComparator) {
+    public List<Bill> filter(Employee salesman, Product product,
+                             LocalDateTime startDate, LocalDateTime endDate,
+                             Comparator<Bill> billComparator) {
         if (getBills() == null) return null;
 
         List<Bill> filtered = new ArrayList<>();
@@ -167,7 +158,7 @@ public class IAppDbImpl implements IAppDb {
     }
 
     private List<Bill> addToListBySeller (List<Bill> listBills,
-                                          Salesman salesman) {
+                                          Employee salesman) {
         List<Bill> list = new ArrayList<>();
 
         if (salesman == null) return listBills;
@@ -214,5 +205,51 @@ public class IAppDbImpl implements IAppDb {
         return list;
     }
 
+    @Override
+    public double aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
+                               LocalDateTime endDate) {
+        double summ = 0.0;
+        if (bills == null)
+            return summ;
+        return aggrAmPrice(filter(salesman,null, startDate, endDate, null));
+    }
 
+    private double aggrAmPrice(List<Bill> filteredList){
+        int summ = 0;
+        if (filteredList == null || filteredList.isEmpty()) return summ;
+        for (Bill bill : filteredList)
+            summ += bill.getAmountPrice();
+        return summ;
+
+    }
+
+    @Override
+    public double averageAmountPrice(Salesman salesman, LocalDateTime startDate,
+                                     LocalDateTime endDate) {
+        List<Bill> filteredList = filter(salesman,null, startDate, endDate, null);
+        if (filteredList == null || filteredList.isEmpty())
+            return 0.0;
+        return  aggrAmPrice(filteredList) / filteredList.size();
+    }
+
+    @Override
+    public Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
+                               LocalDateTime endDate) {
+
+        List<Bill> filtered = filter(salesman, null, startDate, endDate,
+                billComparator);
+        if (filtered == null || filtered.isEmpty())
+            return null;
+        return filtered.get(0);
+    }
+
+    @Override
+    public Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
+                               LocalDateTime endDate) {
+        List<Bill> filtered = filter(salesman, null, startDate, endDate,
+                billComparator);
+        if (filtered == null || filtered.isEmpty())
+            return null;
+        return filtered.get(filtered.size() - 1);
+    }
 }

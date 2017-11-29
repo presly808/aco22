@@ -1,12 +1,12 @@
 package ua.artcode.market.utils;
 
+import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
+//import ua.artcode.market.models.money.Salary;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Generator {
     public static Product createProduct() {
@@ -42,8 +42,8 @@ public class Generator {
         return products;
     }
 
-    public static List<Salesman> generateSalesmanList(int size) {
-        List<Salesman> salesmanList = new ArrayList<>();
+    public static List<Employee> generateSalesmanList(int size) {
+        List<Employee> salesmanList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Salesman salesman = Generator.createRandomSalesman();
             salesmanList.add(salesman);
@@ -56,7 +56,12 @@ public class Generator {
         salesman.setFullName(generateName(10));
         salesman.setLogin(generateName(5));
         salesman.setPassword(generateName(6));
+        salesman.setSalary(new Money((int)(Math.random()*1000), (int)(Math.random()*99)));
         return salesman;
+    }
+
+    public static List<Employee> CreateSubordinateList() {
+        return new ArrayList<Employee>();
     }
 
     /*public static Terminal createTerminal() {

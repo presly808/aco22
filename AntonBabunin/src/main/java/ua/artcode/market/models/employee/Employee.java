@@ -1,19 +1,36 @@
-package ua.artcode.market.models;
+package ua.artcode.market.models.employee;
 
-public class Salesman implements Comparable<Salesman> {
+import ua.artcode.market.models.money.Money;
 
+import java.util.List;
+
+public abstract class Employee implements Comparable<Salesman> {
     private String fullName;
     private String login;
     private String password;
     private boolean isConnected;
+    private Money salary;
 
-    public Salesman() {
+
+    public Employee() {
     }
 
-    public Salesman(String fullName, String login, String password) {
+    public Employee(String fullName, String login, String password) {
         this.fullName = fullName;
         this.login = login;
         this.password = password;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public Money getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Money salary) {
+        this.salary = salary;
     }
 
     public String getFullName() {
@@ -48,32 +65,8 @@ public class Salesman implements Comparable<Salesman> {
         this.isConnected = isConnected;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-
-        Salesman salesman = (Salesman) object;
-
-        return login != null ? login.equals(salesman.login) :
-                salesman.login == null;
-    }
-
-//    @Override
-//    public int compare(Salesman o1, Salesman o2) {
-//        return o1.getFullName().compareTo(o2.getFullName());
-//    }
-//
-//    @Override
-//    public Comparator<Salesman> thenComparing(Comparator<?
-//          super Salesman> other) {
-//        return new Comparator<Salesman>() {
-//            @Override
-//            public int compare(Salesman o1, Salesman o2) {
-//                return o1.getLogin().compareTo(o2.getLogin());
-//            }
-//        };
-//    }
+    public abstract void setSubordinateList(List<Employee> subordinateList);
+    public abstract List getSubordinateList();
 
     @Override
     public int hashCode() {
@@ -82,7 +75,7 @@ public class Salesman implements Comparable<Salesman> {
 
     @Override
     public String toString() {
-        return "Salesman{" +
+        return "Employee{" +
                 "fullName='" + fullName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

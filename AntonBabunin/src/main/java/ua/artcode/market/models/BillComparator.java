@@ -7,6 +7,7 @@ import java.util.Comparator;
 public class BillComparator implements Comparator<Bill> {
 
     public static BillComparator billComparator = new BillComparator();
+
     public static BillComparator other = new BillComparator();
 
     @Override
@@ -26,4 +27,3 @@ public class BillComparator implements Comparator<Bill> {
 
 
 }
-//return (int)((this.getAmountPrice() - o.getAmountPrice())*100);

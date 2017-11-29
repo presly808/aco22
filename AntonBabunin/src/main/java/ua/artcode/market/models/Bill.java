@@ -1,5 +1,8 @@
 package ua.artcode.market.models;
 
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +13,7 @@ public class Bill implements Comparable<Bill> {
     private int id;
 //    private int terminalId;
     private Map<Product, Integer> productsMap;
-    private Salesman salesman;
+    private Employee salesman;
     private double amountPrice;
 
     private LocalDateTime openTime;
@@ -45,11 +48,11 @@ public class Bill implements Comparable<Bill> {
 //        this.productsMap = productsMap;
 //    }
 
-    public Salesman getSalesman() {
+    public Employee getSalesman() {
         return salesman;
     }
 
-    public void setSalesman(Salesman salesman) {
+    public void setSalesman(Employee salesman) {
         this.salesman = salesman;
     }
 
