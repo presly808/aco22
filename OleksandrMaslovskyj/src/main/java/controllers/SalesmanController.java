@@ -5,13 +5,14 @@ import models.Bill;
 import models.Product;
 import models.Salesman;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesmanController implements ISalesmanController {
 
-    public static final double DEFAULT_SALARY = 4000;
-    public static final double COEFICIENT = 0.15;
-    public static final double MAIN_COEFICIENT = 0.2;
+    private static final double DEFAULT_SALARY = 4000;
+    private static final double COEFICIENT = 0.15;
+    private static final double MAIN_COEFICIENT = 0.2;
 
     public double calculateSalaryForWorker(Salesman salesman) {
         if (salesman == null) {
@@ -51,11 +52,35 @@ public class SalesmanController implements ISalesmanController {
         return cost;
     }
 
-    private double getProfitForOwnBills(Salesman salesman){
+    public List<Salesman> getListOfSubordinators(Salesman salesman, List<Salesman> salesmanList){
+        salesmanList.add(salesman);
+        List<Salesman> subordinators = salesman.getSalesmanList();
+
+        if (subordinators == null) {
+            return salesmanList;
+        }
+
+        for (Salesman subordinator : subordinators) {
+            if (subordinator.getSalesmanList() != null) {
+                getListOfSubordinators(subordinator.getSalesmanList().iterator().next(), salesmanList);
+            } else {
+                getListOfSubordinators(subordinator, salesmanList);
+            }
+        }
+
+        return salesmanList;
+    }
+
+    public double getProfitForOwnBills(Salesman salesman){
         return getProfitForListOfBills(salesman.getBills()) * MAIN_COEFICIENT;
     }
 
-    private double getProfitForListOfBills(List<Bill> billList){
+    public double getProfitForListOfBills(List<Bill> billList){
+
+        if (billList == null) {
+            return 0;
+        }
+
         double billPrice = 0;
         for (Bill bill : billList) {
             billPrice += getBillProfit(bill);
@@ -63,7 +88,7 @@ public class SalesmanController implements ISalesmanController {
         return billPrice;
     }
 
-    private double getBillProfit(Bill bill){
+    public double getBillProfit(Bill bill){
         return  bill.getProducts().stream().mapToDouble(Product::getPrice).sum() * COEFICIENT;
     }
 }

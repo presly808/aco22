@@ -17,21 +17,28 @@ import java.util.List;
 
 public class SalasManControllerTest {
 
-    public static final int SALASMAN_QUANTITY = 100;
-    public static final int SALESMAN_INDEX = 50;
+    private static final int SALASMAN_QUANTITY = 100;
+    private static final int SALESMAN_INDEX = 50;
+    public static final double COEFICIENT = 0.15;
+
     private List<Salesman> list;
+    private ISalesmanController iSalesmanController;
+    private Salesman salesman;
+
 
     @Before
     public void prepareData(){
         list = new ArrayList<>();
         this.list = generateSalesManList
                 (SALASMAN_QUANTITY);
+
+         iSalesmanController = new SalesmanController();
+         salesman = new Salesman(StringGenerator.generateName(),
+                StringGenerator.generateName());
     }
 
     @Test
     public void calculateSalaryForWorker() throws Exception {
-        ISalesmanController iSalesmanController =
-                                    new SalesmanController();
         Salesman salesman = list.get(SALESMAN_INDEX);
         double salary = iSalesmanController.
                                 calculateSalaryForWorker(salesman);
@@ -48,6 +55,47 @@ public class SalasManControllerTest {
                 iSalesmanController.calculateDepartmentCostsToSalary(salesmanList);
         Assert.assertNotNull(calculatedDepartmentCost);
         Assert.assertTrue(calculatedDepartmentCost == calculateCost(salesmanList));
+    }
+
+    @Test
+    public void testGetListOfSubordinators(){
+        List<Salesman> salesmanList =
+                iSalesmanController.getListOfSubordinators(salesman, new ArrayList<>());
+        Assert.assertTrue(salesmanList.size() == 1);
+
+        salesman.setSalesmanList(generateSalesManList(2));
+        salesmanList = iSalesmanController.getListOfSubordinators(salesman, new ArrayList<>());
+        Assert.assertTrue(salesmanList.size() == 3);
+    }
+
+    @Test
+    public void testGetProfitForOwnBills(){
+        salesman.setBills(null);
+        double salary = iSalesmanController.getProfitForOwnBills(salesman);
+        Assert.assertTrue(salary == 0);
+
+        salesman.setBills(generateBillList());
+        salary = iSalesmanController.getProfitForOwnBills(salesman);
+        Assert.assertFalse(salary == 0);
+    }
+
+    @Test
+    public void testGetProfitForListOfBills(){
+        double profitForListOfBills = iSalesmanController.getProfitForListOfBills(generateBillList());
+        Assert.assertNotNull(profitForListOfBills);
+    }
+
+    @Test
+    public void testGetBillProfit(){
+        Bill bill = new Bill();
+        double billProfit = iSalesmanController.getBillProfit(bill);
+        Assert.assertTrue(billProfit == 0);
+
+        int price = 4000;
+        bill.setProducts(new Product(StringGenerator.generateName(),
+                price));
+        billProfit = iSalesmanController.getBillProfit(bill);
+        Assert.assertTrue(billProfit == price * COEFICIENT);
     }
 
     private List<Salesman> generateSalesManList(int quantity){

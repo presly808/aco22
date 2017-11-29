@@ -3,7 +3,7 @@ package utils;
 public class SalaryGenerator {
 
     public static double generatePrice(){
-        return 0;
+        return Math.random() * 1000;
     }
 
 }
