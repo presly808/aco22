@@ -1,11 +1,12 @@
 package ua.artcode.market.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Bill {
+public class Bill implements  Cloneable{
 
     private int id;
     private List<Product> products;
@@ -20,7 +21,6 @@ public class Bill {
         openTime = LocalDateTime.now();
         products = new ArrayList<>();
     }
-
 
     public int getId() {
         return id;
@@ -144,6 +144,10 @@ public class Bill {
         return id == bill.id;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
 
 

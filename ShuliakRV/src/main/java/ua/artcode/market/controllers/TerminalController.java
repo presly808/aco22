@@ -2,10 +2,15 @@ package ua.artcode.market.controllers;
 
 import ua.artcode.market.comparators.SalesmenSoldProductsComparator;
 import ua.artcode.market.interfaces.ITerminal;
-import ua.artcode.market.models.*;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
+import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.Statistic;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static ua.artcode.market.utils.Utils.*;
 
@@ -75,7 +80,7 @@ public class TerminalController implements ITerminal {
         salesmen.setSoldProducts(salesmen.getSoldProducts() +
                 bill.getProducts().size());
 
-        salesmen = appDB.updateSalesman(salesmen);
+        appDB.updateSalesman(salesmen);
 
         return bill;
     }
@@ -84,15 +89,11 @@ public class TerminalController implements ITerminal {
 
         if (appDB.getAllSalesman().isEmpty() || n <= 0) return null;
 
-        List<Salesman> salesmen = new ArrayList<>(n);
+        List<Salesman> salesmen =(ArrayList) ((ArrayList) appDB.getAllSalesman()).clone();
 
-        appDB.getAllSalesman().sort(new SalesmenSoldProductsComparator());
+        salesmen.sort(new SalesmenSoldProductsComparator());
 
-        for (int i = 0; i < Math.min(n, appDB.getAllSalesman().size()); i++) {
-            salesmen.add(appDB.getAllSalesman().get(i));
-        }
-
-        return salesmen;
+        return salesmen.subList(0,n);
     }
 
     public Statistic doSomeStatisticStuff() {
@@ -108,15 +109,17 @@ public class TerminalController implements ITerminal {
                              LocalDateTime endTime,
                              Comparator<Bill> comparator) {
 
-        List<Bill> resBill = new ArrayList<>(appDB.getAllBills().size());
+        List<Bill> resBill = new ArrayList<>();
 
         int index = 0;
 
         for (int i = 0; i < appDB.getAllBills().size(); i++) {
 
-            boolean addBill = false;
+            boolean addBill = true;
 
             if (salesmen != null) {
+
+                addBill = false;
 
                 for (int j = 0; j < salesmen.size(); j++) {
                     if (appDB.getAllBills().get(i).getSalesMan().
@@ -129,6 +132,8 @@ public class TerminalController implements ITerminal {
 
             if (addBill && products != null) {
 
+                addBill = false;
+
                 if (appDB.getAllBills().get(i).hasProducts(products)) {
                     addBill = true;
                 } else {
@@ -136,26 +141,22 @@ public class TerminalController implements ITerminal {
                 }
             }
 
-            if (addBill && (startTime != null || endTime != null)) {
-
-                if (startTime != null) {
-                    if (appDB.getAllBills().get(i).getCloseTime().
-                            compareTo(startTime) >= 0) {
-                        addBill = true;
-                    } else {
-                        addBill = false;
-                    }
+            if (addBill && startTime != null) {
+                if (appDB.getAllBills().get(i).getCloseTime().
+                        compareTo(startTime) >= 0) {
+                    addBill = true;
+                } else {
+                    addBill = false;
                 }
+            }
 
-                if (endTime != null) {
-                    if (appDB.getAllBills().get(i).getCloseTime().
-                            compareTo(endTime) <= 0) {
-                        addBill = true;
-                    } else {
-                        addBill = false;
-                    }
+            if (addBill && endTime != null) {
+                if (appDB.getAllBills().get(i).getCloseTime().
+                        compareTo(endTime) <= 0) {
+                    addBill = true;
+                } else {
+                    addBill = false;
                 }
-
             }
 
             if (addBill) resBill.add(appDB.getAllBills().get(i));

@@ -25,7 +25,6 @@ public class AppDB implements IAppDb {
 
     }
 
-
     @Override
     public List<Bill> getAllBills() {
         return bills;
@@ -92,7 +91,7 @@ public class AppDB implements IAppDb {
                 login.isEmpty() || password.isEmpty()) return null;
 
         for (Salesman salesman : salesmen) {
-            if (salesman.getLogin().equals(login) ||
+            if (salesman.getLogin().equals(login) &&
                     salesman.getPassword().equals(password)) {
                 return salesman;
             }
