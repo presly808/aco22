@@ -5,8 +5,8 @@ import ua.artcode.market.models.money.Money;
 
 public interface IReport {
 
-    Money doSalaryReport(Employee employee, boolean all);
-    Money doSalesReport(Employee employee, boolean all);
+    Money doSalaryOfDepartmentReport(Employee employee, boolean all);
+    Money doEmployeeSalaryReport(Employee employee);
 
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 public class HeadOfSalesmen extends Salesman {
 
     private List<Employee> subordinateList;
+    int percentOfPercent;
 
     public HeadOfSalesmen(String fullName, String login, String password,
                           Money salary) {
@@ -16,10 +17,20 @@ public class HeadOfSalesmen extends Salesman {
         this.subordinateList = Generator.CreateSubordinateList();
     }
 
+    public int getPercentOfPercent() {
+        return percentOfPercent;
+    }
+
+    public void setPercentOfPercent(int percentOfPercent) {
+        this.percentOfPercent = percentOfPercent;
+    }
+
+    @Override
     public List<Employee> getSubordinateList() {
         return subordinateList;
     }
 
+    @Override
     public void setSubordinateList(List<Employee> subordinateList) {
         this.subordinateList = subordinateList;
     }

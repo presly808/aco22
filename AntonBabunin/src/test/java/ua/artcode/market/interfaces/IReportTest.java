@@ -38,8 +38,8 @@ public class IReportTest {
 
         mainHead.setSubordinateList(salesmanList);
 
-        Money salary = iReport.doSalaryReport(mainHead,false);
-        Money salaryAll = iReport.doSalaryReport(mainHead,true);
+        Money salary = iReport.doSalaryOfDepartmentReport(mainHead,false);
+        Money salaryAll = iReport.doSalaryOfDepartmentReport(mainHead,true);
 
         Assert.assertEquals(new Money(10, 99), salary);
         Assert.assertEquals(new Money(14, 20), salaryAll);

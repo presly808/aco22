@@ -10,6 +10,7 @@ public abstract class Employee implements Comparable<Salesman> {
     private String password;
     private boolean isConnected;
     private Money salary;
+    private int percent;
 
 
     public Employee() {
@@ -27,6 +28,14 @@ public abstract class Employee implements Comparable<Salesman> {
 
     public Money getSalary() {
         return salary;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
 
     public void setSalary(Money salary) {

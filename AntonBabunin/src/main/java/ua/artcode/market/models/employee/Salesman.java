@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Salesman extends Employee {
 
+    private int percent;
+
     public Salesman(String fullName, String login, String password,
                     Money salary) {
         super(fullName, login, password);
@@ -15,6 +17,14 @@ public class Salesman extends Employee {
 
     public Salesman() {
         super();
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
 
     @Override

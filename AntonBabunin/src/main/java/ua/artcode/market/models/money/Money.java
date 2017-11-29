@@ -34,16 +34,20 @@ public class Money {
     }
 
 
-    public static Money doSum(Money mon1, Money mon2) {
-        if (mon1 == null || mon2 == null) return new Money(0,0);
-        else if (mon1 != null && mon2 == null) return mon1;
-        else if (mon1 == null && mon2 != null) return mon2;
-        else return new Money(mon1.getMoneyWholePart() + mon2.getMoneyWholePart() +
-                    ((mon1.getMoneyFraction() + mon2.getMoneyFraction()) / 100),
-                    (mon1.getMoneyFraction() + mon2.getMoneyFraction()) % 100);
+//    public static Money doSum(Money mon1, Money mon2) {
+//        if (mon1 == null || mon2 == null) return new Money(0,0);
+//        else if (mon1 != null && mon2 == null) return mon1;
+//        else if (mon1 == null && mon2 != null) return mon2;
+//        else return new Money(mon1.getMoneyWholePart() + mon2.getMoneyWholePart() +
+//                    ((mon1.getMoneyFraction() + mon2.getMoneyFraction()) / 100),
+//                    (mon1.getMoneyFraction() + mon2.getMoneyFraction()) % 100);
+//
+//    }
 
+    public Money takePercent (int percent) {
+        int takedPercent = (this.moneyWholePart + this.moneyFraction) * percent / 100;
+        return new Money(takedPercent / 100, takedPercent % 100);
     }
-
 
     @Override
     public boolean equals(Object object) {
