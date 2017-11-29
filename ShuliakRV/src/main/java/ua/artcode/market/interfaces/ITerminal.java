@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ITerminal {
 
-    Salesman logIn(String login, String password);
+    boolean logIn(String login, String password);
 
     Bill createBill(Salesman s);
 

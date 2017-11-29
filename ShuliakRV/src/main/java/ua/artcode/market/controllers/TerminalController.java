@@ -1,5 +1,6 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.DataBases.AppDB;
 import ua.artcode.market.comparators.SalesmenSoldProductsComparator;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
@@ -22,18 +23,21 @@ public class TerminalController implements ITerminal {
         this.appDB = appDB;
     }
 
-    public Salesman logIn(String login, String password) {
+    public boolean logIn(String login, String password) {
 
         if (appDB.getAllSalesman().isEmpty() || login == null ||
                 login.isEmpty() || password == null || password.isEmpty())
-            return null;
+            return false;
 
         Salesman salesman =
                 appDB.findSalesmanByLoginOAndPassword(login, password);
 
-        if (salesman != null) salesman.setLogged(true);
+        if (salesman != null) {
+            salesman.setLogged(true);
+            return true;
+        }
 
-        return salesman;
+        return false;
     }
 
 
@@ -89,11 +93,12 @@ public class TerminalController implements ITerminal {
 
         if (appDB.getAllSalesman().isEmpty() || n <= 0) return null;
 
-        List<Salesman> salesmen =(ArrayList) ((ArrayList) appDB.getAllSalesman()).clone();
+        List<Salesman> salesmen = (ArrayList) ((ArrayList)
+                appDB.getAllSalesman()).clone();
 
         salesmen.sort(new SalesmenSoldProductsComparator());
 
-        return salesmen.subList(0,n);
+        return salesmen.subList(0, n);
     }
 
     public Statistic doSomeStatisticStuff() {

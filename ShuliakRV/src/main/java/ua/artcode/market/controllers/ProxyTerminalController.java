@@ -15,43 +15,47 @@ public class ProxyTerminalController implements ITerminal {
 
     private ITerminal terminalController;
 
-    private Salesman loggedSalesman;
+    private String loggedSalesman;
 
     public ProxyTerminalController(ITerminal terminalController) {
 
         this.terminalController = terminalController;
     }
 
-
     @Override
-    public Salesman logIn(String login, String password) {
+    public boolean logIn(String login, String password) {
 
         Logger.getInstance().log(String.format("Time : %s  User is logging " +
                         "with login: %s and password: %s",
                 LocalDateTime.now().toString(), login, password));
 
-        loggedSalesman = terminalController.logIn(login, password);
+        if (terminalController.logIn(login, password)) {
 
-        if (loggedSalesman != null) {
+            loggedSalesman = login;
 
-            Logger.getInstance().log(String.format("Time : %s  User is logged " +
-                            "with login: %s and password: %s",
-                    LocalDateTime.now().toString(), login, password));
+            Logger.getInstance().log(String.
+                    format("Time : %s  User is logged " +
+                                    "with login: %s and password: %s",
+                            LocalDateTime.now().toString(), login, password));
+
+            return true;
+
         } else {
 
-            Logger.getInstance().log(String.format("Time : %s  User isn't logged " +
-                            "with login: %s and password: %s",
-                    LocalDateTime.now().toString(), login, password));
+            Logger.getInstance().log(String.
+                    format("Time : %s  User isn't logged " +
+                                    "with login: %s and password: %s",
+                            LocalDateTime.now().toString(), login, password));
         }
 
-        return loggedSalesman;
+        return false;
     }
 
     @Override
     public Bill createBill(Salesman salesmen) {
         Logger.getInstance().log(String.
                 format("Time : %s  User %s is trying to create a bill",
-                        LocalDateTime.now().toString(), loggedSalesman.getLogin()));
+                        LocalDateTime.now().toString(), loggedSalesman));
 
         return terminalController.createBill(salesmen);
 
@@ -61,7 +65,7 @@ public class ProxyTerminalController implements ITerminal {
     public Bill addProduct(int billId, Product product) {
         Logger.getInstance().log(String.
                 format("Time : %s  User %s is trying to add a product",
-                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+                        LocalDateTime.now().toString(), loggedSalesman));
 
         return terminalController.addProduct(billId, product);
     }
@@ -71,7 +75,7 @@ public class ProxyTerminalController implements ITerminal {
 
         Logger.getInstance().log(String.
                 format("Time : %s  User %s is trying to close adn save bill",
-                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+                        LocalDateTime.now().toString(), loggedSalesman));
 
         return terminalController.closeAndSaveBill(billId);
     }
@@ -80,7 +84,7 @@ public class ProxyTerminalController implements ITerminal {
     public List<Salesman> getTopNOfSalesMen(int n) {
         Logger.getInstance().log(String.
                 format("Time : %s  User %s is trying to get top N of salesmen",
-                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+                        LocalDateTime.now().toString(), loggedSalesman));
 
         return terminalController.getTopNOfSalesMen(n);
     }
@@ -89,8 +93,8 @@ public class ProxyTerminalController implements ITerminal {
     public Statistic doSomeStatisticStuff() {
 
         Logger.getInstance().log(String.
-                format("Time : %s  User %s is trying to do some statistics stuff",
-                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+                format("Time : %s  User %s is trying to do some statistics",
+                        LocalDateTime.now().toString(), loggedSalesman));
 
 
         return terminalController.doSomeStatisticStuff();
@@ -103,9 +107,10 @@ public class ProxyTerminalController implements ITerminal {
 
         Logger.getInstance().log(String.
                 format("Time : %s  User %s is trying to filter some bills",
-                        LocalDateTime.now().toString(),loggedSalesman.getLogin()));
+                        LocalDateTime.now().toString(), loggedSalesman));
 
 
-        return terminalController.filter(salesmen,products,startTime,endTime,comparator);
+        return terminalController.filter(salesmen, products, startTime,
+                endTime, comparator);
     }
 }

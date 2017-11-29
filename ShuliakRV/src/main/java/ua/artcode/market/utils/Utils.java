@@ -1,6 +1,6 @@
 package ua.artcode.market.utils;
 
-import ua.artcode.market.controllers.AppDB;
+import ua.artcode.market.DataBases.AppDB;
 import ua.artcode.market.models.*;
 
 public class Utils {
