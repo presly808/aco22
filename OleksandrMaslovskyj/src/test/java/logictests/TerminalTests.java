@@ -19,10 +19,12 @@ import java.util.Set;
 public class TerminalTests {
 
     private TerminalController terminal;
+    private BillController billController;
 
     @Before
     public void prepareData(){
-        this.terminal = TerminalFactory.create(new BillController());
+        billController = new BillController();
+        this.terminal = TerminalFactory.create(billController);
     }
 
     @After
@@ -112,6 +114,11 @@ public class TerminalTests {
         List<Bill> billList = terminalController.
                 getBillsByCreator(new Salesman("", ""));
         Assert.assertTrue(billList.isEmpty());
+    }
+
+    @Test
+    public void testTerminalFactory(){
+        Assert.assertNotNull(TerminalFactory.create(billController));
     }
 
     private TerminalController generateBills() {
