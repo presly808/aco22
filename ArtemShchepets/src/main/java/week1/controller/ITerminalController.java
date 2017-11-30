@@ -1,9 +1,9 @@
-package week1.interfaces;
+package week1.controller;
 
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.SalesStatistic;
 import week1.model.Seller;
-import week1.model.Statistic;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -17,6 +17,10 @@ public interface ITerminalController {
 
     Bill addProduct(int billId, Product product);
 
+    int getCurrentSellerId();
+
+    void setCurrentSeller(int currentSellerId);
+
     List<Bill> getAllBills();
 
     Bill closeBill(int billId);
@@ -27,7 +31,7 @@ public interface ITerminalController {
 
     Seller getTopOfSalesman();
 
-    Statistic doSomeStatisticStuff();
+    SalesStatistic doSomeStatisticStuff();
 
     List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator);
 

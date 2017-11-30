@@ -1,4 +1,4 @@
-package week1.interfaces;
+package week1.database;
 
 import week1.model.Bill;
 import week1.model.Seller;
@@ -13,10 +13,6 @@ public interface IAppDB {
     List<Bill> getAllBills();
 
     List<Seller> getAllSellers();
-
-    int getCurrentSellerId();
-
-    void setCurrentSeller(int currentSellerId);
 
     Bill findByBillId(int billId);
 
