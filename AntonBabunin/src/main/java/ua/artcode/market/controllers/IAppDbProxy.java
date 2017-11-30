@@ -6,6 +6,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -71,14 +72,14 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public double aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
+    public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
+                              LocalDateTime endDate) {
         return iAppDb.aggrAmtPrice(salesman, startDate,endDate);
     }
 
     @Override
-    public double averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                                     LocalDateTime endDate) {
+    public Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
+                                    LocalDateTime endDate) {
         return iAppDb.averageAmountPrice(salesman, startDate, endDate);
     }
 

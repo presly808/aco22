@@ -4,6 +4,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -39,11 +40,11 @@ public interface IAppDb {
                       Comparator<Bill> billComparator);
 
 
-    double aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                        LocalDateTime endDate);
+    Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
+                       LocalDateTime endDate);
 
-    double averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                              LocalDateTime endDate);
+    Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
+                             LocalDateTime endDate);
 
     Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
                         LocalDateTime endDate);

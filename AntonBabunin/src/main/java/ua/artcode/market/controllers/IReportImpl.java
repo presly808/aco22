@@ -3,7 +3,6 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.IReport;
 import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Department;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.HeadOfSalesmen;
 import ua.artcode.market.models.money.Money;
@@ -37,20 +36,12 @@ public class IReportImpl implements IReport {
             List<Employee> employeeList = employee.getSubordinateList();
 
             Money empPercent = salesPercent(employee, start, end);
-            System.out.println("EmpPercent - " + empPercent);
-
             Money subPercent =
                     doSubordinateReport(0, employeeList, start, end).
                             takePercent(((HeadOfSalesmen) employee).
                                     getPercentOfPercent());
 
-            System.out.println("subPercent - " + subPercent);
-            Money sum =
-                    employee.getSalary().doSum(empPercent.doSum(subPercent));
-
-            System.out.println("Oklad - " + employee.getSalary());
-            System.out.println("Summa - " + sum);
-            return sum;
+            return employee.getSalary().doSum(empPercent.doSum(subPercent));
         }
 
         return employee.getSalary().doSum(salesPercent(employee, start, end));

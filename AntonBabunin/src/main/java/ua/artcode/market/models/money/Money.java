@@ -86,4 +86,8 @@ public class Money {
     public String toString() {
         return moneyWholePart + "." + moneyFraction;
     }
+
+    public Money div(int size) {
+        return new Money(0,0);
+    }
 }

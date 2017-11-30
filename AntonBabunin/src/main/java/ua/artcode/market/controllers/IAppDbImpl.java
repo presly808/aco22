@@ -4,6 +4,7 @@ import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.models.*;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
 import java.time.LocalDateTime;
@@ -206,32 +207,32 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public double aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
-        double summ = 0.0;
+    public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
+                              LocalDateTime endDate) {
+        Money summ = new Money(0,0);
         if (bills == null)
             return summ;
         return aggrAmPrice(filter(salesman,null, startDate, endDate, null));
     }
 
-    private double aggrAmPrice(List<Bill> filteredList){
-        int summ = 0;
+    private Money aggrAmPrice(List<Bill> filteredList){
+        Money summ = new Money(0,0);
         if (filteredList == null || filteredList.isEmpty()) return summ;
-        for (Bill bill : filteredList) {
-//            summ += bill.getAmountPrice();
+        for (int i = 0; i < filteredList.size(); i++) {
+            summ = summ.doSum(filteredList.get(i).getAmountPrice());
         }
-        return 0.0;
+        return summ;
 
 
     }
 
     @Override
-    public double averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                                     LocalDateTime endDate) {
+    public Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
+                                    LocalDateTime endDate) {
         List<Bill> filteredList = filter(salesman,null, startDate, endDate, null);
         if (filteredList == null || filteredList.isEmpty())
-            return 0.0;
-        return  aggrAmPrice(filteredList) / filteredList.size();
+            return new Money(0,0);
+        return  aggrAmPrice(filteredList).div(filteredList.size());
     }
 
     @Override
