@@ -2,53 +2,43 @@ package ua.artcode.market.utils;
 
 import ua.artcode.market.models.Bill;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class TerminalUtils {
 
-    public static Bill billWithMaxAmount(Bill[] bills) {
+    public static Bill billWithMaxAmount(List<Bill> bills) {
         if (bills == null) {
             return null;
         }
 
-        double maxAmount = bills[0].getAmountPrice();
+        double maxAmount = bills.get(0).getAmountPrice();
         int billIdWithMaxAmount = 0;
 
-        for (int i = 1; i < bills.length; i++) {
-            if (bills[i] != null && bills[i].getAmountPrice() > maxAmount) {
-                maxAmount = bills[i].getAmountPrice();
+        for (int i = 1; i < bills.size(); i++) {
+            if (bills.get(i) != null && bills.get(i).getAmountPrice() > maxAmount) {
+                maxAmount = bills.get(i).getAmountPrice();
                 billIdWithMaxAmount = i;
             }
         }
 
-        return bills[billIdWithMaxAmount];
+        return bills.get(billIdWithMaxAmount);
     }
 
-    public static Bill billWithMinAmount(Bill[] bills) {
+    public static Bill billWithMinAmount(List<Bill> bills) {
         if (bills == null) {
             return null;
         }
 
-        double minAmount = bills[0].getAmountPrice();
+        double minAmount = bills.get(0).getAmountPrice();
         int billIdWithMinAmount = 0;
 
-        for (int i = 1; i < bills.length; i++) {
-            if (bills[i] != null && bills[i].getAmountPrice() < minAmount) {
-                minAmount = bills[i].getAmountPrice();
+        for (int i = 1; i < bills.size(); i++) {
+            if (bills.get(i) != null && bills.get(i).getAmountPrice() < minAmount) {
+                minAmount = bills.get(i).getAmountPrice();
                 billIdWithMinAmount = i;
             }
         }
 
-        return bills[billIdWithMinAmount];
-    }
-
-    public static Bill[] splitBillArr(Bill[] bills, int countFiltBills) {
-        Bill[] billsRes = Arrays.copyOf(bills, countFiltBills);
-        for (Bill billsRe : billsRes) {
-            billsRe.setProducts(Arrays.copyOf(billsRe.getProducts(),
-                    billsRe.getProductsCount()));
-        }
-
-        return billsRes;
+        return bills.get(billIdWithMinAmount);
     }
 }

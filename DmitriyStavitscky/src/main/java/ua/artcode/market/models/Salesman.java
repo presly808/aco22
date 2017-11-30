@@ -5,16 +5,22 @@ public class Salesman {
     private String fullName;
     private String login;
     private int pass;
+    private int id;
     private double sumOfAllSales;
 
     public Salesman(String name) {
         this.fullName = name;
     }
 
-    public Salesman(String fullName, String login, int pass) {
+    public Salesman(String fullName, String login, int pass, int id) {
         this.fullName = fullName;
         this.login = login;
         this.pass = pass;
+        this.id = id;
+    }
+
+    public void addSum(double sum) {
+        this.sumOfAllSales += sum;
     }
 
     @Override
@@ -41,7 +47,6 @@ public class Salesman {
                 sumOfAllSales == other.sumOfAllSales;
     }
 
-
     public int getPass() {
         return pass;
     }
@@ -60,5 +65,9 @@ public class Salesman {
 
     public void setSumOfAllSales(double sumOfAllSales) {
         this.sumOfAllSales = sumOfAllSales;
+    }
+
+    public int getId() {
+        return id;
     }
 }

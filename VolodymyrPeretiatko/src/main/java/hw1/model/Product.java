@@ -1,15 +1,18 @@
 package hw1.model;
 
-public class Product {
+public class Product extends DBItem {
 
-    private int id;
     private String name;
     private Double price;
 
     public Product(int id, String name, double price) {
-        this.id = id;
+        super.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Product(int id) {
+        super.id = id;
     }
 
     public void printFullInfo(){

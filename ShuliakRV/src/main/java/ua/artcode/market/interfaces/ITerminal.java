@@ -1,27 +1,34 @@
 package ua.artcode.market.interfaces;
 
+import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.Date;
+import java.util.List;
 
 public interface ITerminal {
 
-    public Salesman login(String login, String password);
-    public boolean createBill(Salesman s);
-    public boolean addProduct(Product p);
-    public Bill closeAndSaveBill();
-    public Bill findBillById(int id);
-    public Salesman[] findSalesmanByLoginOrFullname(String loginOrFullname);
-    public Salesman[] getTopNofSalesMan(int n);
-    public Statistic doSomeStatisticStuff();
-    public double getMax();
-    public double getMin();
-    public double getAverage();
-    public int countSoldProducts();
+    AppDB getAppDB();
 
-    Bill[] filter(Salesman[] sales,Product[] products, Date startTime, Date endTime, Comparator<Bill> comparator);
+    Salesman logIn(String login, String password);
+
+    void logOut(Salesman salesman);
+
+    Bill createBill(Salesman salesman);
+
+    Bill addProduct(int billId, Product product);
+
+    Bill closeAndSaveBill(int billId);
+
+    List<Salesman> getTopNOfSalesMen(int n);
+
+    Statistic doSomeStatisticStuff();
+
+    List<Bill> filter(List<Salesman> salesmen, List<Product> products,
+                      LocalDateTime startTime, LocalDateTime endTime,
+                      Comparator<Bill> comparator);
 }

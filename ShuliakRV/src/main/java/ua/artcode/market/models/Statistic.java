@@ -7,21 +7,14 @@ public class Statistic {
     private double averageAmountofBill;
     private int countSoldProducts;
 
-    public void setMaxAmountofBill(double maxAmountofBill) {
+    public Statistic(double maxAmountofBill, double minAmountofBill,
+                     double averageAmountofBill, int countSoldProducts) {
         this.maxAmountofBill = maxAmountofBill;
-    }
-
-    public void setMinAmountofBill(double minAmountofBill) {
         this.minAmountofBill = minAmountofBill;
-    }
-
-    public void setAverageAmountofBill(double averageAmountofBill) {
         this.averageAmountofBill = averageAmountofBill;
-    }
-
-    public void setCountSoldProducts(int countSoldProducts) {
         this.countSoldProducts = countSoldProducts;
     }
+
 
     public double getMaxAmountofBill() {
         return maxAmountofBill;
