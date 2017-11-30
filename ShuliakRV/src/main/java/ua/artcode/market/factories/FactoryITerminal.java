@@ -1,6 +1,6 @@
-package ua.artcode.market.Factories;
+package ua.artcode.market.factories;
 
-import ua.artcode.market.DataBases.AppDB;
+import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.controllers.ProxyTerminalController;
 import ua.artcode.market.controllers.TerminalController;
 import ua.artcode.market.interfaces.ITerminal;

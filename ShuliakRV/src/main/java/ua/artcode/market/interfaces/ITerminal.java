@@ -1,6 +1,6 @@
 package ua.artcode.market.interfaces;
 
-import ua.artcode.market.DataBases.AppDB;
+import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -8,7 +8,6 @@ import ua.artcode.market.models.Statistic;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public interface ITerminal {

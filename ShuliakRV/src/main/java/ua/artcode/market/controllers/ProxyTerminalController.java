@@ -1,6 +1,6 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.DataBases.AppDB;
+import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;

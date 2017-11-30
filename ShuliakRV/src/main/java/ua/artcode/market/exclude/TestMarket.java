@@ -1,10 +1,7 @@
 package ua.artcode.market.exclude;
 
-import ua.artcode.market.DataBases.AppDB;
-import ua.artcode.market.Factories.FactoryITerminal;
-import ua.artcode.market.controllers.TerminalController;
+import ua.artcode.market.factories.FactoryITerminal;
 import ua.artcode.market.interfaces.ITerminal;
-import ua.artcode.market.models.*;
 import ua.artcode.market.views.Terminal;
 
 public class TestMarket {

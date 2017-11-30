@@ -1,4 +1,4 @@
-package ua.artcode.market.DataBases;
+package ua.artcode.market.databases;
 
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.models.*;
