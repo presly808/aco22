@@ -40,14 +40,27 @@ public class IReportTest {
                 new Money(10,0));
 
         Employee saller1 = new Salesman("1", "1", "1", new Money(1,1));
-        department.getEmployeeList().add(headOfSalesmen1);
-        department.getEmployeeList().add(headOfSalesmen2);
-        department.getEmployeeList().add(saller1);
 
+        headOfSalesmen1.setConnected(true);
+        headOfSalesmen1.setSubordinateList(new ArrayList<>());
+        headOfSalesmen1.getSubordinateList();
+        headOfSalesmen1.getSalary();
+        headOfSalesmen1.getLogin();
+        headOfSalesmen1.setLogin("head-1");
+        headOfSalesmen1.setPassword("head-1");
+        headOfSalesmen1.getPassword();
+        headOfSalesmen1.setFullName("head-1");
+        headOfSalesmen1.getFullName();
+        headOfSalesmen1.getPercent();
+        headOfSalesmen1.setSalary(new Money(100,0));
+        headOfSalesmen1.isConnected();
 
         headOfSalesmen1.getSubordinateList().add(headOfSalesmen2);
         headOfSalesmen2.getSubordinateList().add(saller1);
 
+        department.getEmployeeList().add(headOfSalesmen1);
+        department.getEmployeeList().add(headOfSalesmen2);
+        department.getEmployeeList().add(saller1);
         Bill bill1 = new Bill();
         bill1.setAmountPrice(new Money(1000,0));
         bill1.setSalesman(headOfSalesmen1);

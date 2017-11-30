@@ -26,6 +26,14 @@ public abstract class Employee implements Comparable<Salesman> {
         isConnected = connected;
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setIsConnected(boolean isConnected) {
+        this.isConnected = isConnected;
+    }
+
     public Money getSalary() {
         return salary;
     }
@@ -66,15 +74,8 @@ public abstract class Employee implements Comparable<Salesman> {
         this.password = password;
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    public void setIsConnected(boolean isConnected) {
-        this.isConnected = isConnected;
-    }
-
     public abstract void setSubordinateList(List<Employee> subordinateList);
+
     public abstract List<Employee> getSubordinateList();
 
     @Override

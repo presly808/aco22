@@ -8,6 +8,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.BillComparator;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
@@ -200,6 +201,13 @@ public class ITerminalControllerTest {
         terminalController.closeBill(bill2.getId());
         terminalController.closeBill(bill3.getId());
         terminalController.closeBill(bill4.getId());
+
+        terminalController.logout((Salesman) salesman1);
+        terminalController.prinBill(bill1);
+        terminalController.getiAppDb();
+        terminalController.getAllBills();
+        terminalController.calculateAmountPrice(bill1);
+
 
         List<Bill> sorted = terminalController.getiAppDb().filter(salesman1,
                 product1, null, null, BillComparator.
