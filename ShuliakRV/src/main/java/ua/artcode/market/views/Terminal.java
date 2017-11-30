@@ -1,8 +1,11 @@
 package ua.artcode.market.views;
 
+import ua.artcode.market.comparators.BillIdComparator;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.*;
+import ua.artcode.market.singletons.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -73,7 +76,6 @@ public class Terminal {
             case 2:
 
                 bill = terminalController.createBill(loggedSalesman);
-
                 if (bill == null) {
                     System.out.println("Bill isn't created");
                 }
@@ -90,11 +92,12 @@ public class Terminal {
                     System.out.println("Bill isn't found");
                 }
 
+                break;
+
             case 4:
 
                 if (bill != null) {
                     bill = terminalController.closeAndSaveBill(bill.getId());
-
                     if (bill == null) {
                         System.out.println("Bill isn't found");
                     }
@@ -107,19 +110,48 @@ public class Terminal {
 
                 List<Salesman> salesmen = terminalController.
                         getTopNOfSalesMen((int) (Math.random() *
-                        terminalController.getAppDB().
-                                getAllSalesman().size()-1)+1);
+                                terminalController.getAppDB().
+                                        getAllSalesman().size() - 1) + 1);
 
                 System.out.println(salesmen);
-
                 break;
 
             case 6:
 
+                Statistic statistic = terminalController.doSomeStatisticStuff();
+                System.out.println(statistic);
+                break;
+
+            case 7:
+
+                ArrayList<Salesman> salesmenList = new ArrayList<>();
+                salesmenList.add(loggedSalesman);
 
 
+                List<Bill> bills = terminalController.
+                        filter(salesmenList, null, null,
+                                null, new BillIdComparator());
+                System.out.println(bills);
+                break;
+
+            case 8:
+
+                loggedSalesman = null;
+                System.out.println("User logged out");
+                break;
+
+            case 9:
+
+                System.out.println(Logger.getInstance().getLogs());
+                break;
+
+            case 10:
+
+                return -1;
 
         }
+
+        return  0;
 
     }
 
