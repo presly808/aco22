@@ -39,7 +39,6 @@ public class ProxyTerminalController implements ITerminal {
 
         if (loggedSalesman != null) {
 
-
             Logger.getInstance().log(String.
                     format("Time : %s  User is logged " +
                                     "with login: %s and password: %s",
@@ -56,6 +55,12 @@ public class ProxyTerminalController implements ITerminal {
         }
 
         return null;
+    }
+
+    @Override
+    public void logOut(Salesman salesman) {
+        terminalController.logOut(salesman);
+        loggedSalesman = null;
     }
 
     @Override

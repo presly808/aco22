@@ -74,7 +74,11 @@ public class Terminal {
                                 getAllSalesman().size()));
                 loggedSalesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
-                System.out.println("User is logged");
+                if (loggedSalesman != null) {
+                    System.out.println("User is logged");
+                } else {
+                    System.out.println("Login or password are not avalible");
+                }
                 break;
 
             case 2:
@@ -88,7 +92,7 @@ public class Terminal {
                 break;
 
             case 3:
-                System.out.println(bill.getId());
+
                 bill = terminalController.addProduct(bill.getId(),
                         terminalController.getAppDB().getAllProducts().
                                 get(((int) (Math.random() * terminalController.
@@ -104,14 +108,13 @@ public class Terminal {
 
             case 4:
 
-                if (bill != null) {
-                    bill = terminalController.closeAndSaveBill(bill.getId());
-                    if (bill == null) {
-                        System.out.println("Bill isn't found");
-                    }
+                bill = terminalController.closeAndSaveBill(bill.getId());
+                if (bill == null) {
+                    System.out.println("Bill wasn't found");
                 } else {
-                    System.out.println("Bill isn't existed");
+                    System.out.println("Bill was saved and closed");
                 }
+
                 break;
 
             case 5:
@@ -143,7 +146,7 @@ public class Terminal {
                 break;
 
             case 8:
-
+                terminalController.logOut(loggedSalesman);
                 loggedSalesman = null;
                 System.out.println("User logged out");
                 break;
@@ -156,10 +159,9 @@ public class Terminal {
             case 10:
 
                 return -1;
-
         }
 
-        return  0;
+        return 0;
 
     }
 

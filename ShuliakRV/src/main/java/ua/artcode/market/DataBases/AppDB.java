@@ -28,13 +28,13 @@ public class AppDB implements IAppDb {
         products = new ArrayList<>();
 
         for (int i = 0; i < countProducts; i++) {
-            products.add(generateProduct());
+            saveProduct(generateProduct());
         }
 
         salesmen = new ArrayList<>();
 
         for (int i = 0; i < countSalesman; i++) {
-            salesmen.add(generateSalesman());
+            saveSalesman(generateSalesman());
         }
 
         bills = new ArrayList<>();

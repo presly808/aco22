@@ -43,6 +43,10 @@ public class TerminalController implements ITerminal {
         return salesman;
     }
 
+    public void logOut(Salesman salesman) {
+        salesman.setLogged(false);
+    }
+
 
     public Bill createBill(Salesman salesman) {
 
@@ -76,18 +80,22 @@ public class TerminalController implements ITerminal {
 
         if (bill == null) return null;
 
-        bill.calculateAmountPrice();
-        bill.setCloseTime(LocalDateTime.now());
-        bill.setClosed(true);
+        if (!bill.isClosed()) {
 
-        appDB.updateBill(bill);
+            bill.calculateAmountPrice();
+            bill.setCloseTime(LocalDateTime.now());
+            bill.setClosed(true);
 
-        Salesman salesmen = bill.getSalesMan();
+            appDB.updateBill(bill);
 
-        salesmen.setSoldProducts(salesmen.getSoldProducts() +
-                bill.getProducts().size());
+            Salesman salesmen = bill.getSalesMan();
 
-        appDB.updateSalesman(salesmen);
+            salesmen.setSoldProducts(salesmen.getSoldProducts() +
+                    bill.getProducts().size());
+
+            appDB.updateSalesman(salesmen);
+
+        }
 
         return bill;
     }

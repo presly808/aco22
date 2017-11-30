@@ -17,7 +17,9 @@ public interface ITerminal {
 
     Salesman logIn(String login, String password);
 
-    Bill createBill(Salesman s);
+    void logOut(Salesman salesman);
+
+    Bill createBill(Salesman salesman);
 
     Bill addProduct(int billId, Product product);
 
