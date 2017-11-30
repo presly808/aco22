@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Bill implements  Cloneable{
+public class Bill {
 
     private int id;
     private List<Product> products;
@@ -144,10 +144,6 @@ public class Bill implements  Cloneable{
         return id == bill.id;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 }
 
 

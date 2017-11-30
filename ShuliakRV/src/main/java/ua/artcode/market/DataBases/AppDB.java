@@ -119,7 +119,7 @@ public class AppDB implements IAppDb {
     @Override
     public Bill saveBill(Bill bill) {
 
-        bill.setId(nextBillId++);
+        bill.setId(++nextBillId);
         bills.add(bill);
 
         return bill;
@@ -128,7 +128,7 @@ public class AppDB implements IAppDb {
     @Override
     public Product saveProduct(Product product) {
 
-        product.setId(nextProductId++);
+        product.setId(++nextProductId);
         products.add(product);
 
         return product;

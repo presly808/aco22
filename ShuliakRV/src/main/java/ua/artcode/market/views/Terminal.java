@@ -26,11 +26,10 @@ public class Terminal {
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("**********Main Menu**********");
-        System.out.println("Make a choice:");
-
         while (true) {
-
+            System.out.println("*****************************");
+            System.out.println("**********Main Menu**********");
+            System.out.println("Make a choice:");
             System.out.println("1. Log In");
             System.out.println("2. Create bill");
             System.out.println("3. Add product");
@@ -41,6 +40,8 @@ public class Terminal {
             System.out.println("8. Log Out");
             System.out.println("9. View operation logs");
             System.out.println("10. Exit");
+            System.out.println();
+            System.out.println("Your choice: ");
 
             int choice = scan.nextInt();
 
@@ -55,6 +56,8 @@ public class Terminal {
             }
 
             if (res == -1) return;
+
+            scan.nextLine();
 
         }
     }
@@ -71,6 +74,7 @@ public class Terminal {
                                 getAllSalesman().size()));
                 loggedSalesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
+                System.out.println("User is logged");
                 break;
 
             case 2:
@@ -78,11 +82,13 @@ public class Terminal {
                 bill = terminalController.createBill(loggedSalesman);
                 if (bill == null) {
                     System.out.println("Bill isn't created");
+                } else {
+                    System.out.println("Bill is created");
                 }
                 break;
 
             case 3:
-
+                System.out.println(bill.getId());
                 bill = terminalController.addProduct(bill.getId(),
                         terminalController.getAppDB().getAllProducts().
                                 get(((int) (Math.random() * terminalController.
@@ -90,6 +96,8 @@ public class Terminal {
                                         size()))));
                 if (bill == null) {
                     System.out.println("Bill isn't found");
+                } else {
+                    System.out.println("Product is added");
                 }
 
                 break;
@@ -111,7 +119,7 @@ public class Terminal {
                 List<Salesman> salesmen = terminalController.
                         getTopNOfSalesMen((int) (Math.random() *
                                 terminalController.getAppDB().
-                                        getAllSalesman().size() - 1) + 1);
+                                        getAllSalesman().size()) + 1);
 
                 System.out.println(salesmen);
                 break;

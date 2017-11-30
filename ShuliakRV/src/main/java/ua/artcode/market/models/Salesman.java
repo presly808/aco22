@@ -68,4 +68,14 @@ public class Salesman {
                 salesman.password == null;
     }
 
+    @Override
+    public String toString() {
+        return "Salesman{" +
+                "fullname='" + fullname + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", soldProducts=" + soldProducts +
+                ", isLogged=" + isLogged +
+                '}';
+    }
 }
