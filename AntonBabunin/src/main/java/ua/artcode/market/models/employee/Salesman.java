@@ -1,7 +1,6 @@
 package ua.artcode.market.models.employee;
 
 import ua.artcode.market.models.money.Money;
-//import ua.artcode.market.models.money.Salary;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ public class Salesman extends Employee {
                     Money salary) {
         super(fullName, login, password);
         this.setSalary(salary);
+        this.percent = 5;
     }
 
     public Salesman() {

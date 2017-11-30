@@ -1,10 +1,10 @@
 package ua.artcode.market.interfaces;
 
-import javafx.concurrent.Worker;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
+import ua.artcode.market.models.money.Money;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +17,7 @@ public interface ITerminalController {
 
     List<Bill> getAllBills();
 
-    double calculateAmountPrice(Bill bill);
+    Money calculateAmountPrice(Bill bill);
 
     String prinBill(Bill bill);
 

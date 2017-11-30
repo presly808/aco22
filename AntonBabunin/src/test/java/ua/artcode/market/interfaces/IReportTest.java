@@ -1,48 +1,74 @@
 package ua.artcode.market.interfaces;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.controllers.IAppDbImpl;
 import ua.artcode.market.controllers.IReportImpl;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Department;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.HeadOfSalesmen;
+import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.models.money.Money;
-//import ua.artcode.market.models.money.Salary;
-import ua.artcode.market.utils.Generator;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class IReportTest {
-
-    private IReport iReport;
+    private IAppDb iAppDb;
 
     @Before
     public void setUp() throws Exception {
-        this.iReport = new IReportImpl();
+        this.iAppDb = new IAppDbImpl();
     }
 
     @After
     public void tearDown() throws Exception {
-        this.iReport = null;
+        this.iAppDb = null;
     }
 
     @Test
-    public void doSalaryReport() throws Exception {
+    public void testdoEmployeeSalaryReport() throws Exception {
 
-        Employee mainHead = new HeadOfSalesmen("mainHead","mainHead","mainHead", new Money(10, 99));
+        Department department = new Department(new ArrayList<>());
 
-        List<Employee> salesmanList = Generator.generateSalesmanList(2);
-        salesmanList.get(0).setSalary(new Money(1, 1));
-        salesmanList.get(1).setSalary(new Money(2, 20));
+        Employee headOfSalesmen1 = new HeadOfSalesmen("head-1", "head1", "head",
+                new Money(100,0));
+        Employee headOfSalesmen2 = new HeadOfSalesmen("head-2", "head2", "head",
+                new Money(10,0));
 
-        mainHead.setSubordinateList(salesmanList);
+        Employee saller1 = new Salesman("1", "1", "1", new Money(1,1));
+        department.getEmployeeList().add(headOfSalesmen1);
+        department.getEmployeeList().add(headOfSalesmen2);
+        department.getEmployeeList().add(saller1);
 
-        Money salary = iReport.doSalaryOfDepartmentReport(mainHead,false);
-        Money salaryAll = iReport.doSalaryOfDepartmentReport(mainHead,true);
 
-        Assert.assertEquals(new Money(10, 99), salary);
-        Assert.assertEquals(new Money(14, 20), salaryAll);
+        headOfSalesmen1.getSubordinateList().add(headOfSalesmen2);
+        headOfSalesmen2.getSubordinateList().add(saller1);
+
+        Bill bill1 = new Bill();
+        bill1.setAmountPrice(new Money(1000,0));
+        bill1.setSalesman(headOfSalesmen1);
+        iAppDb.saveBill(bill1);
+
+        Bill bill2 = new Bill();
+        bill2.setAmountPrice(new Money(1000,0));
+        bill2.setSalesman(saller1);
+        iAppDb.saveBill(bill2);
+
+        IReport iReport = new IReportImpl(iAppDb);
+
+        System.out.println("Bill size - " + iAppDb.getBills().size());
+
+        Money money = iReport.calculateSalary(headOfSalesmen1, null, null);
+        System.out.println(money);
+
+        assertEquals(new Money(170,0),  money);
+        Money all = iReport.doDepartmentReport(department.getEmployeeList(), 0, null, null);
+        assertEquals(new Money(251,1),  all);
+
+
     }
-
 }

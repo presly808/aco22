@@ -8,7 +8,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.BillComparator;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
 import java.util.List;
@@ -76,10 +76,10 @@ public class ITerminalControllerTest {
         open.toString();
         open.getOpenTime();
         open.getAmountPrice();
-        open.setAmountPrice(0.0);
+        open.setAmountPrice(new Money(0,0));
         terminalController.getiAppDb().getProducts().put(product, 15);
         open = terminalController.addProduct(open.getId(), product);
-        double amountPrice = terminalController.calculateAmountPrice(open);
+        Money amountPrice = terminalController.calculateAmountPrice(open);
         product.getPrice();
         product.getId();
         product.getName();
@@ -152,9 +152,9 @@ public class ITerminalControllerTest {
         product3.setName("3");
         product3.setId(3);
 
-        product1.setPrice(1);
-        product2.setPrice(5);
-        product3.setPrice(2313.56);
+        product1.setPrice(new Money(1, 0));
+        product2.setPrice(new Money(123, 0));
+        product3.setPrice(new Money(12313, 42));
 
         Employee salesman1 = terminalController.
                 createSalesman("1123","123","1");

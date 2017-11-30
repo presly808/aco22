@@ -12,12 +12,12 @@ public class Generator {
     public static Product createProduct() {
         Product product = new Product();
         product.setName(generateName(30));
-        product.setPrice(Double.parseDouble(generateProductPrice()));
+        product.setPrice(generateProductPrice());
         return product;
     }
 
-    private static String generateProductPrice() {
-        return (int)(Math.random()*1000) + "." + (int)(Math.random()*100);
+    private static Money generateProductPrice() {
+        return new Money((int)(Math.random()*1000),  (int)(Math.random()*99));
     }
 
     private static String generateName(int r){

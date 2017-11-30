@@ -75,7 +75,7 @@ public abstract class Employee implements Comparable<Salesman> {
     }
 
     public abstract void setSubordinateList(List<Employee> subordinateList);
-    public abstract List getSubordinateList();
+    public abstract List<Employee> getSubordinateList();
 
     @Override
     public int hashCode() {

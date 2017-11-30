@@ -1,7 +1,6 @@
 package ua.artcode.market.models.employee;
 
 import ua.artcode.market.models.money.Money;
-//import ua.artcode.market.models.money.Salary;
 import ua.artcode.market.utils.Generator;
 
 import java.util.List;
@@ -15,6 +14,8 @@ public class HeadOfSalesmen extends Salesman {
                           Money salary) {
         super(fullName, login, password, salary);
         this.subordinateList = Generator.CreateSubordinateList();
+        this.percentOfPercent = 2;
+        this.setPercent(5);
     }
 
     public int getPercentOfPercent() {

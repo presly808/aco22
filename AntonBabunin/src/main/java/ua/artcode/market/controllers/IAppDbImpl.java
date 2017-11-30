@@ -217,9 +217,11 @@ public class IAppDbImpl implements IAppDb {
     private double aggrAmPrice(List<Bill> filteredList){
         int summ = 0;
         if (filteredList == null || filteredList.isEmpty()) return summ;
-        for (Bill bill : filteredList)
-            summ += bill.getAmountPrice();
-        return summ;
+        for (Bill bill : filteredList) {
+//            summ += bill.getAmountPrice();
+        }
+        return Double.parseDouble(null);
+
 
     }
 

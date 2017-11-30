@@ -12,7 +12,8 @@ public class BillComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return (int)((o2.getAmountPrice() - o1.getAmountPrice())*1000);
+        return 0;
+//        return (int)((o2.getAmountPrice() - o1.getAmountPrice())*1000);
     }
 
     @Override

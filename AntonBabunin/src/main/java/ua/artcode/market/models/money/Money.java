@@ -7,6 +7,10 @@ public class Money {
     public Money(int moneyWholePart, int moneyFraction) {
         this.moneyWholePart = moneyWholePart;
         this.moneyFraction = moneyFraction;
+        if (this.moneyFraction > 99) {
+            this.moneyWholePart = moneyWholePart + moneyFraction / 100;
+            this.moneyFraction = moneyFraction % 100;
+        }
     }
 
     public int getMoneyWholePart() {
@@ -28,26 +32,37 @@ public class Money {
     public Money doSum(Money salary) {
         if (salary == null) return this;
 
-        return new Money(this.getMoneyWholePart() + salary.getMoneyWholePart() +
+        return new Money(this.getMoneyWholePart() +
+                salary.getMoneyWholePart() +
                 ((this.getMoneyFraction() + salary.getMoneyFraction()) / 100),
                 (this.getMoneyFraction() + salary.getMoneyFraction()) % 100);
     }
 
 
 //    public static Money doSum(Money mon1, Money mon2) {
-//        if (mon1 == null || mon2 == null) return new Money(0,0);
-//        else if (mon1 != null && mon2 == null) return mon1;
-//        else if (mon1 == null && mon2 != null) return mon2;
-//        else return new Money(mon1.getMoneyWholePart() + mon2.getMoneyWholePart() +
-//                    ((mon1.getMoneyFraction() + mon2.getMoneyFraction()) / 100),
-//                    (mon1.getMoneyFraction() + mon2.getMoneyFraction()) % 100);
-//
-//    }
 
+    //        if (mon1 == null || mon2 == null) return new Money(0,0);
     public Money takePercent (int percent) {
-        int takedPercent = (this.moneyWholePart + this.moneyFraction) * percent / 100;
+        int takedPercent = (this.moneyWholePart + this.moneyFraction) * percent;
         return new Money(takedPercent / 100, takedPercent % 100);
     }
+
+    public Money multiply(Integer value) {
+        if (value == 0) return new Money(0,0);
+        this.setMoneyWholePart(this.moneyWholePart * value);
+        this.setMoneyFraction(this.moneyFraction * value);
+
+        return this;
+
+    }
+
+    //
+    //                    (mon1.getMoneyFraction() + mon2.getMoneyFraction()) % 100);
+    //                    ((mon1.getMoneyFraction() + mon2.getMoneyFraction()) / 100),
+    //        else if (mon1 == null && mon2 != null) return mon2;
+    //        else if (mon1 != null && mon2 == null) return mon1;
+    //        else return new Money(mon1.getMoneyWholePart() + mon2.getMoneyWholePart() +
+    //    }
 
     @Override
     public boolean equals(Object object) {
@@ -56,8 +71,8 @@ public class Money {
 
         Money salary = (Money) object;
 
-        if (moneyWholePart != salary.moneyWholePart) return false;
-        return moneyFraction == salary.moneyFraction;
+        return moneyWholePart == salary.moneyWholePart &&
+                moneyFraction == salary.moneyFraction;
     }
 
     @Override

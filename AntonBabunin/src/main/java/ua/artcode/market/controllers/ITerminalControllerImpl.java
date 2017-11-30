@@ -1,12 +1,12 @@
 package ua.artcode.market.controllers;
 
-import javafx.concurrent.Worker;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ITerminalController;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -74,7 +74,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         bill.getProductsMap().replace(product,
                 bill.getProductsMap().get(product) + 1);
-        bill.setAmountPrice(calculateAmountPrice(bill));
+//        bill.setAmountPrice(calculateAmountPrice(bill));
         iAppDb.getProducts().replace(product,
                 iAppDb.getProducts().get(product) - 1);
         iAppDb.update(bill);
@@ -88,14 +88,15 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public double calculateAmountPrice(Bill bill) {
+    public Money calculateAmountPrice(Bill bill) {
 
-        double amountPrice = 0.0;
+        Money amountPrice = new Money(0,0);
         if (bill == null || bill.getProductsMap() == null ||
                 bill.getProductsMap().isEmpty()) return amountPrice;
         for (Map.Entry<Product, Integer> pair :
                 bill.getProductsMap().entrySet()) {
-            amountPrice += pair.getKey().getPrice() * pair.getValue();
+            amountPrice = amountPrice.doSum(pair.getKey().getPrice().
+                    multiply(pair.getValue()));
         }
         return amountPrice;
     }
