@@ -28,7 +28,4 @@ public class Logger {
         logs.add(logInfo);
     }
 
-
-
-
 }

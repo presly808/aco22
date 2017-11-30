@@ -1,14 +1,18 @@
 package ua.artcode.market.views;
 
 import ua.artcode.market.interfaces.ITerminal;
+import ua.artcode.market.models.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Terminal {
 
     private ITerminal terminalController;
 
-    private boolean loggedSalesman;
+    private Salesman loggedSalesman;
+
+    private Bill bill;
 
     public Terminal(ITerminal terminalController) {
 
@@ -24,18 +28,28 @@ public class Terminal {
 
         while (true) {
 
-            System.out.println("1. LogIn");
+            System.out.println("1. Log In");
             System.out.println("2. Create bill");
             System.out.println("3. Add product");
             System.out.println("4. Close and save bill");
             System.out.println("5. Get top N of salesmen");
             System.out.println("6. Do some statistic");
             System.out.println("7. Filter some bills");
-            System.out.println("8. Exit");
+            System.out.println("8. Log Out");
+            System.out.println("9. View operation logs");
+            System.out.println("10. Exit");
 
             int choice = scan.nextInt();
 
-            int res = runChoice(choice);
+            int res = 0;
+
+            if (choice == 1 || loggedSalesman != null) {
+
+                res = runChoice(choice);
+
+            } else {
+                System.out.println("User isn't logged");
+            }
 
             if (res == -1) return;
 
@@ -45,8 +59,66 @@ public class Terminal {
     public int runChoice(int choice) {
 
         switch (choice) {
+
             case 1:
-                terminalController.logIn();
+
+                Salesman salesman = terminalController.getAppDB().
+                        getAllSalesman().get((int) (Math.random() *
+                        terminalController.getAppDB().
+                                getAllSalesman().size()));
+                loggedSalesman = terminalController.logIn(salesman.getLogin(),
+                        salesman.getPassword());
+                break;
+
+            case 2:
+
+                bill = terminalController.createBill(loggedSalesman);
+
+                if (bill == null) {
+                    System.out.println("Bill isn't created");
+                }
+                break;
+
+            case 3:
+
+                bill = terminalController.addProduct(bill.getId(),
+                        terminalController.getAppDB().getAllProducts().
+                                get(((int) (Math.random() * terminalController.
+                                        getAppDB().getAllProducts().
+                                        size()))));
+                if (bill == null) {
+                    System.out.println("Bill isn't found");
+                }
+
+            case 4:
+
+                if (bill != null) {
+                    bill = terminalController.closeAndSaveBill(bill.getId());
+
+                    if (bill == null) {
+                        System.out.println("Bill isn't found");
+                    }
+                } else {
+                    System.out.println("Bill isn't existed");
+                }
+                break;
+
+            case 5:
+
+                List<Salesman> salesmen = terminalController.
+                        getTopNOfSalesMen((int) (Math.random() *
+                        terminalController.getAppDB().
+                                getAllSalesman().size()-1)+1);
+
+                System.out.println(salesmen);
+
+                break;
+
+            case 6:
+
+
+
+
         }
 
     }

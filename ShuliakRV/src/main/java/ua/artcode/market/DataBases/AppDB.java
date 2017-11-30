@@ -7,7 +7,13 @@ import ua.artcode.market.models.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.artcode.market.utils.Utils.*;
+
 public class AppDB implements IAppDb {
+
+    public static final int countProducts = 10;
+
+    public static final int countSalesman = 10;
 
     private int nextBillId;
     private int nextProductId;
@@ -20,7 +26,17 @@ public class AppDB implements IAppDb {
     public AppDB() {
 
         products = new ArrayList<>();
+
+        for (int i = 0; i < countProducts; i++) {
+            products.add(generateProduct());
+        }
+
         salesmen = new ArrayList<>();
+
+        for (int i = 0; i < countSalesman; i++) {
+            salesmen.add(generateSalesman());
+        }
+
         bills = new ArrayList<>();
 
     }
@@ -43,7 +59,7 @@ public class AppDB implements IAppDb {
     @Override
     public Bill findByBillId(int billId) {
 
-        if (billId<=0) return null;
+        if (billId <= 0) return null;
 
         for (Bill bill : bills) {
             if (bill.getId() == billId)
@@ -56,7 +72,7 @@ public class AppDB implements IAppDb {
     @Override
     public Product findByProductId(int productId) {
 
-        if (productId<=0) return null;
+        if (productId <= 0) return null;
 
         for (Product product : products) {
             if (product.getId() == productId)
@@ -128,7 +144,7 @@ public class AppDB implements IAppDb {
     @Override
     public Bill removeBill(int billId) {
 
-        if (billId<=0) return null;
+        if (billId <= 0) return null;
 
         Bill bill = findByBillId(billId);
 
@@ -142,7 +158,7 @@ public class AppDB implements IAppDb {
     @Override
     public Product removeProduct(int productId) {
 
-        if (productId<=0) return null;
+        if (productId <= 0) return null;
 
         Product product = findByProductId(productId);
 
@@ -176,16 +192,16 @@ public class AppDB implements IAppDb {
 
         if (index == -1) return null;
 
-        return products.set(index,product);
+        return products.set(index, product);
     }
 
     public Salesman updateSalesman(Salesman salesman) {
 
         int index = salesmen.indexOf(salesman);
 
-        if (index==-1) return null;
+        if (index == -1) return null;
 
-        return salesmen.set(index,salesman);
+        return salesmen.set(index, salesman);
 
     }
 

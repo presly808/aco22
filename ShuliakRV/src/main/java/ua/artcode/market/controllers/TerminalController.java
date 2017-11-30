@@ -23,21 +23,24 @@ public class TerminalController implements ITerminal {
         this.appDB = appDB;
     }
 
-    public boolean logIn(String login, String password) {
+    public AppDB getAppDB() {
+        return appDB;
+    }
+
+    public Salesman logIn(String login, String password) {
 
         if (appDB.getAllSalesman().isEmpty() || login == null ||
                 login.isEmpty() || password == null || password.isEmpty())
-            return false;
+            return null;
 
         Salesman salesman =
                 appDB.findSalesmanByLoginOAndPassword(login, password);
 
         if (salesman != null) {
             salesman.setLogged(true);
-            return true;
         }
 
-        return false;
+        return salesman;
     }
 
 

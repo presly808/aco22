@@ -1,5 +1,6 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.DataBases.AppDB;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -15,7 +16,7 @@ public class ProxyTerminalController implements ITerminal {
 
     private ITerminal terminalController;
 
-    private String loggedSalesman;
+    private Salesman loggedSalesman;
 
     public ProxyTerminalController(ITerminal terminalController) {
 
@@ -23,22 +24,28 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public boolean logIn(String login, String password) {
+    public AppDB getAppDB() {
+        return terminalController.getAppDB();
+    }
+
+    @Override
+    public Salesman logIn(String login, String password) {
 
         Logger.getInstance().log(String.format("Time : %s  User is logging " +
                         "with login: %s and password: %s",
                 LocalDateTime.now().toString(), login, password));
 
-        if (terminalController.logIn(login, password)) {
+        loggedSalesman = terminalController.logIn(login, password);
 
-            loggedSalesman = login;
+        if (loggedSalesman != null) {
+
 
             Logger.getInstance().log(String.
                     format("Time : %s  User is logged " +
                                     "with login: %s and password: %s",
-                            LocalDateTime.now().toString(), login, password));
+                            LocalDateTime.now().toString(), loggedSalesman.getLogin(), loggedSalesman.getPassword()));
 
-            return true;
+            return loggedSalesman;
 
         } else {
 
@@ -48,7 +55,7 @@ public class ProxyTerminalController implements ITerminal {
                             LocalDateTime.now().toString(), login, password));
         }
 
-        return false;
+        return null;
     }
 
     @Override

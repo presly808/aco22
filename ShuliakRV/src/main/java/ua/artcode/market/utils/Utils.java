@@ -3,26 +3,28 @@ package ua.artcode.market.utils;
 import ua.artcode.market.DataBases.AppDB;
 import ua.artcode.market.models.*;
 
+import static ua.artcode.market.DataBases.AppDB.*;
+
 public class Utils {
 
 
-    public static Product generateProduct(AppDB appDB) {
+    public static Product generateProduct() {
 
         String[] s = {"Meat", "Fish", "Fruit", "Vegetable", "Sausage"};
 
         return new Product(s[(int) (Math.random() * s.length)] +
-                (int) (Math.random() * appDB.getAllProducts().size()),
+                (int) (Math.random() * countProducts),
                 (Math.random() * 1000));
     }
 
-    public static Salesman generateSalesman(AppDB appDB) {
+    public static Salesman generateSalesman() {
 
         String[] s = {"Andry", "Kate", "Sveta", "Igor", "Maxim", "Olya"};
 
         int index = (int) (Math.random() * s.length);
 
         String fullname = s[index] +
-                (int) (Math.random() * appDB.getAllSalesman().size());
+                (int) (Math.random() * countSalesman);
 
         String login = s[index];
 
