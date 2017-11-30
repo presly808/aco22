@@ -213,6 +213,11 @@ public class ITerminalControllerTest {
                 product1, null, null, BillComparator.
                         billComparator.thenComparing(other));
 
+        terminalController.getiAppDb().removeBill(1);
+        terminalController.getiAppDb().averageAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getiAppDb().minAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getiAppDb().maxAmountPrice((Salesman) salesman1,null, null);
+
        /* LocalDateTime.MIN, LocalDateTime.MAX*/
 //        assertTrue(sorted.get(0).getAmountPrice() >=
 //                sorted.get(1).getAmountPrice());

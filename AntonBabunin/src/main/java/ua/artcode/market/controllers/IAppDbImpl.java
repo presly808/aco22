@@ -220,7 +220,7 @@ public class IAppDbImpl implements IAppDb {
         for (Bill bill : filteredList) {
 //            summ += bill.getAmountPrice();
         }
-        return Double.parseDouble(null);
+        return 0.0;
 
 
     }
