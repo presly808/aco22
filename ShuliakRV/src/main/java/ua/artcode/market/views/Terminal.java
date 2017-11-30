@@ -45,7 +45,9 @@ public class Terminal {
 
             int choice = scan.nextInt();
 
-            int res = 0;
+            if (choice == 10) return;
+
+                int res = 0;
 
             if (choice == 1 || loggedSalesman != null) {
 
@@ -93,6 +95,10 @@ public class Terminal {
 
             case 3:
 
+                if (bill == null) {
+                    System.out.println("Bill isn't exists");
+                    break;
+                }
                 bill = terminalController.addProduct(bill.getId(),
                         terminalController.getAppDB().getAllProducts().
                                 get(((int) (Math.random() * terminalController.
@@ -108,13 +114,17 @@ public class Terminal {
 
             case 4:
 
+                if (bill == null) {
+                    System.out.println("Bill isn't exists");
+                    break;
+                }
                 bill = terminalController.closeAndSaveBill(bill.getId());
                 if (bill == null) {
                     System.out.println("Bill wasn't found");
                 } else {
                     System.out.println("Bill was saved and closed");
                 }
-
+                bill = null;
                 break;
 
             case 5:
@@ -146,6 +156,7 @@ public class Terminal {
                 break;
 
             case 8:
+
                 terminalController.logOut(loggedSalesman);
                 loggedSalesman = null;
                 System.out.println("User logged out");
