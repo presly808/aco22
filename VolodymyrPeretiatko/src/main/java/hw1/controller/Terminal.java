@@ -12,6 +12,33 @@ public class Terminal implements ITerminal {
     private Salesman currentUser;
 
     @Override
+    public Double getSalesmanSallary(Salesman salesman, Date startDate, Date endDate) {
+
+
+        Double ownSalesSalary = getPercentOfSales(salesman, startDate, endDate,
+                                                  AppSettings.SALLARY_PERCENT_SALES_OWN);
+        Double subSalesSalary = 0.0;
+
+        return ownSalesSalary + subSalesSalary;
+    }
+
+    private Double getPercentOfSales(Salesman salesman, Date startDate, Date endDate, Double percent){
+
+        Double result = 0.0;
+
+        List<Salesman> salesmen = new ArrayList<>();
+        salesmen.add(salesman);
+
+        List<Bill> bills = filter(salesmen, null, startDate, endDate, new Bill.SortByDateComparator());
+        for (Bill b: bills){
+            result += b.getAmountPrice() * percent;
+        }
+        return  result;
+    }
+
+    //public Double get
+
+    @Override
     public List<Salesman> getSalesmen() {
         List<DBItem> items = appDB.getAll(Salesman.class);
         List<Salesman> salesmen = new ArrayList<>(items.size());
@@ -131,8 +158,8 @@ public class Terminal implements ITerminal {
     }
 
     @Override
-    public ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products,
-                                  Date startDate, Date endDate, Comparator<Bill> comparator){
+    public List<Bill> filter(List<Salesman> salesmen, List<Product> products,
+                             Date startDate, Date endDate, Comparator<Bill> comparator){
 
         ArrayList<Bill> result = new ArrayList<>();
         Date BDate;
@@ -148,9 +175,9 @@ public class Terminal implements ITerminal {
                 continue;
             }
 
-            if (products != null
-                    && !Utils.listContainElementsOther(b.getProducts(), products)){
-                continue;
+            if (products != null){
+                if (!CollectionUtils.listContainElementsOther(b.getProducts(), products))
+                    continue;
             }
 
             result.add(b);

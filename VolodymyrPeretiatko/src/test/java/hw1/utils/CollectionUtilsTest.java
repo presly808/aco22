@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class TestUtils {
+public class CollectionUtilsTest {
 
     @Test
     public void testListContainElementsOther(){
@@ -24,8 +24,8 @@ public class TestUtils {
         arrList3.add("E");
         arrList3.add("Z");
 
-        Assert.assertTrue(Utils.listContainElementsOther(arrList1, arrList2));
-        Assert.assertFalse(Utils.listContainElementsOther(arrList1, arrList3));
+        Assert.assertTrue(CollectionUtils.listContainElementsOther(arrList1, arrList2));
+        Assert.assertFalse(CollectionUtils.listContainElementsOther(arrList1, arrList3));
 
     }
 

@@ -5,8 +5,9 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class TestTerminal {
+public class TerminalTest {
 
     private ITerminal terminal;
 
@@ -91,7 +92,7 @@ public class TestTerminal {
         expected.add(b1);
         expected.add(b2);
 
-        ArrayList<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
+        List<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
                 new Date(1510842400000L), new Date(1510842400999L), new Bill.SortByDateComparator());
 
         Assert.assertEquals(expected, actual);
@@ -104,7 +105,7 @@ public class TestTerminal {
         ArrayList<Bill> expected = new ArrayList<>();
         expected.add(b2);
 
-        ArrayList<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
+        List<Bill> actual = terminal.filter(terminal.getSalesmen(), terminal.getProducts(),
                 new Date(1510842400077L), new Date(1510842400999L), new Bill.SortByDateComparator());
 
         Assert.assertEquals(expected, actual);
@@ -122,13 +123,13 @@ public class TestTerminal {
     @Test
     public void testFilterbySalesman(){
 
-        ArrayList<Bill> expected = new ArrayList<>();
+        List<Bill> expected = new ArrayList<>();
         expected.add(b1);
 
-        ArrayList<Salesman> salesmen = new ArrayList<>();
+        List<Salesman> salesmen = new ArrayList<>();
         salesmen.add(s1);
 
-        ArrayList<Bill> actual = terminal.filter(salesmen, terminal.getProducts(),
+        List<Bill> actual = terminal.filter(salesmen, terminal.getProducts(),
                 new Date(1510842400000L), new Date(1510842400999L), new Bill.SortByDateComparator());
 
         Assert.assertEquals(expected, actual);

@@ -2,7 +2,7 @@ package hw1.utils;
 
 import java.util.List;
 
-public class Utils {
+public class CollectionUtils {
 
     public static boolean listContainElementsOther(List src, List list){
         for (Object o : list){
