@@ -37,6 +37,29 @@ public class AppDB implements IAppDb {
             saveSalesman(generateSalesman());
         }
 
+
+        int level = 0;
+        int index = 0;
+
+        outer:
+        for (int i = 0; i < salesmen.size(); i ++) {
+
+            for (int j = 1; j <= Math.pow(2, level); j++) {
+
+                index = i + j;
+
+                if (index < salesmen.size()) {
+                    salesmen.get(i).getSubSalesmen().add(salesmen.get(index));
+                } else {
+                    break outer;
+                } ;
+
+                level++;
+
+            }
+
+        }
+
         bills = new ArrayList<>();
 
     }

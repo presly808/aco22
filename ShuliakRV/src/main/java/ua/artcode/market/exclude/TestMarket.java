@@ -2,6 +2,7 @@ package ua.artcode.market.exclude;
 
 import ua.artcode.market.factories.FactoryITerminal;
 import ua.artcode.market.interfaces.ITerminal;
+import ua.artcode.market.models.Salesman;
 import ua.artcode.market.views.Terminal;
 
 public class TestMarket {
@@ -12,7 +13,11 @@ public class TestMarket {
 
         Terminal terminal = new Terminal(terminalController);
 
-        terminal.mainMenu();
+     //   terminal.mainMenu();
+
+        for (Salesman salesman : terminalController.getAppDB().getAllSalesman()) {
+            System.out.println(salesman.getSubSalesmen());
+        }
 
     }
 }

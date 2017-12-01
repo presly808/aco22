@@ -41,6 +41,10 @@ public class Salesman {
         return amountSales;
     }
 
+    public List<Salesman> getSubSalesmen() {
+        return subSalesmen;
+    }
+
     public boolean isLogged() {
         return isLogged;
     }
