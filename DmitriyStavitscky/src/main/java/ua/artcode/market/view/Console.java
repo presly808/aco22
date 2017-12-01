@@ -48,9 +48,11 @@ public class Console {
                     int pass = sc.nextInt();
 
                     terminal.signIn(loginOrName, pass);
+                    break;
 
                 case 2:
                     terminal.logOut();
+                    break;
 
                 case 3:
                     terminal.createBill();
@@ -63,6 +65,7 @@ public class Console {
                             case 1:
                                 System.out.println("Enter id");
                                 terminal.addProductToBill(sc.nextInt());
+                                break;
 
                             case 2:
                                 System.out.println("Enter hours");
@@ -74,22 +77,30 @@ public class Console {
 
                                 terminal.closeAndSaveBill(hours, minutes, seconds);
                                 billOpen = false;
+                                break;
                         }
                     }
+                    break;
 
                 case 4:
                     System.out.println(terminal.getTopNofSalesMan().toString());
+                    break;
 
                 case 5:
                     System.out.println(terminal.makeStatistics().toString());
+                    break;
 
                 case 6:
                     System.out.println("Enter login or name");
                     terminal.getAppDB().findSalesmanByLoginOrName(sc.nextLine());
+                    break;
 
                 case 7:
                     exit = true;
+                    break;
 
+                default:
+                    System.out.println("try again");
             }
         }
     }

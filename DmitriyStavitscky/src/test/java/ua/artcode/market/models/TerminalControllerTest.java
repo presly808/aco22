@@ -250,6 +250,6 @@ public class TerminalControllerTest {
         terminal.addSubSalesman(a4, a5);
         terminal.addSubSalesman(a5, a3);
 
-        assertTrue(TerminalUtils.IsBoss(terminal.getLoggedSalesman(), a5, a3));
+        assertTrue(TerminalUtils.isBoss(terminal.getLoggedSalesman(), a5, a3));
     }
 }

@@ -169,7 +169,7 @@ public class TerminalController implements ITerminal {
         if (!loggedSalesman.isDirector()) {
             System.out.println("Only a director can add a subordinate");
 
-        } else if (!TerminalUtils.IsBoss(loggedSalesman, chief, subordinate)) {
+        } else if (!TerminalUtils.isBoss(loggedSalesman, chief, subordinate)) {
             appDB.findSalesmanById(chief.getId()).getSubordinates().add(subordinate);
 
         } else {
