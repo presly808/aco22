@@ -22,32 +22,25 @@ public class ProxyTerminalControllerTest {
 
     private Terminal terminal;
 
+    private Salesman salesman;
+
     @Before
     public void setUp() throws Exception {
         terminalController = (ProxyTerminalController) FactoryITerminal.createITerminalController();
         terminal = new Terminal(terminalController);
-    }
-
-    @Test
-    public void logIn() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
+        salesman = terminalController.getAppDB().getAllSalesman().get(0);
         assertEquals(salesman, terminalController.logIn(salesman.getLogin(), salesman.getPassword()));
+        salesman = terminalController.logIn(salesman.getLogin(), salesman.getPassword());
     }
 
     @Test
     public void createBill() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         Bill bill = terminalController.createBill(salesman);
         assertEquals(1, bill.getId());
     }
 
     @Test
     public void addProduct() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         Bill bill = terminalController.createBill(salesman);
         Product product = terminalController.getAppDB().getAllProducts().get(0);
         bill = terminalController.addProduct(bill.getId(), product);
@@ -58,9 +51,6 @@ public class ProxyTerminalControllerTest {
 
     @Test
     public void closeAndSaveBill() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         Bill bill = terminalController.createBill(salesman);
         Product product = terminalController.getAppDB().getAllProducts().get(0);
         bill = terminalController.addProduct(bill.getId(), product);
@@ -72,9 +62,6 @@ public class ProxyTerminalControllerTest {
 
     @Test
     public void getTopNOfSalesMen() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         assertEquals(0, terminalController.getTopNOfSalesMen(1).get(0).getSoldProducts());
         Bill bill = terminalController.createBill(salesman);
         Product product = terminalController.getAppDB().getAllProducts().get(0);
@@ -87,9 +74,6 @@ public class ProxyTerminalControllerTest {
 
     @Test
     public void doSomeStatisticStuff() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         Bill bill = terminalController.createBill(salesman);
         Product product = terminalController.getAppDB().getAllProducts().get(0);
         bill = terminalController.addProduct(bill.getId(), product);
@@ -103,9 +87,6 @@ public class ProxyTerminalControllerTest {
 
     @Test
     public void filter() throws Exception {
-        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
-        salesman.setLogged(true);
-        terminalController.setLoggedSalesman(salesman);
         Bill bill = terminalController.createBill(salesman);
         Product product = terminalController.getAppDB().getAllProducts().get(0);
         bill = terminalController.addProduct(bill.getId(), product);

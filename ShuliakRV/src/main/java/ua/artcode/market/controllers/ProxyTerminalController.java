@@ -28,10 +28,6 @@ public class ProxyTerminalController implements ITerminal {
         return terminalController.getAppDB();
     }
 
-    public void setLoggedSalesman(Salesman loggedSalesman) {
-        this.loggedSalesman = loggedSalesman;
-    }
-
     @Override
     public Salesman logIn(String login, String password) {
 
