@@ -3,6 +3,7 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.IReport;
 import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Department;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.HeadOfSalesmen;
 import ua.artcode.market.models.money.Money;
@@ -17,16 +18,11 @@ public class IReportImpl implements IReport {
         this.iAppDb = iAppDb;
     }
 
-    @Override
-    public Money doDepartmentReport(List<Employee> employeeList, int i,
-                                    LocalDateTime start, LocalDateTime end) {
-        Money amountSalary = new Money(0,0);
 
-        if (employeeList == null || employeeList.isEmpty() ||
-                i >= employeeList.size()) return amountSalary;
-            return amountSalary.doSum(calculateSalary(employeeList.get(i),
-                    start, end)).doSum(doDepartmentReport(employeeList,
-                    i + 1, start, end));
+    @Override
+    public Money doDepartmentReport(Department department, LocalDateTime start,
+                                    LocalDateTime end) {
+        return doDepartmentReport(department.getEmployeeList(), 0, start, end);
     }
 
     @Override
@@ -46,6 +42,17 @@ public class IReportImpl implements IReport {
 
         return employee.getSalary().doSum(salesPercent(employee, start, end));
 
+    }
+
+    private Money doDepartmentReport(List<Employee> employeeList, int i,
+                                     LocalDateTime start, LocalDateTime end) {
+        Money amountSalary = new Money(0,0);
+
+        if (employeeList == null || employeeList.isEmpty() ||
+                i >= employeeList.size()) return amountSalary;
+        return amountSalary.doSum(calculateSalary(employeeList.get(i),
+                start, end)).doSum(doDepartmentReport(employeeList,
+                i + 1, start, end));
     }
 
     private Money salesPercent(Employee employee, LocalDateTime start,

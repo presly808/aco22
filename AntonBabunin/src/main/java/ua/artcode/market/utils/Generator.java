@@ -60,7 +60,7 @@ public class Generator {
         return salesman;
     }
 
-    public static List<Employee> CreateSubordinateList() {
+    public static List<Employee> createSubordinateList() {
         return new ArrayList<Employee>();
     }
 

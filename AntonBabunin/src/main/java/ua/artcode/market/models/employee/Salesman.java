@@ -29,7 +29,7 @@ public class Salesman extends Employee {
 
     @Override
     public void setSubordinateList(List<Employee> subordinateList) {
-
+        System.out.println("Salesman haven't the subordinates!");
     }
 
     @Override

@@ -1,7 +1,5 @@
 package ua.artcode.market.models;
 
-import ua.artcode.market.models.money.Money;
-
 public class Product extends AbstractProduct {
 
     @Override

@@ -8,12 +8,12 @@ import java.util.List;
 public class HeadOfSalesmen extends Salesman {
 
     private List<Employee> subordinateList;
-    int percentOfPercent;
+    private int percentOfPercent;
 
     public HeadOfSalesmen(String fullName, String login, String password,
                           Money salary) {
         super(fullName, login, password, salary);
-        this.subordinateList = Generator.CreateSubordinateList();
+        this.subordinateList = Generator.createSubordinateList();
         this.percentOfPercent = 2;
         this.setPercent(5);
     }
@@ -22,9 +22,9 @@ public class HeadOfSalesmen extends Salesman {
         return percentOfPercent;
     }
 
-    public void setPercentOfPercent(int percentOfPercent) {
-        this.percentOfPercent = percentOfPercent;
-    }
+//    public void setPercentOfPercent(int percentOfPercent) {
+//        this.percentOfPercent = percentOfPercent;
+//    }
 
     @Override
     public List<Employee> getSubordinateList() {

@@ -18,7 +18,7 @@ public class IAppDbImpl implements IAppDb {
     private int productNextId;
 
     private List<Bill> bills;
-    private List<Employee> employeeList;
+//    private List<Employee> employeeList;
     private Map<Product,Integer> products;
 
 
@@ -27,9 +27,11 @@ public class IAppDbImpl implements IAppDb {
         this.products = Generator.randomProducts(0);
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
+//    public List<Employee> getEmployeeList() {
+//        return employeeList;
+//    }
+
+
 
     @Override
     public Map<Product, Integer> getProducts() {

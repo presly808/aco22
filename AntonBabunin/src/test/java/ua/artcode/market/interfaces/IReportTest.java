@@ -79,7 +79,7 @@ public class IReportTest {
         System.out.println(money);
 
         assertEquals(new Money(170,0),  money);
-        Money all = iReport.doDepartmentReport(department.getEmployeeList(), 0, null, null);
+        Money all = iReport.doDepartmentReport(department,null, null);
         assertEquals(new Money(251,1),  all);
 
 

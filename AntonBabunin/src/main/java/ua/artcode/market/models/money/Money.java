@@ -1,6 +1,6 @@
 package ua.artcode.market.models.money;
 
-public class Money {
+public class Money implements Comparable{
     private int moneyWholePart;
     private int moneyFraction;
 
@@ -56,14 +56,6 @@ public class Money {
 
     }
 
-    //
-    //                    (mon1.getMoneyFraction() + mon2.getMoneyFraction()) % 100);
-    //                    ((mon1.getMoneyFraction() + mon2.getMoneyFraction()) / 100),
-    //        else if (mon1 == null && mon2 != null) return mon2;
-    //        else if (mon1 != null && mon2 == null) return mon1;
-    //        else return new Money(mon1.getMoneyWholePart() + mon2.getMoneyWholePart() +
-    //    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -89,5 +81,24 @@ public class Money {
 
     public Money div(int size) {
         return new Money(0,0);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) return 1;
+
+        if (this.getMoneyWholePart() > ((Money)o).getMoneyWholePart())
+            return 10;
+
+        else if (this.getMoneyWholePart() < ((Money)o).getMoneyWholePart())
+            return -10;
+
+        else if (this.getMoneyWholePart() == ((Money)o).getMoneyWholePart() &&
+                this.moneyFraction > ((Money)o).getMoneyFraction()) return 5;
+
+        else if (this.getMoneyWholePart() == ((Money)o).getMoneyWholePart() &&
+                this.moneyFraction < ((Money)o).getMoneyFraction()) return -5;
+
+        else return 0;
     }
 }

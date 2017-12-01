@@ -87,10 +87,6 @@ public class ITerminalControllerTest {
 
         assertNotEquals(0.0, amountPrice);
         assertNotEquals(0.0, open.getAmountPrice());
-
-
-
-
     }
 
     @Test
@@ -101,30 +97,24 @@ public class ITerminalControllerTest {
         salesman.getFullName();
         salesman.getPassword();
         salesman.toString();
-//        Employee salesman2 = terminalController.getiAppDb().
-//                createSalesman("2", "2", "2");
-//        salesman2.setLogin("2");
-//        salesman2.setPassword("2");
-//        salesman2.setFullName("2");
-//        salesman2.setIsConnected(false);
-//
-//        assertFalse(salesman.equals(salesman2));
-//        assertNotEquals(null, salesman);
+        Employee salesman2 = terminalController.getiAppDb().
+                createSalesman("2", "2", "2");
+        salesman2.setLogin("2");
+        salesman2.setPassword("2");
+        salesman2.setFullName("2");
+        salesman2.setIsConnected(false);
+
+        assertFalse(salesman.equals(salesman2));
+        assertNotEquals(null, salesman);
     }
 
-    @Test
-    public void login() throws Exception {
-//        Employee salesman = terminalController.getiAppDb().
-//                createSalesman("1", "1", "1");
-//        salesman = terminalController.getiAppDb().login("1", "1");
+//    @Test
+//    public void login() throws Exception {
+//        Employee salesman = terminalController.createSalesman("1", "1", "1");
+//        salesman = terminalController.login("1", "1");
 //        assertNotEquals(null, salesman);
-    }
+//    }
 
-    @Test
-    public void login1() throws Exception {
-//        Employee salesman = terminalController.getiAppDb().login("asd", "asd");
-//        assertEquals(null, salesman);
-    }
 
     @Test
     public void saveAndRemoveBill() throws Exception {
@@ -138,10 +128,6 @@ public class ITerminalControllerTest {
 
     @Test
     public void filter() throws Exception {
-
-
-
-
         Product product1 = new Product();
         Product product2 = new Product();
         Product product3 = new Product();
@@ -202,7 +188,7 @@ public class ITerminalControllerTest {
         terminalController.closeBill(bill3.getId());
         terminalController.closeBill(bill4.getId());
 
-        terminalController.logout((Salesman) salesman1);
+//        terminalController.logout((Salesman) salesman1);
         terminalController.prinBill(bill1);
         terminalController.getiAppDb();
         terminalController.getAllBills();

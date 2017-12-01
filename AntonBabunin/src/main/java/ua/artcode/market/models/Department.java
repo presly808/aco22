@@ -5,7 +5,7 @@ import ua.artcode.market.models.employee.Employee;
 import java.util.List;
 
 public class Department {
-    List<Employee> employeeList;
+    private List<Employee> employeeList;
 
     public Department(List<Employee> employeeList) {
         this.employeeList = employeeList;
