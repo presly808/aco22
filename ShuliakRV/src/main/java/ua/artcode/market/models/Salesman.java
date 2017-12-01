@@ -1,17 +1,24 @@
 package ua.artcode.market.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Salesman {
 
     private String fullname;
     private String login;
     private String password;
     private int soldProducts;
+    private double amountSales;
     private boolean isLogged;
+
+    List<Salesman> subSalesmen;
 
     public Salesman(String fullname, String login, String password) {
         this.fullname = fullname;
         this.login = login;
         this.password = password;
+        this.subSalesmen = new ArrayList<>();
     }
 
     public String getFullname() {
@@ -28,6 +35,10 @@ public class Salesman {
 
     public int getSoldProducts() {
         return soldProducts;
+    }
+
+    public double getAmountSales() {
+        return amountSales;
     }
 
     public boolean isLogged() {
@@ -48,6 +59,10 @@ public class Salesman {
 
     public void setSoldProducts(int soldProducts) {
         this.soldProducts = soldProducts;
+    }
+
+    public void setAmountSales(double amountSales) {
+        this.amountSales = amountSales;
     }
 
     public void setLogged(boolean logged) {

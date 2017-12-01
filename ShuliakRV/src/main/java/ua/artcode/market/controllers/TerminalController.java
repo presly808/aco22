@@ -88,13 +88,6 @@ public class TerminalController implements ITerminal {
 
             appDB.updateBill(bill);
 
-            Salesman salesmen = bill.getSalesMan();
-
-            salesmen.setSoldProducts(salesmen.getSoldProducts() +
-                    bill.getProducts().size());
-
-            appDB.updateSalesman(salesmen);
-
         }
 
         return bill;
@@ -105,6 +98,29 @@ public class TerminalController implements ITerminal {
         if (appDB.getAllSalesman().isEmpty() || n <= 0) return null;
 
         List<Salesman> salesmen = (ArrayList) ((ArrayList) appDB.getAllSalesman()).clone();
+
+        List<Bill> bills = appDB.getAllBills();
+
+        for (Salesman salesman : salesmen) {
+            salesman.setSoldProducts(0);
+            salesman.setAmountSales(0);
+        }
+
+        for (int i = 0; i < bills.size(); i++) {
+
+            if (!bills.get(i).isClosed()) continue;
+
+            Salesman salesman = bills.get(i).getSalesMan();
+
+            salesman.setSoldProducts(
+                    salesman.getSoldProducts() +
+                            bills.get(i).getProducts().size());
+
+            salesman.setAmountSales(salesman.getAmountSales() +
+                    bills.get(i).getAmountPrice());
+
+
+        }
 
         salesmen.sort(new SalesmenSoldProductsComparator());
 
@@ -126,9 +142,20 @@ public class TerminalController implements ITerminal {
 
         List<Bill> resBill = new ArrayList<>();
 
+        for (Salesman salesman : salesmen) {
+            salesman.setSoldProducts(0);
+            salesman.setAmountSales(0);
+        }
+
+        Salesman salesman = null;
+
         int index = 0;
 
-        for (int i = 0; i < appDB.getAllBills().size(); i++) {
+        List<Bill> bills = appDB.getAllBills();
+
+        for (int i = 0; i < bills.size(); i++) {
+
+            if (!bills.get(i).isClosed()) continue;
 
             boolean addBill = true;
 
@@ -137,9 +164,10 @@ public class TerminalController implements ITerminal {
                 addBill = false;
 
                 for (int j = 0; j < salesmen.size(); j++) {
-                    if (appDB.getAllBills().get(i).getSalesMan().
+                    if (bills.get(i).getSalesMan().
                             equals(salesmen.get(j))) {
                         addBill = true;
+                        salesman = bills.get(i).getSalesMan();
                         break;
                     }
                 }
@@ -149,7 +177,7 @@ public class TerminalController implements ITerminal {
 
                 addBill = false;
 
-                if (appDB.getAllBills().get(i).hasProducts(products)) {
+                if (bills.get(i).hasProducts(products)) {
                     addBill = true;
                 } else {
                     addBill = false;
@@ -157,7 +185,7 @@ public class TerminalController implements ITerminal {
             }
 
             if (addBill && startTime != null) {
-                if (appDB.getAllBills().get(i).getCloseTime().
+                if (bills.get(i).getCloseTime().
                         compareTo(startTime) >= 0) {
                     addBill = true;
                 } else {
@@ -166,7 +194,7 @@ public class TerminalController implements ITerminal {
             }
 
             if (addBill && endTime != null) {
-                if (appDB.getAllBills().get(i).getCloseTime().
+                if (bills.get(i).getCloseTime().
                         compareTo(endTime) <= 0) {
                     addBill = true;
                 } else {
@@ -174,7 +202,15 @@ public class TerminalController implements ITerminal {
                 }
             }
 
-            if (addBill) resBill.add(appDB.getAllBills().get(i));
+            if (addBill) {
+                resBill.add(bills.get(i));
+                salesman.setSoldProducts(
+                        salesman.getSoldProducts() +
+                                bills.get(i).getProducts().size());
+
+                salesman.setAmountSales(salesman.getAmountSales() +
+                        bills.get(i).getAmountPrice());
+            }
 
             resBill.sort(comparator);
 
