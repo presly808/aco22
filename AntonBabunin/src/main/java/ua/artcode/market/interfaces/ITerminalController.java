@@ -1,7 +1,6 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.money.Money;
