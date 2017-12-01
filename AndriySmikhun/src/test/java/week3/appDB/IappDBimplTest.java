@@ -1,9 +1,7 @@
-package week3.AppDB;
+package week3.appDB;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class IappDBimplTest {
     @Test

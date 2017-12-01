@@ -1,14 +1,11 @@
-package week3.AppDB;
+package week3.appDB;
 
 import week3.model.Bill;
-import week3.model.Product;
 import week3.model.Salesman;
-
-import java.util.List;
 
 public interface IappDB {
 
-    Bill getBill();
+
     boolean updateBill(Bill newBill, Bill oldBill);
     boolean removeBill(int id);
     Bill findeBillByID(int id);

@@ -27,6 +27,10 @@ public class Bill {
         return id;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
     public double getEverageBill() {
         return everageBill;
     }

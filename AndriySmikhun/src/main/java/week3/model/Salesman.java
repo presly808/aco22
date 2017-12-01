@@ -1,16 +1,21 @@
 package week3.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Salesman {
     private int id;
     private String login;
     private String password;
     private String fullName;
+    public List <Salesman> slaves = new ArrayList <Salesman>() ;
 
-    public Salesman(int id, String login, String password, String fullName) {
+    public Salesman(int id, String login, String password, String fullName, List slaves) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.fullName = fullName;
+        this.slaves = slaves;
     }
 
     public Salesman() {

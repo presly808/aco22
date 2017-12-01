@@ -1,12 +1,12 @@
 package week3.controller;
 
-import week1.model.Product;
-import week3.AppDB.IappDBimpl;
+import week3.model.Product;
+import week3.appDB.IappDBimpl;
 import week3.model.Bill;
 import week3.model.Salesman;
 
-public class ITerminalimpl implements ITerminal{
-    private IappDBimpl  db = new IappDBimpl();
+public class ITerminalimpl implements ITerminal {
+    private IappDBimpl appDB = new IappDBimpl();
     private Salesman user;
 
     @Override
@@ -16,28 +16,28 @@ public class ITerminalimpl implements ITerminal{
 
     //@Override
     //public boolean logOut(Salesman salesman) {
-      //  return false;
+    //  return false;
     //}
 
     @Override
     public boolean addProduct(int id, Product product) {
+        Bill bill = appDB.findeBillByID(id);
+        if (bill != null) {
+            bill.getProducts().add(product);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean deleteProduct(int idBill, Product product) {
+        Bill bill = appDB.findeBillByID(idBill);
+        if (bill.getProducts().remove(product)){
+            return true;
+        }
         return false;
     }
 
-    @Override
-    public Bill maxBill() {
-        return null;
-    }
-
-    @Override
-    public Bill minBill() {
-        return null;
-    }
 
     @Override
     public Bill[] filterBill() {

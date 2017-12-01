@@ -1,6 +1,6 @@
 package week3.controller;
 
-import week1.model.Product;
+import week3.model.Product;
 import week3.model.Bill;
 import week3.model.Salesman;
 
@@ -47,7 +47,7 @@ private Log loger = Log.getLog();
         return false;
     }
 
-    @Override
+   /* @Override
     public Bill maxBill() {
         loger.event("Find Max Bill");
         Bill bill = realterminal.maxBill();
@@ -69,7 +69,7 @@ private Log loger = Log.getLog();
         }
         loger.error("Bill did'nt find");
         return null;
-    }
+    }*/
 
     @Override
     public Bill[] filterBill() {

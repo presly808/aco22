@@ -1,4 +1,4 @@
-package week3.AppDB;
+package week3.appDB;
 
 import week3.model.Bill;
 import week3.model.Product;
@@ -14,11 +14,6 @@ public class IappDBimpl implements IappDB {
 
 
     //////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public Bill getBill() {
-
-        return null;
-    }
 
     @Override
     public boolean updateBill(Bill newBill, Bill oldBill) {
