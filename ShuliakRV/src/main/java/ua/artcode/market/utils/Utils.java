@@ -1,7 +1,13 @@
 package ua.artcode.market.utils;
 
+import ua.artcode.market.comparators.BillIdComparator;
 import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.models.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static ua.artcode.market.databases.AppDB.*;
 
@@ -94,6 +100,129 @@ public class Utils {
         }
 
         return result;
+    }
+
+    public static List<Bill> filter(AppDB appDB,
+                                    List<Salesman> salesmen,
+                                    List<Product> products,
+                                    LocalDateTime startTime,
+                                    LocalDateTime endTime,
+                                    Comparator<Bill> comparator) {
+
+        List<Bill> resBill = new ArrayList<>();
+
+        for (Salesman salesman : salesmen) {
+            salesman.setSoldProducts(0);
+            salesman.setAmountSales(0);
+        }
+
+        Salesman salesman = null;
+
+        int index = 0;
+
+        List<Bill> bills = appDB.getAllBills();
+
+        for (int i = 0; i < bills.size(); i++) {
+
+            if (!bills.get(i).isClosed()) continue;
+
+            boolean addBill = true;
+
+            if (salesmen != null) {
+
+                addBill = false;
+
+                for (int j = 0; j < salesmen.size(); j++) {
+                    if (bills.get(i).getSalesMan().
+                            equals(salesmen.get(j))) {
+                        addBill = true;
+                        salesman = bills.get(i).getSalesMan();
+                        break;
+                    }
+                }
+            }
+
+            if (addBill && products != null) {
+
+                addBill = false;
+
+                if (bills.get(i).hasProducts(products)) {
+                    addBill = true;
+                } else {
+                    addBill = false;
+                }
+            }
+
+            if (addBill && startTime != null) {
+                if (bills.get(i).getCloseTime().
+                        compareTo(startTime) >= 0) {
+                    addBill = true;
+                } else {
+                    addBill = false;
+                }
+            }
+
+            if (addBill && endTime != null) {
+                if (bills.get(i).getCloseTime().
+                        compareTo(endTime) <= 0) {
+                    addBill = true;
+                } else {
+                    addBill = false;
+                }
+            }
+
+            if (addBill) {
+                resBill.add(bills.get(i));
+                salesman.setSoldProducts(
+                        salesman.getSoldProducts() +
+                                bills.get(i).getProducts().size());
+
+                salesman.setAmountSales(salesman.getAmountSales() +
+                        bills.get(i).getAmountPrice());
+            }
+
+            resBill.sort(comparator);
+
+        }
+
+        return resBill;
+    }
+
+    public static void createBinaryTree(AppDB appDB) {
+
+        List<Salesman> salesmen = appDB.getAllSalesman();
+
+        int index = 0;
+        int childNodes = 2;
+
+        outer:
+        for (int i = 0; i < salesmen.size(); i++) {
+            for (int j = 1; j <= childNodes; j++) {
+                index = childNodes * i + j;
+                if (index < salesmen.size()) {
+                    salesmen.get(i).getSubSalesmen().add(salesmen.get(index));
+                } else {
+                    break outer;
+                }
+            }
+        }
+    }
+
+    public static void countSalarySalesman(AppDB appDB) {
+
+        List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
+                null, null, null, new BillIdComparator());
+
+        createBinaryTree(appDB);
+
+        for (Salesman salesman : appDB.getAllSalesman()) {
+            for (Salesman subSalesman : salesman.getSubSalesmen()) {
+
+            }
+        }
+
+
+
     }
 
 

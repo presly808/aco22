@@ -33,12 +33,12 @@ public interface IAppDb {
 
     Product removeProduct(int remove);
 
+    Salesman updateSalesman(Salesman salesman);
+
     boolean removeSalesman(Salesman salesman);
 
     Bill updateBill(Bill bill);
 
     Product updateProduct(Product product);
-
-    Salesman updateSalesman (Salesman salesman);
 
 }

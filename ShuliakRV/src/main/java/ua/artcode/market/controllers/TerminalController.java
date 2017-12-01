@@ -7,6 +7,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
+import ua.artcode.market.utils.Utils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -140,83 +141,8 @@ public class TerminalController implements ITerminal {
                              LocalDateTime endTime,
                              Comparator<Bill> comparator) {
 
-        List<Bill> resBill = new ArrayList<>();
-
-        for (Salesman salesman : salesmen) {
-            salesman.setSoldProducts(0);
-            salesman.setAmountSales(0);
-        }
-
-        Salesman salesman = null;
-
-        int index = 0;
-
-        List<Bill> bills = appDB.getAllBills();
-
-        for (int i = 0; i < bills.size(); i++) {
-
-            if (!bills.get(i).isClosed()) continue;
-
-            boolean addBill = true;
-
-            if (salesmen != null) {
-
-                addBill = false;
-
-                for (int j = 0; j < salesmen.size(); j++) {
-                    if (bills.get(i).getSalesMan().
-                            equals(salesmen.get(j))) {
-                        addBill = true;
-                        salesman = bills.get(i).getSalesMan();
-                        break;
-                    }
-                }
-            }
-
-            if (addBill && products != null) {
-
-                addBill = false;
-
-                if (bills.get(i).hasProducts(products)) {
-                    addBill = true;
-                } else {
-                    addBill = false;
-                }
-            }
-
-            if (addBill && startTime != null) {
-                if (bills.get(i).getCloseTime().
-                        compareTo(startTime) >= 0) {
-                    addBill = true;
-                } else {
-                    addBill = false;
-                }
-            }
-
-            if (addBill && endTime != null) {
-                if (bills.get(i).getCloseTime().
-                        compareTo(endTime) <= 0) {
-                    addBill = true;
-                } else {
-                    addBill = false;
-                }
-            }
-
-            if (addBill) {
-                resBill.add(bills.get(i));
-                salesman.setSoldProducts(
-                        salesman.getSoldProducts() +
-                                bills.get(i).getProducts().size());
-
-                salesman.setAmountSales(salesman.getAmountSales() +
-                        bills.get(i).getAmountPrice());
-            }
-
-            resBill.sort(comparator);
-
-        }
-
-        return resBill;
+        return Utils.filter(appDB, salesmen, products,
+                startTime, endTime, comparator);
     }
 
 }

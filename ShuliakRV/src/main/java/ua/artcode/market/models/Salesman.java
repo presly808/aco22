@@ -10,6 +10,7 @@ public class Salesman {
     private String password;
     private int soldProducts;
     private double amountSales;
+    private double salary;
     private boolean isLogged;
 
     List<Salesman> subSalesmen;
@@ -43,6 +44,10 @@ public class Salesman {
 
     public List<Salesman> getSubSalesmen() {
         return subSalesmen;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 
     public boolean isLogged() {
