@@ -1,16 +1,11 @@
 package ua.artcode.market.view;
 
-import ua.artcode.market.controller.ITerminal;
-import ua.artcode.market.factory.TerminalFactory;
-
-import java.time.LocalDateTime;
-import java.util.Scanner;
-
 public class Console {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Hello world");
 
+        /*Scanner sc = new Scanner(System.in);
         ITerminal terminal = TerminalFactory.create();
 
         boolean exit = false;
@@ -118,6 +113,6 @@ public class Console {
                 "4. Show top salesman \n" +
                 "5. Show statistics \n" +
                 "6. Find salesman by login or name \n" +
-                "7. Exit");
+                "7. Exit");*/
     }
 }
