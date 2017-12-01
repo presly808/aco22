@@ -74,6 +74,10 @@ public class Salesman {
         this.amountSales = amountSales;
     }
 
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     public void setLogged(boolean logged) {
         isLogged = logged;
     }

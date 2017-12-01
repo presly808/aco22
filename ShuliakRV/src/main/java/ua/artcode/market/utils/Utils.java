@@ -208,21 +208,29 @@ public class Utils {
         }
     }
 
-    public static void countSalarySalesman(AppDB appDB) {
+    public static void countSalarySalesmen(AppDB appDB) {
 
         List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
                 null, null, null, new BillIdComparator());
 
         createBinaryTree(appDB);
 
-        for (Salesman salesman : appDB.getAllSalesman()) {
-            for (Salesman subSalesman : salesman.getSubSalesmen()) {
 
-            }
+    }
+
+    public static double countSalarySalesman(Salesman salesman) {
+
+        if (salesman.getSubSalesmen().size() == 0) {
+            salesman.setSalary(salesman.getAmountSales()*0.05);
+            return salesman.getAmountSales()*0.05;
         }
 
+        for (Salesman subSalesman : salesman.getSubSalesmen()) {
+            salesman.setSalary(0.05*salesman.getSalary()+
+                    0.02*countSalarySalesman(subSalesman));
+        }
 
-
+        return 0;
     }
 
 
