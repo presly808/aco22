@@ -1,44 +1,32 @@
 package ua.artcode.market.utils;
 
-import ua.artcode.market.models.Bill;
-
-import java.util.List;
+import ua.artcode.market.models.Salesman;
 
 public class TerminalUtils {
-
-    public static Bill billWithMaxAmount(List<Bill> bills) {
-        if (bills == null) {
-            return null;
+    public static boolean IsBoss(Salesman manager, Salesman chief, Salesman subordinate) {
+        // search chief
+        if (manager.equals(chief)) {
+            return false;
         }
 
-        double maxAmount = bills.get(0).getAmountPrice();
-        int billIdWithMaxAmount = 0;
+        boolean res = false;
+        if (manager.getSubordinates().size() != 0) {
+            for (int i = 0; i < manager.getSubordinates().size(); i++) {
+                if (!IsBoss(manager.getSubordinates().get(i), chief, subordinate) &&
+                        manager.equals(subordinate)) {
+                    return true;
 
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() > maxAmount) {
-                maxAmount = bills.get(i).getAmountPrice();
-                billIdWithMaxAmount = i;
+                } else if (IsBoss(manager.getSubordinates().get(i), chief, subordinate)) {
+                    res = true;
+                }
             }
         }
 
-        return bills.get(billIdWithMaxAmount);
-    }
-
-    public static Bill billWithMinAmount(List<Bill> bills) {
-        if (bills == null) {
-            return null;
-        }
-
-        double minAmount = bills.get(0).getAmountPrice();
-        int billIdWithMinAmount = 0;
-
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() < minAmount) {
-                minAmount = bills.get(i).getAmountPrice();
-                billIdWithMinAmount = i;
-            }
-        }
-
-        return bills.get(billIdWithMinAmount);
+        return res;
     }
 }
+/*
+if(!IsNotBoss(manager.getSubordinates().get(i), chief, subordinate) &&
+        manager.equals(subordinate)){
+        res = true;
+        }*/

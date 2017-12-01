@@ -3,14 +3,15 @@ package ua.artcode.market.models;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.factory.TerminalFactory;
-import ua.artcode.market.proxy.TerminalControllerProxy;
+import ua.artcode.market.proxy.TerminalControllerProxyHistory;
+import ua.artcode.market.utils.TerminalUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TerminalControllerTest {
 
-    private static TerminalControllerProxy terminal;
+    private static TerminalControllerProxyHistory terminal;
 
     private static String name1 = "Dima Stavitscky";
     private static String name2 = "Ivan Raskolnikov";
@@ -37,7 +38,7 @@ public class TerminalControllerTest {
         terminal.addSalesman(name2, login2, pass2);
         terminal.addSalesman(name3, login3, pass3);
 
-        terminal.signIn(true, login3, pass3);
+        terminal.signIn(login3, pass3);
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.addProductToBill(2);
@@ -45,18 +46,20 @@ public class TerminalControllerTest {
         terminal.closeAndSaveBill(23, 58, 59);
         terminal.logOut();
 
-        terminal.signIn(false, name1, pass1);
+        terminal.signIn(name1, pass1);
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.addProductToBill(2);
         terminal.closeAndSaveBill(13, 13, 13);
         terminal.logOut();
 
-        terminal.signIn(true, login2, pass2);
+        terminal.signIn(login2, pass2);
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.closeAndSaveBill(1, 1, 1);
         terminal.logOut();
+
+        terminal.getAppDB().findSalesmanByLoginOrName(login1).setDirector(true);
     }
 
     @Test
@@ -70,14 +73,14 @@ public class TerminalControllerTest {
     public void signIn() throws Exception {
 
         // if salesman was sign in
-        terminal.signIn(true, login2, pass2);
+        terminal.signIn(login2, pass2);
         assertTrue(terminal.getIsLogged());
     }
 
     @Test
     public void closeAndSaveBill() {
 
-        terminal.signIn(false, name1, pass1);
+        terminal.signIn(name1, pass1);
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.closeAndSaveBill(10, 20, 30);
@@ -96,7 +99,7 @@ public class TerminalControllerTest {
     public void findSalesman() throws Exception {
 
         // salerman search
-        Salesman findSalesman = terminal.getAppDB().findSalesman(login2, true);
+        Salesman findSalesman = terminal.getAppDB().findSalesmanByLoginOrName(login2);
 
         assertEquals(findSalesman.getFullName(), name2);
         assertEquals(findSalesman.getLogin(), login2);
@@ -142,9 +145,9 @@ public class TerminalControllerTest {
     public void makeStatistics() throws Exception {
         Statistics statistics = terminal.makeStatistics();
         Statistics expStat = new Statistics(180,
-                terminal.getAppDB().findSalesman(login3, true),
+                terminal.getAppDB().findSalesmanByLoginOrName(login3),
                 100,
-                terminal.getAppDB().findSalesman(login2, true),
+                terminal.getAppDB().findSalesmanByLoginOrName(login2),
                 150,
                 450);
         assertEquals(statistics, expStat);
@@ -191,5 +194,62 @@ public class TerminalControllerTest {
         terminal.getAppDB().update(newBill);
 
         assertEquals(newBill, terminal.getAllBills().get(1));
+    }
+
+    @Test
+    public void testCalculateSalary() throws Exception {
+        terminal.signIn(login1, pass1);
+        Salesman sub1 = new Salesman("Diman", "lside", 101, 101);
+        Salesman sub2 = new Salesman("Dima", "lsid", 102, 102);
+        Salesman sub3 = new Salesman("Dim", "lsi", 103, 103);
+        Salesman sub4 = new Salesman("Di", "ls", 104, 104);
+        Salesman sub5 = new Salesman("D", "l", 105, 105);
+
+        sub1.setSumOfAllSales(100_000);
+        sub2.setSumOfAllSales(150_000);
+        sub3.setSumOfAllSales(200_000);
+        sub4.setSumOfAllSales(250_000);
+        sub5.setSumOfAllSales(300_000);
+
+        Salesman dir1 = terminal.getAppDB().findSalesmanByLoginOrName(login1);
+        Salesman dir2 = terminal.getAppDB().findSalesmanByLoginOrName(login2);
+        Salesman dir3 = terminal.getAppDB().findSalesmanByLoginOrName(login3);
+
+        dir1.setSumOfAllSales(50_000);
+        dir2.setSumOfAllSales(70_000);
+        dir3.setSumOfAllSales(90_000);
+
+        terminal.addSubSalesman(dir1, sub1);
+        terminal.addSubSalesman(dir1, dir2);
+        terminal.addSubSalesman(dir2, sub2);
+        terminal.addSubSalesman(dir2, sub3);
+        terminal.addSubSalesman(dir2, sub4);
+        terminal.addSubSalesman(dir2, dir3);
+        terminal.addSubSalesman(dir3, sub5);
+
+        terminal.calculateSalesmanSalary(dir1);
+        assertEquals(61679, (int) terminal.requiredAmountFromTheDepartment(dir1));
+
+    }
+
+    @Test
+    public void testCheck() throws Exception {
+        terminal.signIn(login1, pass1);
+
+        Salesman a1 = terminal.addSalesman("Dak", "dak", 11);
+        Salesman a2 = terminal.addSalesman("Kok", "kok", 11);
+        Salesman a3 = terminal.addSalesman("Olia", "Ola", 11);
+        Salesman a4 = terminal.addSalesman("Oli", "Ol", 11);
+        Salesman a5 = terminal.addSalesman("Ol", "O", 11);
+
+        terminal.addSubSalesman(terminal.getLoggedSalesman(), a1);
+        terminal.addSubSalesman(a1, a2);
+        terminal.addSubSalesman(a2, a3);
+        terminal.addSubSalesman(a2, a4);
+        terminal.addSubSalesman(a3, a4);
+        terminal.addSubSalesman(a4, a5);
+        terminal.addSubSalesman(a5, a3);
+
+        assertTrue(TerminalUtils.IsBoss(terminal.getLoggedSalesman(), a5, a3));
     }
 }

@@ -29,6 +29,7 @@ public class Bill implements Comparable<Bill> {
         for (Product product : products) {
             amountPrice += product.getPrice();
         }
+
     }
 
     public void closeBill(int hours, int minutes, int seconds) {
