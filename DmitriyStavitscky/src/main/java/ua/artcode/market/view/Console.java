@@ -78,6 +78,9 @@ public class Console {
                                 terminal.closeAndSaveBill(hours, minutes, seconds);
                                 billOpen = false;
                                 break;
+
+                            default:
+                                System.out.println("try again");
                         }
                     }
                     break;

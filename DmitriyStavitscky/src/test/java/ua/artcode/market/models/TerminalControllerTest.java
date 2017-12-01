@@ -143,6 +143,7 @@ public class TerminalControllerTest {
 
     @Test
     public void makeStatistics() throws Exception {
+
         Statistics statistics = terminal.makeStatistics();
         Statistics expStat = new Statistics(180,
                 terminal.getAppDB().findSalesmanByLoginOrName(login3),
@@ -190,6 +191,7 @@ public class TerminalControllerTest {
 
     @Test
     public void appDBUpdate() throws Exception {
+
         Bill newBill = new Bill(terminal.getAppDB().findSalesmanById(5), 8);
         terminal.getAppDB().update(newBill);
 
@@ -198,6 +200,7 @@ public class TerminalControllerTest {
 
     @Test
     public void testCalculateSalary() throws Exception {
+
         terminal.signIn(login1, pass1);
         Salesman sub1 = new Salesman("Diman", "lside", 101, 101);
         Salesman sub2 = new Salesman("Dima", "lsid", 102, 102);
@@ -229,11 +232,11 @@ public class TerminalControllerTest {
 
         terminal.calculateSalesmanSalary(dir1);
         assertEquals(61679, (int) terminal.requiredAmountFromTheDepartment(dir1));
-
     }
 
     @Test
     public void testCheck() throws Exception {
+
         terminal.signIn(login1, pass1);
 
         Salesman a1 = terminal.addSalesman("Dak", "dak", 11);
@@ -241,15 +244,20 @@ public class TerminalControllerTest {
         Salesman a3 = terminal.addSalesman("Olia", "Ola", 11);
         Salesman a4 = terminal.addSalesman("Oli", "Ol", 11);
         Salesman a5 = terminal.addSalesman("Ol", "O", 11);
+        Salesman a6 = terminal.addSalesman("Avan", "ava", 11);
+        Salesman a7 = terminal.addSalesman("Nelia", "nel", 11);
+        Salesman a8 = terminal.addSalesman("Petrik", "pet", 11);
 
         terminal.addSubSalesman(terminal.getLoggedSalesman(), a1);
         terminal.addSubSalesman(a1, a2);
         terminal.addSubSalesman(a2, a3);
         terminal.addSubSalesman(a2, a4);
-        terminal.addSubSalesman(a3, a4);
+        terminal.addSubSalesman(a3, a6);
         terminal.addSubSalesman(a4, a5);
-        terminal.addSubSalesman(a5, a3);
+        terminal.addSubSalesman(a6, a7);
+        terminal.addSubSalesman(a7, a8);
+        terminal.addSubSalesman(a7, a2);
 
-        assertTrue(TerminalUtils.isBoss(terminal.getLoggedSalesman(), a5, a3));
+        assertTrue(TerminalUtils.isBoss(terminal.getLoggedSalesman(), a7, a2));
     }
 }
