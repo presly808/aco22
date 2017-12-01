@@ -81,6 +81,7 @@ public class Console {
 
                             default:
                                 System.out.println("try again");
+                                break;
                         }
                     }
                     break;
@@ -104,6 +105,7 @@ public class Console {
 
                 default:
                     System.out.println("try again");
+                    break;
             }
         }
     }
