@@ -101,7 +101,8 @@ public class Terminal {
                 }
                 bill = terminalController.addProduct(bill.getId(),
                         terminalController.getAppDB().getAllProducts().
-                                get(((int) (Math.random() * terminalController.
+                                get(((int) (Math.random() *
+                                        terminalController.
                                         getAppDB().getAllProducts().
                                         size()))));
                 if (bill == null) {
@@ -139,7 +140,8 @@ public class Terminal {
 
             case 6:
 
-                Statistic statistic = terminalController.doSomeStatisticStuff();
+                Statistic statistic = terminalController.
+                        doSomeStatisticStuff();
                 System.out.println(statistic);
                 break;
 

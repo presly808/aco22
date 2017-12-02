@@ -210,8 +210,8 @@ public class Utils {
 
     public static double sumSalarySalesmen(AppDB appDB) {
 
-        //     List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
-        //         null, null, null, new BillIdComparator());
+             List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
+                null, null, null, new BillIdComparator());
 
         createBinaryTree(appDB);
 
@@ -246,6 +246,5 @@ public class Utils {
 
         return sum;
     }
-
 
 }

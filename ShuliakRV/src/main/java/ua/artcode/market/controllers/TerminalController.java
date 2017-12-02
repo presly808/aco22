@@ -98,7 +98,8 @@ public class TerminalController implements ITerminal {
 
         if (appDB.getAllSalesman().isEmpty() || n <= 0) return null;
 
-        List<Salesman> salesmen = (ArrayList) ((ArrayList) appDB.getAllSalesman()).clone();
+        List<Salesman> salesmen = (ArrayList)
+                ((ArrayList) appDB.getAllSalesman()).clone();
 
         List<Bill> bills = appDB.getAllBills();
 
