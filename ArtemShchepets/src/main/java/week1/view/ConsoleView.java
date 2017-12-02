@@ -1,6 +1,6 @@
 package week1.view;
 
-import week1.interfaces.ITerminalController;
+import week1.controller.ITerminalController;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;

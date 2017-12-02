@@ -1,12 +1,11 @@
 package week1.controller;
 
 import week1.comparators.SellersSoldProductsComparator;
-import week1.interfaces.IAppDB;
-import week1.interfaces.ITerminalController;
+import week1.database.IAppDB;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
-import week1.model.Statistic;
+import week1.model.SalesStatistic;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static week1.utils.TerminalUtils.calculateSumOfSoldProducts;
-import static week1.utils.TerminalUtils.findMaxPriceBill;
-import static week1.utils.TerminalUtils.findMinPriceBill;
+import static week1.utils.TerminalStatisticUtils.calculateSumOfSoldProducts;
+import static week1.utils.TerminalStatisticUtils.findMaxPriceBill;
+import static week1.utils.TerminalStatisticUtils.findMinPriceBill;
 
 public class ITerminalControllerImpl implements ITerminalController {
 
     private final static Logger logger = Logger.getLogger(ITerminalControllerImpl.class.getName());
 
     private IAppDB iAppDB;
+
+    private int currentSeller = -1;
 
     public ITerminalControllerImpl(IAppDB iAppDB) {
         this.iAppDB = iAppDB;
@@ -34,7 +35,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     public boolean login(String login, String password) {
 
         // set current seller in db to "-1", logging out
-        iAppDB.setCurrentSeller(-1);
+        currentSeller = -1;
 
         if ((login == null || password == null) ||
                 (login.equals("") || password.equals(""))
@@ -52,7 +53,7 @@ public class ITerminalControllerImpl implements ITerminalController {
             return false;
         }
 
-        iAppDB.setCurrentSeller(sellerId);
+        currentSeller = sellerId;
 
         logger.info("Successfully logged in!");
         return true;
@@ -63,8 +64,8 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Bill bill = new Bill();
 
-        if (iAppDB.getCurrentSellerId() != -1)
-            bill.setSeller(iAppDB.getAllSellers().get(iAppDB.getCurrentSellerId()));
+        if (currentSeller != -1)
+            bill.setSeller(iAppDB.getAllSellers().get(currentSeller));
 
         Bill billWithId = iAppDB.saveBill(bill);
 
@@ -92,6 +93,17 @@ public class ITerminalControllerImpl implements ITerminalController {
         logger.info("Method addProduct done");
         return bill;
     }
+
+    @Override
+    public int getCurrentSellerId() {
+        return this.currentSeller;
+    }
+
+    @Override
+    public void setCurrentSeller(int currentSellerId) {
+        this.currentSeller = currentSellerId;
+    }
+
 
     @Override
     public List<Bill> getAllBills() {
@@ -171,22 +183,22 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Statistic doSomeStatisticStuff() {
+    public SalesStatistic doSomeStatisticStuff() {
 
-        Statistic statistic = new Statistic();
+        SalesStatistic salesStatistic = new SalesStatistic();
 
         if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0) {
             logger.warning("Sry, we haven't any bills or sellers!");
             return null;
         }
 
-        statistic.setMaxBillPrice(findMaxPriceBill(iAppDB));
-        statistic.setMinBillPrice(findMinPriceBill(iAppDB));
-        statistic.setSoldProducts(calculateSumOfSoldProducts(iAppDB));
-        statistic.setBestSalesMan(getTopOfSalesman());
+        salesStatistic.setMaxBillPrice(findMaxPriceBill(iAppDB));
+        salesStatistic.setMinBillPrice(findMinPriceBill(iAppDB));
+        salesStatistic.setSoldProducts(calculateSumOfSoldProducts(iAppDB));
+        salesStatistic.setBestSalesMan(getTopOfSalesman());
 
         logger.info("Method doStatisticStuff was done.");
-        return statistic;
+        return salesStatistic;
     }
 
     @Override

@@ -1,15 +1,15 @@
-package week1.interfaces;
+package week1.controller;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import week1.comparators.CreationDateComparator;
-import week1.controller.ITerminalControllerImpl;
-import week1.database.IAppDBImpl;
+import week1.database.IAppDB;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.SalesStatistic;
 import week1.model.Seller;
-import week1.model.Statistic;
+import week1.utils.InitUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ITerminalControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        iAppDB = new IAppDBImpl();
+        iAppDB = InitUtils.initSellerDb();
         terminalController = new ITerminalControllerImpl(iAppDB);
         terminalController.turnOnDatabaseLogger();
         terminalController.turnOnTerminalLogger();
@@ -43,7 +43,7 @@ public class ITerminalControllerTest {
                 new Seller("worker", "password", "Nadya Horoshun"));
 
         assertTrue(terminalController.login("worker", "password"));
-        assertEquals(0, iAppDB.getCurrentSellerId());
+        assertEquals(0, terminalController.getCurrentSellerId());
     }
 
     @Test
@@ -133,13 +133,13 @@ public class ITerminalControllerTest {
         terminalController.addProduct(2, new Product("Juice", 9.0)); // 28.79
 
 
-        Statistic statistic = terminalController.doSomeStatisticStuff();
+        SalesStatistic salesStatistic = terminalController.doSomeStatisticStuff();
 
-        assertNotNull(statistic);
-        assertEquals(20.27, statistic.getMinBillPrice(), 0.001);
-        assertEquals(78.19, statistic.getMaxBillPrice(), 0.001);
-        assertEquals(15, statistic.getSoldProducts());
-        assertEquals(addSeller3, statistic.getBestSalesMan());
+        assertNotNull(salesStatistic);
+        assertEquals(20.27, salesStatistic.getMinBillPrice(), 0.001);
+        assertEquals(78.19, salesStatistic.getMaxBillPrice(), 0.001);
+        assertEquals(15, salesStatistic.getSoldProducts());
+        assertEquals(addSeller3, salesStatistic.getBestSalesMan());
 
     }
 
