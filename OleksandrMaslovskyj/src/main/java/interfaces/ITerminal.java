@@ -16,7 +16,7 @@ public interface ITerminal {
 
     void closeAndSaveBill(Bill bill) throws IncorrectBillException;
 
-    Bill findBillById(long id) throws NoSuchBillException;
+    Bill findBillById(long id) throws BillNotFoundException;
 
     Salesman findSalesmanByLoginOrFullName(String fullname, String login)
                                                 throws NoSuchSalesmanException;
