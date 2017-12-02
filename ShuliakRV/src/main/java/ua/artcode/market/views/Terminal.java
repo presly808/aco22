@@ -63,7 +63,9 @@ public class Terminal {
     }
 
     public int runChoice(int choice) {
+
         Bill bill = null;
+
         switch (choice) {
             case 1:
                 Salesman salesman = terminalController.getAppDB().
@@ -150,6 +152,7 @@ public class Terminal {
 
             default:
                 break;
+
         }
         return 0;
     }
