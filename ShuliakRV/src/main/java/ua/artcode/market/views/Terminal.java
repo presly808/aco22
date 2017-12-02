@@ -64,8 +64,7 @@ public class Terminal {
 
     public int runChoice(int choice) {
         Bill bill = null;
-        int anyChoice = choice;
-        switch (anyChoice) {
+        switch (choice) {
             case 1:
                 Salesman salesman = terminalController.getAppDB().
                         getAllSalesman().get((int) (Math.random() *

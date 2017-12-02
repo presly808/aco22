@@ -123,12 +123,10 @@ public class Utils {
 
                 addBill = false;
 
-                for (int j = 0; j < salesmen.size(); j++) {
-                    if (bills.get(i).getSalesMan().
-                            equals(salesmen.get(j))) {
-                        addBill = true;
-                        break;
-                    }
+                if (bills.get(i).hasSalesman(salesmen)) {
+                    addBill = true;
+                } else {
+                    addBill = false;
                 }
             }
 
