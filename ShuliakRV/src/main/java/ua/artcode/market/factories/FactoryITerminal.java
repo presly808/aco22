@@ -8,7 +8,7 @@ import ua.artcode.market.interfaces.ITerminal;
 public class FactoryITerminal {
 
     public static ITerminal createITerminalController() {
-        return new ProxyTerminalController(new TerminalController
-                (new AppDB()));
+        return new
+                ProxyTerminalController(new TerminalController(new AppDB()));
     }
 }

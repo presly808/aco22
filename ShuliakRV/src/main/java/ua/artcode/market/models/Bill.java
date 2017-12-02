@@ -1,9 +1,7 @@
 package ua.artcode.market.models;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Bill {

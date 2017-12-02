@@ -51,7 +51,8 @@ public class TerminalController implements ITerminal {
 
     public Bill createBill(Salesman salesman) {
 
-        if (salesman == null || salesman.isLogged() == false) return null;
+        if (salesman == null || !salesman.isLogged())
+            return null;
 
         Bill bill = new Bill(salesman);
 
@@ -142,7 +143,7 @@ public class TerminalController implements ITerminal {
                              LocalDateTime endTime,
                              Comparator<Bill> comparator) {
 
-        return Utils.filter(appDB, salesmen, products,
+        return staticFilter(appDB, salesmen, products,
                 startTime, endTime, comparator);
     }
 

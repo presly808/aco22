@@ -9,8 +9,9 @@ public class Logger {
 
     private List<String> logs;
 
-    private Logger () {
-      logs = new ArrayList<>();
+    private Logger() {
+
+        logs = new ArrayList<>();
     }
 
     public static Logger getInstance() {

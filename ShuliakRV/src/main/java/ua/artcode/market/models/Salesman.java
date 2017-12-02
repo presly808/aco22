@@ -13,7 +13,7 @@ public class Salesman {
     private double salary;
     private boolean isLogged;
 
-    List<Salesman> subSalesmen;
+    private List<Salesman> subSalesmen;
 
     public Salesman(String fullname, String login, String password) {
         this.fullname = fullname;

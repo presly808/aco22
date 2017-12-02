@@ -15,8 +15,6 @@ public class Terminal {
 
     private Salesman loggedSalesman;
 
-    private Bill bill;
-
     public Terminal(ITerminal terminalController) {
 
         this.terminalController = terminalController;
@@ -47,7 +45,7 @@ public class Terminal {
 
             if (choice == 10) return;
 
-                int res = 0;
+            int res = 0;
 
             if (choice == 1 || loggedSalesman != null) {
 
@@ -65,11 +63,9 @@ public class Terminal {
     }
 
     public int runChoice(int choice) {
-
+        Bill bill = null;
         switch (choice) {
-
             case 1:
-
                 Salesman salesman = terminalController.getAppDB().
                         getAllSalesman().get((int) (Math.random() *
                         terminalController.getAppDB().
@@ -82,9 +78,7 @@ public class Terminal {
                     System.out.println("Login or password are not avalible");
                 }
                 break;
-
             case 2:
-
                 bill = terminalController.createBill(loggedSalesman);
                 if (bill == null) {
                     System.out.println("Bill isn't created");
@@ -92,9 +86,7 @@ public class Terminal {
                     System.out.println("Bill is created");
                 }
                 break;
-
             case 3:
-
                 if (bill == null) {
                     System.out.println("Bill isn't exists");
                     break;
@@ -103,18 +95,15 @@ public class Terminal {
                         terminalController.getAppDB().getAllProducts().
                                 get(((int) (Math.random() *
                                         terminalController.
-                                        getAppDB().getAllProducts().
-                                        size()))));
+                                                getAppDB().getAllProducts().
+                                                size()))));
                 if (bill == null) {
                     System.out.println("Bill isn't found");
                 } else {
                     System.out.println("Product is added");
                 }
-
                 break;
-
             case 4:
-
                 if (bill == null) {
                     System.out.println("Bill isn't exists");
                     break;
@@ -127,9 +116,7 @@ public class Terminal {
                 }
                 bill = null;
                 break;
-
             case 5:
-
                 List<Salesman> salesmen = terminalController.
                         getTopNOfSalesMen((int) (Math.random() *
                                 terminalController.getAppDB().
@@ -137,45 +124,31 @@ public class Terminal {
 
                 System.out.println(salesmen);
                 break;
-
             case 6:
-
                 Statistic statistic = terminalController.
                         doSomeStatisticStuff();
                 System.out.println(statistic);
                 break;
-
             case 7:
-
                 ArrayList<Salesman> salesmenList = new ArrayList<>();
                 salesmenList.add(loggedSalesman);
-
-
                 List<Bill> bills = terminalController.
                         filter(salesmenList, null, null,
                                 null, new BillIdComparator());
                 System.out.println(bills);
                 break;
-
             case 8:
-
                 terminalController.logOut(loggedSalesman);
                 loggedSalesman = null;
                 System.out.println("User logged out");
                 break;
-
             case 9:
-
                 System.out.println(Logger.getInstance().getLogs());
                 break;
-
             case 10:
-
                 return -1;
         }
-
         return 0;
-
     }
 
 

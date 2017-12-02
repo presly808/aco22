@@ -102,23 +102,14 @@ public class Utils {
         return result;
     }
 
-    public static List<Bill> filter(AppDB appDB,
-                                    List<Salesman> salesmen,
-                                    List<Product> products,
-                                    LocalDateTime startTime,
-                                    LocalDateTime endTime,
-                                    Comparator<Bill> comparator) {
+    public static List<Bill> staticFilter(AppDB appDB,
+                                          List<Salesman> salesmen,
+                                          List<Product> products,
+                                          LocalDateTime startTime,
+                                          LocalDateTime endTime,
+                                          Comparator<Bill> comparator) {
 
         List<Bill> resBill = new ArrayList<>();
-
-        for (Salesman salesman : salesmen) {
-            salesman.setSoldProducts(0);
-            salesman.setAmountSales(0);
-        }
-
-        Salesman salesman = null;
-
-        int index = 0;
 
         List<Bill> bills = appDB.getAllBills();
 
@@ -136,7 +127,6 @@ public class Utils {
                     if (bills.get(i).getSalesMan().
                             equals(salesmen.get(j))) {
                         addBill = true;
-                        salesman = bills.get(i).getSalesMan();
                         break;
                     }
                 }
@@ -173,16 +163,9 @@ public class Utils {
 
             if (addBill) {
                 resBill.add(bills.get(i));
-                salesman.setSoldProducts(
-                        salesman.getSoldProducts() +
-                                bills.get(i).getProducts().size());
-
-                salesman.setAmountSales(salesman.getAmountSales() +
-                        bills.get(i).getAmountPrice());
             }
 
             resBill.sort(comparator);
-
         }
 
         return resBill;
@@ -210,8 +193,23 @@ public class Utils {
 
     public static double sumSalarySalesmen(AppDB appDB) {
 
-             List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
+        List<Bill> bills = staticFilter(appDB, appDB.getAllSalesman(),
                 null, null, null, new BillIdComparator());
+
+        for (Salesman salesman : appDB.getAllSalesman()) {
+            salesman.setSoldProducts(0);
+            salesman.setAmountSales(0);
+        }
+
+        for (Bill bill : bills) {
+            Salesman salesman = bill.getSalesMan();
+            salesman.setSoldProducts(
+                    salesman.getSoldProducts() +
+                            bill.getProducts().size());
+
+            salesman.setAmountSales(salesman.getAmountSales() +
+                    bill.getAmountPrice());
+        }
 
         createBinaryTree(appDB);
 

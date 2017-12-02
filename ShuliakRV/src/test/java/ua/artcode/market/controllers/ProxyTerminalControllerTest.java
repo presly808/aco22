@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.comparators.BillIdComparator;
 import ua.artcode.market.factories.FactoryITerminal;
-import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
