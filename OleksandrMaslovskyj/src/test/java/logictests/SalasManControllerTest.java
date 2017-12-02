@@ -19,7 +19,7 @@ public class SalasManControllerTest {
 
     private static final int SALASMAN_QUANTITY = 100;
     private static final int SALESMAN_INDEX = 50;
-    public static final double COEFICIENT = 0.15;
+    private static final double COEFICIENT = 0.15;
 
     private List<Salesman> list;
     private ISalesmanController iSalesmanController;
