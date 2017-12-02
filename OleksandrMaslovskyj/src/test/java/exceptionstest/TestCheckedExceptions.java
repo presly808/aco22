@@ -4,7 +4,6 @@ import controllers.BillController;
 import controllers.SalesmanController;
 import controllers.TerminalController;
 import exceptions.*;
-import interfaces.IBillLogic;
 import models.Bill;
 import models.Salesman;
 import org.junit.Before;

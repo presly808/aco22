@@ -49,7 +49,7 @@ public class BillController implements IBillLogic {
 
     public double calculateAmountPrice(Bill bill) throws UnableToCalculatePriceException {
         List<Product> products = bill.getProducts();
-        if (products.isEmpty() || products == null) {
+        if (products.isEmpty()) {
             throw new UnableToCalculatePriceException("Empty product list");
         }
         double amountPrice = products.stream().mapToDouble(Product::getPrice).sum();
