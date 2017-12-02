@@ -1,9 +1,9 @@
 package week1.utils;
 
-import week1.interfaces.IAppDB;
+import week1.database.IAppDB;
 import week1.model.Bill;
 
-public class TerminalUtils {
+public class TerminalStatisticUtils {
 
     public static int calculateSumOfSoldProducts(IAppDB iAppDB) {
         int soldProducts = 0;

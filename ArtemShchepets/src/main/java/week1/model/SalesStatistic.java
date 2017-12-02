@@ -1,6 +1,6 @@
 package week1.model;
 
-public class Statistic {
+public class SalesStatistic {
 
     private double minBillPrice;
     private double maxBillPrice;
@@ -41,7 +41,7 @@ public class Statistic {
 
     @Override
     public String toString() {
-        return "Statistic{" +
+        return "SalesStatistic{" +
                 "minBillPrice=" + minBillPrice +
                 ", maxBillPrice=" + maxBillPrice +
                 ", soldProducts=" + soldProducts +
