@@ -208,31 +208,43 @@ public class Utils {
         }
     }
 
-    public static void countSalarySalesmen(AppDB appDB) {
+    public static double sumSalarySalesmen(AppDB appDB) {
 
-        List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
-                null, null, null, new BillIdComparator());
+        //     List<Bill> bills = filter(appDB, appDB.getAllSalesman(),
+        //         null, null, null, new BillIdComparator());
 
         createBinaryTree(appDB);
 
-        countSalarySalesman(appDB.getAllSalesman().get(0));
+        countSalary(appDB.getAllSalesman().get(0));
 
+        return sumSalary(appDB.getAllSalesman().get(0));
     }
 
-    public static double countSalarySalesman(Salesman salesman) {
+    public static double countSalary(Salesman salesman) {
 
-        salesman.setSalary(salesman.getAmountSales()*0.05);
-
-        if (salesman.getSubSalesmen().size() == 0) {
-            return salesman.getSalary();
-        }
+        salesman.setSalary(salesman.getAmountSales() * 0.05);
 
         for (Salesman subSalesman : salesman.getSubSalesmen()) {
-            salesman.setSalary(salesman.getSalary()+
-                    0.02*countSalarySalesman(subSalesman));
+            salesman.setSalary(salesman.getSalary() +
+                    0.02 * countSalary(subSalesman));
         }
 
         return salesman.getSalary();
+    }
+
+    public static double sumSalary(Salesman salesman) {
+
+        double sum = salesman.getSalary();
+
+        if (salesman.getSubSalesmen().size() == 0) {
+            return sum;
+        }
+
+        for (Salesman subSalesman : salesman.getSubSalesmen()) {
+            sum += sumSalary(subSalesman);
+        }
+
+        return sum;
     }
 
 

@@ -5,7 +5,7 @@ import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.views.Terminal;
 
-import static ua.artcode.market.utils.Utils.countSalarySalesmen;
+import static ua.artcode.market.utils.Utils.sumSalarySalesmen;
 
 public class TestMarket {
 
@@ -17,8 +17,6 @@ public class TestMarket {
         Terminal terminal = new Terminal(terminalController);
 
         terminal.mainMenu();
-
-        countSalarySalesmen(terminalController.getAppDB());
 
         for (Salesman salesman : terminalController.getAppDB().
                 getAllSalesman()) {
