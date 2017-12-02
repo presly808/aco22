@@ -1,6 +1,7 @@
 package logictests;
 
 import controllers.BillController;
+import exceptions.UnableToAddProductToBillException;
 import models.Bill;
 import models.Product;
 import org.junit.Assert;
@@ -25,7 +26,7 @@ public class BillControllerTests {
     }
 
     @Test
-    public void testAddProductToBillMethod(){
+    public void testAddProductToBillMethod() throws UnableToAddProductToBillException {
         Bill bill = new Bill();
         billController.addProductToBill(bill, "Milk");
         billController.addProductToBill(bill, "Coffee");
@@ -34,7 +35,7 @@ public class BillControllerTests {
     }
 
     @Test
-    public void testCalculateAmountPrice(){
+    public void testCalculateAmountPrice() throws UnableToAddProductToBillException {
         Bill bill = new Bill();
         billController.addProductToBill(bill, "Milk");
         billController.addProductToBill(bill, "Coffee");

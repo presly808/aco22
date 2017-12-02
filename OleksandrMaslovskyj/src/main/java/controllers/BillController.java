@@ -1,5 +1,7 @@
 package controllers;
 
+import exceptions.BillNotFoundException;
+import exceptions.UnableToAddProductToBillException;
 import utils.TerminalUtils;
 import interfaces.IBillLogic;
 import models.Bill;
@@ -17,7 +19,12 @@ public class BillController implements IBillLogic {
         billSet = new HashSet<>();
     }
 
-    public Product addProductToBill(Bill bill, String productName){
+    public Product addProductToBill(Bill bill, String productName)
+                                throws UnableToAddProductToBillException {
+
+        if (bill == null || productName.isEmpty()) {
+            throw new UnableToAddProductToBillException("Product can not be created");
+        }
         Product product = new Product(TerminalUtils.longIdGenerator(),
                             productName, new Random().nextDouble());
         bill.setProducts(product);
@@ -43,7 +50,10 @@ public class BillController implements IBillLogic {
         return amountPrice;
     }
 
-    public String printBill(Bill currentBill) {
+    public String printBill(Bill currentBill) throws BillNotFoundException {
+        if (currentBill == null) {
+            throw new BillNotFoundException("Incorrect Bill");
+        }
         return String.format("{id:%d, products:%s, salesman:%s, " +
                         "amountPrice%d, closeTime%s}" , currentBill.getId(),
                 currentBill.getProducts(), currentBill.getSalesman(),

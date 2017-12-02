@@ -12,7 +12,7 @@ public interface ITerminal {
     Bill createBill(Bill bill) throws IncorrectBillException;
 
     Product addProduct(Bill bill, String productName)
-                                throws IncorrectBillException;
+            throws IncorrectBillException, UnableToAddProductToBillException;
 
     void closeAndSaveBill(Bill bill) throws IncorrectBillException;
 

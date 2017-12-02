@@ -1,9 +1,13 @@
 package controllers;
 
+import exceptions.IncorrectBillException;
+import exceptions.NoSuchSalesmanException;
+import exceptions.UnableToAddProductToBillException;
 import interfaces.ITerminal;
 import models.Bill;
 import models.Product;
 import models.Salesman;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,15 +19,15 @@ public class TerminalController implements ITerminal{
         this.billController = billController;
     }
 
-    public Bill createBill(Bill bill) {
+    public Bill createBill(Bill bill) throws IncorrectBillException {
         if (bill == null) {
-            throw new IllegalArgumentException("Bill can not be null");
+            throw new IncorrectBillException("Bill can not be null");
         }
         billController.getBillSet().add(bill);
         return bill;
     }
 
-    public Product addProduct(Bill bill, String productName) {
+    public Product addProduct(Bill bill, String productName) throws UnableToAddProductToBillException {
         if (bill == null) {
             throw new IllegalArgumentException("BillController not created");
         }
@@ -39,18 +43,22 @@ public class TerminalController implements ITerminal{
                 stream().filter(bill -> bill.getId() == id).findFirst().get();
     }
 
-    public Salesman findSalesmanByLoginOrFullName(String fullName,
-                                                    String login) {
+    public Salesman findSalesmanByLoginOrFullName(String fullName, String login)
+                                                    throws NoSuchSalesmanException{
         Set<Bill> billSet = billController.getBillSet();
-        return billSet.stream().filter((Bill bill) -> {
-            Salesman salesman = bill.getSalesman();
-            String fullname = salesman.getFullname();
-            String salesmanLogin = salesman.getLogin();
 
-            return salesman != null && (!(fullname == null
-                    && salesmanLogin == null) && (fullname.equals(fullName) ||
-                    salesmanLogin.equals(login) ? true : false));
-        }).collect(Collectors.toList()).get(0).getSalesman();
+        try {
+            return billSet.stream().filter((Bill bill) -> {
+                Salesman salesman = bill.getSalesman();
+                String fullname = salesman.getFullname();
+                String salesmanLogin = salesman.getLogin();
+
+                return !(fullname == null && salesmanLogin == null) &&
+                        (fullname.equals(fullName) || salesmanLogin.equals(login));
+            }).collect(Collectors.toList()).get(0).getSalesman();
+        } catch (Exception e){
+            throw new NoSuchSalesmanException("Salesman not found");
+        }
     }
 
     public List<Bill> sortBillListByDateCreation() {
