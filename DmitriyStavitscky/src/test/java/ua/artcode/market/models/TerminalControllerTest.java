@@ -202,7 +202,7 @@ public class TerminalControllerTest {
     public void testCalculateSalary() throws Exception {
 
         terminal.signIn(login1, pass1);
-        Salesman sub1 = new Salesman("Diman", "lside", 101, 101);
+        Salesman sub1 = new Salesman("Diman", "lside", 107, 101);
         Salesman sub2 = new Salesman("Dima", "lsid", 102, 102);
         Salesman sub3 = new Salesman("Dim", "lsi", 103, 103);
         Salesman sub4 = new Salesman("Di", "ls", 104, 104);
