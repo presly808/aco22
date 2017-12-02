@@ -8,12 +8,12 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
-import ua.artcode.market.views.Terminal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static ua.artcode.market.utils.Utils.sumSalarySalesmen;
 
 public class ProxyTerminalControllerTest {
 
@@ -96,6 +96,7 @@ public class ProxyTerminalControllerTest {
         List<Bill> bills = terminalController.filter(salesmen,products,null,
                 null,new BillIdComparator());
         assertEquals(1,bills.size());
+        assertNotNull(sumSalarySalesmen(terminalController.getAppDB()));
     }
 
 }
