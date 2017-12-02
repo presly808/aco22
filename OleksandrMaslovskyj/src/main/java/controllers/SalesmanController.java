@@ -1,5 +1,7 @@
 package controllers;
 
+import exceptions.InvalidSalesmanException;
+import exceptions.UnableToCalculateSalaryException;
 import interfaces.ISalesmanController;
 import models.Bill;
 import models.Product;
@@ -13,7 +15,7 @@ public class SalesmanController implements ISalesmanController {
     private static final double COEFICIENT = 0.15;
     private static final double MAIN_COEFICIENT = 0.2;
 
-    public double calculateSalaryForWorker(Salesman salesman) {
+    public double calculateSalaryForWorker(Salesman salesman) throws UnableToCalculateSalaryException {
         if (salesman == null) {
             throw new IllegalArgumentException(salesman + "is null");
         }
@@ -37,10 +39,11 @@ public class SalesmanController implements ISalesmanController {
         return salary;
     }
 
-    public double calculateDepartmentCostsToSalary(List<Salesman> salesmanList) {
+    public double calculateDepartmentCostsToSalary(List<Salesman> salesmanList)
+                                    throws UnableToCalculateSalaryException, InvalidSalesmanException {
 
-        if (salesmanList == null) {
-            return 0;
+        if (salesmanList == null || salesmanList.isEmpty()) {
+            throw new InvalidSalesmanException("Salesman list is empty");
         }
 
         double cost = 0;
@@ -71,13 +74,19 @@ public class SalesmanController implements ISalesmanController {
     }
 
     public double getProfitForOwnBills(Salesman salesman){
-        return getProfitForListOfBills(salesman.getBills()) * MAIN_COEFICIENT;
+        double profitForListOfBills = 0;
+        try {
+            profitForListOfBills = getProfitForListOfBills(salesman.getBills());
+        } catch (UnableToCalculateSalaryException e){
+
+        }
+        return profitForListOfBills * MAIN_COEFICIENT;
     }
 
-    public double getProfitForListOfBills(List<Bill> billList){
+    public double getProfitForListOfBills(List<Bill> billList) throws UnableToCalculateSalaryException {
 
         if (billList == null) {
-            return 0;
+            throw new UnableToCalculateSalaryException("Bill list not init");
         }
 
         double billPrice = 0;

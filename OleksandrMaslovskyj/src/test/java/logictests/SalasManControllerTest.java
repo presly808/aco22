@@ -54,7 +54,7 @@ public class SalasManControllerTest {
     }
 
     @Test
-    public void testGetListOfSubordinators(){
+    public void testGetListOfSubordinators() throws Exception {
         List<Salesman> salesmanList =
                 iSalesmanController.getListOfSubordinators(salesman, new ArrayList<>());
         Assert.assertTrue(salesmanList.size() == 1);
@@ -65,7 +65,7 @@ public class SalasManControllerTest {
     }
 
     @Test
-    public void testGetProfitForOwnBills(){
+    public void testGetProfitForOwnBills() throws Exception {
         salesman.setBills(null);
         double salary = iSalesmanController.getProfitForOwnBills(salesman);
         Assert.assertTrue(salary == 0);
@@ -76,7 +76,7 @@ public class SalasManControllerTest {
     }
 
     @Test
-    public void testGetProfitForListOfBills(){
+    public void testGetProfitForListOfBills() throws Exception {
         double profitForListOfBills = iSalesmanController.getProfitForListOfBills(generateBillList());
         Assert.assertNotNull(profitForListOfBills);
     }
