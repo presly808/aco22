@@ -117,51 +117,35 @@ public class Utils {
 
             if (!bills.get(i).isClosed()) continue;
 
-            boolean addBill = true;
-
             if (salesmen != null) {
 
-                addBill = false;
-
-                if (bills.get(i).hasSalesman(salesmen)) {
-                    addBill = true;
-                } else {
-                    addBill = false;
+                if (!bills.get(i).hasSalesman(salesmen)) {
+                    continue;
                 }
             }
 
-            if (addBill && products != null) {
+            if (products != null) {
 
-                addBill = false;
-
-                if (bills.get(i).hasProducts(products)) {
-                    addBill = true;
-                } else {
-                    addBill = false;
+                if (!bills.get(i).hasProducts(products)) {
+                    continue;
                 }
             }
 
-            if (addBill && startTime != null) {
+            if (startTime != null) {
                 if (bills.get(i).getCloseTime().
-                        compareTo(startTime) >= 0) {
-                    addBill = true;
-                } else {
-                    addBill = false;
+                        compareTo(startTime) < 0) {
+                    continue;
                 }
             }
 
-            if (addBill && endTime != null) {
+            if (endTime != null) {
                 if (bills.get(i).getCloseTime().
-                        compareTo(endTime) <= 0) {
-                    addBill = true;
-                } else {
-                    addBill = false;
+                        compareTo(endTime) > 0) {
+                    continue;
                 }
             }
 
-            if (addBill) {
-                resBill.add(bills.get(i));
-            }
+            resBill.add(bills.get(i));
 
             resBill.sort(comparator);
         }
