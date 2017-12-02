@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
  * Created by serhii on 26.11.17.
  */
 public class Recursion2 {
-
-    /*public List<Integer> doubling(List<Integer> nums) {
+/*
+    public List<Integer> doubling(List<Integer> nums) {
 
         Function<Integer, Integer> function1 = new Function<Integer, Integer>() {
             @Override
@@ -36,8 +36,8 @@ public class Recursion2 {
         ;
 
         return nums.stream().map(e -> e * 2).collect(Collectors.toList());
-    } */
-
+    }
+*/
 
     public static boolean hasSeq(int[] arr, int target) {
 
