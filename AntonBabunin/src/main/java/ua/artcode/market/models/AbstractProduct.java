@@ -1,9 +1,11 @@
 package ua.artcode.market.models;
 
+import ua.artcode.market.models.money.Money;
+
 public abstract class AbstractProduct {
     private int id;
     private String name;
-    private double price;
+    private Money price;
 
     public int getId() {
         return id;
@@ -21,11 +23,11 @@ public abstract class AbstractProduct {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Money getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Money price) {
         this.price = price;
     }
 
