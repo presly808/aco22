@@ -2,12 +2,18 @@ package controllers;
 
 import exceptions.BillNotFoundException;
 import exceptions.UnableToAddProductToBillException;
-import utils.TerminalUtils;
+import exceptions.UnableToCalculatePriceException;
+import exceptions.UnableToCloseBillException;
 import interfaces.IBillLogic;
 import models.Bill;
 import models.Product;
+import utils.TerminalUtils;
+
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class BillController implements IBillLogic {
 
@@ -31,15 +37,20 @@ public class BillController implements IBillLogic {
         return product;
     }
 
-    public void closeBill(Bill bill) {
+    public void closeBill(Bill bill) throws UnableToCloseBillException {
+
+        if (bill == null) {
+            throw new UnableToCloseBillException("Bill is null");
+        }
+
         bill.setCloseTime(new SimpleDateFormat(
                 DATE_FORMAT).toString());
     }
 
-    public double calculateAmountPrice(Bill bill) {
+    public double calculateAmountPrice(Bill bill) throws UnableToCalculatePriceException {
         List<Product> products = bill.getProducts();
-        if (products.isEmpty()) {
-            throw new IllegalStateException("Empty product list");
+        if (products.isEmpty() || products == null) {
+            throw new UnableToCalculatePriceException("Empty product list");
         }
         double amountPrice = products.stream().mapToDouble(Product::getPrice).sum();
         this.amountPrice = amountPrice;

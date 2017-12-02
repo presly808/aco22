@@ -3,6 +3,7 @@ package controllers;
 import exceptions.IncorrectBillException;
 import exceptions.NoSuchSalesmanException;
 import exceptions.UnableToAddProductToBillException;
+import exceptions.UnableToCloseBillException;
 import interfaces.ITerminal;
 import models.Bill;
 import models.Product;
@@ -34,7 +35,7 @@ public class TerminalController implements ITerminal{
         return billController.addProductToBill(bill, productName);
     }
 
-    public void closeAndSaveBill(Bill bill) {
+    public void closeAndSaveBill(Bill bill) throws UnableToCloseBillException {
         billController.closeBill(bill);
     }
 

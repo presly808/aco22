@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.StringGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestCheckedExceptions {
@@ -59,19 +60,26 @@ public class TestCheckedExceptions {
     }
 
     @Test(expected = UnableToCalculatePriceException.class)
-    public void testUnableToCalculatePriceException(){
-
+    public void testUnableToCalculatePriceException() throws UnableToCalculatePriceException {
+        Bill bill = new Bill();
+        billLogic.calculateAmountPrice(bill);
     }
 
     @Test(expected = UnableToCalculateSalaryException.class)
-    public void testUnableToCalculateSalaryException(){
-
+    public void testUnableToCalculateSalaryException() throws UnableToCalculateSalaryException {
+        Salesman salesman = null;
+        salesmanController.calculateSalaryForWorker(salesman);
     }
 
     @Test(expected = UnableToGetSubordinatorsException.class)
-    public void testUnableToGetSubordinatorsException(){}
+    public void testUnableToGetSubordinatorsException() throws UnableToGetSubordinatorsException {
+        salesmanController.getListOfSubordinators(null, new ArrayList<>());
 
-    @Test(expected = UnableToGetSubordinatorsException.class)
-    public void testUnableToCloseBillException(){}
+    }
 
+    @Test(expected = UnableToCloseBillException.class)
+    public void testUnableToCloseBillException() throws UnableToCloseBillException {
+        Bill bill = null;
+        billLogic.closeBill(bill);
+    }
 }

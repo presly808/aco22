@@ -14,7 +14,7 @@ public interface ITerminal {
     Product addProduct(Bill bill, String productName)
             throws IncorrectBillException, UnableToAddProductToBillException;
 
-    void closeAndSaveBill(Bill bill) throws IncorrectBillException;
+    void closeAndSaveBill(Bill bill) throws IncorrectBillException, UnableToCloseBillException;
 
     Bill findBillById(long id) throws BillNotFoundException;
 

@@ -2,6 +2,7 @@ package controllers;
 
 import exceptions.InvalidSalesmanException;
 import exceptions.UnableToCalculateSalaryException;
+import exceptions.UnableToGetSubordinatorsException;
 import interfaces.ISalesmanController;
 import models.Bill;
 import models.Product;
@@ -17,7 +18,7 @@ public class SalesmanController implements ISalesmanController {
 
     public double calculateSalaryForWorker(Salesman salesman) throws UnableToCalculateSalaryException {
         if (salesman == null) {
-            throw new IllegalArgumentException(salesman + "is null");
+            throw new UnableToCalculateSalaryException(salesman + "is null");
         }
 
         List<Bill> salesmanBills = salesman.getBills();
@@ -54,7 +55,12 @@ public class SalesmanController implements ISalesmanController {
         return cost;
     }
 
-    public List<Salesman> getListOfSubordinators(Salesman salesman, List<Salesman> salesmanList){
+    public List<Salesman> getListOfSubordinators(Salesman salesman, List<Salesman> salesmanList)
+                                                            throws UnableToGetSubordinatorsException {
+        if (salesman == null) {
+            throw new UnableToGetSubordinatorsException("Unable to get subordinators for " + salesman);
+        }
+
         salesmanList.add(salesman);
         List<Salesman> subordinators = salesman.getSalesmanList();
 
