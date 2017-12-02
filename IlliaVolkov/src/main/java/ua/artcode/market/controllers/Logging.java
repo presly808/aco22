@@ -3,6 +3,7 @@ package ua.artcode.market.controllers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 public class Logging extends IOException {
 
@@ -10,7 +11,7 @@ public class Logging extends IOException {
 
         private Logging(String stringForLoging) throws IOException  {
 
-            write(stringForLoging);
+            write("" + new Date() + "--- " + stringForLoging);
         }
 
         public static Logging getInstance() throws IOException {
