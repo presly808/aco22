@@ -117,32 +117,22 @@ public class Utils {
 
             if (!bills.get(i).isClosed()) continue;
 
-            if (salesmen != null) {
-
-                if (!bills.get(i).hasSalesman(salesmen)) {
-                    continue;
-                }
+            if (salesmen != null && !bills.get(i).hasSalesman(salesmen)) {
+                continue;
             }
 
-            if (products != null) {
-
-                if (!bills.get(i).hasProducts(products)) {
-                    continue;
-                }
+            if (products != null && !bills.get(i).hasProducts(products)) {
+                continue;
             }
 
-            if (startTime != null) {
-                if (bills.get(i).getCloseTime().
-                        compareTo(startTime) < 0) {
-                    continue;
-                }
+            if (startTime != null && bills.get(i).getCloseTime().
+                    compareTo(startTime) < 0) {
+                continue;
             }
 
-            if (endTime != null) {
-                if (bills.get(i).getCloseTime().
-                        compareTo(endTime) > 0) {
-                    continue;
-                }
+            if (endTime != null && bills.get(i).getCloseTime().
+                    compareTo(endTime) > 0) {
+                continue;
             }
 
             resBill.add(bills.get(i));
