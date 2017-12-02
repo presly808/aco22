@@ -4,16 +4,24 @@ import week3.model.Product;
 import week3.model.Bill;
 import week3.model.Salesman;
 
-public class ProxyLogTerminal implements ITerminal{
+public class ProxyLogTerminal implements ITerminal {
 
-private ITerminal realterminal;
-private Log loger = Log.getLog();
+    private ITerminal realterminal;
+
+    public ProxyLogTerminal() {
+    }
+
+    public ProxyLogTerminal(ITerminal realterminal) {
+        this.realterminal = realterminal;
+    }
+
+    private Log loger = Log.getLog();
 
     @Override
     public boolean login(String login, String password) {
         loger.event("Log in system user " + login);
 
-        if (realterminal.login(login, password)){
+        if (realterminal.login(login, password)) {
             loger.event("User in System");
             return true;
         }
@@ -21,8 +29,8 @@ private Log loger = Log.getLog();
         return false;
     }
 
-  //  @Override
-   // public boolean logOut() {
+    //  @Override
+    // public boolean logOut() {
     //    return false;
     //}
 
@@ -40,7 +48,7 @@ private Log loger = Log.getLog();
     @Override
     public boolean deleteProduct(int idBill, Product product) {
         loger.event("Delete product" + product + " from bill" + idBill);
-        if (realterminal.addProduct(idBill, product)){
+        if (realterminal.addProduct(idBill, product)) {
             loger.event("Product was deleted");
         }
         loger.error("Product did'nt delete");
@@ -75,7 +83,7 @@ private Log loger = Log.getLog();
     public Bill[] filterBill() {
         loger.event("Filter by bill");
         Bill[] bills = realterminal.filterBill();
-        if (bills != null){
+        if (bills != null) {
             loger.event("Fillter finded bills");
             return bills;
         }
@@ -86,7 +94,7 @@ private Log loger = Log.getLog();
     @Override
     public boolean closeBill(Bill bill) {
         loger.event("Close bill");
-        if (realterminal.closeBill(bill)){
+        if (realterminal.closeBill(bill)) {
             loger.event("Bill was closed");
             return true;
         }
@@ -98,12 +106,12 @@ private Log loger = Log.getLog();
     public boolean createSalesMan() {
         loger.event("Create user in system");
 
-        if (realterminal.createSalesMan()){
+        if (realterminal.createSalesMan()) {
             loger.event("User was created");
             return true;
 
         }
-        loger.error("User did'nt create" );
+        loger.error("User did'nt create");
         return false;
     }
 
@@ -111,7 +119,7 @@ private Log loger = Log.getLog();
     public Salesman getTopSalesman() {
         loger.event("Search Top Salesman By average");
         Salesman salesman = realterminal.getTopSalesman();
-        if (salesman != null){
+        if (salesman != null) {
             loger.event("Salesman was fount");
             return salesman;
         }

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IappDBimpl implements IappDB {
+
+    // todo init in constructor
     private List<Salesman> salesmen = new ArrayList<>();
     private List<Bill> bills = new ArrayList<>();
     private List<Product> products = new ArrayList<>();

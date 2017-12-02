@@ -1,13 +1,24 @@
 package week3.controller;
 
+import week3.appDB.IappDB;
 import week3.model.Product;
 import week3.appDB.IappDBimpl;
 import week3.model.Bill;
 import week3.model.Salesman;
 
 public class ITerminalimpl implements ITerminal {
-    private IappDBimpl appDB = new IappDBimpl();
+
+
+    private IappDB appDB;
     private Salesman user;
+
+    public ITerminalimpl() {
+        appDB = new IappDBimpl();
+    }
+
+    public ITerminalimpl(IappDB appDB) {
+        this.appDB = appDB;
+    }
 
     @Override
     public boolean login(String login, String password) {
@@ -32,10 +43,7 @@ public class ITerminalimpl implements ITerminal {
     @Override
     public boolean deleteProduct(int idBill, Product product) {
         Bill bill = appDB.findeBillByID(idBill);
-        if (bill.getProducts().remove(product)){
-            return true;
-        }
-        return false;
+        return bill.getProducts().remove(product);
     }
 
 
