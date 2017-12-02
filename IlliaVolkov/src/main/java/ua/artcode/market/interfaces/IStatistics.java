@@ -1,20 +1,10 @@
-package ua.artcode.market.model;
+package ua.artcode.market.interfaces;
+
+import ua.artcode.market.model.Product;
 
 import java.util.List;
 
-public class Product {
-
-    public int code;
-    public String name;
-    public double price;
-
-    public Product(int code, String name, double price){
-
-        this.code = code;
-        this.name = name;
-        this.price = price;
-
-    }
+public interface IStatistics {
 
     public static void printFullInfo(List<Product> productsPrice){
 
@@ -37,6 +27,3 @@ public class Product {
         return textMessage+"\n";
     }
 }
-
-
-

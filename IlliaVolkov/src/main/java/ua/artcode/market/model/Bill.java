@@ -7,25 +7,22 @@ import java.util.List;
 public class Bill {
 
     private int code;
-    //private int[][] products;
+    public final Terminal terminal;
     private List<ProductBill>  productsBill;
     private int quantityGoods;
     private double amountPrice;
-    private SalesMan salesMan;
     public boolean closed;
     public Date createTime;
     public Date closeTime;
-    final List<Product> productsPrice;
 
+    public Bill(Terminal currentTerminal, int code){
 
-    //public Bill(int code, int countProducts, String salesManName, Product[] productList){
-    public Bill(int code, SalesMan salesMan, List<Product> productsPrice){
+        this.terminal = currentTerminal;
 
         this.code = code;
         this.createTime = new Date();
         this.productsBill = new ArrayList<>();
-        this.salesMan = salesMan;
-        this.productsPrice = productsPrice;
+
     }
 
     public int getCode() {
@@ -34,11 +31,9 @@ public class Bill {
 
     public List<ProductBill> getProductsBill() { return productsBill; }
 
-    public void setProductsBill(ProductBill productsBill) { this.productsBill.add(productsBill); }
+    public void addProductBill(ProductBill productBill) { this.productsBill.add(productBill); }
 
-    public List<Product> getProductsPrice() { return productsPrice; }
-
-    public int getSizeProductsBill(){
+    public int getQuantityProductsBill(){
         return this.productsBill.size();
     }
 
@@ -57,10 +52,6 @@ public class Bill {
     }
 
     public SalesMan getSalesMan() {
-        return salesMan;
-    }
-
-    public void setSalesMan(SalesMan salesMan) {
-        this.salesMan = salesMan;
+        return terminal.getSalesMan();
     }
 }

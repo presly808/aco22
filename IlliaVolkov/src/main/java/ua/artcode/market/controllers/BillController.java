@@ -1,67 +1,26 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.IBill;
-import ua.artcode.market.model.Bill;
-import ua.artcode.market.model.Product;
-import ua.artcode.market.model.ProductBill;
+import ua.artcode.market.model.*;
 import ua.artcode.market.view.InterfaceServices;
 
-import java.util.List;
 import java.util.Date;
 
 public class BillController implements IBill{
 
+    public static Bill createBill(Terminal currentTerminal) {
+        return currentTerminal.currentAppDBImpl.createBill(currentTerminal);
+    }
+
     public static void addProduct(Bill currentBill, int productCode, int quantity){
-
-        boolean productProcessed = false;
-
-        for (ProductBill itemProductBill: currentBill.getProductsBill()) {
-
-            if (itemProductBill.getProductCode() == productCode && !productProcessed) {
-
-                itemProductBill.setProductQuontity(itemProductBill.getProductQuontity() + quantity);
-
-                calculateAmountPrice(currentBill);
-
-                productProcessed = true;
-            }
-        }
-
-        if (!productProcessed) {
-            currentBill.setProductsBill(new ProductBill(Product.findByCode( currentBill.getProductsPrice(), productCode).code, quantity));
-
-            calculateAmountPrice(currentBill);
-            currentBill.setQuantityGoods(currentBill.getQuantityGoods() + 1);
-        }
+        AppDBImpl.addProductToBill(currentBill, productCode, quantity);
     }
 
-    public static void changeProduct(Bill currentBill, int productCode, int quantity){
-
-        boolean productProcessed = false;
-
-        List<ProductBill> currentProductsBill = currentBill.getProductsBill();
-        for (ProductBill itemProductBill: currentProductsBill) {
-
-            if (itemProductBill.getProductCode() == productCode && !productProcessed) {
-
-                if (quantity == 0) {
-
-                    currentProductsBill.remove(itemProductBill);
-                    currentBill.setQuantityGoods(currentBill.getQuantityGoods() - 1);
-                    calculateAmountPrice(currentBill);
-                }
-                else {
-                    itemProductBill.setProductQuontity(quantity);
-                    calculateAmountPrice(currentBill);
-                }
-                productProcessed = true;
-            }
-        }
+    public static void changeProductToBill(Bill currentBill, int productCode, int quantity){
+        AppDBImpl.changeProductToBill(currentBill, productCode, quantity);
     }
 
-    @Override
     public void choseProduct(Bill currentBill) {
-
         InterfaceServices.choseProduct(currentBill);
     }
 
@@ -84,8 +43,7 @@ public class BillController implements IBill{
 
         for (ProductBill itemProductBill: currentBill.getProductsBill()) {
 
-            Product currentProduct = Product.findByCode(currentBill.getProductsPrice(),
-                    itemProductBill.getProductCode());
+            Product currentProduct = currentBill.terminal.currentAppDBImpl.findProductByCode(itemProductBill.getProductCode());
 
             message += "" + currentProduct.code +
                     "\t\t" + currentProduct.name +
@@ -96,18 +54,10 @@ public class BillController implements IBill{
         return message;
     }
 
-    public static void calculateAmountPrice(Bill currentBill){
+    public static void printBill(Bill currentBill) {
 
-        currentBill.setAmountPrice(0);
-
-        for (ProductBill itemProductBill: currentBill.getProductsBill()) {
-
-            Product currentProduct = Product.findByCode(currentBill.getProductsPrice(),
-                    itemProductBill.getProductCode());
-
-            currentBill.setAmountPrice(Math.rint(currentBill.getAmountPrice()
-                    + currentProduct.price*itemProductBill.getProductQuontity()*100)/100);
-        }
+        System.out.println(BillController.getBillHeadInfoForPrint(currentBill));
+        System.out.println(BillController.GetBillProductsForPrint(currentBill));
     }
 
     @Override
