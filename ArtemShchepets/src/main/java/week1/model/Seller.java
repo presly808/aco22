@@ -1,32 +1,39 @@
 package week1.model;
 
-public class Seller {
+import java.util.ArrayList;
+import java.util.List;
 
-    private String name;
+public class Seller {
 
     private String login;
     private String password;
 
-    private int age;
+    private String fullName;
 
     private int soldProducts;
 
+    private double salary;
+
+    private List<Seller> subsellers;
+
+    private List<Bill> bills;
+
     public Seller() {
+        this.subsellers = new ArrayList<>();
     }
 
-    public Seller(String name, int age, String login, String password) {
-        this.name = name;
-        this.age = age;
+    public Seller(String login, String password, String fullName) {
         this.login = login;
         this.password = password;
+        this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
+    public Seller(String login, String password, String fullName, List<Bill> bills) {
+        this.login = login;
+        this.password = password;
+        this.fullName = fullName;
+        this.bills = bills;
+        subsellers = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -37,6 +44,10 @@ public class Seller {
         return password;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
     public int getSoldProducts() {
         return soldProducts;
     }
@@ -45,26 +56,53 @@ public class Seller {
         this.soldProducts = soldProducts;
     }
 
-    @Override
-    public String toString() {
-        return "Seller: " + name + ", age: " + age + ", sold: " + soldProducts;
+    public List<Seller> getSubsellers() {
+        return subsellers;
+    }
+
+    public void setSubsellers(List<Seller> subsellers) {
+        this.subsellers = subsellers;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public void addSubSeller(Seller subSeller){
+        subsellers.add(subSeller);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public String toString() {
+        return "Seller{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", soldProducts=" + soldProducts +
+                '}';
+    }
 
-        if (this == obj) return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        if (obj == null || obj.getClass() != Seller.class) return false;
+        Seller seller = (Seller) o;
 
-        Seller other = (Seller) obj;
-
-        if ((name != null && name.equals(other.getName())) &&
-                (login != null && login.equals(other.getLogin())) &&
-                (password != null && password.equals(other.getPassword())) &&
-                age == other.getAge() &&
-                soldProducts == other.getSoldProducts()) return true;
-
-        return false;
+        if (login != null ? !login.equals(seller.login) : seller.login != null) return false;
+        if (password != null ? !password.equals(seller.password) : seller.password != null) return false;
+        return fullName != null ? fullName.equals(seller.fullName) : seller.fullName == null;
     }
 }

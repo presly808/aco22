@@ -100,7 +100,7 @@ public class TestTerminal {
 
     @Test
     public void testFilterbyDate(){
-
+        p1.getId();
         ArrayList<Bill> expected = new ArrayList<>();
         expected.add(b2);
 

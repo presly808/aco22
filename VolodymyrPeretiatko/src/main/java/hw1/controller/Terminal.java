@@ -47,12 +47,17 @@ public class Terminal implements ITerminal {
     public boolean login(String name, String pass){
 
         List<DBItem> salesmen = appDB.getAll(Salesman.class);
+        Salesman salesman;
         for (DBItem s : salesmen) {
-            if (name.equals(((Salesman)s).getName()))
-                if (pass.equals(((Salesman)s).getPass())){
-                    this.currentUser = (Salesman) s;
-                    return true;
-                }
+            salesman = (Salesman) s;
+            if (!name.equals(salesman.getName())){
+                continue;
+            }
+            if (pass.equals(salesman.getPass())){
+                this.currentUser = (Salesman) s;
+                return true;
+            }
+
         }
         return false;
     }

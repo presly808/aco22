@@ -3,13 +3,13 @@ package ua.artcode.market.models;
 public class Product {
 
     private String name;
-    private int id;
     private double price;
+    private int id;
 
-    public Product(String name, int id, double price) {
+    public Product(String name, double price, int id) {
         this.name = name;
-        this.id = id;
         this.price = price;
+        this.id = id;
     }
 
     @Override

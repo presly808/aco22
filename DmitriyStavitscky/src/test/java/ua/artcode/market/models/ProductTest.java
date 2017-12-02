@@ -9,7 +9,7 @@ public class ProductTest {
 
     @Test
     public void convertToStringFullInfo() throws Exception {
-        Product product = new Product("Milk", 10, 5.50);
+        Product product = new Product("Milk", 5.50, 10);
         String expected = "name: Milk, id: 10, price: 5,50";
         assertTrue(product.toString().contains("Milk"));
     }

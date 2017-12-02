@@ -1,66 +1,51 @@
 package ua.artcode.market.models;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class Bill implements Comparable<Bill> {
 
-    private static final int MAX_COUNT_OF_PRODUCTS_IN_BILL = 10;
-
-    private Product[] products = new Product[MAX_COUNT_OF_PRODUCTS_IN_BILL];
+    private List<Product> products = new ArrayList<>();
     private int productsCount;
     private int id;
     private double amountPrice;
 
-    private boolean isClosed;
-
     private Salesman salesman;
 
-    private Time time;
+    private LocalDateTime openTime;
+
+    private Time closeTime;
 
     public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
         this.id = idOfBill;
+        this.openTime = LocalDateTime.now();
     }
 
-    public void addProduct(String name, int id, double price) {
-        if (productsCount == MAX_COUNT_OF_PRODUCTS_IN_BILL) {
-            System.out.println("sorry, max count of products in bill");
+    public void calculateAmountPrice() {
 
-        } else if (name == null || id == 0 || price == 0.0) {
-            System.out.println("wrong data");
-
-        } else if (isClosed) {
-            System.out.println("sorry, bill is closed");
-
-        } else {
-            products[productsCount++] = new Product(name, id, price);
-            calculateAmountPrice();
-        }
-    }
-
-    private void calculateAmountPrice() {
-        for (int i = 0; i < productsCount; i++) {
-            amountPrice += products[i].getPrice();
+        for (Product product : products) {
+            amountPrice += product.getPrice();
         }
     }
 
     public void closeBill(int hours, int minutes, int seconds) {
-        isClosed = true;
-        time = new Time(hours, minutes, seconds);
-        salesman.setSumOfAllSales(amountPrice);
+
+        closeTime = new Time(hours, minutes, seconds);
+        salesman.setSumOfAllSales(salesman.getSumOfAllSales() + amountPrice);
     }
 
     @Override
     public String toString() {
         return "Bill{" +
-                "products=" + Arrays.toString(products) +
+                "products=" + products +
                 ", productsCount=" + productsCount +
                 ", id=" + id +
                 ", amountPrice=" + amountPrice +
-                ", isClosed=" + isClosed +
-                ", salesman=" + salesman.toString() +
-                ", time=" + time.toString() +
+                ", salesman=" + salesman +
+                ", closeTime=" + closeTime +
                 '}';
     }
 
@@ -76,13 +61,12 @@ public class Bill implements Comparable<Bill> {
 
         Bill other = (Bill) obj;
 
-        return (products != null && Arrays.equals(products, other.products)) &&
+        return (products != null && products.equals(other.products)) &&
                 (productsCount == other.productsCount) &&
                 id == other.id &&
                 amountPrice == other.amountPrice &&
-                isClosed == other.isClosed &&
                 salesman.equals(other.salesman) &&
-                time.equals(other.time);
+                closeTime.equals(other.closeTime);
 
     }
 
@@ -94,11 +78,7 @@ public class Bill implements Comparable<Bill> {
     }
 
     public void setProductsCount(int productsCount) {
-        this.productsCount = productsCount;
-    }
-
-    public boolean getIsClosed() {
-        return isClosed;
+        this.productsCount += productsCount;
     }
 
     public int getId() {
@@ -109,20 +89,20 @@ public class Bill implements Comparable<Bill> {
         return amountPrice;
     }
 
-    public Product[] getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Product[] products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getCloseTime() {
+        return closeTime;
     }
 
-    public boolean isClosed() {
-        return isClosed;
+    public void setCloseTime(Time closeTime) {
+        this.closeTime = closeTime;
     }
 
     public Salesman getSalesman() {
@@ -135,6 +115,10 @@ public class Bill implements Comparable<Bill> {
 
         return res > 0 ? 1 :
                 res < 0 ? -1 : 0;
+    }
+
+    public LocalDateTime getOpenTime() {
+        return openTime;
     }
 }
 
@@ -151,7 +135,7 @@ class BillProductsCountComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return o1.getProductsCount() - o2.getProductsCount();
+        return o1.getProducts().size() - o2.getProducts().size();
     }
 }
 
@@ -180,7 +164,7 @@ class BillTimeComparator implements Comparator<Bill> {
 
     @Override
     public int compare(Bill o1, Bill o2) {
-        return o1.getTime().compareTo(o2.getTime());
+        return o1.getCloseTime().compareTo(o2.getCloseTime());
     }
 }
 
