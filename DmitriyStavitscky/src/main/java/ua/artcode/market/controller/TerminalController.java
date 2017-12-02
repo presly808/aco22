@@ -221,25 +221,15 @@ public class TerminalController implements ITerminal {
         return appDB;
     }
 
-    public int getCountOfBills() {
-        return appDB.getBills().size();
-    }
+    public int getCountOfBills() { return appDB.getBills().size(); }
 
-    public int getCountOfSalesman() {
-        return appDB.getSalesmans().size();
-    }
+    public int getCountOfSalesman() { return appDB.getSalesmans().size(); }
 
-    public Salesman getLoggedSalesman() {
-        return loggedSalesman;
-    }
+    public Salesman getLoggedSalesman() { return loggedSalesman; }
 
-    public boolean getIsLogged() {
-        return logged;
-    }
+    public boolean getIsLogged() { return logged; }
 
-    public Bill getCurrentBill() {
-        return currentBill;
-    }
+    public Bill getCurrentBill() { return currentBill; }
 
     public List<Salesman> getSalesmans() {
         return appDB.getSalesmans();
