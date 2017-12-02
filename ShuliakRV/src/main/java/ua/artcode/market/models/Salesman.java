@@ -103,7 +103,10 @@ public class Salesman {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", soldProducts=" + soldProducts +
+                ", amountSales=" + amountSales +
+                ", salary=" + salary +
                 ", isLogged=" + isLogged +
+                ", subSalesmen=" + subSalesmen +
                 '}';
     }
 }

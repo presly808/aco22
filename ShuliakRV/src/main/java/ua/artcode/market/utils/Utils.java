@@ -215,22 +215,24 @@ public class Utils {
 
         createBinaryTree(appDB);
 
+        countSalarySalesman(appDB.getAllSalesman().get(0));
 
     }
 
     public static double countSalarySalesman(Salesman salesman) {
 
+        salesman.setSalary(salesman.getAmountSales()*0.05);
+
         if (salesman.getSubSalesmen().size() == 0) {
-            salesman.setSalary(salesman.getAmountSales()*0.05);
-            return salesman.getAmountSales()*0.05;
+            return salesman.getSalary();
         }
 
         for (Salesman subSalesman : salesman.getSubSalesmen()) {
-            salesman.setSalary(0.05*salesman.getSalary()+
+            salesman.setSalary(salesman.getSalary()+
                     0.02*countSalarySalesman(subSalesman));
         }
 
-        return 0;
+        return salesman.getSalary();
     }
 
 

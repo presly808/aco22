@@ -13,7 +13,7 @@ public class AppDB implements IAppDb {
 
     public static final int countProducts = 10;
 
-    public static final int countSalesman = 10;
+    public static final int countSalesman = 7;
 
     private int nextBillId;
     private int nextProductId;
