@@ -147,6 +147,9 @@ public class Terminal {
                 break;
             case 10:
                 return -1;
+
+            default:
+                break;
         }
         return 0;
     }
