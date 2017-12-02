@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Recursion2 {
 
-    public List<Integer> doubling(List<Integer> nums) {
+    public static List<Integer> doubling(List<Integer> nums) {
 
         Function<Integer, Integer> function1 = new Function<Integer, Integer>() {
             @Override
