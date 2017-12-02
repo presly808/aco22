@@ -4,7 +4,9 @@ import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ITerminalController;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -25,24 +27,26 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login,
+    public Employee createSalesman(String fullName, String login,
                                    String password) throws IOException {
         return iAppDb.createSalesman(fullName, login, password);
     }
 
-    @Override
-    public Salesman login(String login, String password) throws IOException {
-        return iAppDb.login(login, password);
+//    @Override
+//    public Employee login(String login, String password) throws IOException {
+//        return iAppDb.login(login, password);
+//    }
+
+//    @Override
+    public Employee logout(Salesman salesman) throws IOException {
+//        return iAppDb.logout(salesman);
+        return null;
     }
 
     @Override
-    public Salesman logout(Salesman salesman) throws IOException {
-        return iAppDb.logout(salesman);
-    }
-
-    @Override
-    public Salesman findSalesmanByLogin(String login) {
-        return iAppDb.findSalesmanByLogin(login);
+    public Employee findSalesmanByLogin(String login) {
+//        return iAppDb.findSalesmanByLogin(login);
+        return null;
     }
 
     @Override
@@ -62,16 +66,16 @@ public class ITerminalControllerImpl implements ITerminalController {
         if (!bill.getProductsMap().containsKey(product)) {
             bill.getProductsMap().put(product, 1);
             bill.setAmountPrice(calculateAmountPrice(bill));
-            iAppDb.getAllProducts().replace(product,
-                    iAppDb.getAllProducts().get(product) - 1);
+            iAppDb.getProducts().replace(product,
+                    iAppDb.getProducts().get(product) - 1);
             return bill;
         }
 
         bill.getProductsMap().replace(product,
                 bill.getProductsMap().get(product) + 1);
-        bill.setAmountPrice(calculateAmountPrice(bill));
-        iAppDb.getAllProducts().replace(product,
-                iAppDb.getAllProducts().get(product) - 1);
+//        bill.setAmountPrice(calculateAmountPrice(bill));
+        iAppDb.getProducts().replace(product,
+                iAppDb.getProducts().get(product) - 1);
         iAppDb.update(bill);
 
         return bill;
@@ -83,14 +87,15 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public double calculateAmountPrice(Bill bill) {
+    public Money calculateAmountPrice(Bill bill) {
 
-        double amountPrice = 0.0;
+        Money amountPrice = new Money(0,0);
         if (bill == null || bill.getProductsMap() == null ||
                 bill.getProductsMap().isEmpty()) return amountPrice;
         for (Map.Entry<Product, Integer> pair :
                 bill.getProductsMap().entrySet()) {
-            amountPrice += pair.getKey().getPrice() * pair.getValue();
+            amountPrice = amountPrice.doSum(pair.getKey().getPrice().
+                    multiply(pair.getValue()));
         }
         return amountPrice;
     }
