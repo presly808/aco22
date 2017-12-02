@@ -39,6 +39,17 @@ public class Bill {
     }
 
     public double getAmountPrice() {
+        return calculateAmountPrice();
+    }
+
+    private double calculateAmountPrice() {
+
+        double amountPrice = 0;
+
+        for (int i = 0; i < productList.size(); i++) {
+            amountPrice += productList.get(i).getPrice();
+        }
+
         return amountPrice;
     }
 
