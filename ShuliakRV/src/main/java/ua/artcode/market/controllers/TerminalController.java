@@ -7,7 +7,6 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
-import ua.artcode.market.utils.Utils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

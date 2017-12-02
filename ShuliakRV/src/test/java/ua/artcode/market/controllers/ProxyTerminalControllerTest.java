@@ -19,14 +19,11 @@ public class ProxyTerminalControllerTest {
 
     private ProxyTerminalController terminalController;
 
-    private Terminal terminal;
-
     private Salesman salesman;
 
     @Before
     public void setUp() throws Exception {
         terminalController = (ProxyTerminalController) FactoryITerminal.createITerminalController();
-        terminal = new Terminal(terminalController);
         salesman = terminalController.getAppDB().getAllSalesman().get(0);
         assertEquals(salesman, terminalController.logIn(salesman.getLogin(), salesman.getPassword()));
         salesman = terminalController.logIn(salesman.getLogin(), salesman.getPassword());

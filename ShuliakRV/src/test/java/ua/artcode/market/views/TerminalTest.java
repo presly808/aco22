@@ -1,6 +1,5 @@
 package ua.artcode.market.views;
 
-import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.factories.FactoryITerminal;
 import ua.artcode.market.interfaces.ITerminal;
