@@ -1,10 +1,13 @@
 package ua.artcode.market.view;
 
+import ua.artcode.market.controllers.AppDBImpl;
 import ua.artcode.market.controllers.BillController;
 import ua.artcode.market.model.Bill;
 import ua.artcode.market.model.Product;
+import ua.artcode.market.model.SalesMan;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 public class InterfaceServices {
@@ -14,7 +17,7 @@ public class InterfaceServices {
                 "Waiting to continue work", JOptionPane.YES_NO_OPTION);
     }
 
-    public static void allProductsSelected(Bill currentBill) {
+    public static void allProductsSelected(Bill currentBill) throws IOException {
 
         String message = "Are the products selected correctly?";
         String title = "Waiting to continue work";
@@ -36,10 +39,10 @@ public class InterfaceServices {
 
                     if (productQuontity == 0 || productCode == 0) {
 
-                        BillController.changeProductToBill(currentBill, productCode, productQuontity);
+                        currentBill.terminal.currentAppDBImpl.changeProductToBill(currentBill, productCode, productQuontity);
                     }
 
-                   BillController.printBill(currentBill);
+                   currentBill.terminal.currentAppDBImpl.statistics.printBill(currentBill);
                 }
                 message = "All positions are corrected?";
                 title = "Waiting to continue work";
@@ -48,13 +51,13 @@ public class InterfaceServices {
         }
     }
 
-    public static void choseProduct(Bill currentBill) {
+    public static void choseProduct(Bill currentBill) throws IOException {
 
         List<Product> productsPrice = currentBill.terminal.currentAppDBImpl.getProductsPrice();
 
         int key = JOptionPane.YES_OPTION;
         String message;
-        Product.printFullInfo(productsPrice);
+        currentBill.terminal.currentAppDBImpl.statistics.printPriceOfProducts(productsPrice);
 
         while (key == JOptionPane.YES_OPTION) {
 
@@ -70,7 +73,7 @@ public class InterfaceServices {
 
                 if (productQuontity != 0 && productCode != 0) {
 
-                   BillController.addProduct(currentBill, productCode, productQuontity);
+                   currentBill.terminal.currentAppDBImpl.addProductToBill(currentBill, productCode, productQuontity);
                 }
             }
 
@@ -88,7 +91,7 @@ public class InterfaceServices {
 
         if (key == JOptionPane.YES_OPTION){
 
-            BillController.closeBill(currentBill);
+            currentBill.terminal.currentAppDBImpl.billController.closeBill(currentBill);
         }
     }
 
@@ -97,4 +100,34 @@ public class InterfaceServices {
                 "Waiting to continue work", JOptionPane.YES_NO_OPTION);
     }
 
+    public static SalesMan autorizationSalesMan(AppDBImpl appDB) throws IOException {
+
+        int key = JOptionPane.YES_OPTION;
+
+        while (key == JOptionPane.YES_OPTION) {
+
+            String message = "Enter the SalesMan <LOGIN> ";
+            String loginSalesMan = JOptionPane.showInputDialog(message);
+
+            message = "Enter the SalesMan <PASSWORD> ";
+            String passSalesMan = JOptionPane.showInputDialog(message);
+
+            SalesMan currentSalesMan = appDB.findSalesMan(loginSalesMan, passSalesMan);
+
+            if (currentSalesMan == null) {
+                message = "Do you want to try again?";
+                String title = "Autorization of the SalesMan";
+                key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
+
+                if (key == JOptionPane.NO_OPTION) {
+                    return null;
+                }
+            }
+            else {
+                return currentSalesMan;
+            }
+        }
+
+        return null;
+    }
 }

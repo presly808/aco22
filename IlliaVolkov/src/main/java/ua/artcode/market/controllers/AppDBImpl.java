@@ -2,37 +2,47 @@ package ua.artcode.market.controllers;
 
 import ua.artcode.market.Util.Generator;
 import ua.artcode.market.interfaces.IAppDB;
-import ua.artcode.market.interfaces.IStatistics;
 import ua.artcode.market.model.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppDBImpl implements IAppDB, IStatistics{
-
-    public Generator generator;
+public class AppDBImpl implements IAppDB {
 
     private List<SalesMan> salesMansList;
     private List<Product> productsPriceList;
     private List<Terminal> terminalList;
     private List<Bill> billList;
 
+    public final Logging logging;
+
+    public final Generator generator;
+
     public final BillController billController;
     public final TerminalController terminalController;
 
+    public final Statistics statistics;
 
-    public AppDBImpl() {
-        this.generator = new Generator(this);
+    public AppDBImpl() throws IOException {
+
         this.salesMansList = new ArrayList<SalesMan>();
         this.productsPriceList = new ArrayList<Product>();
         this.terminalList = new ArrayList<Terminal>();
         this.billList = new ArrayList<Bill>();
+
+        this.logging = Logging.getEntity();
+
+        this.generator = new Generator(this);
+
         this.billController = new BillController();
         this.terminalController = new TerminalController();
+
+        this.statistics = new Statistics();
     }
 
     @Override
-    public void remove(Object currentObject){
+    public void remove(Object currentObject) throws IOException {
 
         if (currentObject.getClass() == Terminal.class) {
             terminalList.remove(currentObject);
@@ -47,12 +57,12 @@ public class AppDBImpl implements IAppDB, IStatistics{
             salesMansList.remove(currentObject);
         }
         else{
-            System.out.println("Object is not identified. Removing stopped!");
+            logging.fixEvent("Object is not identified. Removing stopped!");
         }
     }
 
     @Override
-    public List<? extends Object> getAll(Class currentClass){
+    public List<? extends Object> getAll(Class currentClass) throws IOException {
 
         if (currentClass.equals(Terminal.class)) {
             return terminalList;
@@ -68,14 +78,14 @@ public class AppDBImpl implements IAppDB, IStatistics{
             return salesMansList;
         }
         else{
-            System.out.println("Object is not identified. Operation stopped!");
+            logging.fixEvent("Object is not identified. Operation stopped!");
 
             return null;
         }
     }
 
     @Override
-    public SalesMan findSalesMan(String login, String pass) {
+    public SalesMan findSalesMan(String login, String pass) throws IOException {
 
         for (SalesMan itemSalesMan: this.salesMansList) {
 
@@ -84,13 +94,13 @@ public class AppDBImpl implements IAppDB, IStatistics{
             }
         }
 
-        System.out.println("SalesMan was not found!");
+        logging.fixEvent("SalesMan was not found!");
 
         return null;
     }
 
     @Override
-    public Product findProductByCode(int productCode) {
+    public Product findProductByCode(int productCode) throws IOException {
 
         for (Product itemProduct: this.productsPriceList) {
 
@@ -99,7 +109,21 @@ public class AppDBImpl implements IAppDB, IStatistics{
             }
         }
 
-        System.out.println("It is not possible to identify the product by code <<" + productCode + ">>");
+        logging.fixEvent("It is not possible to identify the product by code <<" + productCode + ">>");
+
+        return null;
+    }
+
+    public ProductBill findProductBillByCode(Bill currentBill, int productCode) throws IOException {
+
+        for (ProductBill itemProductBill: currentBill.getProductsBill()) {
+
+            if (itemProductBill.getProductCode() == productCode) {
+                return itemProductBill;
+            }
+        }
+
+        logging.fixEvent("It is not possible to identify the product by code <<" + productCode + ">>");
 
         return null;
     }
@@ -111,6 +135,8 @@ public class AppDBImpl implements IAppDB, IStatistics{
 
         return salesMan;
     }
+
+    public List<SalesMan> getSalesManList() throws IOException { return this.salesMansList; }
 
     public Product createProduct(int code, String name, double price){
 
@@ -133,7 +159,7 @@ public class AppDBImpl implements IAppDB, IStatistics{
                 this.terminalController.getQuantityBillsTerminal(currentTerminal) + 1);
     }
 
-    public static void addProductToBill(Bill currentBill, int productCode, int quantity){
+    public static void addProductToBill(Bill currentBill, int productCode, int quantity) throws IOException {
 
         boolean productProcessed = false;
 
@@ -183,7 +209,7 @@ public class AppDBImpl implements IAppDB, IStatistics{
         }
     }
 
-    public void updateAmountPriceToBill(Bill currentBill){
+    public void updateAmountPriceToBill(Bill currentBill) throws IOException {
 
         currentBill.setAmountPrice(0);
 
@@ -201,7 +227,7 @@ public class AppDBImpl implements IAppDB, IStatistics{
         return terminal.getBillsTerminal().size();
     }
 
-    public void saveClosedBill(Bill currentBill) {
+    public void saveClosedBill(Bill currentBill) throws IOException {
 
         if (currentBill.closed) {
 
@@ -209,7 +235,7 @@ public class AppDBImpl implements IAppDB, IStatistics{
             billList.add(currentBill);
         }
         else {
-            System.out.println("Bill is not closed, recording is not possible!");
+            logging.fixEvent("Bill is not closed, recording is not possible!");
         }
     }
 
@@ -228,4 +254,73 @@ public class AppDBImpl implements IAppDB, IStatistics{
     public List<Product> getProductsPrice() { return this.productsPriceList; }
 
 
+    public static class Statistics {
+
+        public void printPriceOfProducts(List<Product> productsPrice){
+
+            System.out.println("\n" + getPriceOfProductsForPrint(productsPrice));
+        }
+
+        public String getPriceOfProductsForPrint(List<Product> productsPrice) {
+
+            String textMessage = "";
+
+            textMessage += "\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price";
+
+            for (Product itemProduct: productsPrice) {
+
+                textMessage += "\n" + itemProduct.code +
+                        "\t\t" + itemProduct.name +
+                        "\t\t" + itemProduct.price;
+            }
+
+            return textMessage+"\n";
+        }
+
+        public String getBillHeadInfoForPrint(Bill currentBill){
+
+            String message = "Bill №" + currentBill.getCode() +
+                    "/ quontity of goods - " + currentBill.getQuantityGoods() +
+                    "/ Amount - " + currentBill.getAmountPrice() +
+                    "/ SalesMan - " + currentBill.getSalesMan().getFullName() +
+                    "/ Closed - " + currentBill.closed +
+                    "/ createTime - " + (currentBill.createTime == null ? "" : currentBill.createTime) +
+                    "/ CloseTime - " + (currentBill.closeTime == null ? "" : currentBill.closeTime);
+
+            return message;
+        }
+
+        public String getBillProductsForPrint(Bill currentBill) throws IOException {
+
+            String message = "Code\t"+"Goods\t"+"Price\t"+"Quantity\n";
+
+            for (ProductBill itemProductBill: currentBill.getProductsBill()) {
+
+                Product currentProduct = currentBill.terminal.currentAppDBImpl.findProductByCode(itemProductBill.getProductCode());
+
+                message += "" + currentProduct.code +
+                        "\t\t" + currentProduct.name +
+                        "\t\t" + currentProduct.price +
+                        "\t\t" + itemProductBill.getProductQuontity()+"\n";
+            }
+
+            return message;
+        }
+
+        public void printBill(Bill currentBill) throws IOException {
+
+            System.out.println(getBillHeadInfoForPrint(currentBill));
+            System.out.println(getBillProductsForPrint(currentBill));
+        }
+
+        public void showInfo(Terminal currentTerminal) throws IOException {
+
+            System.out.println("\n\n\n STATISTICS OF THE WORK OF THE STORE");
+
+            for (Bill itemBill: currentTerminal.currentAppDBImpl.getBillsTerminal(currentTerminal)) {
+                currentTerminal.currentAppDBImpl.statistics.printBill(itemBill);
+            }
+        }
+
+    }
 }

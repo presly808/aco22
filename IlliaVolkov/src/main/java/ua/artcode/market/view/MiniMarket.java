@@ -10,6 +10,7 @@ import ua.artcode.market.model.Terminal;
 import ua.artcode.market.proxy.MarketProxy;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class MiniMarket {
 
@@ -19,20 +20,20 @@ public class MiniMarket {
         this.currentAppDBImpl = newAppDBImpl;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         MarketProxy marketProxy = MarketFactory.createProxy();
 
         marketProxy.getMiniMarket().startMarket();
     }
 
-    public void startMarket() {
+    public void startMarket() throws IOException {
 
         JOptionPane.showMessageDialog(null, "Good afternoon!\n" + "Shop starts work");
 
         this.currentAppDBImpl.generator.initSalesMans(2);
 
-        SalesMan autorizedSalesMan = autorizationSalesMan();
+        SalesMan autorizedSalesMan = InterfaceServices.autorizationSalesMan(this.currentAppDBImpl);
 
         if (autorizedSalesMan != null) {
 
@@ -48,17 +49,17 @@ public class MiniMarket {
 
             while (key == JOptionPane.YES_OPTION) {
 
-                Bill currentBill = BillController.createBill(currentTerminal);
+                Bill currentBill = currentAppDBImpl.createBill(currentTerminal);
 
                 while (!currentBill.closed) {
 
-                    currentTerminal.billController.choseProduct(currentBill);
+                    InterfaceServices.choseProduct(currentBill);
 
-                    BillController.printBill(currentBill);
+                    currentAppDBImpl.statistics.printBill(currentBill);
 
-                    currentTerminal.billController.allProductsSelected(currentBill);
+                    InterfaceServices.allProductsSelected(currentBill);
 
-                    currentTerminal.billController.questionForClosingBill(currentBill);
+                    InterfaceServices.questionForClosingBill(currentBill);
 
                     this.currentAppDBImpl.saveClosedBill(currentBill);
 
@@ -73,7 +74,7 @@ public class MiniMarket {
 
                         autorizedSalesMan = null;
 
-                        this.currentAppDBImpl.terminalController.showInfo(currentTerminal);
+                        this.currentAppDBImpl.statistics.showInfo(currentTerminal);
 
                         key = keyBill;
                     }
@@ -82,36 +83,5 @@ public class MiniMarket {
                 }
             }
         }
-    }
-
-    public SalesMan autorizationSalesMan() {
-
-        int key = JOptionPane.YES_OPTION;
-
-        while (key == JOptionPane.YES_OPTION) {
-
-            String message = "Enter the SalesMan <LOGIN> ";
-            String loginSalesMan = JOptionPane.showInputDialog(message);
-
-            message = "Enter the SalesMan <PASSWORD> ";
-            String passSalesMan = JOptionPane.showInputDialog(message);
-
-            SalesMan currentSalesMan = this.currentAppDBImpl.findSalesMan(loginSalesMan, passSalesMan);
-
-            if (currentSalesMan == null) {
-                message = "Do you want to try again?";
-                String title = "Autorization of the SalesMan";
-                key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
-
-                if (key == JOptionPane.NO_OPTION) {
-                    return null;
-                }
-            }
-            else {
-                return currentSalesMan;
-            }
-        }
-
-        return null;
     }
 }

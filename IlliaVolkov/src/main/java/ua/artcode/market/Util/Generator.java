@@ -1,6 +1,13 @@
 package ua.artcode.market.Util;
 
 import ua.artcode.market.controllers.AppDBImpl;
+import ua.artcode.market.controllers.BillController;
+import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Product;
+import ua.artcode.market.model.ProductBill;
+import ua.artcode.market.model.Terminal;
+
+import java.io.IOException;
 
 public class Generator{
 
@@ -23,6 +30,18 @@ public class Generator{
             this.currentAppDBImpl.createProduct(i+1,
                     "Goods"+(i+1),
                     Math.rint((Math.random()*10)*100)/100);
+        }
+    }
+
+    public void initBill(Terminal currentTerminal, int countBill) throws IOException {
+
+        for (int i = 0; i < countBill; i++) {
+            Bill currentBill = this.currentAppDBImpl.createBill(currentTerminal);
+            for (Product product: this.currentAppDBImpl.getProductsPrice()) {
+                currentBill.addProductBill(new ProductBill(product.code, 1));
+            }
+            currentBill.terminal.currentAppDBImpl.billController.closeBill(currentBill);
+            currentAppDBImpl.saveClosedBill(currentBill);
         }
     }
 }

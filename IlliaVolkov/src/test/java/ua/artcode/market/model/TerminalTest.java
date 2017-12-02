@@ -1,4 +1,4 @@
-package ua.artcode.market;
+package ua.artcode.market.model;
 
 import
         org.junit.Assert;
