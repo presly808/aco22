@@ -1,5 +1,6 @@
 package week1.controller;
 
+import week1.exception.AppException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -13,7 +14,7 @@ public interface ITerminalController {
 
     boolean login(String login, String password);
 
-    Bill createBill();
+    Bill createBill() throws AppException;
 
     Bill addProduct(int billId, Product product);
 

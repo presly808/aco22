@@ -1,6 +1,7 @@
 package week1.view;
 
 import week1.controller.ITerminalController;
+import week1.exception.AppException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
@@ -155,13 +156,14 @@ public class ConsoleView {
 
     private void menuCreateBill(Scanner scanner, ITerminalController terminal) {
 
-        Bill bill = terminal.createBill();
-
-        if (bill == null)
-            System.out.println("New bill wasn't created!");
-        else
+        Bill bill = null;
+        try {
+            bill = terminal.createBill();
             System.out.println("New bill was created!");
-        scanner.next(); //dk how to stop for a little my console app except this way
+            scanner.next(); //dk how to stop for a little my console app except this way
+        } catch (AppException e) {
+            e.printStackTrace();
+        }
     }
 
     private void menuSignIn(Scanner scanner, ITerminalController terminal) {

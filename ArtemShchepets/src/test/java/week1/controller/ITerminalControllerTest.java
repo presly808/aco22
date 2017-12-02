@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import week1.comparators.CreationDateComparator;
 import week1.database.IAppDB;
+import week1.exception.AppException;
+import week1.exception.MyLoginException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -150,6 +152,14 @@ public class ITerminalControllerTest {
 
         assertEquals(0, bill.getProductList().size());
         assertEquals(0, bill.getId());
+    }
+
+    @Test(expected = MyLoginException.class)
+    public void createBillNotLogged() throws Exception {
+
+        terminalController.setCurrentSeller(-1);
+
+        Bill bill = terminalController.createBill();
     }
 
     @Test

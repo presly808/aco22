@@ -2,6 +2,8 @@ package week1.controller;
 
 import week1.comparators.SellersSoldProductsComparator;
 import week1.database.IAppDB;
+import week1.exception.AppException;
+import week1.exception.MyLoginException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
@@ -60,12 +62,17 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill createBill() {
+    public Bill createBill() throws AppException {
 
         Bill bill = new Bill();
 
-        if (currentSeller != -1)
+        if (currentSeller == -1) {
+            throw new MyLoginException("You must login before invoking methods");
+        } else {
             bill.setSeller(iAppDB.getAllSellers().get(currentSeller));
+        }
+
+
 
         Bill billWithId = iAppDB.saveBill(bill);
 

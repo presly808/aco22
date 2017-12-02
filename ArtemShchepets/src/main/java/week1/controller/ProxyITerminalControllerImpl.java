@@ -1,5 +1,6 @@
 package week1.controller;
 
+import week1.exception.AppException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -27,7 +28,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill createBill() {
+    public Bill createBill() throws AppException{
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to create a bill.");
 
