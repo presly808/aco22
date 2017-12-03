@@ -1,5 +1,8 @@
 package ua.artcode.market.models;
 
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.money.Money;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +13,8 @@ public class Bill implements Comparable<Bill> {
     private int id;
 //    private int terminalId;
     private Map<Product, Integer> productsMap;
-    private Salesman salesman;
-    private double amountPrice;
+    private Employee salesman;
+    private Money amountPrice;
 
     private LocalDateTime openTime;
     private LocalDateTime closeTime;
@@ -45,19 +48,19 @@ public class Bill implements Comparable<Bill> {
 //        this.productsMap = productsMap;
 //    }
 
-    public Salesman getSalesman() {
+    public Employee getSalesman() {
         return salesman;
     }
 
-    public void setSalesman(Salesman salesman) {
+    public void setSalesman(Employee salesman) {
         this.salesman = salesman;
     }
 
-    public double getAmountPrice() {
+    public Money getAmountPrice() {
         return amountPrice;
     }
 
-    public void setAmountPrice(double amountPrice) {
+    public void setAmountPrice(Money amountPrice) {
         this.amountPrice = amountPrice;
     }
 
@@ -108,10 +111,9 @@ public class Bill implements Comparable<Bill> {
     @Override
     public int compareTo(Bill o) {
         if (o == null) return 1;
-        if (((o.getAmountPrice()-this.getAmountPrice()) * 100) > 0) return -1;
-        else if (((o.getAmountPrice()-this.getAmountPrice()) * 100) == 0)
-            return 0;
-        else return 1;
+        return Integer.compare(0, (o.getAmountPrice().
+                doSum(this.getAmountPrice().multiply(-1)).
+                multiply(100)).compareTo(new Money(0, 0)));
     }
 //
 //    @Override
