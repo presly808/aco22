@@ -1,4 +1,4 @@
-package ua.artcode.market.interf;
+package ua.artcode.market.appdb;
 
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -12,7 +12,7 @@ public interface IAppDB {
 
     void addActionToHistory(String message);
 
-    Salesman findSalesman(String loginOrName, boolean isLogin);
+    Salesman findSalesmanByLoginOrName(String loginOrName);
 
     void addProductToDataBase(String name, double price);
 
@@ -31,10 +31,4 @@ public interface IAppDB {
     Salesman removeSalesman(int id);
 
     Bill update(Bill bill);
-
-
-    /*getAll()
-    findById(id)
-    remove(id)
-    update(object, id)*/
 }

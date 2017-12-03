@@ -1,5 +1,6 @@
-package ua.artcode.market.interf;
+package ua.artcode.market.controller;
 
+import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public interface ITerminal {
 
-    void addSalesman(String fullName, String login, int pass);
+    Salesman addSalesman(String fullName, String login, int pass);
 
-    void signIn(boolean isLogin, String loginOrName, int password);
+    void signIn(String loginOrName, int password);
 
     void logOut();
 
@@ -29,4 +30,12 @@ public interface ITerminal {
     List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator);
 
     List<Bill> getAllBills();
+
+    AppDB getAppDB();
+
+    void addSubSalesman(Salesman chief, Salesman subordinate);
+
+    double calculateSalesmanSalary(Salesman chief);
+
+    double requiredAmountFromTheDepartment(Salesman chief);
 }
