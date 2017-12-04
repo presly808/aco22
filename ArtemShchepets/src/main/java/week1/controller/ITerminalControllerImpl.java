@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static week1.utils.TerminalStatisticUtils.calculateSumOfSoldProducts;
 import static week1.utils.TerminalStatisticUtils.findMaxPriceBill;
@@ -147,20 +148,13 @@ public class ITerminalControllerImpl implements ITerminalController {
         if (iAppDB.getAllSellers().isEmpty() || iAppDB.getAllBills().isEmpty())
             throw new UnableToGetTopSellersException("There aren't any sellers or bills in DB!");
 
-        for (Seller seller : iAppDB.getAllSellers()) {
-            seller = calculateSellerSoldProducts(seller);
-
-            iAppDB.updateSeller(seller);
-        }
-
-        // sort sellers by sold products
-        iAppDB.getAllSellers().sort(new SellersSoldProductsComparator());
-
-        logger.info("Method getTopOfSalesman was done.");
-        return iAppDB.getAllSellers().get(iAppDB.getAllSellers().size() - 1);
+       return iAppDB.getAllSellers().stream().peek(this::calculateSellerSoldProducts)
+                .peek(iAppDB::updateSeller).max(new SellersSoldProductsComparator()).get();
     }
 
     private Seller calculateSellerSoldProducts(Seller seller) {
+
+        //TODO HOW TO APPLY JAVA8 HERE?
         for (Bill bill : iAppDB.getAllBills()) {
             if (seller.getFullName() != null && seller.getSoldProducts() == 0) {
                 if (seller.getFullName().equals(bill.getSeller().getFullName()))
@@ -195,18 +189,10 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         if (endTime.compareTo(startTime) < 0) throw new UnableToFilterException("Invalid end and start dates!");
 
-        List<Bill> billList = new ArrayList<>();
-
-        for (Bill bill : iAppDB.getAllBills()) {
-            if (bill.getOpenTime().compareTo(startTime) > 0 &&
-                    bill.getOpenTime().compareTo(endTime) < 0)
-                billList.add(bill);
-        }
-
-        billList.sort(comparator);
-
-        logger.info("Method filter was done.");
-        return billList;
+        return iAppDB.getAllBills().stream().filter(bill ->
+                bill.getOpenTime().compareTo(startTime) > 0
+                        &&  bill.getOpenTime().compareTo(endTime) < 0)
+                .sorted(comparator).collect(Collectors.toList());
     }
 
     @Override

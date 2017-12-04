@@ -3,6 +3,7 @@ package week1.controller;
 import week1.exceptions.UnableToCalcucateDeptCostsException;
 import week1.exceptions.UnableToCalculateBillIncomeException;
 import week1.exceptions.UnableToCalculateSellerSalaryException;
+import week1.model.Bill;
 import week1.model.IncomeExpenses;
 import week1.model.Seller;
 
@@ -20,6 +21,7 @@ public class ISellerControllerImpl  implements ISellerController{
         List<Seller> subsellers = seller.getSubsellers();
 
         double salary = calculateOwnSellerSalary(seller);
+
         if (!subsellers.isEmpty()) {
             for (int i = 0; i < subsellers.size(); i++) {
                 salary += calculateAllSellerSalary(subsellers.get(i)) * PERCENT_FROM_SUBSELLER;
@@ -88,12 +90,6 @@ public class ISellerControllerImpl  implements ISellerController{
 
     private double calculateIncomeForDepartmentFromOneSeller(Seller mainSeller) {
 
-        double incomeFromSeller = 0;
-
-        for (int i = 0; i < mainSeller.getBills().size(); i++) {
-            incomeFromSeller += mainSeller.getBills().get(i).getAmountPrice();
-        }
-
-        return incomeFromSeller;
+        return mainSeller.getBills().stream().mapToDouble(Bill::getAmountPrice).sum();
     }
 }
