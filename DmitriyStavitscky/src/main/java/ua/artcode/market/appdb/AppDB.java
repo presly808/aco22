@@ -1,6 +1,5 @@
 package ua.artcode.market.appdb;
 
-import ua.artcode.market.interf.IAppDB;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -12,19 +11,20 @@ public class AppDB implements IAppDB {
 
     private List<Bill> bills = new ArrayList<>();
 
+    private Salesman manager;
+
     private List<Salesman> salesmans = new ArrayList<>();
 
     private List<Product> products = new ArrayList<>();
 
     private List<String> historyOfActions = new ArrayList<>();
 
-    private int countOdId;
+    private int countOfId;
 
     @Override
     public int genId() {
 
-        countOdId++;
-        return countOdId;
+        return ++countOfId;
     }
 
     @Override
@@ -55,18 +55,15 @@ public class AppDB implements IAppDB {
     }
 
     @Override
-    public Salesman findSalesman(String loginOrName, boolean isLogin) {
+    public Salesman findSalesmanByLoginOrName(String loginOrName) {
         if (loginOrName == null || loginOrName.isEmpty()) return null;
 
-        if (isLogin) {
-            for (Salesman salesman : salesmans) {
-                if (salesman.getLogin().equals(loginOrName)) return salesman;
-            }
+        for (Salesman salesman : salesmans) {
+            if (salesman.getLogin().equals(loginOrName)) return salesman;
+        }
 
-        } else {
-            for (Salesman salesman : salesmans) {
-                if (salesman.getFullName().equals(loginOrName)) return salesman;
-            }
+        for (Salesman salesman : salesmans) {
+            if (salesman.getFullName().equals(loginOrName)) return salesman;
         }
 
         System.out.println("salesman not found");
@@ -183,12 +180,20 @@ public class AppDB implements IAppDB {
         this.historyOfActions = historyOfActions;
     }
 
-    public int getCountOdId() {
-        return countOdId;
+    public int getCountOfId() {
+        return countOfId;
     }
 
-    public void setCountOdId(int countOdId) {
-        this.countOdId = countOdId;
+    public void setCountOfId(int countOfId) {
+        this.countOfId = countOfId;
+    }
+
+    public Salesman getManager() {
+        return manager;
+    }
+
+    public void setManager(Salesman manager) {
+        this.manager = manager;
     }
 }
 

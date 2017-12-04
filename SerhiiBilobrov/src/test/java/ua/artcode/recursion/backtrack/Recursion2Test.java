@@ -41,4 +41,12 @@ public class Recursion2Test {
         assertTrue(expected.containsAll(doubling.doubling(res)));
     }
 
+    @Test
+    public void verificationForTravis() throws Exception {
+
+        List<Integer> list= Arrays.asList(10,1,2);
+
+        assertNotNull(Recursion2.doubling(list));
+    }
+
 }
