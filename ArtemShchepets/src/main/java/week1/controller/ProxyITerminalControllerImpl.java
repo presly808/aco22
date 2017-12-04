@@ -1,5 +1,6 @@
 package week1.controller;
 
+import week1.exceptions.*;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -19,7 +20,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public boolean login(String login, String password) {
+    public boolean login(String login, String password) throws UnableToLogInException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to sign in.");
 
@@ -35,7 +36,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product)
+            throws InvalidBillIdException, UnableToFindABillException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to add a product.");
 
@@ -58,7 +60,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill closeBill(int billId) {
+    public Bill closeBill(int billId) throws UnableToFindABillException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to close a bill.");
 
@@ -66,7 +68,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill findBillById(int billId) {
+    public Bill findBillById(int billId) throws InvalidBillIdException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to find a bill by id.");
 
@@ -82,7 +84,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Seller getTopOfSalesman() {
+    public Seller getTopOfSalesman() throws UnableToGetTopSellersException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to get top seller.");
 
@@ -90,7 +92,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public SalesStatistic doSomeStatisticStuff() {
+    public SalesStatistic doSomeStatisticStuff()
+            throws UnableToDoStatisticException, UnableToGetTopSellersException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to get some statistic.");
 
@@ -98,7 +101,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator) {
+    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator)
+            throws UnableToFilterException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to filter some bills.");
 

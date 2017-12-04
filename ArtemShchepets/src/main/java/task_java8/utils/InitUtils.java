@@ -1,16 +1,14 @@
-package taskJava8.utils;
+package task_java8.utils;
 
-import taskJava8.model.User;
+import task_java8.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateUtils {
+public class InitUtils {
     public static List<User> initUsers() {
 
         List<User> users = new ArrayList<>();
-
-        int generatedCount = 1;
 
         users.add(new User( 123515, "worker1", 26, "F", 2500, "Kyiv", 1));
         users.add(new User( 123514, "worker2", 20, "M", 23456, "Lviv", 1));

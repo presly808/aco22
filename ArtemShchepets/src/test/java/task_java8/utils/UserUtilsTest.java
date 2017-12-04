@@ -1,10 +1,10 @@
-package taskJava8.utils;
+package task_java8.utils;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import taskJava8.model.User;
+import task_java8.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class UserUtilsTest {
 
     @Before
     public void setUp() throws Exception {
-        users = GenerateUtils.initUsers();
+        users = InitUtils.initUsers();
     }
 
     @After

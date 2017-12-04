@@ -2,6 +2,7 @@ package week1.controller;
 
 import week1.comparators.SellersSoldProductsComparator;
 import week1.database.IAppDB;
+import week1.exceptions.*;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
@@ -28,26 +29,25 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     public ITerminalControllerImpl(IAppDB iAppDB) {
         this.iAppDB = iAppDB;
+        this.currentSeller = iAppDB.getAllSellers().size() - 1;
         logger.setLevel(Level.OFF);
     }
 
     @Override
-    public boolean login(String login, String password) {
+    public boolean login(String login, String password) throws UnableToLogInException {
 
         // set current seller in db to "-1", logging out
         currentSeller = -1;
 
         if ((login == null || password == null) ||
                 (login.equals("") || password.equals(""))
-                || iAppDB.getAllSellers().size() == 0) {
-
-            logger.warning("Login or pass is invalid or sellers is null!");
-            return false;
-        }
+                || iAppDB.getAllSellers().size() == 0)
+            throw new UnableToLogInException("Invalid log\\pass or aren't any sellers!");
 
         int sellerId = iAppDB.getAllSellers().
                 indexOf(iAppDB.findBySellerLoginAndPassword(login, password));
 
+        //TODO HOW TO DO EXCEPTION THERE CORRECTLY?
         if (sellerId == -1) {
             logger.warning("There aren't any sellers with such login\\pass!");
             return false;
@@ -74,14 +74,13 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product) throws UnableToFindABillException, InvalidBillIdException {
+
+        if (billId <= -1) throw new InvalidBillIdException("Bill id is -1 or less!");
 
         Bill bill = iAppDB.findByBillId(billId);
 
-        if (bill == null) {
-            logger.warning("Not found a bill with such id");
-            return null;
-        }
+        if (bill == null) throw new UnableToFindABillException("There isn't a bill with such id!");
 
         product.setId(bill.getNextProductId());
         bill.getProductList().add(product);
@@ -111,15 +110,11 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill closeBill(int billId) {
+    public Bill closeBill(int billId) throws UnableToFindABillException {
 
-        //TODO ADD SAAAAAAVE OF BILL
         Bill bill = iAppDB.findByBillId(billId);
 
-        if (bill == null) {
-            logger.warning("Not found a bill with such id");
-            return null;
-        }
+        if (bill == null) throw new UnableToFindABillException("There isn't a bill with such id!");
 
         bill.setClosed(true);
         bill.setCloseTime(LocalDateTime.now());
@@ -131,12 +126,9 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill findBillById(int billId) {
+    public Bill findBillById(int billId) throws InvalidBillIdException {
 
-        if (billId < 0) {
-            logger.info("Bill id is less than 0.");
-            return null;
-        }
+        if (billId <= -1) throw new InvalidBillIdException("Bill id is -1 or less!");
 
         logger.info("Method findBillById was done.");
         return iAppDB.findByBillId(billId);
@@ -150,12 +142,10 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Seller getTopOfSalesman() {
+    public Seller getTopOfSalesman() throws UnableToGetTopSellersException {
 
-        if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0) {
-            logger.warning("Sellers or bills are null");
-            return null;
-        }
+        if (iAppDB.getAllSellers().isEmpty() || iAppDB.getAllBills().isEmpty())
+            throw new UnableToGetTopSellersException("There aren't any sellers or bills in DB!");
 
         for (Seller seller : iAppDB.getAllSellers()) {
             seller = calculateSellerSoldProducts(seller);
@@ -183,14 +173,12 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public SalesStatistic doSomeStatisticStuff() {
+    public SalesStatistic doSomeStatisticStuff() throws UnableToDoStatisticException, UnableToGetTopSellersException {
 
         SalesStatistic salesStatistic = new SalesStatistic();
 
-        if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0) {
-            logger.warning("Sry, we haven't any bills or sellers!");
-            return null;
-        }
+        if (iAppDB.getAllSellers().size() == 0 || iAppDB.getAllBills().size() == 0)
+            throw new UnableToDoStatisticException("There aren't any sellers or bills in DB!");
 
         salesStatistic.setMaxBillPrice(findMaxPriceBill(iAppDB));
         salesStatistic.setMinBillPrice(findMinPriceBill(iAppDB));
@@ -202,7 +190,10 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator) {
+    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator)
+            throws UnableToFilterException {
+
+        if (endTime.compareTo(startTime) < 0) throw new UnableToFilterException("Invalid end and start dates!");
 
         List<Bill> billList = new ArrayList<>();
 

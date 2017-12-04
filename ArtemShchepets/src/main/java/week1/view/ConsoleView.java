@@ -1,6 +1,7 @@
 package week1.view;
 
 import week1.controller.ITerminalController;
+import week1.exceptions.*;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
@@ -46,7 +47,12 @@ public class ConsoleView {
                     menuShowTopSellers(scanner, terminal);
                     break;
                 case "8":
-                    System.out.println(terminal.doSomeStatisticStuff());
+                    try {
+                        System.out.println(terminal.doSomeStatisticStuff());
+                    } catch (UnableToDoStatisticException | UnableToGetTopSellersException e) {
+                        e.printStackTrace();
+                        System.out.println("Can't get a statistic!");
+                    }
                     scanner.next();
                     break;
                 case "q":
@@ -77,7 +83,12 @@ public class ConsoleView {
 
         System.out.println("***Top seller***");
 
-        Seller topSeller = terminal.getTopOfSalesman();
+        Seller topSeller = null;
+        try {
+            topSeller = terminal.getTopOfSalesman();
+        } catch (UnableToGetTopSellersException e) {
+            e.printStackTrace();
+        }
 
         if (topSeller == null)
             System.out.println("No such info.");
@@ -107,7 +118,12 @@ public class ConsoleView {
 
         int id = scanner.nextInt();
 
-        Bill searchingBill = terminal.findBillById(id);
+        Bill searchingBill = null;
+        try {
+            searchingBill = terminal.findBillById(id);
+        } catch (InvalidBillIdException e) {
+            e.printStackTrace();
+        }
 
         if (searchingBill == null)
             System.out.println("We can't find such bill in our DB.");
@@ -121,7 +137,12 @@ public class ConsoleView {
 
         System.out.println("Enter bill id, which you want to close.");
 
-        Bill bill = terminal.closeBill(scanner.nextInt());
+        Bill bill = null;
+        try {
+            bill = terminal.closeBill(scanner.nextInt());
+        } catch (UnableToFindABillException e) {
+            e.printStackTrace();
+        }
 
         if (bill == null)
             System.out.println("Bill wasn't closed!");
@@ -145,11 +166,14 @@ public class ConsoleView {
 
         Product newProduct = new Product(newProductName, newProductPrice);
 
-        if (terminal.addProduct(id, newProduct) != null)
-            System.out.println("Product was added to the bill with id " + id);
-        else
+        try {
+            Bill bill = terminal.addProduct(id, newProduct);
+        } catch (UnableToFindABillException | InvalidBillIdException e) {
+            e.printStackTrace();
             System.out.println("Product wasn't added.");
+        }
 
+        System.out.println("Product was added to the bill with id " + id);
         scanner.next(); //dk how to stop for a little my console app except this way
     }
 
@@ -175,9 +199,12 @@ public class ConsoleView {
 
             System.out.println("\nTrying to sign in...\n");
 
-            if (terminal.login(login, password))
-                loggedIn = true;
-            else System.out.println("Sorry, something went wrong! Try again!");
+            try {
+                if (terminal.login(login, password))
+                    loggedIn = true;
+            } catch (UnableToLogInException e) {
+                System.out.println("Sorry, something went wrong! Try again!");
+            }
         } while (!loggedIn);
 
     }

@@ -1,16 +1,16 @@
-package taskJava8.model;
+package task_java8.model;
 
 public class User {
 
     // Input Stream of Users(id,name,sex,salary,city,department)
 
-   private long id;
-   private String name;
-   private String sex;
-   private double salary;
-   private String city;
-   private int company;
-   private int age;
+    private long id;
+    private String name;
+    private String sex;
+    private double salary;
+    private String city;
+    private int company;
+    private int age;
 
     public User(long id, String name, int age, String sex, double salary, String city, int company) {
         this.id = id;

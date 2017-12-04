@@ -1,5 +1,8 @@
 package week1.controller;
 
+import week1.exceptions.UnableToCalcucateDeptCostsException;
+import week1.exceptions.UnableToCalculateBillIncomeException;
+import week1.exceptions.UnableToCalculateSellerSalaryException;
 import week1.model.IncomeExpenses;
 import week1.model.Seller;
 
@@ -10,11 +13,9 @@ public class SellersController {
     private static final double PERCENT_FROM_BILL = 0.2;
     private static final double PERCENT_FROM_SUBSELLER = 0.3;
 
-    public double calculateAllSellerSalary( Seller seller) {
+    public double calculateAllSellerSalary( Seller seller) throws UnableToCalculateSellerSalaryException {
 
-        if (seller == null) {
-            return 0;
-        }
+        if (seller == null) throw new UnableToCalculateSellerSalaryException("Seller is null");
 
         List<Seller> subsellers = seller.getSubsellers();
 
@@ -40,11 +41,9 @@ public class SellersController {
         return salary;
     }
 
-    public double calculateDepartamentCosts(Seller rootSeller) {
+    public double calculateDepartamentCosts(Seller rootSeller) throws UnableToCalcucateDeptCostsException {
 
-        if (rootSeller == null) {
-            return 0;
-        }
+        if (rootSeller == null) throw new UnableToCalcucateDeptCostsException("Root seller is null!");
 
         List<Seller> subsellers = rootSeller.getSubsellers();
 
@@ -60,7 +59,7 @@ public class SellersController {
         return salary;
     }
 
-    public IncomeExpenses calculateIncomeAndExpenses(Seller mainSeller) {
+    public IncomeExpenses calculateIncomeAndExpenses(Seller mainSeller) throws UnableToCalculateBillIncomeException, UnableToCalcucateDeptCostsException {
 
         IncomeExpenses incomeExpenses = new IncomeExpenses();
 
@@ -70,10 +69,8 @@ public class SellersController {
         return incomeExpenses;
     }
 
-    private double calculateIncomeFromBills(Seller mainSeller) {
-        if (mainSeller == null) {
-            return 0;
-        }
+    private double calculateIncomeFromBills(Seller mainSeller) throws UnableToCalculateBillIncomeException {
+        if (mainSeller == null) throw new UnableToCalculateBillIncomeException("Main seller is null!");
 
         List<Seller> subsellers = mainSeller.getSubsellers();
 

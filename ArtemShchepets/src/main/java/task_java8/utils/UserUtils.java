@@ -1,10 +1,9 @@
-package taskJava8.utils;
+package task_java8.utils;
 
-import taskJava8.comparators.AgeUserComparator;
-import taskJava8.comparators.SalaryUserComparator;
-import taskJava8.model.User;
+import task_java8.comparators.AgeUserComparator;
+import task_java8.comparators.SalaryUserComparator;
+import task_java8.model.User;
 
-import javax.rmi.CORBA.Util;
 import java.util.*;
 import java.util.stream.Collectors;
 

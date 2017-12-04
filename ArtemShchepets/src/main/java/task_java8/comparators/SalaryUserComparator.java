@@ -1,6 +1,6 @@
-package taskJava8.comparators;
+package task_java8.comparators;
 
-import taskJava8.model.User;
+import task_java8.model.User;
 
 import java.util.Comparator;
 
