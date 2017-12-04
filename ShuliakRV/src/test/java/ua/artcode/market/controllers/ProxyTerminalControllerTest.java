@@ -98,5 +98,10 @@ public class ProxyTerminalControllerTest {
         assertEquals(1,bills.size());
         assertNotNull(sumSalarySalesmen(terminalController.getAppDB()));
     }
+    @Test
+    public void remove() throws Exception {
+        Product p1 = terminalController.getAppDB().removeProduct(1);
+        assertTrue(p1 == null);
+    }
 
 }
