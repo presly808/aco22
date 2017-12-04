@@ -6,26 +6,26 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class tasksTest {
 
-    private List<User> users = new ArrayList<>();
-    private Tasks task = new Tasks(users);
+    private Tasks task = new Tasks(new ArrayList<>());
 
-    private User user1 = new User("Dima", 1, 1,  1000, "man", "Kiev", "first");
+    private User user1 = new User("Dima", 1, 1, 1000, "man", "Kiev", "first");
     private User user2 = new User("Marina", 5, 2, 5000, "woman", "Kiev", "second");
     private User user3 = new User("Ivan", 10, 3, 10_000, "man", "Odessa", "first");
-    private User user4 = new User("Kolia",15, 4, 15_000, "man", "Odessa", "second");
+    private User user4 = new User("Kolia", 15, 4, 15_000, "man", "Odessa", "second");
     private User user5 = new User("Sofa", 20, 5, 20_000, "woman", "Kiev", "first");
-    private User user6 = new User("Kila",25, 6, 25_000, "man", "Kiev", "second");
-    private User user7 = new User("Kira",30, 7, 30_000, "woman", "Odessa", "first");
-    private User user8 = new User("Lapa",35, 8, 35_000, "woman", "Odessa", "second");
-    private User user9 = new User("Rana",40, 9, 40_000, "man", "Kiev", "first");
-    private User user10 = new User("Motya",45, 10, 45_000, "woman", "Kiev", "second");
+    private User user6 = new User("Kila", 25, 6, 25_000, "man", "Kiev", "second");
+    private User user7 = new User("Kira", 30, 7, 30_000, "woman", "Odessa", "first");
+    private User user8 = new User("Lapa", 35, 8, 35_000, "woman", "Odessa", "second");
+    private User user9 = new User("Rana", 40, 9, 40_000, "man", "Kiev", "first");
+    private User user10 = new User("Motya", 45, 10, 45_000, "woman", "Kiev", "second");
 
     private List<User> expected;
     private List<User> actual;
+
     @Before
     public void before() {
 
@@ -87,7 +87,6 @@ public class tasksTest {
 
         System.out.println("Test: add 5% salary");
         task.addSalaryAndPrint(5);
-
     }
 
     // How many users do live in Kiev?
@@ -110,5 +109,4 @@ public class tasksTest {
 
         assertEquals(101_000, task.getSalarySumByDepartment("first"), 1);
     }
-
 }

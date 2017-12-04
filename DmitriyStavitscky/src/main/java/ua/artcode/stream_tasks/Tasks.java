@@ -1,10 +1,8 @@
 package ua.artcode.stream_tasks;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import ua.artcode.stream_tasks.UserUtils;
 
 public class Tasks {
 
@@ -39,7 +37,7 @@ public class Tasks {
 
         return users.stream()
                 .filter(u -> u.getCity().equals(city) &&
-                                u.getName().startsWith(firstSymbolOfName))
+                        u.getName().startsWith(firstSymbolOfName))
                 .mapToDouble(User::getSalary).sum();
     }
 
@@ -66,7 +64,6 @@ public class Tasks {
                 .mapToDouble(User::getSalary)
                 .average()
                 .getAsDouble();
-
     }
 
     // get sum of salaries grouped by department and sorted by sum

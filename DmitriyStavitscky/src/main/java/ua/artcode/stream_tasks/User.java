@@ -1,10 +1,6 @@
 package ua.artcode.stream_tasks;
 
-import java.util.Comparator;
-
 public class User {
-
-    // Input Stream of Users(id,name,sex,salary,city,department)
 
     private String name;
     private int age;
@@ -15,12 +11,6 @@ public class User {
     private String department;
 
     public User() {
-    }
-
-    public User(String name, double salary, String city) {
-        this.name = name;
-        this.salary = salary;
-        this.city = city;
     }
 
     public User(String name, int age, int id, double salary, String sex, String city, String department) {
@@ -66,53 +56,29 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getSex() {
         return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
+    public double getSalary() { return salary; }
 
-    public double getSalary() {
-        return salary;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
-
-    public void setSalary(double salary) { this.salary = salary; }
 }
