@@ -210,9 +210,6 @@ public class IAppDbImpl implements IAppDb {
 
         filteredList.stream().map(bill -> summ.doSum(bill.getAmountPrice())).
                 close();
-//        for (Bill aFilteredList : filteredList) {
-//            summ = summ.doSum(aFilteredList.getAmountPrice());
-//        }
         return summ;
 
 
