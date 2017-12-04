@@ -1,6 +1,6 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.exception.BillNotFoundException;
+import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ITerminalController;
 import ua.artcode.market.models.Bill;
@@ -12,7 +12,6 @@ import ua.artcode.market.models.money.Money;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ITerminalControllerImpl implements ITerminalController {
@@ -24,7 +23,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         this.iAppDb = iAppDb;
     }
 
-    public IAppDb getiAppDb() {
+    public IAppDb getIAppDb() {
         return iAppDb;
     }
 

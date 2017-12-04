@@ -1,8 +1,6 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.exception.BillNotFoundException;
-import ua.artcode.market.exception.NullArgumentException;
-import ua.artcode.market.exception.ProductNotFoundException;
+import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.models.*;
 import ua.artcode.market.models.employee.Employee;
@@ -210,6 +208,7 @@ public class IAppDbImpl implements IAppDb {
 
         filteredList.stream().map(bill -> summ.doSum(bill.getAmountPrice())).
                 close();
+
         return summ;
 
 

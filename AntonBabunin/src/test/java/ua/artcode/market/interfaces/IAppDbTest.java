@@ -5,10 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.IAppDbImpl;
 import ua.artcode.market.controllers.ITerminalControllerImpl;
-import ua.artcode.market.exception.BillNotFoundException;
+import ua.artcode.market.exclude.BillNotFoundException;
 import ua.artcode.market.models.Bill;
-
-import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
