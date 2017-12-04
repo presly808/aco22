@@ -1,6 +1,10 @@
 package logictests;
 
 import controllers.BillController;
+import exceptions.IncorrectBillException;
+import exceptions.NoSuchSalesmanException;
+import exceptions.UnableToAddProductToBillException;
+import factory.TerminalFactory;
 import utils.StringGenerator;
 import utils.TerminalUtils;
 import controllers.TerminalController;
@@ -11,7 +15,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -19,10 +22,12 @@ import java.util.Set;
 public class TerminalTests {
 
     private TerminalController terminal;
+    private BillController billController;
 
     @Before
     public void prepareData(){
-        this.terminal = new TerminalController(new BillController());
+        billController = new BillController();
+        this.terminal = TerminalFactory.create(billController);
     }
 
     @After
@@ -31,7 +36,7 @@ public class TerminalTests {
     }
 
     @Test
-    public void testCreateBillMethod(){
+    public void testCreateBillMethod() throws IncorrectBillException {
         Bill bill = terminal.createBill(new Bill());
 
         Assert.assertNotNull("BillController created", bill);
@@ -39,7 +44,8 @@ public class TerminalTests {
     }
 
     @Test
-    public void testAddProduct(){
+    public void testAddProduct() throws IncorrectBillException,
+                                        UnableToAddProductToBillException {
         Bill bill = new Bill();
         String productName = StringGenerator.generateName();
         Product product = terminal.addProduct(bill, productName);
@@ -56,7 +62,8 @@ public class TerminalTests {
     }
 
     @Test
-    public void testFindSalesmanByLoginOrFullName(){
+    public void testFindSalesmanByLoginOrFullName() throws IncorrectBillException,
+                                                                NoSuchSalesmanException {
         String salesManName = null;
         int salesManQuantity = 10;
 
@@ -78,7 +85,7 @@ public class TerminalTests {
     }
 
     @Test
-    public void testSortBillsByCreatedDate(){
+    public void testSortBillsByCreatedDate() throws IncorrectBillException {
         for (int i = 0; i < 100; i++) {
             terminal.createBill(new Bill());
         }
@@ -87,7 +94,7 @@ public class TerminalTests {
     }
 
     @Test
-    public void testFindBillById(){
+    public void testFindBillById() throws IncorrectBillException {
         Set<Bill> billSet = terminal.getBillSet();
         Assert.assertTrue("Empty set", billSet.size() == 0);
         for (int i = 0; i < 10; i++) {
@@ -97,7 +104,7 @@ public class TerminalTests {
     }
 
     @Test
-    public void testGetBillsByStartAndEndDates(){
+    public void testGetBillsByStartAndEndDates() throws IncorrectBillException {
         TerminalController terminalController = generateBills();
         List<Bill> billList = terminalController.
                 getBillsByStartAndEndDates(new Date(System.currentTimeMillis()),
@@ -107,14 +114,19 @@ public class TerminalTests {
     }
 
     @Test
-    public void testGetBillsByCreator(){
+    public void testGetBillsByCreator() throws IncorrectBillException {
         TerminalController terminalController = generateBills();
         List<Bill> billList = terminalController.
                 getBillsByCreator(new Salesman("", ""));
         Assert.assertTrue(billList.isEmpty());
     }
 
-    private TerminalController generateBills() {
+    @Test
+    public void testTerminalFactory(){
+        Assert.assertNotNull(TerminalFactory.create(billController));
+    }
+
+    private TerminalController generateBills() throws IncorrectBillException {
         TerminalController terminalController =
                 new TerminalController(new BillController());
         for (int i = 0; i < 100; i++) {

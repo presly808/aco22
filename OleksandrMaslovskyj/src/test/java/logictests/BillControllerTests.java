@@ -1,6 +1,9 @@
 package logictests;
 
 import controllers.BillController;
+import exceptions.UnableToAddProductToBillException;
+import exceptions.UnableToCalculatePriceException;
+import exceptions.UnableToCloseBillException;
 import models.Bill;
 import models.Product;
 import org.junit.Assert;
@@ -17,7 +20,7 @@ public class BillControllerTests {
     }
 
     @Test
-    public void testCloseBillMethod(){
+    public void testCloseBillMethod() throws UnableToCloseBillException {
         Bill bill = new Bill();
         billController.closeBill(bill);
         Assert.assertTrue(bill.getCloseTime() != null);
@@ -25,7 +28,7 @@ public class BillControllerTests {
     }
 
     @Test
-    public void testAddProductToBillMethod(){
+    public void testAddProductToBillMethod() throws UnableToAddProductToBillException {
         Bill bill = new Bill();
         billController.addProductToBill(bill, "Milk");
         billController.addProductToBill(bill, "Coffee");
@@ -34,7 +37,7 @@ public class BillControllerTests {
     }
 
     @Test
-    public void testCalculateAmountPrice(){
+    public void testCalculateAmountPrice() throws UnableToAddProductToBillException, UnableToCalculatePriceException {
         Bill bill = new Bill();
         billController.addProductToBill(bill, "Milk");
         billController.addProductToBill(bill, "Coffee");

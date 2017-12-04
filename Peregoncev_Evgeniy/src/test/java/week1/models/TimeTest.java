@@ -1,4 +1,4 @@
-package week1;
+package week1.models;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class TimeTest {
         Time testTime = new Time();
 
         Date testTimeNow = new Date();
-        SimpleDateFormat time = new SimpleDateFormat("'Time: 'H:mm:ss'\nDate: 'yyyy.MM.dd");
+        SimpleDateFormat time = new SimpleDateFormat("'Date: 'yyyy.MM.dd 'Time: 'H:mm:ss");
 
         assertEquals(time.format(testTimeNow), testTime.printTime());
 
