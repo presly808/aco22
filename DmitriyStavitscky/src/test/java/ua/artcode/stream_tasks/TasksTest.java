@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class tasksTest {
+public class TasksTest {
 
     private Tasks task = new Tasks(new ArrayList<>());
 
@@ -87,6 +87,8 @@ public class tasksTest {
 
         System.out.println("Test: add 5% salary");
         task.addSalaryAndPrint(5);
+
+        assertEquals(task.getUsers().get(0).getSalary(), 1050, 1 );
     }
 
     // How many users do live in Kiev?
