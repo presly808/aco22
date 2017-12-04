@@ -1,11 +1,16 @@
 package models;
 
+import java.util.List;
 
 public class Salesman implements Comparable<Salesman>{
 
     private String fullname;
     private String login;
     private String pass;
+    private double salary;
+
+    private List<Salesman> salesmanList;
+    private List<Bill> bills;
 
     public Salesman(String login, String pass) {
         this.fullname = login;
@@ -25,18 +30,6 @@ public class Salesman implements Comparable<Salesman>{
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
     public String toString() {
         return "Salesman{" +
                 "fullname='" + fullname + '\'' +
@@ -45,8 +38,30 @@ public class Salesman implements Comparable<Salesman>{
                 '}';
     }
 
+    public double getSalary() {
+        return salary;
+    }
 
-    @Override
+    public List<Salesman> getSalesmanList() {
+        return salesmanList;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setSalesmanList(List<Salesman> salesmanList) {
+        this.salesmanList = salesmanList;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
     public int compareTo(Salesman o) {
         return this.getFullname().equals(o.getFullname())
                 && this.getLogin().equals(o.getLogin()) ? 1 : 0;
