@@ -8,7 +8,7 @@ import week1.model.Seller;
 
 import java.util.List;
 
-public class SellersController {
+public class ISellerControllerImpl  implements ISellerController{
 
     private static final double PERCENT_FROM_BILL = 0.2;
     private static final double PERCENT_FROM_SUBSELLER = 0.3;
