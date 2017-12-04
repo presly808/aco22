@@ -38,7 +38,6 @@ public class Recursion2 {
         return nums.stream().map(e -> e * 2).collect(Collectors.toList());
     }
 
-
     public static boolean hasSeq(int[] arr, int target) {
 
         if (target == 0) {
