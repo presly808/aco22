@@ -22,6 +22,8 @@ public class IAppDbTest {
 
     @After
     public void tearDown() throws Exception {
+        iAppDb = null;
+        iTerminalController = null;
     }
 
     @Test
@@ -30,10 +32,11 @@ public class IAppDbTest {
         Bill bill2 = iTerminalController.createBill();
         Bill bill3 = iTerminalController.createBill();
         Bill bill4 = iTerminalController.createBill();
-
+        System.out.println(bill1.toString() +  bill2.toString() +
+                bill4.toString());
         Bill bill = iAppDb.findBillById(3);
 
-        assertTrue(bill3.getId() == 3);
+        assertTrue(bill3.getId() == bill.getId());
     }
 
     @Test
