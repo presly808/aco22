@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.TerminalControllerFactory;
+import ua.artcode.market.exception.ProductNotFoundException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.BillComparator;
 import ua.artcode.market.models.Product;
@@ -40,14 +41,15 @@ public class ITerminalControllerTest {
 
     @Test
     public void addProduct() throws Exception {
+        Product product = Generator.createProduct();
+        product.setId(1);
+        terminalController.getiAppDb().saveProduct(product);
         Bill bill = terminalController.createBill();
         bill = terminalController.addProduct(bill.getId(),
-                terminalController.getiAppDb().findProductById(1));
+                terminalController.getiAppDb().findProductById(product.getId()));
+
         terminalController.getiAppDb().saveBill(bill);
-        if (bill != null) {
-            assertEquals(0, bill.getProductsMap().size());
-        }
-        assertNull(bill);
+            assertEquals(1, bill.getProductsMap().size());
     }
 
     @Test
@@ -58,7 +60,7 @@ public class ITerminalControllerTest {
         terminalController.createBill();
         terminalController.createBill();
 
-        assertEquals(5, terminalController.getAllBills().size());
+        assertEquals(5, terminalController.getBills().size());
 
     }
 
@@ -70,6 +72,11 @@ public class ITerminalControllerTest {
         assertNotNull(close.getCloseTime());
     }
 
+    @Test
+    public void calculateAmountPriceNeg() throws Exception {
+        Money amPrice = terminalController.calculateAmountPrice(null);
+        assertTrue(new Money(0,0).equals(amPrice));
+    }
     @Test
     public void calculateAmountPrice() throws Exception {
         Bill open = terminalController.createBill();
@@ -191,7 +198,7 @@ public class ITerminalControllerTest {
 //        terminalController.logout((Salesman) salesman1);
         terminalController.prinBill(bill1);
         terminalController.getiAppDb();
-        terminalController.getAllBills();
+        terminalController.getBills();
         terminalController.calculateAmountPrice(bill1);
 
 

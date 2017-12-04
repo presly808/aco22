@@ -1,5 +1,7 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.exception.BillNotFoundException;
+import ua.artcode.market.exception.ProductNotFoundException;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ILogging;
 import ua.artcode.market.models.Bill;
@@ -24,8 +26,8 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public void write(String messege) throws IOException {
-        iLogging.write(messege);
+    public void write(String message) throws IOException {
+        iLogging.write(message);
     }
 
     @Override
@@ -49,12 +51,12 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Bill findBillById(int id) {
+    public Bill findBillById(int id) throws BillNotFoundException {
         return iAppDb.findBillById(id);
     }
 
     @Override
-    public Product findProductById(int id) {
+    public Product findProductById(int id) throws ProductNotFoundException {
         return iAppDb.findProductById(id);
     }
 
@@ -96,78 +98,83 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Bill removeBill(int id) throws IOException {
-        Bill bill = iAppDb.removeBill(id);
-        String messege = null;
-        if (bill == null) {
-            messege = String.format("Bill %s not found \r\n", bill);
-            iLogging.write(messege);
-            return null;
+    public Bill removeBill(int id) throws IOException, BillNotFoundException {
+        Bill bill;
+        String message;
+
+        try {
+            bill = iAppDb.removeBill(id);
+        } catch (BillNotFoundException e) {
+            message = String.format("Bill id=%d not found \r\n", id);
+            iLogging.write(message);
+            throw e;
         }
-        messege = String.format("Bill %s removed \r\n", bill);
-        iLogging.write(messege);
+        message = String.format("Bill %s removed \r\n", bill);
+        iLogging.write(message);
         return bill;
     }
 
     @Override
-    public Product removeProduct(int id) throws IOException {
-        Product product1 = iAppDb.removeProduct(id);
-        String messege = null;
-        if (product1 == null) {
-            messege = String.format("Product %s wasn't removed \r\n", product1);
-            iLogging.write(messege);
-            return null;
+    public Product removeProduct(int id) throws IOException, ProductNotFoundException {
+        String message = null;
+        Product product1;
+        try {
+            product1 = iAppDb.removeProduct(id);
+        } catch (ProductNotFoundException e) {
+            message = String.format("Product id=%s wasn't removed \r\n", id);
+            iLogging.write(message);
+            throw e;
         }
-        messege = String.format("Product %s saved \r\n", product1);
-        iLogging.write(messege);
+        message = String.format("Product %s saved \r\n", product1);
+        iLogging.write(message);
         return product1;
     }
 
     @Override
     public Bill saveBill(Bill bill) throws IOException {
         Bill bill1 = iAppDb.saveBill(bill);
-        String messege = null;
+        String message = null;
         if (bill1 == null) {
-            messege = String.format("Bill %s wasn't saved \r\n", bill1);
-            iLogging.write(messege);
+            message = String.format("Bill %s wasn't saved \r\n", bill1);
+            iLogging.write(message);
             return null;
         }
-        messege = String.format("Bill %s saved \r\n", bill1);
-        iLogging.write(messege);
+        message = String.format("Bill %s saved \r\n", bill1);
+        iLogging.write(message);
         return bill1;
     }
 
     @Override
     public Product saveProduct(Product product) throws IOException {
         Product product1 = iAppDb.saveProduct(product);
-        String messege = null;
+        String message = null;
         if (product1 == null) {
-            messege = String.format("Product %s wasn't saved \r\n", product1);
-            iLogging.write(messege);
+            message = String.format("Product %s wasn't saved \r\n", product1);
+            iLogging.write(message);
             return null;
         }
-        messege = String.format("Product %s saved \r\n", product1);
-        iLogging.write(messege);
+        message = String.format("Product %s saved \r\n", product1);
+        iLogging.write(message);
         return product1;
     }
 
     @Override
-    public final Bill update(Bill bill) throws IOException {
+    public final Bill update(Bill bill) throws IOException, BillNotFoundException {
         Bill found = iAppDb.update(bill);
-        String messege = null;
+        String message = null;
         if (bill.getCloseTime() != null) {
-            messege = String.format("Bill %s is closed ad it can't be " +
+            message = String.format("Bill %s is closed ad it can't be " +
                             "updated \r\n", bill);
-            iLogging.write(messege);
+            iLogging.write(message);
             return null;
         }
         if (found == null){
-            messege = String.format("Bill %s not found \r\n", bill);
-            iLogging.write(messege);
+            message = String.format("Bill %s not found \r\n", bill);
+            iLogging.write(message);
             return found;
         }
-        messege = String.format("Bill %s was updated \r\n", bill);
-        iLogging.write(messege);
+        message = String.format("Bill %s was updated \r\n", bill);
+        iLogging.write(message);
         return found;
     }
 

@@ -1,5 +1,8 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.exception.BillNotFoundException;
+import ua.artcode.market.exception.NullArgumentException;
+import ua.artcode.market.exception.ProductNotFoundException;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.models.*;
 import ua.artcode.market.models.employee.Employee;
@@ -9,6 +12,7 @@ import ua.artcode.market.utils.Generator;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ua.artcode.market.models.BillComparator.billComparator;
 
@@ -49,62 +53,60 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Bill findBillById(int id) {
-        for (Bill bill : bills) {
-            if (bill.getId() == id) return bill;
+    public Bill findBillById(int id) throws BillNotFoundException {
+        try {
+            Bill bill = this.bills.stream().
+                    filter(billE -> billE.getId() == id).findFirst().get();
+            return bill;
+        } catch (NoSuchElementException e) {
+            throw new BillNotFoundException();
         }
-        return null;
     }
 
     @Override
-    public Product findProductById(int id) {
+    public Product findProductById(int id) throws ProductNotFoundException {
         for (Product product : products.keySet()) {
             if (product.getId() == id) return product;
         }
-        return null;
+        throw new ProductNotFoundException();
     }
 
     @Override
-    public Bill removeBill(int id) {
+    public Bill removeBill(int id) throws BillNotFoundException {
         Bill bill = findBillById(id);
-
-        if (bill == null) return null;
-
         bills.remove(bill);
-
         return bill;
     }
 
     @Override
-    public Product removeProduct(int id) {
+    public Product removeProduct(int id) throws ProductNotFoundException {
         Product product = findProductById(id);
-        if (product != null) {
-            products.replace(product, products.get(product) - 1);
-        }
+        products.replace(product, products.get(product) - 1);
         return product;
     }
 
     @Override
-    public Bill saveBill(Bill bill) {
-        if (bill != null) {
+    public Bill saveBill(Bill bill) throws IllegalArgumentException {
+        if (bill == null) throw new IllegalArgumentException();
             bill.setId(++billNextId);
             bills.add(bill);
             return bill;
-        } return null;
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product saveProduct(Product product) throws IllegalArgumentException {
+        if (product == null) throw new IllegalArgumentException();
         product.setId(++productNextId);
         products.putIfAbsent(product, 0);
         return product;
     }
 
     @Override
-    public Bill update(Bill bill) {
+    public Bill update(Bill bill) throws IllegalArgumentException, BillNotFoundException {
+        if (bill == null) throw new IllegalArgumentException();
         int index = bills.indexOf(bill);
 
-        if (index == -1) return null;
+        if (index == -1) throw new BillNotFoundException();
 
         return bills.set(index, bill);
     }
@@ -124,12 +126,11 @@ public class IAppDbImpl implements IAppDb {
         List<Bill> filtered = new ArrayList<>();
         filtered.addAll(getBills());
 
-
         if (salesman != null)
             filtered = addToListBySeller(filtered, salesman);
 
         if (product != null)
-            filtered = addToListByProduct(filtered, product);
+            filtered = addProductToList(filtered, product);
 
         if (startDate != null)
             filtered = addToListByStartDate(filtered, startDate);
@@ -145,18 +146,19 @@ public class IAppDbImpl implements IAppDb {
         return filtered;
     }
 
-    private List<Bill> addToListByProduct (List<Bill> listBills,
-                                           Product product) {
+    private List<Bill> addProductToList(List<Bill> listBills,
+                                        Product product) {
         List<Bill> list = new ArrayList<>();
 
-        if (product == null) return listBills;
+        if (product == null) throw new NullArgumentException();
 
-        if (listBills != null)
-            for (Bill bill : listBills) {
-                if ((bill.getProductsMap().containsKey(product))) {
-                    list.add(bill);
-                }
+        if (listBills == null) throw new NullArgumentException();
+
+        for (Bill bill : listBills) {
+            if ((bill.getProductsMap().containsKey(product))) {
+                list.add(bill);
             }
+        }
         return list;
     }
 
@@ -178,51 +180,39 @@ public class IAppDbImpl implements IAppDb {
 
     private List<Bill> addToListByStartDate(List<Bill> listBills,
                                             LocalDateTime date) {
-        List<Bill> list = new ArrayList<>();
-
+        if (listBills == null) throw new NullArgumentException();
         if (date == null) return listBills;
-
-        if (listBills != null) {
-            for (Bill bill : listBills) {
-                if ((date.compareTo(bill.getOpenTime())) >= 0 ) {
-                    list.add(bill);
-                }
-            }
-        }
-        return list;
+        return listBills.stream().
+                filter(bill -> date.compareTo(bill.getOpenTime()) >= 0).
+                collect(Collectors.toList());
     }
 
     private List<Bill> addToListByEndDate(List<Bill> listBills,
                                           LocalDateTime date) {
-        List<Bill> list = new ArrayList<>();
-
+        if (listBills == null ) throw new NullArgumentException();
         if (date == null) return listBills;
-
-        if (listBills != null ) {
-            for (Bill bill : listBills) {
-                if ((date.compareTo(bill.getCloseTime())) <= 0 ) {
-                    list.add(bill);
-                }
-            }
-        }
-        return list;
+        return listBills.stream().
+                filter(bill -> date.compareTo(bill.getCloseTime()) <= 0).
+                collect(Collectors.toList());
     }
 
     @Override
     public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
                               LocalDateTime endDate) {
-        Money summ = new Money(0,0);
-        if (bills == null)
-            return summ;
+        if (bills == null) throw new NullArgumentException();
         return aggrAmPrice(filter(salesman,null, startDate, endDate, null));
     }
 
     private Money aggrAmPrice(List<Bill> filteredList){
-        Money summ = new Money(0,0);
-        if (filteredList == null || filteredList.isEmpty()) return summ;
-        for (int i = 0; i < filteredList.size(); i++) {
-            summ = summ.doSum(filteredList.get(i).getAmountPrice());
-        }
+        final Money summ = new Money(0,0);
+        if (filteredList == null) throw new NullArgumentException();
+        if(filteredList.isEmpty()) return summ;
+
+        filteredList.stream().map(bill -> summ.doSum(bill.getAmountPrice())).
+                close();
+//        for (Bill aFilteredList : filteredList) {
+//            summ = summ.doSum(aFilteredList.getAmountPrice());
+//        }
         return summ;
 
 
