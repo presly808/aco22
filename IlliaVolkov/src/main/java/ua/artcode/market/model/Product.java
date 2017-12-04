@@ -1,7 +1,5 @@
 package ua.artcode.market.model;
 
-import java.util.List;
-
 public class Product {
 
     public int code;

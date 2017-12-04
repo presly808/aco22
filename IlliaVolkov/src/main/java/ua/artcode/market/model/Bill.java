@@ -1,5 +1,8 @@
 package ua.artcode.market.model;
 
+import ua.artcode.market.controllers.AppDBImpl;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +32,7 @@ public class Bill {
         return code;
     }
 
-    public List<ProductBill> getProductsBill() { return productsBill; }
+    public List<ProductBill> getProductsBill() { return this.productsBill; }
 
     public void addProductBill(ProductBill productBill) { this.productsBill.add(productBill); }
 
@@ -52,6 +55,6 @@ public class Bill {
     }
 
     public SalesMan getSalesMan() {
-        return terminal.getSalesMan();
+        return this.terminal.getSalesMan();
     }
 }

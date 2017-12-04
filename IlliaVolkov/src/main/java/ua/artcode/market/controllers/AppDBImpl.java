@@ -1,6 +1,6 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.Util.Generator;
+import ua.artcode.market.util.Generator;
 import ua.artcode.market.interfaces.IAppDB;
 import ua.artcode.market.model.*;
 
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppDBImpl implements IAppDB {
+
+    private static AppDBImpl entity;
 
     private List<SalesMan> salesMansList;
     private List<Product> productsPriceList;
@@ -33,12 +35,25 @@ public class AppDBImpl implements IAppDB {
 
         this.logging = Logging.getEntity();
 
-        this.generator = new Generator(this);
+        this.generator = new Generator();
 
         this.billController = new BillController();
         this.terminalController = new TerminalController();
 
         this.statistics = new Statistics();
+    }
+
+    public static AppDBImpl getEntity() throws IOException {
+
+        if (entity == null) {
+
+            synchronized (AppDBImpl.class) {
+                if (entity == null) {
+                    entity = new AppDBImpl();
+                }
+            }
+        }
+        return entity;
     }
 
     @Override
@@ -61,6 +76,26 @@ public class AppDBImpl implements IAppDB {
         }
     }
 
+    public void clearList(Class currentClass) throws IOException {
+
+        if (currentClass.equals(Terminal.class)) {
+            terminalList.clear();
+        }
+        else if (currentClass.equals(Bill.class)) {
+            billList.clear();
+        }
+        else if (currentClass.equals(Product.class)) {
+            productsPriceList.clear();
+
+        }
+        else if (currentClass.equals(SalesMan.class)) {
+            salesMansList.clear();
+        }
+        else{
+            logging.fixEvent("Class is not identified. Operation stopped!");
+        }
+    }
+
     @Override
     public List<? extends Object> getAll(Class currentClass) throws IOException {
 
@@ -78,7 +113,7 @@ public class AppDBImpl implements IAppDB {
             return salesMansList;
         }
         else{
-            logging.fixEvent("Object is not identified. Operation stopped!");
+            logging.fixEvent("Class is not identified. Operation stopped!");
 
             return null;
         }
@@ -146,17 +181,17 @@ public class AppDBImpl implements IAppDB {
         return product;
     }
 
-    public Terminal createTerminal(){
+    public Terminal createTerminal() throws IOException {
 
-        Terminal terminal = new Terminal(this);
+        Terminal terminal = new Terminal();
         this.terminalList.add(terminal);
 
         return terminal;
     }
 
-    public Bill createBill(Terminal currentTerminal) {
+    public Bill createBill(Terminal currentTerminal) throws IOException {
         return new Bill(currentTerminal,
-                this.terminalController.getQuantityBillsTerminal(currentTerminal) + 1);
+                AppDBImpl.getEntity().getQuantityBillsTerminal(currentTerminal) + 1);
     }
 
     public static void addProductToBill(Bill currentBill, int productCode, int quantity) throws IOException {
@@ -177,7 +212,7 @@ public class AppDBImpl implements IAppDB {
 
         if (!productProcessed) {
             ProductBill newProductBill =
-                    new ProductBill(currentBill.terminal.currentAppDBImpl.findProductByCode(productCode).code, quantity);
+                    new ProductBill(AppDBImpl.getEntity().findProductByCode(productCode).code, quantity);
             currentBill.addProductBill(newProductBill);
 
             //updateAmountPriceToBill(currentBill);
@@ -185,7 +220,7 @@ public class AppDBImpl implements IAppDB {
         }
     }
 
-    public static void changeProductToBill(Bill currentBill, int productCode, int quantity){
+    public void changeProductToBill(Bill currentBill, int productCode, int quantity){
 
         boolean productProcessed = false;
 
@@ -222,7 +257,7 @@ public class AppDBImpl implements IAppDB {
         }
     }
 
-    public int getQuantityBillsTerminal(Terminal terminal) {
+    public int getQuantityBillsTerminal(Terminal terminal) throws IOException {
 
         return terminal.getBillsTerminal().size();
     }
@@ -296,7 +331,7 @@ public class AppDBImpl implements IAppDB {
 
             for (ProductBill itemProductBill: currentBill.getProductsBill()) {
 
-                Product currentProduct = currentBill.terminal.currentAppDBImpl.findProductByCode(itemProductBill.getProductCode());
+                Product currentProduct = AppDBImpl.getEntity().findProductByCode(itemProductBill.getProductCode());
 
                 message += "" + currentProduct.code +
                         "\t\t" + currentProduct.name +
@@ -317,8 +352,10 @@ public class AppDBImpl implements IAppDB {
 
             System.out.println("\n\n\n STATISTICS OF THE WORK OF THE STORE");
 
-            for (Bill itemBill: currentTerminal.currentAppDBImpl.getBillsTerminal(currentTerminal)) {
-                currentTerminal.currentAppDBImpl.statistics.printBill(itemBill);
+            AppDBImpl appDB = AppDBImpl.getEntity();
+
+            for (Bill itemBill: appDB.getBillsTerminal(currentTerminal)) {
+                appDB.statistics.printBill(itemBill);
             }
         }
 

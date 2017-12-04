@@ -11,8 +11,8 @@ import java.util.List;
 public class TerminalController implements ITerminal{
 
     @Override
-    public int getQuantityBillsTerminal(Terminal terminal) {
-        return terminal.currentAppDBImpl.getQuantityBillsTerminal(terminal);
+    public int getQuantityBillsTerminal(Terminal terminal) throws IOException {
+        return AppDBImpl.getEntity().getQuantityBillsTerminal(terminal);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class TerminalController implements ITerminal{
     public SalesMan getSalesMan(Terminal terminal) { return terminal.getSalesMan(); }
 
     @Override
-    public List<Bill> getBillsTerminal(Terminal terminal) { return terminal.currentAppDBImpl.getBillsTerminal(terminal); }
+    public List<Bill> getBillsTerminal(Terminal terminal) throws IOException { return AppDBImpl.getEntity().getBillsTerminal(terminal); }
 
 }

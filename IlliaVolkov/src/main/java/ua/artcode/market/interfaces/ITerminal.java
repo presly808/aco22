@@ -1,8 +1,6 @@
 package ua.artcode.market.interfaces;
 
-import ua.artcode.market.controllers.BillController;
 import ua.artcode.market.model.Bill;
-import ua.artcode.market.model.Product;
 import ua.artcode.market.model.SalesMan;
 import ua.artcode.market.model.Terminal;
 
@@ -11,13 +9,12 @@ import java.util.List;
 
 public interface ITerminal {
 
-    public int getQuantityBillsTerminal(Terminal terminal);
+    int getQuantityBillsTerminal(Terminal terminal) throws IOException;
 
-    public void setAutorizedSalesMan(Terminal terminal, SalesMan autorizedSalesMan);
+    void setAutorizedSalesMan(Terminal terminal, SalesMan autorizedSalesMan);
 
-    public SalesMan getSalesMan(Terminal terminal);
+    SalesMan getSalesMan(Terminal terminal);
 
-    public List<Bill> getBillsTerminal(Terminal terminal);
-
+    List<Bill> getBillsTerminal(Terminal terminal) throws IOException;
 
 }

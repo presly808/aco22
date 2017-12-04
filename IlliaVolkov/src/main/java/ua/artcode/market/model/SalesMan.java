@@ -1,13 +1,10 @@
 package ua.artcode.market.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SalesMan {
 
-    String fullName;
-    String login;
-    String pass;
+    private String fullName;
+    private String login;
+    private String pass;
 
     public SalesMan(String fullName, String login, String pass){
 
@@ -17,15 +14,15 @@ public class SalesMan {
     }
 
     public String getFullName() {
-        return fullName;
+        return this.fullName;
     }
 
     public String getLogin() {
-        return login;
+        return this.login;
     }
 
     public String getPass() {
-        return pass;
+        return this.pass;
     }
 
 

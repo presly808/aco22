@@ -1,10 +1,12 @@
 package ua.artcode.market.controllers;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.factory.MarketFactory;
 import ua.artcode.market.model.Bill;
+import ua.artcode.market.model.Product;
 import ua.artcode.market.model.SalesMan;
 import ua.artcode.market.model.Terminal;
 import ua.artcode.market.proxy.MarketProxy;
@@ -23,7 +25,7 @@ public class AppDBImplTest {
 
         MarketProxy marketProxy = MarketFactory.createProxy();
 
-        this.appDB = marketProxy.getMiniMarket().currentAppDBImpl;
+        this.appDB = AppDBImpl.getEntity();
 
         appDB.generator.initSalesMans(2);
         appDB.generator.initProductsPrice(3);
@@ -37,6 +39,9 @@ public class AppDBImplTest {
         String BillProductsForPrint = appDB.statistics.getBillProductsForPrint(appDB.getBillsTerminal(terminal).get(0));
         String BillHeadInfoForPrint = appDB.statistics.getBillHeadInfoForPrint(appDB.getBillsTerminal(terminal).get(0));
     }
+
+    @After
+    public void exitTest(){ this.appDB = null; }
 
     @Test
     public void remove() throws Exception {
@@ -52,11 +57,15 @@ public class AppDBImplTest {
 
     @Test
     public void getAll() throws Exception {
-        List<? extends Object> billList = appDB.getAll(Bill.class);
 
-        int sizeBillList = billList.size();
+        appDB.clearList(Product.class);
+        appDB.generator.initProductsPrice(3);
 
-        Assert.assertEquals(sizeBillList, 3);
+        List<? extends Object> productpList = this.appDB.getAll(Product.class);
+
+        int sizeProductpList = productpList.size();
+
+        Assert.assertEquals(sizeProductpList, 3);
     }
 
     @Test
@@ -97,9 +106,9 @@ public class AppDBImplTest {
     @Test
     public void changeProductToBill() throws Exception {
 
-        Bill currentBill = appDB.getBillsTerminal(terminal).get(0);
+        Bill currentBill = this.appDB.getBillsTerminal(terminal).get(0);
 
-        int oldQuantity = appDB.findProductBillByCode(currentBill, 1).getProductQuontity();
+        int oldQuantity = this.appDB.findProductBillByCode(currentBill, 1).getProductQuontity();
 
         int newQuantity = 6;
 

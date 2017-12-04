@@ -1,7 +1,6 @@
 package ua.artcode.market.view;
 
 import ua.artcode.market.controllers.AppDBImpl;
-import ua.artcode.market.controllers.BillController;
 import ua.artcode.market.model.Bill;
 import ua.artcode.market.model.Product;
 import ua.artcode.market.model.SalesMan;
@@ -19,6 +18,8 @@ public class InterfaceServices {
 
     public static void allProductsSelected(Bill currentBill) throws IOException {
 
+        AppDBImpl appDB = AppDBImpl.getEntity();
+
         String message = "Are the products selected correctly?";
         String title = "Waiting to continue work";
         int key = JOptionPane.showConfirmDialog( null, message, title, JOptionPane.YES_NO_OPTION);
@@ -33,16 +34,16 @@ public class InterfaceServices {
                 if (productCode != 0) {
 
                     message = "Enter the quantity of the product " +
-                            currentBill.terminal.currentAppDBImpl.findProductByCode(productCode).name;
+                    appDB.findProductByCode(productCode).name;
                     String stringProductQuontity = JOptionPane.showInputDialog(message);
                     int productQuontity = Integer.parseInt(stringProductQuontity);
 
-                    if (productQuontity == 0 || productCode == 0) {
+                    if (productQuontity == 0) {
 
-                        currentBill.terminal.currentAppDBImpl.changeProductToBill(currentBill, productCode, productQuontity);
+                        appDB.changeProductToBill(currentBill, productCode, productQuontity);
                     }
 
-                   currentBill.terminal.currentAppDBImpl.statistics.printBill(currentBill);
+                   appDB.statistics.printBill(currentBill);
                 }
                 message = "All positions are corrected?";
                 title = "Waiting to continue work";
@@ -53,11 +54,13 @@ public class InterfaceServices {
 
     public static void choseProduct(Bill currentBill) throws IOException {
 
-        List<Product> productsPrice = currentBill.terminal.currentAppDBImpl.getProductsPrice();
+        AppDBImpl appDB = AppDBImpl.getEntity();
+
+        List<Product> productsPrice = appDB.getProductsPrice();
 
         int key = JOptionPane.YES_OPTION;
         String message;
-        currentBill.terminal.currentAppDBImpl.statistics.printPriceOfProducts(productsPrice);
+        appDB.statistics.printPriceOfProducts(productsPrice);
 
         while (key == JOptionPane.YES_OPTION) {
 
@@ -66,14 +69,14 @@ public class InterfaceServices {
 
             if (productCode != 0) {
 
-                Product currentProduct = currentBill.terminal.currentAppDBImpl.findProductByCode(productCode);
+                Product currentProduct = AppDBImpl.getEntity().findProductByCode(productCode);
                 message = "Enter the quantity of the product " + currentProduct.name;
                 String stringProductQuontity = JOptionPane.showInputDialog(message, 0);
                 int productQuontity = Integer.parseInt(stringProductQuontity);
 
-                if (productQuontity != 0 && productCode != 0) {
+                if (productQuontity != 0) {
 
-                   currentBill.terminal.currentAppDBImpl.addProductToBill(currentBill, productCode, productQuontity);
+                   appDB.addProductToBill(currentBill, productCode, productQuontity);
                 }
             }
 
@@ -83,7 +86,7 @@ public class InterfaceServices {
         }
     }
 
-    public static void questionForClosingBill(Bill currentBill) {
+    public static void questionForClosingBill(Bill currentBill) throws IOException {
 
         String message = "Close check?";
         String title = "Waiting for confirmation to continue";
@@ -91,7 +94,7 @@ public class InterfaceServices {
 
         if (key == JOptionPane.YES_OPTION){
 
-            currentBill.terminal.currentAppDBImpl.billController.closeBill(currentBill);
+            AppDBImpl.getEntity().billController.closeBill(currentBill);
         }
     }
 
@@ -100,7 +103,7 @@ public class InterfaceServices {
                 "Waiting to continue work", JOptionPane.YES_NO_OPTION);
     }
 
-    public static SalesMan autorizationSalesMan(AppDBImpl appDB) throws IOException {
+    public static SalesMan autorizationSalesMan() throws IOException {
 
         int key = JOptionPane.YES_OPTION;
 
@@ -112,7 +115,7 @@ public class InterfaceServices {
             message = "Enter the SalesMan <PASSWORD> ";
             String passSalesMan = JOptionPane.showInputDialog(message);
 
-            SalesMan currentSalesMan = appDB.findSalesMan(loginSalesMan, passSalesMan);
+            SalesMan currentSalesMan = AppDBImpl.getEntity().findSalesMan(loginSalesMan, passSalesMan);
 
             if (currentSalesMan == null) {
                 message = "Do you want to try again?";
