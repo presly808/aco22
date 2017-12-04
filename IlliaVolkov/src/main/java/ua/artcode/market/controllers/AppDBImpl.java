@@ -1,6 +1,5 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.util.Generator;
 import ua.artcode.market.interfaces.IAppDB;
 import ua.artcode.market.model.*;
 

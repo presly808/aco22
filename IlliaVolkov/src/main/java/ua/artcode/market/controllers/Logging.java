@@ -27,7 +27,7 @@ public class Logging extends IOException {
 
         System.out.println(messege);
 
-        fileWriter.write("" + new Date() + "--- " + messege);
+        fileWriter.write("" + new Date() + "--- " + messege + "\n");
         fileWriter.flush();
         fileWriter.close();
     }

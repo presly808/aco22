@@ -11,9 +11,9 @@ import ua.artcode.market.model.SalesMan;
 import ua.artcode.market.model.Terminal;
 import ua.artcode.market.proxy.MarketProxy;
 
+
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 public class AppDBImplTest {
 
@@ -27,17 +27,17 @@ public class AppDBImplTest {
 
         this.appDB = AppDBImpl.getEntity();
 
-        appDB.generator.initSalesMans(2);
-        appDB.generator.initProductsPrice(3);
+        this.appDB.generator.initSalesMans(2);
+        this.appDB.generator.initProductsPrice(3);
 
-        this.terminal = appDB.createTerminal();
-        this.appDB.terminalController.setAutorizedSalesMan(terminal, appDB.getSalesManList().get(0));
+        this.terminal = this.appDB.createTerminal();
+        this.appDB.terminalController.setAutorizedSalesMan(this.terminal, this.appDB.getSalesManList().get(0));
 
-        appDB.generator.initBill(this.terminal, appDB.getProductsPrice().size());
+        this.appDB.generator.initBill(this.terminal, this.appDB.getProductsPrice().size());
 
-        String PriceOfProductsForPrint = appDB.statistics.getPriceOfProductsForPrint(appDB.getProductsPrice());
-        String BillProductsForPrint = appDB.statistics.getBillProductsForPrint(appDB.getBillsTerminal(terminal).get(0));
-        String BillHeadInfoForPrint = appDB.statistics.getBillHeadInfoForPrint(appDB.getBillsTerminal(terminal).get(0));
+        String PriceOfProductsForPrint = this.appDB.statistics.getPriceOfProductsForPrint(this.appDB.getProductsPrice());
+        String BillProductsForPrint = this.appDB.statistics.getBillProductsForPrint(this.appDB.getBillsTerminal(this.terminal).get(0));
+        String BillHeadInfoForPrint = this.appDB.statistics.getBillHeadInfoForPrint(this.appDB.getBillsTerminal(this.terminal).get(0));
     }
 
     @After
@@ -46,20 +46,20 @@ public class AppDBImplTest {
     @Test
     public void remove() throws Exception {
 
-        List<Bill> billList = appDB.getBillsTerminal(terminal);
+        List<Bill> billList = this.appDB.getBillsTerminal(this.terminal);
 
         int sizeBillList = billList.size();
 
-        appDB.remove(billList.get(0));
+        this.appDB.remove(billList.get(0));
 
-        Assert.assertEquals(sizeBillList, appDB.getBillsTerminal(this.terminal).size()+1);
+        Assert.assertEquals(sizeBillList, this.appDB.getBillsTerminal(this.terminal).size()+1);
     }
 
     @Test
     public void getAll() throws Exception {
 
-        appDB.clearList(Product.class);
-        appDB.generator.initProductsPrice(3);
+        this.appDB.clearList(Product.class);
+        this.appDB.generator.initProductsPrice(3);
 
         List<? extends Object> productpList = this.appDB.getAll(Product.class);
 
@@ -106,7 +106,7 @@ public class AppDBImplTest {
     @Test
     public void changeProductToBill() throws Exception {
 
-        Bill currentBill = this.appDB.getBillsTerminal(terminal).get(0);
+        Bill currentBill = this.appDB.getBillsTerminal(this.terminal).get(0);
 
         int oldQuantity = this.appDB.findProductBillByCode(currentBill, 1).getProductQuontity();
 
@@ -124,6 +124,12 @@ public class AppDBImplTest {
 
     @Test
     public void getQuantityBillsTerminal() throws Exception {
+        int quantity = this.appDB.terminalController.getQuantityBillsTerminal(this.terminal);
+
+        this.appDB.remove(this.appDB.terminalController.getBillsTerminal(this.terminal).get(0));
+
+        Assert.assertEquals(quantity, this.appDB.getQuantityBillsTerminal(this.terminal) + 1);
+
     }
 
     @Test

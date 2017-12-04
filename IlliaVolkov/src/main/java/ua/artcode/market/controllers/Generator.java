@@ -1,4 +1,4 @@
-package ua.artcode.market.util;
+package ua.artcode.market.controllers;
 
 import ua.artcode.market.controllers.AppDBImpl;
 import ua.artcode.market.model.Bill;
