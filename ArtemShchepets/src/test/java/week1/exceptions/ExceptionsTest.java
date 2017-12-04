@@ -42,7 +42,7 @@ public class ExceptionsTest {
     @Test(expected = Exception.class)
     public void testUnableToCalculateBillIncomeException()
             throws UnableToCalculateBillIncomeException, UnableToCalcucateDeptCostsException {
-        Exception exception = new UnableToCalculateBillIncomeException("test");
+       new UnableToCalculateBillIncomeException("test");
         sellerController.calculateIncomeAndExpenses(null);
     }
 

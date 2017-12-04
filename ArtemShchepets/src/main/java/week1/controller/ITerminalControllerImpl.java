@@ -9,7 +9,6 @@ import week1.model.Seller;
 import week1.model.SalesStatistic;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
@@ -148,7 +147,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         if (iAppDB.getAllSellers().isEmpty() || iAppDB.getAllBills().isEmpty())
             throw new UnableToGetTopSellersException("There aren't any sellers or bills in DB!");
 
-       return iAppDB.getAllSellers().stream().peek(this::calculateSellerSoldProducts)
+        return iAppDB.getAllSellers().stream().peek(this::calculateSellerSoldProducts)
                 .peek(iAppDB::updateSeller).max(new SellersSoldProductsComparator()).get();
     }
 
@@ -191,7 +190,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         return iAppDB.getAllBills().stream().filter(bill ->
                 bill.getOpenTime().compareTo(startTime) > 0
-                        &&  bill.getOpenTime().compareTo(endTime) < 0)
+                        && bill.getOpenTime().compareTo(endTime) < 0)
                 .sorted(comparator).collect(Collectors.toList());
     }
 
