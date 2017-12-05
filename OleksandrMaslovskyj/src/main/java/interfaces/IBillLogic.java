@@ -1,16 +1,21 @@
 package interfaces;
 
+import exceptions.BillNotFoundException;
+import exceptions.UnableToAddProductToBillException;
+import exceptions.UnableToCalculatePriceException;
+import exceptions.UnableToCloseBillException;
 import models.Bill;
 import models.Product;
 
 public interface IBillLogic {
 
-    Product addProductToBill(Bill bill, String name);
+    Product addProductToBill(Bill bill, String name)
+                throws UnableToAddProductToBillException;
+    void closeBill(Bill bill) throws UnableToCloseBillException;
 
-    void closeBill(Bill bill);
+    double calculateAmountPrice(Bill bill)
+                                    throws UnableToCalculatePriceException;
 
-    double calculateAmountPrice(Bill bill);
-
-    String printBill(Bill bill);
+    String printBill(Bill bill) throws BillNotFoundException;
 
 }

@@ -3,8 +3,10 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ILogging;
 import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -12,12 +14,12 @@ import java.util.*;
 
 public class IAppDbProxy implements IAppDb, ILogging{
 
-    private IAppDb target;
+    private IAppDb iAppDb;
     private ILogging iLogging;
 
 
-    public IAppDbProxy(IAppDb target) throws IOException {
-        this.target = target;
+    public IAppDbProxy(IAppDb iAppDb) throws IOException {
+        this.iAppDb = iAppDb;
         this.iLogging = ILoggingImpl.getInstance();
     }
 
@@ -28,50 +30,74 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public Map<Product, Integer> getProducts() {
-        return target.getProducts();
+        return iAppDb.getProducts();
     }
 
     @Override
     public List<Bill> getBills() {
-        return target.getBills();
+        return iAppDb.getBills();
     }
 
     @Override
-    public Map<Product, Integer> getAllProducts() {
-        return target.getAllProducts();
+    public List<Employee> getEmployee() {
+        return iAppDb.getEmployee();
     }
 
     @Override
-    public List<Salesman> getAllSalesmans() {
+    public List<Employee> getAllSalesmans() {
         return iLogging.getAllSalesmans();
     }
 
     @Override
     public Bill findBillById(int id) {
-        return target.findBillById(id);
+        return iAppDb.findBillById(id);
     }
 
     @Override
     public Product findProductById(int id) {
-        return target.findProductById(id);
+        return iAppDb.findProductById(id);
     }
 
     @Override
-    public Salesman findSalesmanByLogin(String login) {
+    public Employee findSalesmanByLogin(String login) {
         return iLogging.findSalesmanByLogin(login);
     }
 
     @Override
-    public List<Bill> filter(Salesman salesman, Product product,
+    public List<Bill> filter(Employee salesman, Product product,
                             LocalDateTime startDate, LocalDateTime endDate,
                             Comparator<Bill> billComparator) {
-        return target.filter(salesman, product, startDate, endDate,
+        return iAppDb.filter(salesman, product, startDate, endDate,
                 billComparator);
     }
 
     @Override
+    public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
+                              LocalDateTime endDate) {
+        return iAppDb.aggrAmtPrice(salesman, startDate,endDate);
+    }
+
+    @Override
+    public Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
+                                    LocalDateTime endDate) {
+        return iAppDb.averageAmountPrice(salesman, startDate, endDate);
+    }
+
+    @Override
+    public Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
+                               LocalDateTime endDate) {
+        return iAppDb.minAmountPrice(salesman, startDate, endDate);
+    }
+
+    @Override
+    public Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
+                               LocalDateTime endDate) {
+        return iAppDb.maxAmountPrice(salesman, startDate, endDate);
+    }
+
+    @Override
     public Bill removeBill(int id) throws IOException {
-        Bill bill = target.removeBill(id);
+        Bill bill = iAppDb.removeBill(id);
         String messege = null;
         if (bill == null) {
             messege = String.format("Bill %s not found \r\n", bill);
@@ -85,7 +111,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public Product removeProduct(int id) throws IOException {
-        Product product1 = target.removeProduct(id);
+        Product product1 = iAppDb.removeProduct(id);
         String messege = null;
         if (product1 == null) {
             messege = String.format("Product %s wasn't removed \r\n", product1);
@@ -99,7 +125,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public Bill saveBill(Bill bill) throws IOException {
-        Bill bill1 = target.saveBill(bill);
+        Bill bill1 = iAppDb.saveBill(bill);
         String messege = null;
         if (bill1 == null) {
             messege = String.format("Bill %s wasn't saved \r\n", bill1);
@@ -113,7 +139,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public Product saveProduct(Product product) throws IOException {
-        Product product1 = target.saveProduct(product);
+        Product product1 = iAppDb.saveProduct(product);
         String messege = null;
         if (product1 == null) {
             messege = String.format("Product %s wasn't saved \r\n", product1);
@@ -127,7 +153,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
 
     @Override
     public final Bill update(Bill bill) throws IOException {
-        Bill found = target.update(bill);
+        Bill found = iAppDb.update(bill);
         String messege = null;
         if (bill.getCloseTime() != null) {
             messege = String.format("Bill %s is closed ad it can't be " +
@@ -146,14 +172,14 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login,
+    public Employee createSalesman(String fullName, String login,
                                    String password) throws IOException {
         boolean result = false;
-        Salesman salesman = iLogging.createSalesman(fullName, login, password);
+        Employee salesman = iLogging.createSalesman(fullName, login, password);
         if (salesman != null) {
             result = true;
         }
-        iLogging.write(String.format("Salesman was created: " +
+        iLogging.write(String.format("Employee was created: " +
                         "FullName %s login %s and password %s, result %s\r\n",
                 fullName, login, password, result));
 
@@ -161,14 +187,14 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Salesman login(String login, String password) throws IOException {
+    public Employee login(String login, String password) throws IOException {
 
         boolean result = false;
-        Salesman salesman = iLogging.login(login, password);
+        Employee salesman = iLogging.login(login, password);
         if (salesman != null) {
             result = true;
         }
-        iLogging.write(String.format("Salesman try connect with login %s " +
+        iLogging.write(String.format("Employee try connect with login %s " +
                         "and password %s," + "result %s\r\n",
                         login, password, result));
         return salesman;
@@ -181,7 +207,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
         if (salesman1 != null) {
             result = true;
         }
-        iLogging.write(String.format("Salesman was logout with login %s " +
+        iLogging.write(String.format("Employee was logout with login %s " +
                         "and password %s," + "result %s\r\n",
                 salesman1.getLogin(), salesman1.getPassword(), result));
         return salesman1;

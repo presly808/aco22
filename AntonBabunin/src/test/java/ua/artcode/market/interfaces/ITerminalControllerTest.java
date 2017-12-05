@@ -7,7 +7,9 @@ import ua.artcode.market.controllers.TerminalControllerFactory;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.BillComparator;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
+import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
 import java.util.List;
@@ -75,31 +77,27 @@ public class ITerminalControllerTest {
         open.toString();
         open.getOpenTime();
         open.getAmountPrice();
-        open.setAmountPrice(0.0);
-        terminalController.getiAppDb().getAllProducts().put(product, 15);
+        open.setAmountPrice(new Money(0,0));
+        terminalController.getiAppDb().getProducts().put(product, 15);
         open = terminalController.addProduct(open.getId(), product);
-        double amountPrice = terminalController.calculateAmountPrice(open);
+        Money amountPrice = terminalController.calculateAmountPrice(open);
         product.getPrice();
         product.getId();
         product.getName();
 
         assertNotEquals(0.0, amountPrice);
         assertNotEquals(0.0, open.getAmountPrice());
-
-
-
-
     }
 
     @Test
     public void createSalesman() throws Exception {
-        Salesman salesman = terminalController.getiAppDb().
+        Employee salesman = terminalController.
                 createSalesman("1", "1", "1");
         salesman.getLogin();
         salesman.getFullName();
         salesman.getPassword();
         salesman.toString();
-        Salesman salesman2 = terminalController.getiAppDb().
+        Employee salesman2 = terminalController.getiAppDb().
                 createSalesman("2", "2", "2");
         salesman2.setLogin("2");
         salesman2.setPassword("2");
@@ -110,19 +108,13 @@ public class ITerminalControllerTest {
         assertNotEquals(null, salesman);
     }
 
-    @Test
-    public void login() throws Exception {
-        Salesman salesman = terminalController.getiAppDb().
-                createSalesman("1", "1", "1");
-        salesman = terminalController.getiAppDb().login("1", "1");
-        assertNotEquals(null, salesman);
-    }
+//    @Test
+//    public void login() throws Exception {
+//        Employee salesman = terminalController.createSalesman("1", "1", "1");
+//        salesman = terminalController.login("1", "1");
+//        assertNotEquals(null, salesman);
+//    }
 
-    @Test
-    public void login1() throws Exception {
-        Salesman salesman = terminalController.getiAppDb().login("asd", "asd");
-        assertEquals(null, salesman);
-    }
 
     @Test
     public void saveAndRemoveBill() throws Exception {
@@ -136,10 +128,6 @@ public class ITerminalControllerTest {
 
     @Test
     public void filter() throws Exception {
-
-
-
-
         Product product1 = new Product();
         Product product2 = new Product();
         Product product3 = new Product();
@@ -151,20 +139,20 @@ public class ITerminalControllerTest {
         product3.setName("3");
         product3.setId(3);
 
-        product1.setPrice(1);
-        product2.setPrice(5);
-        product3.setPrice(2313.56);
+        product1.setPrice(new Money(1, 0));
+        product2.setPrice(new Money(123, 0));
+        product3.setPrice(new Money(12313, 42));
 
-        Salesman salesman1 = terminalController.
+        Employee salesman1 = terminalController.
                 createSalesman("1123","123","1");
-        Salesman salesman2 = terminalController.
+        Employee salesman2 = terminalController.
                 createSalesman("2","12","1");
-        Salesman salesman3 = terminalController.
+        Employee salesman3 = terminalController.
                 createSalesman("2","13","1");
 
-        terminalController.getiAppDb().getAllProducts().put(product1, 15);
-        terminalController.getiAppDb().getAllProducts().put(product2, 15);
-        terminalController.getiAppDb().getAllProducts().put(product3, 15);
+        terminalController.getiAppDb().getProducts().put(product1, 15);
+        terminalController.getiAppDb().getProducts().put(product2, 15);
+        terminalController.getiAppDb().getProducts().put(product3, 15);
 
 
 
@@ -200,9 +188,21 @@ public class ITerminalControllerTest {
         terminalController.closeBill(bill3.getId());
         terminalController.closeBill(bill4.getId());
 
+//        terminalController.logout((Salesman) salesman1);
+        terminalController.prinBill(bill1);
+        terminalController.getiAppDb();
+        terminalController.getAllBills();
+        terminalController.calculateAmountPrice(bill1);
+
+
         List<Bill> sorted = terminalController.getiAppDb().filter(salesman1,
                 product1, null, null, BillComparator.
                         billComparator.thenComparing(other));
+
+        terminalController.getiAppDb().removeBill(1);
+        terminalController.getiAppDb().averageAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getiAppDb().minAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getiAppDb().maxAmountPrice((Salesman) salesman1,null, null);
 
        /* LocalDateTime.MIN, LocalDateTime.MAX*/
 //        assertTrue(sorted.get(0).getAmountPrice() >=
