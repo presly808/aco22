@@ -1,7 +1,10 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.interfaces.ILogging;
-import ua.artcode.market.models.Salesman;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
+//import ua.artcode.market.models.money.Salary;
+import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
 import java.io.File;
@@ -13,11 +16,11 @@ public class ILoggingImpl implements ILogging {
 
     private static volatile ILogging instance;
 
-    private List<Salesman> salesmenList;
+    private List<Employee> salesmenList;
 
     private ILoggingImpl() throws IOException {
         this.salesmenList = Generator.generateSalesmanList(0);
-        for (Salesman salesman : salesmenList){
+        for (Employee salesman : salesmenList){
             write(String.format("Fullname: %s, Login: %s, Password: %s, \r\n",
                     salesman.getFullName(), salesman.getLogin(),
                     salesman.getPassword()));
@@ -49,24 +52,24 @@ public class ILoggingImpl implements ILogging {
     }
 
     @Override
-    public List<Salesman> getAllSalesmans() {
+    public List<Employee> getAllSalesmans() {
         return salesmenList;
     }
 
     @Override
-    public Salesman createSalesman(String fullName, String login, String password) {
-        Salesman salesman = null;
-        Salesman seller = findSalesmanByLogin(login);
+    public Employee createSalesman(String fullName, String login, String password) {
+        Employee salesman = null;
+        Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
-            salesman = new Salesman(fullName, login, password);
+            salesman = new Salesman(fullName, login, password, new Money(123,12));
             salesmenList.add(salesman);
         }
         return salesman;
     }
 
     @Override
-    public Salesman login(String login, String password) throws IOException {
-        Salesman seller = findSalesmanByLogin(login);
+    public Employee login(String login, String password) throws IOException {
+        Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
             return null;
         }
@@ -84,8 +87,8 @@ public class ILoggingImpl implements ILogging {
     }
 
     @Override
-    public Salesman findSalesmanByLogin(String login) {
-        for (Salesman salesman : salesmenList) {
+    public Employee findSalesmanByLogin(String login) {
+        for (Employee salesman : salesmenList) {
             if (login.equals(salesman.getLogin())) {
                 return salesman;
             }
