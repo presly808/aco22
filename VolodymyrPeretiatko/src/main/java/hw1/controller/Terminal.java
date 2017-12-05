@@ -14,29 +14,32 @@ public class Terminal implements ITerminal {
     @Override
     public Double getSalesmanSallary(Salesman salesman, Date startDate, Date endDate) {
 
-
-        Double ownSalesSalary = getPercentOfSales(salesman, startDate, endDate,
-                                                  AppSettings.SALLARY_PERCENT_SALES_OWN);
-        Double subSalesSalary = 0.0;
-
-        return ownSalesSalary + subSalesSalary;
-    }
-
-    private Double getPercentOfSales(Salesman salesman, Date startDate, Date endDate, Double percent){
-
-        Double result = 0.0;
-
+        //Own sales
         List<Salesman> salesmen = new ArrayList<>();
         salesmen.add(salesman);
 
-        List<Bill> bills = filter(salesmen, null, startDate, endDate, new Bill.SortByDateComparator());
-        for (Bill b: bills){
-            result += b.getAmountPrice() * percent;
-        }
-        return  result;
+        Double ownSalesSalary = getSalesAmount(salesmen, startDate, endDate);
+
+        //Sub sales
+        salesmen = Salesman.getAllSubSalesmen(salesman);
+        salesmen.remove(salesman);
+
+        Double subSalesSalary = getSalesAmount(salesmen, startDate, endDate);
+
+        return ownSalesSalary * AppBusinesLogicConst.SALLARY_PERCENT_SALES_OWN
+                + subSalesSalary * AppBusinesLogicConst.SALLARY_PERCENT_SALES_SUB;
     }
 
-    //public Double get
+    private Double getSalesAmount(List<Salesman> salesmen, Date startDate, Date endDate){
+
+        Double salesAmount = 0.0;
+
+        List<Bill> bills = filter(salesmen, null, startDate, endDate, new Bill.SortByDateComparator());
+        for (Bill b: bills){
+            salesAmount += b.getAmountPrice();
+        }
+        return  salesAmount;
+    }
 
     @Override
     public List<Salesman> getSalesmen() {

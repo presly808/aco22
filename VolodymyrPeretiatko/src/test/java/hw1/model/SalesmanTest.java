@@ -2,6 +2,7 @@ package hw1.model;
 
 import org.junit.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesmanTest {
@@ -43,7 +44,15 @@ public class SalesmanTest {
 
         List<Salesman> actual = Salesman.getAllSubSalesmen(s1);
 
-        System.out.println(actual);
+        List<Salesman> expected = new ArrayList<>();
+        expected.add(s1);
+        expected.add(s2);
+        expected.add(s3);
+        expected.add(s4);
+        expected.add(s5);
+        expected.add(s6);
+
+        Assert.assertTrue(expected.containsAll(actual));
 
     }
 

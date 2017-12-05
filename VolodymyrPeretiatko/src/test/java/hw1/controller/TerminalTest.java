@@ -54,6 +54,12 @@ public class TerminalTest {
     }
 
     @Test
+    public void getSalesmanSallaryTest(){
+        s1.addSubSalesman(s2);
+        System.out.println(terminal.getSalesmanSallary(s1, new Date(1510842400000L), new Date(1510842400777L)));
+    }
+
+    @Test
     public void testLogin(){
         Assert.assertTrue(terminal.login("Jhon", "qwerty"));
         Assert.assertTrue(terminal.login("Frank", "qwerty"));
