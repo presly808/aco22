@@ -39,13 +39,14 @@ public class ITerminalControllerTest {
     }
 
     @Test
-    public void addProduct() throws Exception {
+    public void addProduct() throws Throwable {
         Product product = Generator.createProduct();
         product.setId(1);
         terminalController.getIAppDb().saveProduct(product);
         Bill bill = terminalController.createBill();
         bill = terminalController.addProduct(bill.getId(),
-                terminalController.getIAppDb().findProductById(product.getId()));
+                terminalController.getIAppDb().
+                        findProductById(product.getId()));
 
         terminalController.getIAppDb().saveBill(bill);
             assertEquals(1, bill.getProductsMap().size());
@@ -58,9 +59,7 @@ public class ITerminalControllerTest {
         terminalController.createBill();
         terminalController.createBill();
         terminalController.createBill();
-
         assertEquals(5, terminalController.getBills().size());
-
     }
 
     @Test
@@ -98,13 +97,13 @@ public class ITerminalControllerTest {
     @Test
     public void createSalesman() throws Exception {
         Employee salesman = terminalController.
-                createSalesman("1", "1", "1");
+                createSalesman("1", "1", "1", new Money(0,0));
         salesman.getLogin();
         salesman.getFullName();
         salesman.getPassword();
         salesman.toString();
         Employee salesman2 = terminalController.getIAppDb().
-                createSalesman("2", "2", "2");
+                createSalesman("2", "2", "2", new Money(10, 0));
         salesman2.setLogin("2");
         salesman2.setPassword("2");
         salesman2.setFullName("2");
@@ -150,11 +149,11 @@ public class ITerminalControllerTest {
         product3.setPrice(new Money(12313, 42));
 
         Employee salesman1 = terminalController.
-                createSalesman("1123","123","1");
+                createSalesman("1123","123","1", new Money(0,0));
         Employee salesman2 = terminalController.
-                createSalesman("2","12","1");
+                createSalesman("2","12","1", new Money(0,0));
         Employee salesman3 = terminalController.
-                createSalesman("2","13","1");
+                createSalesman("2","13","1",  new Money(0,0));
 
         terminalController.getIAppDb().getProducts().put(product1, 15);
         terminalController.getIAppDb().getProducts().put(product2, 15);

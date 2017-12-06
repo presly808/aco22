@@ -29,25 +29,14 @@ public class ITerminalControllerImpl implements ITerminalController {
 
     @Override
     public Employee createSalesman(String fullName, String login,
-                                   String password) throws IOException {
-        return iAppDb.createSalesman(fullName, login, password);
-    }
-
-//    @Override
-//    public Employee login(String login, String password) throws IOException {
-//        return iAppDb.login(login, password);
-//    }
-
-//    @Override
-    public Employee logout(Salesman salesman) throws IOException {
-//        return iAppDb.logout(salesman);
-        return null;
+                                   String password, Money salary)
+            throws IOException {
+        return iAppDb.createSalesman(fullName, login, password, salary);
     }
 
     @Override
     public Employee findSalesmanByLogin(String login) {
-//        return iAppDb.findSalesmanByLogin(login);
-        return null;
+        return iAppDb.findSalesmanByLogin(login);
     }
 
     @Override

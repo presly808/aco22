@@ -52,21 +52,21 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Bill findBillById(int id) throws BillNotFoundException {
-        try {
-            Bill bill = this.bills.stream().
-                    filter(billE -> billE.getId() == id).findFirst().get();
-            return bill;
-        } catch (NoSuchElementException e) {
-            throw new BillNotFoundException();
-        }
+            return this.bills.stream().
+                    filter(billE -> billE.getId() == id).findFirst().
+                    orElseThrow(new BillNotFoundException());
     }
 
     @Override
     public Product findProductById(int id) throws ProductNotFoundException {
-        for (Product product : products.keySet()) {
-            if (product.getId() == id) return product;
-        }
-        throw new ProductNotFoundException();
+            return this.products.keySet().stream().
+                    filter(product -> product.getId() == id).findFirst().
+                    orElseThrow(new ProductNotFoundException());
+//
+//        for (Product product : products.keySet()) {
+//            if (product.getId() == id) return product;
+//        }
+//        throw new ProductNotFoundException();
     }
 
     @Override
@@ -92,7 +92,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product saveProduct(Product product) throws IllegalArgumentException {
+    public Product saveProduct(Product product)
+            throws IllegalArgumentException {
         if (product == null) throw new IllegalArgumentException();
         product.setId(++productNextId);
         products.putIfAbsent(product, 0);
@@ -100,7 +101,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Bill update(Bill bill) throws IllegalArgumentException, BillNotFoundException {
+    public Bill update(Bill bill)
+            throws IllegalArgumentException, BillNotFoundException {
         if (bill == null) throw new IllegalArgumentException();
         int index = bills.indexOf(bill);
 
@@ -111,8 +113,13 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Employee createSalesman(String fullName, String login,
-                                   String password) {
-        return new Salesman();
+                                   String password, Money salary) {
+        return new Salesman(fullName, login, password, salary);
+    }
+
+    @Override
+    public Employee findSalesmanByLogin(String login) {
+        return null;
     }
 
     @Override
@@ -125,59 +132,48 @@ public class IAppDbImpl implements IAppDb {
         filtered.addAll(getBills());
 
         if (salesman != null)
-            filtered = addToListBySeller(filtered, salesman);
+            filtered = filterBySeller(filtered, salesman);
 
         if (product != null)
-            filtered = addProductToList(filtered, product);
+            filtered = filterByProduct(filtered, product);
 
         if (startDate != null)
-            filtered = addToListByStartDate(filtered, startDate);
+            filtered = filterByStartDate(filtered, startDate);
 
         if (endDate != null)
-            filtered = addToListByEndDate(filtered, endDate);
+            filtered = filterByEndDate(filtered, endDate);
 
-        if (billComparator != null) {
-
+        if (billComparator != null)
             filtered.sort(billComparator.reversed());
 
-        }
         return filtered;
     }
 
-    private List<Bill> addProductToList(List<Bill> listBills,
-                                        Product product) {
-        List<Bill> list = new ArrayList<>();
-
+    private List<Bill> filterByProduct(List<Bill> listBills,
+                                       Product product)
+            throws NullArgumentException{
+        if (listBills == null) throw new NullArgumentException();
         if (product == null) throw new NullArgumentException();
 
+        return listBills.stream().filter(bill ->
+                bill.getProductsMap().keySet().contains(product)).
+                collect(Collectors.toList());
+    }
+
+    private List<Bill> filterBySeller(List<Bill> listBills,
+                                      Employee salesman)
+            throws NullArgumentException{
+
         if (listBills == null) throw new NullArgumentException();
+        if (salesman == null) throw new NullArgumentException();
 
-        for (Bill bill : listBills) {
-            if ((bill.getProductsMap().containsKey(product))) {
-                list.add(bill);
-            }
-        }
-        return list;
+        return listBills.stream().filter(bill ->
+                bill.getSalesman().equals(salesman)).
+                collect(Collectors.toList());
     }
 
-    private List<Bill> addToListBySeller (List<Bill> listBills,
-                                          Employee salesman) {
-        List<Bill> list = new ArrayList<>();
-
-        if (salesman == null) return listBills;
-
-        if (listBills != null) {
-            for (Bill bill : listBills) {
-                if ((salesman.equals(bill.getSalesman()))) {
-                    list.add(bill);
-                }
-            }
-        }
-        return list;
-    }
-
-    private List<Bill> addToListByStartDate(List<Bill> listBills,
-                                            LocalDateTime date) {
+    private List<Bill> filterByStartDate(List<Bill> listBills,
+                                         LocalDateTime date) {
         if (listBills == null) throw new NullArgumentException();
         if (date == null) return listBills;
         return listBills.stream().
@@ -185,8 +181,8 @@ public class IAppDbImpl implements IAppDb {
                 collect(Collectors.toList());
     }
 
-    private List<Bill> addToListByEndDate(List<Bill> listBills,
-                                          LocalDateTime date) {
+    private List<Bill> filterByEndDate(List<Bill> listBills,
+                                       LocalDateTime date) {
         if (listBills == null ) throw new NullArgumentException();
         if (date == null) return listBills;
         return listBills.stream().
@@ -208,10 +204,7 @@ public class IAppDbImpl implements IAppDb {
 
         filteredList.stream().map(bill -> summ.doSum(bill.getAmountPrice())).
                 close();
-
         return summ;
-
-
     }
 
     @Override

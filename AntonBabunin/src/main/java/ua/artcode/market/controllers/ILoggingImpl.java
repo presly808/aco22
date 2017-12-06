@@ -57,11 +57,13 @@ public class ILoggingImpl implements ILogging {
     }
 
     @Override
-    public Employee createSalesman(String fullName, String login, String password) {
+    public Employee createSalesman(String fullName, String login,
+                                   String password, Money salary) {
         Employee salesman = null;
         Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
-            salesman = new Salesman(fullName, login, password, new Money(123,12));
+            salesman = new Salesman(fullName, login, password,
+                    new Money(123,12));
             salesmenList.add(salesman);
         }
         return salesman;

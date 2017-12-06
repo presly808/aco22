@@ -27,9 +27,9 @@ public interface ITerminalController {
 
 
 
-    Employee createSalesman(String fullName, String login, String password) throws IOException;
-//    Employee login(String login, String password) throws IOException;
-//    Employee logout(Salesman salesman) throws IOException;
+    Employee createSalesman(String fullName, String login, String password,
+                            Money salary) throws IOException;
+
     Employee findSalesmanByLogin(String login);
 
 }

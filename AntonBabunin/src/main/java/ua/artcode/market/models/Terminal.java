@@ -1,5 +1,11 @@
-/*
+
 package ua.artcode.market.models;
+
+import ua.artcode.market.interfaces.IAppDb;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
+
+import java.io.IOException;
 
 public class Terminal {
     private int id;
@@ -35,5 +41,12 @@ public class Terminal {
                 "id=" + id +
                 '}';
     }
+
+    public Employee login(String login, String password) throws IOException {
+        return null;
+    }
+    public Employee logout(Salesman salesman) throws IOException {
+        return null;
+    }
 }
-*/
+

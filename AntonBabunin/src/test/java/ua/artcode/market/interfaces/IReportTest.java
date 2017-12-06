@@ -73,10 +73,8 @@ public class IReportTest {
 
         IReport iReport = new IReportImpl(iAppDb);
 
-        System.out.println("Bill size - " + iAppDb.getBills().size());
 
         Money money = iReport.calculateSalary(headOfSalesmen1, null, null);
-        System.out.println(money);
 
         assertEquals(new Money(170,0),  money);
         Money all = iReport.doDepartmentReport(department,null, null);

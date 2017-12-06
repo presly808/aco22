@@ -23,18 +23,16 @@ public interface IAppDb {
 
     Bill removeBill(int id) throws IOException, BillNotFoundException;
 
-    Product removeProduct(int id) throws IOException, ProductNotFoundException;
+    Product removeProduct(int id) throws ProductNotFoundException, IOException;
     Bill saveBill(Bill bill) throws IOException;
 
     Product saveProduct(Product product) throws IOException;
     Bill update(Bill bill) throws IOException, BillNotFoundException;
 
-    Employee createSalesman(String fullName, String login, String password) throws IOException;
-//            throws IOException;
+    Employee createSalesman(String fullName, String login, String password,
+                            Money salary) throws IOException;
 
-//    Employee login(String login, String password) throws IOException;
-//    Employee logout(Employee salesman) throws IOException;
-//    Employee findSalesmanByLogin(String login);
+    Employee findSalesmanByLogin(String login);
 
     List<Bill> filter(Employee salesman, Product product,
                       LocalDateTime startDate, LocalDateTime endDate,

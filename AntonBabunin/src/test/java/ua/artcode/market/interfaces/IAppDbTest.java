@@ -7,6 +7,8 @@ import ua.artcode.market.controllers.IAppDbImpl;
 import ua.artcode.market.controllers.ITerminalControllerImpl;
 import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
+import ua.artcode.market.utils.Generator;
 
 import static org.junit.Assert.*;
 
@@ -32,10 +34,10 @@ public class IAppDbTest {
         Bill bill2 = iTerminalController.createBill();
         Bill bill3 = iTerminalController.createBill();
         Bill bill4 = iTerminalController.createBill();
-        System.out.println(bill1.toString() +  bill2.toString() +
-                bill4.toString());
+//        System.out.println(bill1.toString() + bill2.toString() +
+//                bill4.toString());
         Bill bill = iAppDb.findBillById(3);
-
+//        System.out.println(bill);
         assertTrue(bill3.getId() == bill.getId());
     }
 
@@ -44,10 +46,21 @@ public class IAppDbTest {
         Bill bill = null;
         try {
             bill = iAppDb.findBillById(1);
-        }catch (BillNotFoundException ignored) {
-            System.out.println("Bill not found");
-            ignored.printStackTrace();
+        } catch (BillNotFoundException ignored) {
+            /*System.out.println("Bill not found");
+            ignored.printStackTrace();*/
+            assertNull(bill);
         }
-        assertNull(bill);
+    }
+
+    @Test
+    public void findProductByIdNeg() throws Exception {
+        Product expected = null;
+        Product actual = null;
+        try {
+            actual = iAppDb.findProductById(10);
+        } catch (ProductNotFoundException e) {
+            assertEquals(expected, actual);
+        }
     }
 }
