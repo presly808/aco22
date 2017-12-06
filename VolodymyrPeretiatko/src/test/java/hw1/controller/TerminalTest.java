@@ -25,12 +25,6 @@ public class TerminalTest {
         p1 = new Product(1, "Laptop HP 750B",  500.0);
         p2 = new Product(2, "Laptop HP 1020Z", 650.0);
 
-        s1 = new Salesman("Jhon Lohan",    "Jhon",  "qwerty");
-        s2 = new Salesman("Frank Sinatra", "Frank", "qwerty");
-
-        p1 = new Product(1, "Laptop HP 750B",  500.0);
-        p2 = new Product(2, "Laptop HP 1020Z", 650.0);
-
         b1 = new Bill(1, s1);
         b2 = new Bill(2, s2);
 
@@ -56,7 +50,12 @@ public class TerminalTest {
     @Test
     public void getSalesmanSallaryTest(){
         s1.addSubSalesman(s2);
-        System.out.println(terminal.getSalesmanSallary(s1, new Date(1510842400000L), new Date(1510842400777L)));
+        Assert.assertEquals(48.0,
+            terminal.getSalesmanSallary(s1, new Date(1510842400000L), new Date(1510842400999L)), 0.001);
+        Assert.assertEquals(57.5,
+                terminal.getSalesmanSallary(s2, new Date(1510842400000L), new Date(1510842400999L)), 0.001);
+
+
     }
 
     @Test
@@ -65,6 +64,7 @@ public class TerminalTest {
         Assert.assertTrue(terminal.login("Frank", "qwerty"));
         Assert.assertFalse(terminal.login("HuiChi", "qwerty"));
     }
+
 
     @Test
     public void testFindBillById(){
