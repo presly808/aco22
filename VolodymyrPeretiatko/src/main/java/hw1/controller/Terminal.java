@@ -1,6 +1,7 @@
 package hw1.controller;
 
 import hw1.model.*;
+import hw1.reports.IncomeExpensesReport;
 import hw1.utils.*;
 
 import java.util.*;
@@ -190,6 +191,22 @@ public class Terminal implements ITerminal {
         if(comparator != null && !result.isEmpty()) {result.sort(comparator); result.trimToSize();}
 
         return result;
+    }
+
+
+    public IncomeExpensesReport getIncomeExpensesByDate(Date startDate, Date endDate){
+
+        List<Salesman> salesmen = getSalesmen();
+
+        Double salesAmount = getSalesAmount(salesmen, startDate, endDate);
+        Double salesmanSalary = 0.0;
+
+        for (Salesman salesman : salesmen){
+            salesmanSalary += getSalesmanSallary(salesman, startDate, endDate);
+        }
+
+        return new IncomeExpensesReport(startDate, endDate, salesAmount, salesmanSalary);
+
     }
 
 }

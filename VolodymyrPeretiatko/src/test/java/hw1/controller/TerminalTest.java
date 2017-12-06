@@ -53,7 +53,7 @@ public class TerminalTest {
         Assert.assertEquals(48.0,
             terminal.getSalesmanSallary(s1, new Date(1510842400000L), new Date(1510842400999L)), 0.001);
         Assert.assertEquals(57.5,
-                terminal.getSalesmanSallary(s2, new Date(1510842400000L), new Date(1510842400999L)), 0.001);
+             terminal.getSalesmanSallary(s2, new Date(1510842400000L), new Date(1510842400999L)), 0.001);
 
 
     }
@@ -154,7 +154,12 @@ public class TerminalTest {
     }
 
 
+    @Test
+    public void getIncomeExpensesByDateTest(){
 
+
+
+    }
 
 
 }
