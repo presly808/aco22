@@ -3,6 +3,8 @@ package week3.appDB;
 import week3.model.Bill;
 import week3.model.Salesman;
 
+import java.util.List;
+
 public interface IappDB {
 
 
@@ -17,4 +19,5 @@ public interface IappDB {
     Salesman findSalemanByName(String fullName);
     boolean removeSaleman(Salesman salesman);
     boolean updateSalemen(Salesman newSalesman, Salesman oldSalesman);
+    List findBillBySalesman(Salesman salesman);
 }

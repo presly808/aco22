@@ -10,11 +10,18 @@ import java.util.List;
 public class IappDBimpl implements IappDB {
 
     // todo init in constructor
-    private List<Salesman> salesmen = new ArrayList<>();
-    private List<Bill> bills = new ArrayList<>();
-    private List<Product> products = new ArrayList<>();
+    private List<Salesman> salesmen;
+    private List<Bill> bills;
+    private List<Product> products;
 
+    public IappDBimpl(List<Salesman> salesmen, List<Bill> bills, List<Product> products) {
+        this.salesmen = salesmen;
+        this.bills = bills;
+        this.products = products;
+    }
 
+    public IappDBimpl() {
+    }
     //////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -108,4 +115,18 @@ public class IappDBimpl implements IappDB {
         }
         return false;
     }
+    @Override
+    public List findBillBySalesman(Salesman salesman){
+        List<Bill> filtredBills = new ArrayList<>();
+        for (Bill bill: bills) {
+            if (bill.getSalesman().equals(salesman)){
+                filtredBills.add(bill);
+            }
+        }
+     return filtredBills;
+    }
+
+
+
+
 }
