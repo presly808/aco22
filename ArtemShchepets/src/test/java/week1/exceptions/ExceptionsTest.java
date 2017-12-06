@@ -3,11 +3,11 @@ package week1.exceptions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import week1.comparators.CreationDateComparator;
 import week1.controller.ISellerController;
 import week1.controller.ISellerControllerImpl;
 import week1.controller.ITerminalController;
 import week1.controller.ITerminalControllerFactory;
+import week1.model.Bill;
 import week1.model.Product;
 
 import java.time.LocalDateTime;
@@ -61,7 +61,7 @@ public class ExceptionsTest {
         terminalController
                 .filter(LocalDateTime
                         .parse("2007-12-01T10:15:30"),
-                        LocalDateTime.parse("2003-12-01T10:15:30"), new CreationDateComparator());
+                        LocalDateTime.parse("2003-12-01T10:15:30"), new Bill.CreationDateComparator());
     }
 
     @Test(expected = UnableToFindABillException.class)

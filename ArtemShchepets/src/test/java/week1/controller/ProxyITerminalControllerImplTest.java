@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.comparators.CreationDateComparator;
 import week1.model.Bill;
 import week1.model.Product;
 
@@ -143,7 +142,7 @@ public class ProxyITerminalControllerImplTest {
         LocalDateTime startTime = LocalDateTime.parse("2014-01-01T00:00:00");
         LocalDateTime endTime = LocalDateTime.parse("2016-12-31T23:59:59");
 
-        terminalController.filter(startTime, endTime, new CreationDateComparator());
+        terminalController.filter(startTime, endTime, new Bill.CreationDateComparator());
         Assert.assertNull(null);
     }
 

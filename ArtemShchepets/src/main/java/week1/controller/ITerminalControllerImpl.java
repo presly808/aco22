@@ -1,6 +1,5 @@
 package week1.controller;
 
-import week1.comparators.SellersSoldProductsComparator;
 import week1.database.IAppDB;
 import week1.exceptions.*;
 import week1.model.Bill;
@@ -148,7 +147,8 @@ public class ITerminalControllerImpl implements ITerminalController {
             throw new UnableToGetTopSellersException("There aren't any sellers or bills in DB!");
 
         return iAppDB.getAllSellers().stream().peek(this::calculateSellerSoldProducts)
-                .peek(iAppDB::updateSeller).max(new SellersSoldProductsComparator()).get();
+                .peek(iAppDB::updateSeller)
+                .max(Comparator.comparing(Seller::getSoldProducts)).get();
     }
 
     private Seller calculateSellerSoldProducts(Seller seller) {

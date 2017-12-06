@@ -9,12 +9,12 @@ import week1.model.Seller;
 
 import java.util.List;
 
-public class ISellerControllerImpl  implements ISellerController{
+public class ISellerControllerImpl implements ISellerController {
 
     private static final double PERCENT_FROM_BILL = 0.2;
     private static final double PERCENT_FROM_SUBSELLER = 0.3;
 
-    public double calculateAllSellerSalary( Seller seller) throws UnableToCalculateSellerSalaryException {
+    public double calculateAllSellerSalary(Seller seller) throws UnableToCalculateSellerSalaryException {
 
         if (seller == null) throw new UnableToCalculateSellerSalaryException("Seller is null");
 
@@ -22,9 +22,11 @@ public class ISellerControllerImpl  implements ISellerController{
 
         double salary = calculateOwnSellerSalary(seller);
 
+        int counter = 0;
+
         if (!subsellers.isEmpty()) {
-            for (int i = 0; i < subsellers.size(); i++) {
-                salary += calculateAllSellerSalary(subsellers.get(i)) * PERCENT_FROM_SUBSELLER;
+            for (Seller subseller : subsellers) {
+                salary += calculateAllSellerSalary(subsellers.get(counter++)) * PERCENT_FROM_SUBSELLER;
             }
         }
 
