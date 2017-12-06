@@ -106,14 +106,4 @@ public class Seller {
         if (password != null ? !password.equals(seller.password) : seller.password != null) return false;
         return fullName != null ? fullName.equals(seller.fullName) : seller.fullName == null;
     }
-
-    public class SellersSoldProductsComparator implements Comparator<Seller> {
-
-
-        @Override
-        public int compare(Seller o1, Seller o2) {
-            return o1.getSoldProducts() - o2.getSoldProducts();
-        }
-
-    }
 }
