@@ -42,7 +42,7 @@ public class ExceptionsTest {
     @Test(expected = Exception.class)
     public void testUnableToCalculateBillIncomeException()
             throws UnableToCalculateBillIncomeException, UnableToCalcucateDeptCostsException {
-       new UnableToCalculateBillIncomeException("test");
+        new UnableToCalculateBillIncomeException("test");
         sellerController.calculateIncomeAndExpenses(null);
     }
 
@@ -60,7 +60,7 @@ public class ExceptionsTest {
     public void testUnableToFilterException() throws UnableToFilterException {
         terminalController
                 .filter(LocalDateTime
-                        .parse("2007-12-01T10:15:30"),
+                                .parse("2007-12-01T10:15:30"),
                         LocalDateTime.parse("2003-12-01T10:15:30"), new Bill.CreationDateComparator());
     }
 
@@ -71,7 +71,7 @@ public class ExceptionsTest {
 
     @Test(expected = UnableToGetTopSellersException.class)
     public void testUnableToGetTopSellersException() throws UnableToGetTopSellersException {
-       terminalController.getTopOfSalesman();
+        terminalController.getTopOfSalesman();
     }
 
     @Test(expected = UnableToLogInException.class)

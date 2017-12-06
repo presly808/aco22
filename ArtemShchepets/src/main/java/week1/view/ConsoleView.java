@@ -167,7 +167,7 @@ public class ConsoleView {
         Product newProduct = new Product(newProductName, newProductPrice);
 
         try {
-           terminal.addProduct(id, newProduct);
+            terminal.addProduct(id, newProduct);
         } catch (UnableToFindABillException | InvalidBillIdException e) {
             e.printStackTrace();
             System.out.println("Product wasn't added.");
