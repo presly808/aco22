@@ -49,4 +49,7 @@ public class User{
         return department;
     }
 
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
 }

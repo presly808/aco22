@@ -14,14 +14,17 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class StatisticTest {
-    IappDB db;
+    IappDB db = new IappDBimpl();
     Bill b1, b2, b3;
     Product p1, p2, p3;
     Salesman s1, s2, s3, s4, m1, m2, d;
-    ITerminalimpl t1;
+    ITerminal t1;
 
     @Before
     public void setUp() {
+
+
+
         s1 = new Salesman(7,"sss1","ddd4", "Fullname1", Arrays.asList());
         s2 = new Salesman(8,"sss2","ddd6", "Fullname2", Arrays.asList());
 
@@ -39,14 +42,28 @@ public class StatisticTest {
 
 
         b1 = new Bill();
-
         db.saveBill(b1);
         b1.setId(1);
+        t1.addProduct(1,p1);
+        t1.addProduct(1,p2);
+        t1.closeBill(b1);
+
+        b2 = new Bill();
+        db.saveBill(b2);
+        b1.setId(2);
+        t1.addProduct(2,p3);
+        t1.addProduct(2,p2);
+        t1.closeBill(b2);
+
+        b3 = new Bill();
+        db.saveBill(b3);
+        b1.setId(2);
+        t1.addProduct(2,p3);
+        t1.addProduct(2,p1);
+        t1.closeBill(b3);
 
 
-        db = new IappDBimpl();
-        db.saveBill(b1);
-        db.saveSaleman(s1);
+
     }
 
     @Test

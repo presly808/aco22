@@ -1,21 +1,25 @@
 package week3.appDB;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import week1.controller.Terminal;
+import week3.model.Bill;
 import week3.model.Product;
 import week3.model.Salesman;
+
+import java.util.Arrays;
 
 public class IappDBimplTest {
 
     Terminal terminal;
-    IappDB db;
+    IappDB db = new IappDBimpl();
     Salesman s1, s2, s3, s4;
     Product p1,p2,p3,p4,p5;
 
     @Before
     public void initData(){
-        db = new IappDBimpl();
+        IappDBimpl db = new IappDBimpl(Arrays.asList(),Arrays.asList(),Arrays.asList());
 
     }
 
@@ -36,7 +40,10 @@ public class IappDBimplTest {
     }
 
     @Test
-    public void saveBill1() throws Exception {
+    public void saveBill1()  {
+        Bill bill = new Bill();
+        Assert.assertTrue(db.saveBill(bill));
+
     }
 
     @Test

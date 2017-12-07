@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bill {
     private int id;
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
     private double everageBill;
     private String openTime;
     private String closeTime;
@@ -51,6 +51,14 @@ public class Bill {
         this.id = id;
     }
 
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,4 +73,15 @@ public class Bill {
     public int hashCode() {
         return id;
     }
+
+
+    public void everageBill(){
+        double sum = 0.0;
+        for (Product product: products) {
+            sum += product.getPrice();
+        }
+        everageBill = sum;
+    }
+
+
 }

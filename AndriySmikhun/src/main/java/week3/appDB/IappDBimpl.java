@@ -10,9 +10,9 @@ import java.util.List;
 public class IappDBimpl implements IappDB {
 
     // todo init in constructor
-    private List<Salesman> salesmen;
-    private List<Bill> bills;
-    private List<Product> products;
+    private List<Salesman> salesmen = new ArrayList<>();
+    private List<Bill> bills = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public IappDBimpl(List<Salesman> salesmen, List<Bill> bills, List<Product> products) {
         this.salesmen = salesmen;
@@ -26,9 +26,10 @@ public class IappDBimpl implements IappDB {
 
     @Override
     public boolean updateBill(Bill newBill, Bill oldBill) {
-        for (Bill b: bills
-             ) {if (b.equals(oldBill))
-                 b = newBill;
+        for (Bill b : bills
+                ) {
+            if (b.equals(oldBill))
+                b = newBill;
 
         }
 
@@ -60,73 +61,70 @@ public class IappDBimpl implements IappDB {
 
     @Override
     public boolean saveBill(Bill bill) {
-        if (bills.add(bill)) {
+        bill.setOpenTime("13:00 07/12/17");
+     return bills.add(bill);
+    }
+        @Override
+        public Salesman findSalemanById ( int id){
+            for (Salesman s : salesmen
+                    ) {
+                if (s.getId() == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public boolean saveSaleman (Salesman salesman){
+            salesmen.add(salesman);
             return true;
         }
-        return false;
-    }
 
-    @Override
-    public Salesman findSalemanById(int id) {
-        for (Salesman s : salesmen
-                ) {
-            if (s.getId() == id) {
-                return s;
+        @Override
+        public Salesman findSalemanByName (String fullName){
+            for (Salesman s : salesmen) {
+                if (s.getFullName().equals(fullName)) {
+                    return s;
+                }
             }
+            return null;
         }
-        return null;
-    }
 
-    @Override
-    public boolean saveSaleman(Salesman salesman) {
-        salesmen.add(salesman);
-        return true;
-    }
 
-    @Override
-    public Salesman findSalemanByName(String fullName) {
-        for (Salesman s : salesmen) {
-            if (s.getFullName().equals(fullName)) {
-                return s;
+        @Override
+        public boolean removeSaleman (Salesman salesman){
+            for (Salesman s : salesmen
+                    ) {
+                s = null;
+                return true;
+
             }
-        }
-        return null;
-    }
-
-
-    @Override
-    public boolean removeSaleman(Salesman salesman) {
-        for (Salesman s: salesmen
-             ) {s = null;
-             return true;
-
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateSalemen(Salesman newSalesman,Salesman oldSalesman) {
-        for (Salesman s:salesmen
-             ) {if (s.equals(oldSalesman)){
-                 s = newSalesman;
-                 return true;
+            return false;
         }
 
-        }
-        return false;
-    }
-    @Override
-    public List findBillBySalesman(Salesman salesman){
-        List<Bill> filtredBills = new ArrayList<>();
-        for (Bill bill: bills) {
-            if (bill.getSalesman().equals(salesman)){
-                filtredBills.add(bill);
+        @Override
+        public boolean updateSalemen (Salesman newSalesman, Salesman oldSalesman){
+            for (Salesman s : salesmen
+                    ) {
+                if (s.equals(oldSalesman)) {
+                    s = newSalesman;
+                    return true;
+                }
+
             }
+            return false;
         }
-     return filtredBills;
+        @Override
+        public List findBillBySalesman (Salesman salesman){
+            List<Bill> filtredBills = new ArrayList<>();
+            for (Bill bill : bills) {
+                if (bill.getSalesman().equals(salesman)) {
+                    filtredBills.add(bill);
+                }
+            }
+            return filtredBills;
+        }
+
+
     }
-
-
-
-
-}

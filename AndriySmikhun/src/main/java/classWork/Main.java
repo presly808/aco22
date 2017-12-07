@@ -14,12 +14,18 @@ public class Main {
         User user4 = new User(4,"Sergii","men",47,4000,"Kharkiv","IT");
         User user5 = new User(5,"Oleg","women",29,3800,"Dnipro","Marketing");
         User user6 = new User(6,"Ira","women",31,4500,"Odessa","Account");
-        User user7 = new User(7,"Natalia","women",39,4800,"Ternopil","Marketing");
+        User user7 = new User(7,"Natalia","men",39,4800,"Kyiv","Marketing");
 
         Worker worker = new Worker(Arrays.asList(user1,user2,user3,user4,user5,user6,user7));
         List<Worker> tmp = new ArrayList<>();
 
-        worker.topThree();
+        //worker.topThree();
+        //double f = 0.23;
+        //int d = (int)f;
+        //worker.filterByOdessa();
+        //worker.plus5Percent();
+        //worker.liveInKiev();
+        worker.avarageSalary();
 
 
 

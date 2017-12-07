@@ -53,7 +53,10 @@ public class ITerminalimpl implements ITerminal {
     }
 
     @Override
-    public boolean closeBill(Bill bill) {
+    public boolean closeBill( Bill bill) {
+        bill.everageBill();
+        bill.setCloseTime("14:15 07/12/17");
+
         return false;
     }
 
