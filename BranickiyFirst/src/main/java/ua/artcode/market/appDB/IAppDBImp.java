@@ -1,18 +1,19 @@
-package main.java.ua.artcode.market.appDB;
+package src.main.java.ua.artcode.market.appDB;
 
 import main.java.ua.artcode.market.models.Bill;
 import main.java.ua.artcode.market.models.Product;
-import main.java.ua.artcode.market.models.SalesMan;
+import main.java.ua.artcode.market.models.Salesman;
+import src.main.java.ua.artcode.market.appDB.IAppDB;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IAppDBImp implements IAppDB{
+public class IAppDBImp implements IAppDB {
 
     private List<Bill> bills = new ArrayList<>();
 
-    private List<SalesMan> salesmans = new ArrayList<>();
+    private List<Salesman> salesmen = new ArrayList<>();
 
     private List<Product> products = new ArrayList<>();
 
@@ -28,25 +29,26 @@ public class IAppDBImp implements IAppDB{
     }
 
     @Override
-    public void addActionToHistory(String messege) {
+    public void addActionToHistory(String message) {
 
         this.historyOfActions.add(message);
     }
 
     @Override
-    public SalesMan findSalesMan(String loginOrName) {
+    public Salesman findSalesman(String loginOrName) {
 
         if (loginOrName == null || loginOrName.isEmpty() )
         {return null;}
 
-        for (SalesMan salesMan : salesMans)
-        if (salesMan.getLogin().equals(loginOrName))
-        {return salesMan;}
+        for (Salesman salesman : salesmen)
+        if (salesman.getLogin().equals(loginOrName))
+        {return salesman;}
 
-        System.out.println("SalesMan not found. Try again.");
+        System.out.println("Salesman not found. Try again.");
 
         return null;
     }
+
 
     @Override
     public void addProductToDataBase(String name, double price) {
@@ -87,9 +89,10 @@ public class IAppDBImp implements IAppDB{
         return bills.remove(bills.indexOff(findBillById(id)));
     }
 
+
     @Override
-    public SalesMan removeSalesMan(int id) {
-        return salesMans.remove(salesMans.indexOff(findSalesMan(loginOrName)));
+    public Salesman removeSalesman(int id) {
+        return salesmen.remove(salesmen.indexOff(findSalesman(loginOrName)));
     }
 
     @Override
@@ -111,5 +114,38 @@ public class IAppDBImp implements IAppDB{
         return bills.set(index, bill);
 
         return null;
+    }
+
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public List<Salesman> getsalesmans() {
+        return salesmen;
+    }
+
+    public void setsalesmans(List<Salesman> salesmans) {
+        this.salesmen = salesmans;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<String> getHistoryOfActions() {
+        return historyOfActions;
+    }
+
+    public void setHistoryOfActions(List<String> historyOfActions) {
+        this.historyOfActions = historyOfActions;
     }
 }

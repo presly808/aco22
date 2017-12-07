@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.Utils;
+package src.main.java.ua.artcode.market.Utils;
 
 import main.java.ua.artcode.market.models.Bill;
 

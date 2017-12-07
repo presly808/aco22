@@ -1,9 +1,11 @@
-package main.java.ua.artcode.market.controllers;
+package src.main.java.ua.artcode.market.controllers;
 
+import main.java.ua.artcode.market.Utils.TerminalUtils;
 import main.java.ua.artcode.market.appDB.IAppDB;
 import main.java.ua.artcode.market.models.Bill;
-import main.java.ua.artcode.market.models.SalesMan;
+import main.java.ua.artcode.market.models.Salesman;
 import main.java.ua.artcode.market.models.Statistics;
+import src.main.java.ua.artcode.market.controllers.ITerminal;
 
 import java.sql.Time;
 import java.util.List;
@@ -12,23 +14,23 @@ public class ITerminalControllerImpl implements ITerminal {
 
     private IAppDB iAppDB;
     private Bill newBill;
-    private  SalesMan loggedSalesMan;
+    private Salesman loggedSalesman;
     private boolean logged;
 
     public ITerminalControllerImpl(IAppDB IappDB){
-        this.IappDB = IappDB;
+        this.iAppDB = IappDB;
     }
 
 
     @Override
     public void addSalesman(String fullName, String login, String password) {
-        IappDB.getSalesMans().add(new SalesMan(fullName, login, password, IappDB.genId()));
+        IAppDB.getSalesmans().add(new Salesman(fullName, login, password, iAppDB.genId()));
     }
 
     @Override
     public void signIn(String login, String password) {
 
-        this.loggedSalesMan = IappDB.findSalesman(loginOrName);
+        this.loggedSalesman = IAppDB.findSalesman(loginOrName);
         logged = true;
 
     }
@@ -37,14 +39,14 @@ public class ITerminalControllerImpl implements ITerminal {
     public void logOut() {
 
         logged = false;
-        loggedSalesMan = null;
+        loggedSalesman = null;
 
     }
 
     @Override
     public void creareBill() {
 
-        newBill = new Bill(loggedSalesMan,iAppDB.genID());
+        newBill = new Bill(loggedSalesman,iAppDB.genID());
 
     }
 
@@ -53,7 +55,7 @@ public class ITerminalControllerImpl implements ITerminal {
 
         newBill.calculateAmountPrice();
         newBill.setCloseTime(new Time());
-        IappDB.getBills().add(newBill);
+        IAppDB.getBills().add(newBill);
         newBill.getSalesMan().addSum(newBill.getAmountPrice());
         newBill = null;
 
@@ -93,7 +95,7 @@ public class ITerminalControllerImpl implements ITerminal {
                 billWithMinAmount.getAmountPrice(),
                 billWithMinAmount.getSalesMan(),
                 averageAmountInOneChek,
-                sumOfAllSalles);
+                amountOfAllSales);
 
     }
 
@@ -125,8 +127,8 @@ public class ITerminalControllerImpl implements ITerminal {
         return newBill;
     }
 
-    public SalesMan getLoggedSalesMan() {
-        return loggedSalesMan;
+    public Salesman getLoggedSalesman() {
+        return loggedSalesman;
     }
 
     public boolean isLogged() {

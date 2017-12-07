@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.models;
+package src.main.java.ua.artcode.market.models;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -6,21 +6,21 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Bill {
+public class Bill implements Comparable<Bill> {
 
-    private List<Product> products = new ArrayList<>();
+    private List<main.java.ua.artcode.market.models.Product> products = new ArrayList<>();
     private int productsCount;
     private int id;
     private double amountPrice;
 
-    private SalesMan salesMan;
+    private main.java.ua.artcode.market.models.Salesman salesman;
 
     private LocalDateTime openTime;
 
     private Time closeTime;
 
-    public Bill(SalesMan salesMan, int idOfBill) {
-        this.salesMan = salesMan;
+    public Bill(main.java.ua.artcode.market.models.Salesman salesman, int idOfBill) {
+        this.salesman = salesman;
         this.id = idOfBill;
         this.openTime = LocalDateTime.now();
     }
@@ -32,10 +32,10 @@ public class Bill {
         }
     }
 
-    public void closeBill(int hours, int minutes, int seconds) {
+    public void closeBill() {
 
-        closeTime = new LocalDateTime.now();
-        salesMan.setAmountOfAllSales(salesMan.getAmountOfAllSales() + amountPrice);
+        closeTime = new LocalDateTime();
+        salesman.setAmountOfAllSales(salesman.getAmountOfAllSales() + amountPrice);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Bill {
                 ", productsCount=" + productsCount +
                 ", id=" + id +
                 ", amountPrice=" + amountPrice +
-                ", salesMan=" + salesMan +
+                ", salesman=" + salesman +
                 ", closeTime=" + closeTime +
                 '}';
     }
@@ -66,7 +66,7 @@ public class Bill {
                 (productsCount == other.productsCount) &&
                 id == other.id &&
                 amountPrice == other.amountPrice &&
-                salesMan.equals(other.salesMan) &&
+                salesman.equals(other.salesman) &&
                 closeTime.equals(other.closeTime);
 
     }
@@ -106,8 +106,8 @@ public class Bill {
         this.closeTime = closeTime;
     }
 
-    public SalesMan getSalesMan() {
-        return salesMan;
+    public Salesman getSalesMan() {
+        return salesman;
     }
 
     @Override

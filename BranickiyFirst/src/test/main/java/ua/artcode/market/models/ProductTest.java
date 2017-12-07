@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.models;
+package src.test.main.java.ua.artcode.market.models;
 
 import org.junit.Test;
 

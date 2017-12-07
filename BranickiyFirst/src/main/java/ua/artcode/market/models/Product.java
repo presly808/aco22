@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.models;
+package src.main.java.ua.artcode.market.models;
 
 import java.util.Objects;
 

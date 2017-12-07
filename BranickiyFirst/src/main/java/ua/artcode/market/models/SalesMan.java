@@ -1,18 +1,20 @@
-package main.java.ua.artcode.market.models;
+package src.main.java.ua.artcode.market.models;
 
-public class SalesMan {
+import src.main.java.ua.artcode.market.models.Product;
+
+public class Salesman {
 
    private String fullName, login, password;
    private int id;
    private  double amountOfAllSales;
 
-   public SalesMan(String fullName, String login, String password, int id, double amountOfAllSales){
+   public Salesman(String fullName, String login, String password, int id){
 
        this.fullName = fullName;
        this.login = login;
        this.password = password;
        this.id = id;
-       this.amountOfAllSales = amountOfAllSales;
+
 
    }
     /*

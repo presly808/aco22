@@ -1,4 +1,4 @@
-package main.java.ua.artcode.market.controllers;
+package src.main.java.ua.artcode.market.controllers;
 
 import main.java.ua.artcode.market.appDB.IAppDB;
 import main.java.ua.artcode.market.models.Bill;

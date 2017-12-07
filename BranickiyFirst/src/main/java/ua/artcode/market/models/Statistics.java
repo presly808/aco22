@@ -1,16 +1,18 @@
-package main.java.ua.artcode.market.models;
+package src.main.java.ua.artcode.market.models;
+
+import src.main.java.ua.artcode.market.models.Salesman;
 
 public class Statistics {
 
-    private SalesMan salesmanWithMaxAmount;
+    private Salesman salesmanWithMaxAmount;
     private double maxAmount;
-    private SalesMan salesmanWithMinAmount;
+    private Salesman salesmanWithMinAmount;
     private double minAmount;
     private double averageAmountInOneCheck;
     private double sumOfAllSalles;
 
-    public Statistics(SalesMan salesmanWithMaxAmount, double maxAmount,
-                      SalesMan salesmanWithMinAmount, double minAmount,
+    public Statistics(Salesman salesmanWithMaxAmount, double maxAmount,
+                      Salesman salesmanWithMinAmount, double minAmount,
                       double averageAmountInOneCheck, double sumOfAllSalles) {
         this.salesmanWithMaxAmount = salesmanWithMaxAmount;
         this.maxAmount = maxAmount;
