@@ -64,8 +64,7 @@ public class User {
 
     // 5. ** How many users do live in Kiev?
     public static int getHowManyUsersLiveInKiev(List<User> users){
-       return (int) users.stream().filter(u -> "Kiev".equals(u.city))
-                                  .count();
+       return (int) users.stream().filter(u -> "Kiev".equals(u.city)).count();
     }
 
     // 6. ** Avarage salary in Kiev(Men)
