@@ -179,10 +179,10 @@ public class Terminal implements ITerminal {
                 continue;
             }
 
-            if (products != null){
-                if (!CollectionUtils.listContainElementsOther(b.getProducts(), products))
+            if (products != null
+                && !CollectionUtils.listContainElementsOther(b.getProducts(), products))
                     continue;
-            }
+
 
             result.add(b);
 

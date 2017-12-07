@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class IncomeExpensesReportTest {
 
-    IncomeExpensesReport report1, report2, report3;
+    private IncomeExpensesReport report1, report2, report3;
 
     @Before
     public void testInit(){

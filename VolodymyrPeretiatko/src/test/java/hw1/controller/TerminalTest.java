@@ -154,12 +154,4 @@ public class TerminalTest {
     }
 
 
-    @Test
-    public void getIncomeExpensesByDateTest(){
-
-
-
-    }
-
-
 }
