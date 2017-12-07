@@ -52,7 +52,7 @@ public class BillComparator implements java.util.Comparator<Bill>{
 
         @Override
         public int compare(Bill o1, Bill o2) {
-            return o1.closeTime.compareTo(o2.closeTime);
+            return o1.getCloseTime().compareTo(o2.getCloseTime());
         }
     }
 

@@ -1,6 +1,5 @@
 package ua.artcode.market.controllers;
 
-import ua.artcode.market.controllers.AppDBImpl;
 import ua.artcode.market.model.Bill;
 import ua.artcode.market.model.Product;
 import ua.artcode.market.model.ProductBill;
@@ -33,7 +32,7 @@ public class Generator{
         for (int i = 0; i < countBill; i++) {
             Bill currentBill = appDB.createBill(currentTerminal);
             for (Product product: appDB.getProductsPrice()) {
-                currentBill.addProductBill(new ProductBill(product.code, 1));
+                currentBill.addProductBill(new ProductBill(product.getCode(), 1));
             }
             appDB.billController.closeBill(currentBill);
             appDB.saveClosedBill(currentBill);

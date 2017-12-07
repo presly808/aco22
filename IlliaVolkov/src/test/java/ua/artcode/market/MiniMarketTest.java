@@ -1,8 +1,8 @@
 package ua.artcode.market;
 
-import org.junit.Assert;
-import org.junit.Test;
-import ua.artcode.market.view.MiniMarket;
+//import org.junit.Assert;
+//import org.junit.Test;
+//import ua.artcode.market.view.MiniMarket;
 
 public class MiniMarketTest {
 //    @Test

@@ -25,7 +25,7 @@ public class AppDBImpl implements IAppDB {
 
     public final Statistics statistics;
 
-    public AppDBImpl() throws IOException {
+    private AppDBImpl() throws IOException {
 
         this.salesMansList = new ArrayList<SalesMan>();
         this.productsPriceList = new ArrayList<Product>();
@@ -85,7 +85,6 @@ public class AppDBImpl implements IAppDB {
         }
         else if (currentClass.equals(Product.class)) {
             productsPriceList.clear();
-
         }
         else if (currentClass.equals(SalesMan.class)) {
             salesMansList.clear();
@@ -106,7 +105,6 @@ public class AppDBImpl implements IAppDB {
         }
         else if (currentClass.equals(Product.class)) {
             return productsPriceList;
-
         }
         else if (currentClass.equals(SalesMan.class)) {
             return salesMansList;
@@ -137,8 +135,7 @@ public class AppDBImpl implements IAppDB {
     public Product findProductByCode(int productCode) throws IOException {
 
         for (Product itemProduct: this.productsPriceList) {
-
-            if (itemProduct.code == productCode) {
+            if (itemProduct.getCode() == productCode) {
                 return itemProduct;
             }
         }
@@ -151,12 +148,10 @@ public class AppDBImpl implements IAppDB {
     public ProductBill findProductBillByCode(Bill currentBill, int productCode) throws IOException {
 
         for (ProductBill itemProductBill: currentBill.getProductsBill()) {
-
             if (itemProductBill.getProductCode() == productCode) {
                 return itemProductBill;
             }
         }
-
         logging.fixEvent("It is not possible to identify the product by code <<" + productCode + ">>");
 
         return null;
@@ -198,23 +193,17 @@ public class AppDBImpl implements IAppDB {
         boolean productProcessed = false;
 
         for (ProductBill itemProductBill: currentBill.getProductsBill()) {
-
             if (itemProductBill.getProductCode() == productCode && !productProcessed) {
-
                 itemProductBill.setProductQuontity(itemProductBill.getProductQuontity() + quantity);
-
-                //updateAmountPriceToBill(currentBill);
-
                 productProcessed = true;
             }
         }
 
         if (!productProcessed) {
             ProductBill newProductBill =
-                    new ProductBill(AppDBImpl.getEntity().findProductByCode(productCode).code, quantity);
-            currentBill.addProductBill(newProductBill);
+                    new ProductBill(AppDBImpl.getEntity().findProductByCode(productCode).getCode(), quantity);
 
-            //updateAmountPriceToBill(currentBill);
+            currentBill.addProductBill(newProductBill);
             currentBill.setQuantityGoods(currentBill.getQuantityGoods() + 1);
         }
     }
@@ -225,34 +214,28 @@ public class AppDBImpl implements IAppDB {
 
         List<ProductBill> currentProductsBill = currentBill.getProductsBill();
         for (ProductBill itemProductBill: currentProductsBill) {
-
             if (itemProductBill.getProductCode() == productCode && !productProcessed) {
-
                 if (quantity == 0) {
-
                     currentProductsBill.remove(itemProductBill);
                     currentBill.setQuantityGoods(currentBill.getQuantityGoods() - 1);
-                    //updateAmountPriceToBill(currentBill);
                 }
                 else {
                     itemProductBill.setProductQuontity(quantity);
-                    //updateAmountPriceToBill(currentBill);
                 }
                 productProcessed = true;
             }
         }
     }
 
-    public void updateAmountPriceToBill(Bill currentBill) throws IOException {
+    private void updateAmountPriceToBill(Bill currentBill) throws IOException {
 
         currentBill.setAmountPrice(0);
 
         for (ProductBill itemProductBill: currentBill.getProductsBill()) {
-
             Product currentProduct = findProductByCode(itemProductBill.getProductCode());
 
             currentBill.setAmountPrice(Math.rint(currentBill.getAmountPrice()
-                    + currentProduct.price*itemProductBill.getProductQuontity()*100)/100);
+                    + currentProduct.getPrice() * itemProductBill.getProductQuontity() * 100) / 100);
         }
     }
 
@@ -264,7 +247,6 @@ public class AppDBImpl implements IAppDB {
     public void saveClosedBill(Bill currentBill) throws IOException {
 
         if (currentBill.closed) {
-
             updateAmountPriceToBill(currentBill);
             billList.add(currentBill);
         }
@@ -275,8 +257,7 @@ public class AppDBImpl implements IAppDB {
 
     public List<Bill> getBillsTerminal(Terminal currentTerminal) {
 
-        List<Bill> currentBillsList = new ArrayList<Bill>();
-
+        List<Bill> currentBillsList = new ArrayList<>();
         for (Bill itemBill: billList) {
             if (itemBill.terminal.equals(currentTerminal)) {
                 currentBillsList.add(itemBill);
@@ -287,57 +268,54 @@ public class AppDBImpl implements IAppDB {
 
     public List<Product> getProductsPrice() { return this.productsPriceList; }
 
-
     public static class Statistics {
 
         public void printPriceOfProducts(List<Product> productsPrice){
-
             System.out.println("\n" + getPriceOfProductsForPrint(productsPrice));
         }
 
         public String getPriceOfProductsForPrint(List<Product> productsPrice) {
 
-            String textMessage = "";
+            String textMessage;
 
-            textMessage += "\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price";
+            textMessage = "\nPRICE OF GOODS\n" + "Code\t\t"+"Goods\t\t"+"Price";
 
             for (Product itemProduct: productsPrice) {
 
-                textMessage += "\n" + itemProduct.code +
-                        "\t\t" + itemProduct.name +
-                        "\t\t" + itemProduct.price;
+                textMessage = textMessage.concat("\n" + itemProduct.getCode() +
+                        "\t\t" + itemProduct.getName() +
+                        "\t\t" + itemProduct.getPrice());
             }
-
-            return textMessage+"\n";
+            return textMessage + "\n";
         }
 
         public String getBillHeadInfoForPrint(Bill currentBill){
 
-            String message = "Bill №" + currentBill.getCode() +
+            String message;
+            message = "Bill №" + currentBill.getCode() +
                     "/ quontity of goods - " + currentBill.getQuantityGoods() +
                     "/ Amount - " + currentBill.getAmountPrice() +
                     "/ SalesMan - " + currentBill.getSalesMan().getFullName() +
                     "/ Closed - " + currentBill.closed +
-                    "/ createTime - " + (currentBill.createTime == null ? "" : currentBill.createTime) +
-                    "/ CloseTime - " + (currentBill.closeTime == null ? "" : currentBill.closeTime);
+                    "/ createTime - " + (currentBill.getCreateTime() == null ? "" : currentBill.getCreateTime()) +
+                    "/ CloseTime - " + (currentBill.getCloseTime() == null ? "" : currentBill.getCloseTime());
 
             return message;
         }
 
         public String getBillProductsForPrint(Bill currentBill) throws IOException {
 
-            String message = "Code\t"+"Goods\t"+"Price\t"+"Quantity\n";
+            String message = "Code\t" + "Goods\t" + "Price\t" + "Quantity\n";
 
             for (ProductBill itemProductBill: currentBill.getProductsBill()) {
 
                 Product currentProduct = AppDBImpl.getEntity().findProductByCode(itemProductBill.getProductCode());
 
-                message += "" + currentProduct.code +
-                        "\t\t" + currentProduct.name +
-                        "\t\t" + currentProduct.price +
-                        "\t\t" + itemProductBill.getProductQuontity()+"\n";
+                message = message.concat("" + currentProduct.getCode() +
+                        "\t\t" + currentProduct.getName() +
+                        "\t\t" + currentProduct.getPrice() +
+                        "\t\t" + itemProductBill.getProductQuontity() + "\n");
             }
-
             return message;
         }
 

@@ -7,3 +7,7 @@ Mon Dec 04 21:51:33 EET 2017--- Create LoggingInstance
 Mon Dec 04 21:56:35 EET 2017--- Create LoggingInstance
 Mon Dec 04 21:59:03 EET 2017--- Create LoggingInstance
 Mon Dec 04 22:02:17 EET 2017--- Create LoggingInstance
+Mon Dec 04 22:03:59 EET 2017--- Create LoggingInstance
+Thu Dec 07 19:43:40 EET 2017--- Create LoggingInstance
+Thu Dec 07 20:03:34 EET 2017--- Create LoggingInstance
+Thu Dec 07 20:03:39 EET 2017--- Create LoggingInstance

@@ -11,6 +11,6 @@ public class BillController implements IBill{
     public void closeBill(Bill currentBill){
 
         currentBill.closed = true;
-        currentBill.closeTime = new Date();
+        currentBill.setCloseTime(new Date());
     }
 }

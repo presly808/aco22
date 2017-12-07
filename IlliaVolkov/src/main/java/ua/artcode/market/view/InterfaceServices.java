@@ -34,15 +34,13 @@ public class InterfaceServices {
                 if (productCode != 0) {
 
                     message = "Enter the quantity of the product " +
-                    appDB.findProductByCode(productCode).name;
+                            appDB.findProductByCode(productCode).getName();
                     String stringProductQuontity = JOptionPane.showInputDialog(message);
                     int productQuontity = Integer.parseInt(stringProductQuontity);
 
                     if (productQuontity == 0) {
-
                         appDB.changeProductToBill(currentBill, productCode, productQuontity);
                     }
-
                    appDB.statistics.printBill(currentBill);
                 }
                 message = "All positions are corrected?";
@@ -63,19 +61,17 @@ public class InterfaceServices {
         appDB.statistics.printPriceOfProducts(productsPrice);
 
         while (key == JOptionPane.YES_OPTION) {
-
             String stringProductCode = JOptionPane.showInputDialog("Enter the product code", 0);
             int productCode = Integer.parseInt((stringProductCode == null ? ""+0: stringProductCode));
 
             if (productCode != 0) {
 
-                Product currentProduct = AppDBImpl.getEntity().findProductByCode(productCode);
-                message = "Enter the quantity of the product " + currentProduct.name;
+                Product currentProduct = AppDBImpl.getEntity().findProductByCode (productCode);
+                message = "Enter the quantity of the product " + currentProduct.getName();
                 String stringProductQuontity = JOptionPane.showInputDialog(message, 0);
                 int productQuontity = Integer.parseInt(stringProductQuontity);
 
                 if (productQuontity != 0) {
-
                    appDB.addProductToBill(currentBill, productCode, productQuontity);
                 }
             }
@@ -90,10 +86,9 @@ public class InterfaceServices {
 
         String message = "Close check?";
         String title = "Waiting for confirmation to continue";
-        int key = JOptionPane.showConfirmDialog( null, message,title, JOptionPane.YES_NO_OPTION);
+        int key = JOptionPane.showConfirmDialog ( null, message,title, JOptionPane.YES_NO_OPTION);
 
         if (key == JOptionPane.YES_OPTION){
-
             AppDBImpl.getEntity().billController.closeBill(currentBill);
         }
     }

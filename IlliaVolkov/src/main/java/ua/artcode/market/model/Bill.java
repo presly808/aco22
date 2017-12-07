@@ -1,8 +1,6 @@
 package ua.artcode.market.model;
 
-import ua.artcode.market.controllers.AppDBImpl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,15 +13,15 @@ public class Bill {
     private int quantityGoods;
     private double amountPrice;
     public boolean closed;
-    public Date createTime;
-    public Date closeTime;
+    private Date createTime;
+    private Date closeTime;
 
     public Bill(Terminal currentTerminal, int code){
 
         this.terminal = currentTerminal;
 
         this.code = code;
-        this.createTime = new Date();
+        this.setCreateTime(new Date());
         this.productsBill = new ArrayList<>();
 
     }
@@ -56,5 +54,21 @@ public class Bill {
 
     public SalesMan getSalesMan() {
         return this.terminal.getSalesMan();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(Date closeTime) {
+        this.closeTime = closeTime;
     }
 }
