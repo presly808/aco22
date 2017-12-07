@@ -1,8 +1,5 @@
 package java8;
 
-import jdk.internal.dynalink.beans.StaticClass;
-
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,7 +35,7 @@ public class User {
     // 1. ** find users(women) that live in kiev and age > 25 age < 30 sorted by age
     public static List<User> findWomenFromKievBeetwen25and30SortedByAge(List<User> users){
         return users.stream().filter(u -> u.sex == 'F')
-                             .filter(u -> u.city.equals("Kiev"))
+                             .filter(u -> "Kiev".equals(u.city))
                              .filter(u -> u.age > 25 && u.age < 30)
                              .sorted((u1 , u2) -> u1.age - u2.age)
                              .collect(Collectors.toList());
@@ -54,7 +51,7 @@ public class User {
     // 3. ** sum all salaries of Odessa's users, user name should start with letter 'A'
     public static int getSumAllSalariesOdessaUsersWithNameBeginFromA(List<User> users){
         return users.stream().filter(u -> u.name.substring(0,1).equals("A"))
-                             .filter(u -> u.city.equals("Odessa"))
+                             .filter(u -> "Odessa".equals(u.city))
                              .mapToInt(User::getSalary).sum();
     }
 
@@ -73,7 +70,7 @@ public class User {
 
     // 6. ** Avarage salary in Kiev(Men)
     public static int getAvarageSalaryInKiev(List<User> users){
-        return (int) users.stream().filter(u -> u.city.equals("Kiev") && u.sex == 'M')
+        return (int) users.stream().filter(u -> "Kiev".equals(u.city) && u.sex == 'M')
                                    .mapToInt(u -> u.salary)
                                    .average()
                                    .getAsDouble();
