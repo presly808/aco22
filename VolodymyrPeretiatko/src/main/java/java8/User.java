@@ -80,7 +80,7 @@ public class User {
     }
 
     // 7. ** get sum of salaries grouped by department and sorted by sum
-    public static Map<String, Integer> getSumOfSalariesGroupedByDepartmentSortedBySum(List<User> users){
+    public static Map<String, Integer> getSumOfSalariesGroupedByDepartment(List<User> users){
         return users.stream().collect(Collectors.groupingBy(User::getDepartment, Collectors.summingInt(User::getSalary)));
     }
 
