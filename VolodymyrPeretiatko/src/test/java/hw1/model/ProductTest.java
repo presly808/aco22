@@ -3,7 +3,7 @@ package hw1.model;
 
 import org.junit.*;
 
-public class TestProduct {
+public class ProductTest {
 
     private Product product;
     private static Product testData1;
