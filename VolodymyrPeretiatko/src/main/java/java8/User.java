@@ -64,7 +64,7 @@ public class User {
 
     // 5. ** How many users do live in Kiev?
     public static int getHowManyUsersLiveInKiev(List<User> users){
-       return (int) users.stream().filter(u -> u.city.equals("Kiev"))
+       return (int) users.stream().filter(u -> "Kiev".equals(u.city))
                                   .count();
     }
 
