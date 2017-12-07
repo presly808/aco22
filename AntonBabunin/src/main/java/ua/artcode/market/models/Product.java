@@ -15,20 +15,18 @@ public class Product extends AbstractProduct {
     @Override
     public int hashCode() {
         int result;
-        long temp;
         result = getId();
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        temp = Double.doubleToLongBits(getPrice());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
 
     @Override
     public String toString() {
         return "AbstractProduct{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", price=" + getPrice() +
+                "id=" + this.getId() +
+                ", name='" + this.getName() + '\'' +
+                ", price=" + this.getPrice() +
                 '}';
     }
 

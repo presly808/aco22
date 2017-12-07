@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Recursion2 {
 
-    public List<Integer> doubling(List<Integer> nums) {
+    public static List<Integer> doubling(List<Integer> nums) {
 
         Function<Integer, Integer> function1 = new Function<Integer, Integer>() {
             @Override
@@ -37,7 +37,6 @@ public class Recursion2 {
 
         return nums.stream().map(e -> e * 2).collect(Collectors.toList());
     }
-
 
     public static boolean hasSeq(int[] arr, int target) {
 

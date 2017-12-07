@@ -27,8 +27,24 @@ public class Recursion2Test {
         List<Integer> expected = Arrays.asList(10, 1, 2);
         //Assert.assertEquals(expected, res);
         assertTrue(res.containsAll(expected));
+    }
 
+    @Test
+    public void doubling() throws Exception {
+        List<Integer> res = Arrays.asList(0, 5, 10, -5, 99);
+        List<Integer> exprcted = Arrays.asList(0, 10, 20, -10, 198);
 
+        Recursion2 doubling = new Recursion2();
+
+        assertEquals(exprcted, doubling.doubling(res));
+    }
+
+    @Test
+    public void verificationForTravis() throws Exception {
+
+        List<Integer> list= Arrays.asList(10,1,2);
+
+        assertNotNull(Recursion2.doubling(list));
     }
 
 }
