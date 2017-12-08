@@ -20,12 +20,11 @@ public class Main {
         List<Worker> tmp = new ArrayList<>();
 
         //worker.topThree();
-        //double f = 0.23;
-        //int d = (int)f;
         //worker.filterByOdessa();
         //worker.plus5Percent();
         //worker.liveInKiev();
-        worker.avarageSalary();
+        //worker.avarageSalary();
+        worker.byGroup();
 
 
 

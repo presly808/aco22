@@ -15,7 +15,8 @@ public class Worker {
     }
 
     public void showByName(List<Worker> users) {
-        users.stream().forEach(s -> System.out.println(s));
+        users.stream()
+                .forEach(s -> System.out.println(s));
     }
 
     public void filterByCityAndAge() {
@@ -29,8 +30,8 @@ public class Worker {
     }
 
     public void filterByOdessa() {
-        users.stream().filter(s -> s.getSity().equals("Odessa")).filter(s -> s.getName()
-                .contains("A")).forEach(s -> System.out.println(s.getName()));
+        users.stream().filter(s -> s.getSity().equals("Odessa")).filter(s -> s.getName().contains("A"))
+                .forEach(s -> System.out.println(s.getName()));
 
     }
 
@@ -47,7 +48,9 @@ public class Worker {
     }
 
     public void liveInKiev(){
-        long i = users.stream().filter( s -> s.getSity().equals("Kyiv")).count();
+        long i = users.stream()
+                .filter( s -> s.getSity()
+                        .equals("Kyiv")).count();
         System.out.println("Count users live in Kyiv " + i);
     }
 
@@ -60,6 +63,15 @@ public class Worker {
 
     public void byGroup(){
         Map <String ,List<User>> tmp = users.stream().collect(Collectors.groupingBy(User ::getDepartment ));
+
+        for (Map.Entry <String ,List<User>> item: tmp.entrySet()){
+            System.out.println(item.getKey());
+            item.getValue().stream().sorted(new CompareUserBySalery())
+                    .forEach(s -> System.out.println(s.getName() + " Salery " + s.getSalary()));
+
+
+            System.out.println(" ");
+        }
     }
 
 }

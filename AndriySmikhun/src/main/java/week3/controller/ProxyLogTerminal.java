@@ -103,10 +103,10 @@ public class ProxyLogTerminal implements ITerminal {
     }
 
     @Override
-    public boolean createSalesMan() {
+    public boolean createSalesMan(String login, String password, String fullName) {
         loger.event("Create user in system");
 
-        if (realterminal.createSalesMan()) {
+        if (realterminal.createSalesMan(login,password,fullName)) {
             loger.event("User was created");
             return true;
 

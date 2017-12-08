@@ -5,11 +5,12 @@ import week3.model.Product;
 import week3.model.Salesman;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class IappDBimpl implements IappDB {
+public class IappDBimpl implements IappDB{
 
-    // todo init in constructor
     private List<Salesman> salesmen = new ArrayList<>();
     private List<Bill> bills = new ArrayList<>();
     private List<Product> products = new ArrayList<>();
@@ -22,12 +23,20 @@ public class IappDBimpl implements IappDB {
 
     public IappDBimpl() {
     }
+    @Override
+    public List<Salesman> getSalesmen() {
+        return salesmen;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean updateBill(Bill newBill, Bill oldBill) {
-        for (Bill b : bills
-                ) {
+        for (Bill b : bills) {
             if (b.equals(oldBill))
                 b = newBill;
 
@@ -50,13 +59,7 @@ public class IappDBimpl implements IappDB {
 
     @Override
     public Bill findeBillByID(int id) {
-        for (Bill b : bills
-                ) {
-            if (b.getId() == id) {
-                return b;
-            }
-        }
-        return null;
+        return bills.stream().filter(s -> s.getId() == id).findFirst().get();
     }
 
     @Override
@@ -66,31 +69,22 @@ public class IappDBimpl implements IappDB {
     }
         @Override
         public Salesman findSalemanById ( int id){
-            for (Salesman s : salesmen
-                    ) {
-                if (s.getId() == id) {
-                    return s;
-                }
-            }
-            return null;
+            return salesmen.stream().filter(s -> s.getId() == id).findFirst().get();
         }
 
         @Override
-        public boolean saveSaleman (Salesman salesman){
-            salesmen.add(salesman);
+        public boolean saveSaleman (Salesman salesman) {
+            if(salesman == null) return false;
+            boolean check = salesmen.stream()
+                    .anyMatch(s -> s.getId() == salesman.getId());
+            if (!check) { return salesmen.add(salesman);}
             return true;
         }
 
         @Override
         public Salesman findSalemanByName (String fullName){
-            for (Salesman s : salesmen) {
-                if (s.getFullName().equals(fullName)) {
-                    return s;
-                }
-            }
-            return null;
+            return salesmen.stream().filter(s -> s.getFullName().equals(fullName)).findFirst().get();
         }
-
 
         @Override
         public boolean removeSaleman (Salesman salesman){
@@ -116,15 +110,8 @@ public class IappDBimpl implements IappDB {
             return false;
         }
         @Override
-        public List findBillBySalesman (Salesman salesman){
-            List<Bill> filtredBills = new ArrayList<>();
-            for (Bill bill : bills) {
-                if (bill.getSalesman().equals(salesman)) {
-                    filtredBills.add(bill);
-                }
-            }
-            return filtredBills;
+        public List findBillBySalesman (Salesman salesman) {
+            return bills.stream().filter(s -> s.getSalesman().equals(salesman))
+                    .collect(Collectors.toList());
         }
-
-
     }

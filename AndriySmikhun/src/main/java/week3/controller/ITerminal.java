@@ -16,8 +16,8 @@ public interface ITerminal {
     Bill[] filterBill();
     boolean closeBill(Bill bill);
 
-    boolean createSalesMan();
-    Salesman getTopSalesman();
+    boolean createSalesMan(String login, String password, String fullName);
+    void getTopSalesman();
 
 
 }

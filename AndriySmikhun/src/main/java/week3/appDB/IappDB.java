@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface IappDB {
 
+    List<Salesman> getSalesmen();
+    public List<Bill> getBills();
+
 
     boolean updateBill(Bill newBill, Bill oldBill);
     boolean removeBill(int id);
