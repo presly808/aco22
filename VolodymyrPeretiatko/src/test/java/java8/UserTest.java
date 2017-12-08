@@ -6,7 +6,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserTest {
 
@@ -97,4 +99,18 @@ public class UserTest {
         Assert.assertFalse(expected.equals(User.add5PercentToSalary(users)));
 
     }
+
+    @Test
+    public void getSumOfSalariesGroupedByDepartmentTest(){
+
+        Map<String, Integer> expected = new HashMap<>();
+        expected.put("IT",  5130);
+        expected.put("CEO", 5310);
+
+        Map<String, Integer> actual = User.getSumOfSalariesGroupedByDepartment(users);
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
 }
