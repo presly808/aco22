@@ -21,6 +21,7 @@ public class AppDB implements IAppDb {
     private List<Product> products;
     private List<Salesman> salesmen;
     private List<Bill> bills;
+    private List<String> logs;
 
 
     public AppDB() {
@@ -39,6 +40,8 @@ public class AppDB implements IAppDb {
 
         bills = new ArrayList<>();
 
+        logs = new ArrayList<>();
+
     }
 
     @Override
@@ -54,6 +57,11 @@ public class AppDB implements IAppDb {
     @Override
     public List<Salesman> getAllSalesman() {
         return salesmen;
+    }
+
+    @Override
+    public List<String> getLogs() {
+        return logs;
     }
 
     @Override
