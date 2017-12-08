@@ -1,27 +1,30 @@
 package week1.controller;
 
+import week1.exceptions.UnableToCalcucateDeptCostsException;
+import week1.exceptions.UnableToCalculateBillIncomeException;
+import week1.exceptions.UnableToCalculateSellerSalaryException;
+import week1.model.Bill;
 import week1.model.IncomeExpenses;
 import week1.model.Seller;
 
 import java.util.List;
 
-public class SellersController {
+public class ISellerControllerImpl implements ISellerController {
 
     private static final double PERCENT_FROM_BILL = 0.2;
     private static final double PERCENT_FROM_SUBSELLER = 0.3;
 
-    public double calculateAllSellerSalary( Seller seller) {
+    public double calculateAllSellerSalary(Seller seller) throws UnableToCalculateSellerSalaryException {
 
-        if (seller == null) {
-            return 0;
-        }
+        if (seller == null) throw new UnableToCalculateSellerSalaryException("Seller is null");
 
         List<Seller> subsellers = seller.getSubsellers();
 
         double salary = calculateOwnSellerSalary(seller);
+
         if (!subsellers.isEmpty()) {
-            for (int i = 0; i < subsellers.size(); i++) {
-                salary += calculateAllSellerSalary(subsellers.get(i)) * PERCENT_FROM_SUBSELLER;
+            for (Seller subseller : subsellers) {
+                salary += calculateAllSellerSalary(subseller) * PERCENT_FROM_SUBSELLER;
             }
         }
 
@@ -40,11 +43,9 @@ public class SellersController {
         return salary;
     }
 
-    public double calculateDepartamentCosts(Seller rootSeller) {
+    public double calculateDepartamentCosts(Seller rootSeller) throws UnableToCalcucateDeptCostsException {
 
-        if (rootSeller == null) {
-            return 0;
-        }
+        if (rootSeller == null) throw new UnableToCalcucateDeptCostsException("Root seller is null!");
 
         List<Seller> subsellers = rootSeller.getSubsellers();
 
@@ -60,7 +61,7 @@ public class SellersController {
         return salary;
     }
 
-    public IncomeExpenses calculateIncomeAndExpenses(Seller mainSeller) {
+    public IncomeExpenses calculateIncomeAndExpenses(Seller mainSeller) throws UnableToCalculateBillIncomeException, UnableToCalcucateDeptCostsException {
 
         IncomeExpenses incomeExpenses = new IncomeExpenses();
 
@@ -70,10 +71,8 @@ public class SellersController {
         return incomeExpenses;
     }
 
-    private double calculateIncomeFromBills(Seller mainSeller) {
-        if (mainSeller == null) {
-            return 0;
-        }
+    private double calculateIncomeFromBills(Seller mainSeller) throws UnableToCalculateBillIncomeException {
+        if (mainSeller == null) throw new UnableToCalculateBillIncomeException("Main seller is null!");
 
         List<Seller> subsellers = mainSeller.getSubsellers();
 
@@ -91,12 +90,6 @@ public class SellersController {
 
     private double calculateIncomeForDepartmentFromOneSeller(Seller mainSeller) {
 
-        double incomeFromSeller = 0;
-
-        for (int i = 0; i < mainSeller.getBills().size(); i++) {
-            incomeFromSeller += mainSeller.getBills().get(i).getAmountPrice();
-        }
-
-        return incomeFromSeller;
+        return mainSeller.getBills().stream().mapToDouble(Bill::getAmountPrice).sum();
     }
 }
