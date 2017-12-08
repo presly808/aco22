@@ -1,19 +1,51 @@
 package hw1.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Salesman extends DBItem{
 
     private String fullName;
     private String name;
     private String pass;
+    private List<Salesman> subSalesmen;
 
     public Salesman(String fullName, String name, String pass) {
         this.fullName = fullName;
         this.name = name;
         this.pass = pass;
+        this.subSalesmen = new ArrayList<>();
+    }
+
+    public void addSubSalesman(Salesman s) {
+        this.subSalesmen.add(s);
+    }
+
+    public static List<Salesman> getAllSubSalesmen(Salesman root) {
+
+        List<Salesman> salesmen = new ArrayList<>();
+
+        salesmen.add(root);
+
+        if(root.subSalesmen.size() == 0) {
+            return salesmen;
+        }
+
+        for(Salesman s : root.getSubSalesmen()){
+            salesmen.addAll(getAllSubSalesmen(s));
+        }
+
+        return salesmen;
+    }
+
+    public List<Salesman> getSubSalesmen() {
+
+        return subSalesmen;
     }
 
     public Salesman(int id) {
         super.id = id;
+        this.subSalesmen = new ArrayList<>();
     }
 
     public String getFullName() {

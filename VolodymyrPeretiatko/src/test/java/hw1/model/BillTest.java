@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class TestBill {
+public class BillTest {
 
     private Bill bill;
     private static Bill b2;
