@@ -35,7 +35,7 @@ public class Salesman {
     }
 
 
-    public void printSalesman(){
+    public void printSalesman() {
         System.out.println("Full name " + fullname);
         System.out.println("Login" + login);
         System.out.println("Is working " + status);
@@ -47,7 +47,7 @@ public class Salesman {
         if (!(obj instanceof Salesman)) return false;
         Salesman o = (Salesman) obj;
         if (!(this.login.equals(o.login))) return false;
-        if (!(this.fullname.equals(o.fullname)))return false;
+        if (!(this.fullname.equals(o.fullname))) return false;
         return this.password.equals(o.password);
 
     }
