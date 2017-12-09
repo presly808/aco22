@@ -1,4 +1,4 @@
-package week1.server_handlers;
+package week1.view.server_handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -6,7 +6,6 @@ import com.sun.net.httpserver.HttpHandler;
 import week1.controller.ITerminalController;
 import week1.controller.ITerminalControllerFactory;
 import week1.exceptions.InvalidBillIdException;
-import week1.model.Bill;
 
 import java.io.IOException;
 import java.io.OutputStream;
