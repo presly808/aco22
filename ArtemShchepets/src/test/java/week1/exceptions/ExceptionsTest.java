@@ -29,6 +29,7 @@ public class ExceptionsTest {
         terminalController = null;
     }
 
+
     @Test(expected = InvalidBillIdException.class)
     public void testInvalidBillIdException() throws InvalidBillIdException, UnableToFindABillException {
         terminalController.addProduct(-123, new Product());
