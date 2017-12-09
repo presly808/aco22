@@ -20,12 +20,12 @@ public class View {
         Scanner scanner = new Scanner(System.in);
         String login = scanner.nextLine();
         String pass = scanner.nextLine();
-try{
-        terminal.login(login, pass);
+        try {
+            terminal.login(login, pass);
 
-}catch (InvalidLoginException e){
-    e.getMessage();
-}
+        } catch (InvalidLoginException e) {
+            e.getMessage();
+        }
 
 
         if (terminal.getCurrentSalesmanIndex() != -1) {
@@ -82,7 +82,7 @@ try{
     // Methods
 
 
-    private void menuCreateBill(ITerminalController terminal)  {
+    private void menuCreateBill(ITerminalController terminal) {
         terminal.createBill();
         int index = terminal.getAllBills().size() - 1;
         System.out.println("bill was created with id " + index);
@@ -178,7 +178,7 @@ try{
 
         Salesman salesman = terminal.getTopOfSalesmans();
 
-        if (salesman==null){
+        if (salesman == null) {
             return;
         }
 
@@ -195,7 +195,7 @@ try{
 
         List<Bill> billList = terminal.filterForBills(start, end, new BillComparatorForSorting());
 
-        if (billList == null||billList.isEmpty()){
+        if (billList == null || billList.isEmpty()) {
             System.out.println("something gone wrong. Maybe you wrote wrong input data");
             return;
         }
