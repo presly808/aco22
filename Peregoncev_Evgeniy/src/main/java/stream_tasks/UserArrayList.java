@@ -1,4 +1,4 @@
-package streamTasks;
+package stream_tasks;
 
 import java.util.ArrayList;
 

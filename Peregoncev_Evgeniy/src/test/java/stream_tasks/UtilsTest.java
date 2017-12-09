@@ -1,17 +1,15 @@
-package streamTasks;
+package stream_tasks;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import streamTasks.User;
-import streamTasks.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static streamTasks.UserArrayList.userArrayList;
+import static stream_tasks.UserArrayList.userArrayList;
 import static org.junit.Assert.*;
 
 /**
