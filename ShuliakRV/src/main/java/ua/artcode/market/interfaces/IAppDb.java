@@ -14,6 +14,8 @@ public interface IAppDb {
 
     List<Salesman> getAllSalesman();
 
+    public List<String> getLogs();
+
     Bill findByBillId(int billId);
 
     Product findByProductId(int billId);

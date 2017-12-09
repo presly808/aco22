@@ -145,7 +145,7 @@ public class Terminal {
                 System.out.println("User logged out");
                 break;
             case 9:
-                System.out.println(Logger.getInstance().getLogs());
+                System.out.println(Logger.getInstance(terminalController.getAppDB()).getLogs());
                 break;
             case 10:
                 return -1;

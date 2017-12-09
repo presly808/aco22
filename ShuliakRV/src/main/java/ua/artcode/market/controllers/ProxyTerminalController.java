@@ -31,7 +31,8 @@ public class ProxyTerminalController implements ITerminal {
     @Override
     public Salesman logIn(String login, String password) {
 
-        Logger.getInstance().log(String.format("Time : %s  User is logging " +
+        Logger.getInstance(terminalController.getAppDB()).log(
+                String.format("Time : %s  User is logging " +
                         "with login: %s and password: %s",
                 LocalDateTime.now().toString(), login, password));
 
@@ -39,7 +40,7 @@ public class ProxyTerminalController implements ITerminal {
 
         if (loggedSalesman != null) {
 
-            Logger.getInstance().log(String.
+            Logger.getInstance(terminalController.getAppDB()).log(String.
                     format("Time : %s  User is logged " +
                                     "with login: %s and password: %s",
                             LocalDateTime.now().toString(),
@@ -50,7 +51,7 @@ public class ProxyTerminalController implements ITerminal {
 
         } else {
 
-            Logger.getInstance().log(String.
+            Logger.getInstance(terminalController.getAppDB()).log(String.
                     format("Time : %s  User isn't logged " +
                                     "with login: %s and password: %s",
                             LocalDateTime.now().toString(),
@@ -69,7 +70,7 @@ public class ProxyTerminalController implements ITerminal {
 
     @Override
     public Bill createBill(Salesman salesmen) {
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to create a bill",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
@@ -80,7 +81,7 @@ public class ProxyTerminalController implements ITerminal {
 
     @Override
     public Bill addProduct(int billId, Product product) {
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to add a product",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
@@ -91,7 +92,7 @@ public class ProxyTerminalController implements ITerminal {
     @Override
     public Bill closeAndSaveBill(int billId) {
 
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to close and save bill",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
@@ -101,7 +102,7 @@ public class ProxyTerminalController implements ITerminal {
 
     @Override
     public List<Salesman> getTopNOfSalesMen(int n) {
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to get top N of salesmen",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
@@ -112,7 +113,7 @@ public class ProxyTerminalController implements ITerminal {
     @Override
     public Statistic doSomeStatisticStuff() {
 
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to do some statistics",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
@@ -126,7 +127,7 @@ public class ProxyTerminalController implements ITerminal {
                              LocalDateTime startTime, LocalDateTime endTime,
                              Comparator<Bill> comparator) {
 
-        Logger.getInstance().log(String.
+        Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to filter some bills",
                         LocalDateTime.now().toString(),
                         loggedSalesman.getLogin()));
