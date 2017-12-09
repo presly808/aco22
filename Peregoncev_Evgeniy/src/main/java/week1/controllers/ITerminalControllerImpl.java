@@ -60,7 +60,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         currentSalesmanIndex = -1;
 
         if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
-            System.out.println("write true login/pass");
+            throw new InvalidLoginException("write true login/pass");
         } else if (iAppDb == null) {
             System.out.println("wrong salesman database");
         }
