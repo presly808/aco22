@@ -1,6 +1,6 @@
 package java8.streams;
 
-public class Users {
+public class User {
     private int id;
     private String name;
     private int age;
@@ -9,7 +9,7 @@ public class Users {
     private String city;
     private String department;
 
-    public Users(int id, String name, int age, String sex, double salary,
+    public User(int id, String name, int age, String sex, double salary,
                  String city, String department) {
         this.id = id;
         this.name = name;
@@ -81,7 +81,7 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Users users = (Users) o;
+        User users = (User) o;
 
         return id == users.id;
     }
