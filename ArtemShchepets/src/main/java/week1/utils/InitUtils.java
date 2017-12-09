@@ -6,6 +6,7 @@ import week1.model.Bill;
 import week1.model.Product;
 import week1.model.Seller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,13 @@ public class InitUtils {
                 "worker22", "password432", "Annita Volosova"));
         db.getAllSellers().add(new Seller(
                 "worker01", "password1111", "Vova Split"));
+
+        db.getAllBills().add(new Bill(0,22.33, LocalDateTime.now(),false));
+        db.getAllBills().add(new Bill(1,154.4, LocalDateTime.now(),true));
+        db.getAllBills().add(new Bill(2,9.2, LocalDateTime.now(),false));
+        db.getAllBills().add(new Bill(3,13.55, LocalDateTime.now(),false));
+        db.getAllBills().add(new Bill(4,10.0, LocalDateTime.now(),true));
+        db.getAllBills().add(new Bill(5,225.5, LocalDateTime.now(),false));
 
         return db;
     }
