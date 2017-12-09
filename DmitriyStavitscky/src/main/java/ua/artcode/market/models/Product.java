@@ -6,6 +6,9 @@ public class Product {
     private double price;
     private int id;
 
+    public Product() {
+    }
+
     public Product(String name, double price, int id) {
         this.name = name;
         this.price = price;
@@ -14,13 +17,9 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
+        if (obj == this) return true;
 
-        if (obj == null || obj.getClass() != getClass()) {
-            return false;
-        }
+        if (obj == null || obj.getClass() != getClass()) return false;
 
         Product other = (Product) obj;
 
@@ -31,21 +30,36 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("name: %s, id: %d, price: %.2f", name, id, price);
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", id=" + id +
+                '}';
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getPrice() {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
 
 

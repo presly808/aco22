@@ -1,10 +1,10 @@
 package week1.controller;
 
-import week1.interfaces.ITerminalController;
+import week1.exceptions.*;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.SalesStatistic;
 import week1.model.Seller;
-import week1.model.Statistic;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,18 +15,12 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
 
     private ITerminalController terminalController;
 
-    private static ProxyITerminalControllerImpl instance = new ProxyITerminalControllerImpl();
-
-    private ProxyITerminalControllerImpl() {
-        this.terminalController = ITerminalControllerFactory.create();
-    }
-
-    public static ProxyITerminalControllerImpl getInstance() {
-        return instance;
+    public ProxyITerminalControllerImpl(ITerminalController terminalController) {
+        this.terminalController = terminalController;
     }
 
     @Override
-    public boolean login(String login, String password) {
+    public boolean login(String login, String password) throws UnableToLogInException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to sign in.");
 
@@ -42,11 +36,22 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product)
+            throws InvalidBillIdException, UnableToFindABillException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to add a product.");
 
         return terminalController.addProduct(billId, product);
+    }
+
+    @Override
+    public int getCurrentSellerId() {
+        return terminalController.getCurrentSellerId();
+    }
+
+    @Override
+    public void setCurrentSeller(int currentSellerId) {
+        terminalController.setCurrentSeller(currentSellerId);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill closeBill(int billId) {
+    public Bill closeBill(int billId) throws UnableToFindABillException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to close a bill.");
 
@@ -63,7 +68,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill findBillById(int billId) {
+    public Bill findBillById(int billId) throws InvalidBillIdException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to find a bill by id.");
 
@@ -79,7 +84,7 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Seller getTopOfSalesman() {
+    public Seller getTopOfSalesman() throws UnableToGetTopSellersException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to get top seller.");
 
@@ -87,7 +92,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Statistic doSomeStatisticStuff() {
+    public SalesStatistic doSomeStatisticStuff()
+            throws UnableToDoStatisticException, UnableToGetTopSellersException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to get some statistic.");
 
@@ -95,7 +101,8 @@ public class ProxyITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator) {
+    public List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator)
+            throws UnableToFilterException {
 
         System.out.println("[" + LocalTime.now() + "]: User is trying to filter some bills.");
 

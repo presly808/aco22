@@ -2,6 +2,7 @@ package week1.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Bill {
@@ -39,6 +40,17 @@ public class Bill {
     }
 
     public double getAmountPrice() {
+        return calculateAmountPrice();
+    }
+
+    private double calculateAmountPrice() {
+
+        double amountPrice = 0;
+
+        for (int i = 0; i < productList.size(); i++) {
+            amountPrice += productList.get(i).getPrice();
+        }
+
         return amountPrice;
     }
 
@@ -92,4 +104,21 @@ public class Bill {
                 ", closeTime=" + closeTime +
                 '}';
     }
+
+    public static class AmountPriceComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return (int) (o1.getAmountPrice() - o2.getAmountPrice());
+        }
+    }
+
+    public static class CreationDateComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getOpenTime().compareTo(o2.getOpenTime());
+        }
+    }
+
 }
