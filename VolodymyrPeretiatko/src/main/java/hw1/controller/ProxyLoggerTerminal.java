@@ -4,14 +4,14 @@ import hw1.model.Bill;
 import hw1.model.Product;
 import hw1.model.Salesman;
 import hw1.utils.ILogger;
-import hw1.utils.LogSOut;
+import hw1.utils.LogerPrntln;
 
 import java.util.*;
 
 public class ProxyLoggerTerminal implements ITerminal {
 
     private ITerminal realTerminal;
-    private ILogger logger = LogSOut.getInstance();
+    private ILogger logger = LogerPrntln.getInstance();
 
     public ProxyLoggerTerminal(){
         realTerminal = new Terminal();
@@ -23,7 +23,7 @@ public class ProxyLoggerTerminal implements ITerminal {
     }
 
     @Override
-    public ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products, Date startDate, Date endDate, Comparator<Bill> comparator) {
+    public List<Bill> filter(List<Salesman> salesmen, List<Product> products, Date startDate, Date endDate, Comparator<Bill> comparator) {
         return realTerminal.filter(salesmen, products, startDate, endDate, comparator);
     }
 
@@ -77,6 +77,11 @@ public class ProxyLoggerTerminal implements ITerminal {
     @Override
     public Salesman getTopNofSalesMan() {
         return realTerminal.getTopNofSalesMan();
+    }
+
+    @Override
+    public Double getSalesmanSallary(Salesman salesman, Date startDate, Date endDate) {
+        return realTerminal.getSalesmanSallary(salesman, startDate, endDate);
     }
 
     @Override
