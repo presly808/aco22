@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week1.comparators.CreationDateComparator;
 import week1.model.Bill;
 import week1.model.Product;
 
@@ -80,12 +79,58 @@ public class ProxyITerminalControllerImplTest {
     @Test
     public void getTopOfSalesman() throws Exception {
 
+        terminalController.createBill();
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Cheese", 0.30));
+        terminalController.addProduct(0, new Product("Milk", 15.50));
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));// 20.27
+
+        terminalController.login("worker123", "password11");
+        terminalController.createBill();
+        terminalController.addProduct(1, new Product("Cake", 27.170));
+        terminalController.addProduct(1, new Product("Cheese", 33.30));
+        terminalController.addProduct(1, new Product("Water", 15.50));
+        terminalController.addProduct(1, new Product("Milk", 2.220)); // 78.19
+
+        terminalController.login("worker", "password");
+        terminalController.createBill();
+        terminalController.addProduct(2, new Product("Watermelon", 3.990));
+        terminalController.addProduct(2, new Product("Cheese", 0.30));
+        terminalController.addProduct(2, new Product("Milk", 15.50));
+        terminalController.addProduct(2, new Product("Juice", 9.0)); // 28.79
+
         terminalController.getTopOfSalesman();
         Assert.assertNull(null);
     }
 
     @Test
     public void doSomeStatisticStuff() throws Exception {
+
+        terminalController.createBill();
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Cheese", 0.30));
+        terminalController.addProduct(0, new Product("Milk", 15.50));
+        terminalController.addProduct(0, new Product("Milk", 2.220));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));
+        terminalController.addProduct(0, new Product("Milk", 0.010));// 20.27
+
+        terminalController.login("worker123", "password11");
+        terminalController.createBill();
+        terminalController.addProduct(1, new Product("Cake", 27.170));
+        terminalController.addProduct(1, new Product("Cheese", 33.30));
+        terminalController.addProduct(1, new Product("Water", 15.50));
+        terminalController.addProduct(1, new Product("Milk", 2.220)); // 78.19
+
+        terminalController.login("worker", "password");
+        terminalController.createBill();
+        terminalController.addProduct(2, new Product("Watermelon", 3.990));
+        terminalController.addProduct(2, new Product("Cheese", 0.30));
+        terminalController.addProduct(2, new Product("Milk", 15.50));
+        terminalController.addProduct(2, new Product("Juice", 9.0)); // 28.79
 
         terminalController.doSomeStatisticStuff();
         Assert.assertNull(null);
@@ -97,7 +142,7 @@ public class ProxyITerminalControllerImplTest {
         LocalDateTime startTime = LocalDateTime.parse("2014-01-01T00:00:00");
         LocalDateTime endTime = LocalDateTime.parse("2016-12-31T23:59:59");
 
-        terminalController.filter(startTime, endTime, new CreationDateComparator());
+        terminalController.filter(startTime, endTime, new Bill.CreationDateComparator());
         Assert.assertNull(null);
     }
 

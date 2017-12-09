@@ -1,5 +1,6 @@
 package ua.artcode.market.interfaces;
 
+import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -12,17 +13,17 @@ public interface ITerminalController {
 
     Bill createBill() throws IOException;
 
-    Bill addProduct(int billId, Product product) throws IOException;
+    Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException;
 
-    List<Bill> getAllBills();
+    List<Bill> getBills();
 
     Money calculateAmountPrice(Bill bill);
 
     String prinBill(Bill bill);
 
-    Bill closeBill(int id) throws IOException;
+    Bill closeBill(int id) throws IOException, BillNotFoundException;
 
-    IAppDb getiAppDb();
+    IAppDb getIAppDb();
 
 
 

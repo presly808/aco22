@@ -1,5 +1,6 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ITerminalController;
 import ua.artcode.market.models.Bill;
@@ -11,7 +12,7 @@ import ua.artcode.market.models.money.Money;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ITerminalControllerImpl implements ITerminalController {
 
@@ -22,7 +23,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         this.iAppDb = iAppDb;
     }
 
-    public IAppDb getiAppDb() {
+    public IAppDb getIAppDb() {
         return iAppDb;
     }
 
@@ -53,18 +54,16 @@ public class ITerminalControllerImpl implements ITerminalController {
     public Bill createBill() throws IOException {
         Bill bill = new Bill();
         bill.setOpenTime(LocalDateTime.now());
-        Bill bill1 = iAppDb.saveBill(bill);
-
-        return bill1;
+        return iAppDb.saveBill(bill);
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) throws IOException {
+    public Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException {
         Bill bill = iAppDb.findBillById(billId);
 
         if (bill == null || product == null) return null;
         if (!bill.getProductsMap().containsKey(product)) {
-            bill.getProductsMap().put(product, 1);
+            bill.getProductsMap().putIfAbsent(product, 1);
             bill.setAmountPrice(calculateAmountPrice(bill));
             iAppDb.getProducts().replace(product,
                     iAppDb.getProducts().get(product) - 1);
@@ -73,7 +72,7 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         bill.getProductsMap().replace(product,
                 bill.getProductsMap().get(product) + 1);
-//        bill.setAmountPrice(calculateAmountPrice(bill));
+        bill.setAmountPrice(calculateAmountPrice(bill));
         iAppDb.getProducts().replace(product,
                 iAppDb.getProducts().get(product) - 1);
         iAppDb.update(bill);
@@ -82,21 +81,34 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public List<Bill> getAllBills() {
+    public List<Bill> getBills() {
         return iAppDb.getBills();
     }
 
     @Override
     public Money calculateAmountPrice(Bill bill) {
-
         Money amountPrice = new Money(0,0);
         if (bill == null || bill.getProductsMap() == null ||
                 bill.getProductsMap().isEmpty()) return amountPrice;
-        for (Map.Entry<Product, Integer> pair :
-                bill.getProductsMap().entrySet()) {
-            amountPrice = amountPrice.doSum(pair.getKey().getPrice().
-                    multiply(pair.getValue()));
-        }
+        List<Money> monies = bill.getProductsMap().keySet().stream().
+                map(product -> product.getPrice().
+                        multiply(bill.getProductsMap().get(product))).
+                collect(Collectors.toList());
+
+        return calculateAmountPrice(monies);
+
+//          Code like that is easier
+//        for (Map.Entry<Product, Integer> pair :
+//                bill.getProductsMap().entrySet()) {
+//            amountPrice = amountPrice.doSum(pair.getKey().getPrice().
+//                    multiply(pair.getValue()));
+//        }
+    }
+
+    private Money calculateAmountPrice(List<Money> monies) {
+        final Money amountPrice = new Money(0,0);
+        monies.stream().
+                peek(money -> amountPrice.doSum(money));
         return amountPrice;
     }
 
@@ -106,8 +118,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill closeBill(int id) throws IOException {
-
+    public Bill closeBill(int id) throws IOException, BillNotFoundException {
         Bill bill = iAppDb.findBillById(id);
         bill.setCloseTime(LocalDateTime.now());
         iAppDb.update(bill);
