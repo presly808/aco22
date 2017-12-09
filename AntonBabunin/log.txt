@@ -99,3 +99,37 @@ Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=20
 Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:08:27.779, closeTime=null} saved 
 Bill null wasn't saved 
 Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:08:27.783, closeTime=null} saved 
+Employee was created: FullName 1 login 1 and password 1, result true
+Employee was created: FullName 2 login 2 and password 2, result true
+Employee was created: FullName 1123 login 123 and password 1, result true
+Employee was created: FullName 2 login 12 and password 1, result true
+Employee was created: FullName 2 login 13 and password 1, result true
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.499, closeTime=null} saved 
+Bill Bill{billId=1, productsMap={AbstractProduct{id=1, name='1', price=2.0}=2}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.499, closeTime=null} was updated 
+Bill Bill{billId=1, productsMap={AbstractProduct{id=1, name='1', price=6.0}=3}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.499, closeTime=null} was updated 
+Bill Bill{billId=2, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.516, closeTime=null} saved 
+Bill Bill{billId=2, productsMap={AbstractProduct{id=1, name='1', price=6.0}=1, AbstractProduct{id=2, name='2', price=246.0}=2}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.516, closeTime=null} was updated 
+Bill Bill{billId=3, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.517, closeTime=null} saved 
+Bill Bill{billId=3, productsMap={AbstractProduct{id=3, name='3', price=12313.42}=1, AbstractProduct{id=2, name='2', price=492.0}=2}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.517, closeTime=null} was updated 
+Bill Bill{billId=4, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.518, closeTime=null} saved 
+Bill Bill{billId=4, productsMap={AbstractProduct{id=3, name='3', price=24626.84}=2}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.518, closeTime=null} was updated 
+Bill Bill{billId=1, productsMap={AbstractProduct{id=1, name='1', price=6.0}=3}, salesman=Employee{fullName='1123', login='123', password='1'}, amountPrice=0.0, openTime=2017-12-09T09:17:42.499, closeTime=2017-12-09T09:17:42.518} is closed ad it can't be updated 
+Bill Bill{billId=2, productsMap={AbstractProduct{id=1, name='1', price=6.0}=1, AbstractProduct{id=2, name='2', price=492.0}=2}, salesman=Employee{fullName='2', login='12', password='1'}, amountPrice=0.0, openTime=2017-12-09T09:17:42.516, closeTime=2017-12-09T09:17:42.518} is closed ad it can't be updated 
+Bill Bill{billId=3, productsMap={AbstractProduct{id=3, name='3', price=49252.168}=1, AbstractProduct{id=2, name='2', price=492.0}=2}, salesman=Employee{fullName='2', login='13', password='1'}, amountPrice=0.0, openTime=2017-12-09T09:17:42.517, closeTime=2017-12-09T09:17:42.518} is closed ad it can't be updated 
+Bill Bill{billId=4, productsMap={AbstractProduct{id=3, name='3', price=49252.168}=2, AbstractProduct{id=1, name='1', price=6.0}=1}, salesman=Employee{fullName='1123', login='123', password='1'}, amountPrice=0.0, openTime=2017-12-09T09:17:42.518, closeTime=2017-12-09T09:17:42.519} is closed ad it can't be updated 
+Bill Bill{billId=1, productsMap={AbstractProduct{id=1, name='1', price=18.0}=3}, salesman=Employee{fullName='1123', login='123', password='1'}, amountPrice=0.0, openTime=2017-12-09T09:17:42.499, closeTime=2017-12-09T09:17:42.518} removed 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.527, closeTime=null} saved 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.527, closeTime=2017-12-09T09:17:42.527} is closed ad it can't be updated 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.528, closeTime=null} saved 
+Bill Bill{billId=2, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.528, closeTime=null} saved 
+Bill Bill{billId=3, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.528, closeTime=null} saved 
+Bill Bill{billId=4, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.528, closeTime=null} saved 
+Bill Bill{billId=5, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.529, closeTime=null} saved 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.529, closeTime=null} saved 
+Bill Bill{billId=2, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.529, closeTime=null} saved 
+Bill Bill{billId=2, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.529, closeTime=null} removed 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.530, closeTime=null} saved 
+Product AbstractProduct{id=1, name='LLFEOQXCQNYIUOBQSRJFMMAGIYDTKL', price=989.11} saved 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.531, closeTime=null} saved 
+Bill Bill{billId=2, productsMap={AbstractProduct{id=1, name='LLFEOQXCQNYIUOBQSRJFMMAGIYDTKL', price=989.11}=1}, salesman=null, amountPrice=0.0, openTime=2017-12-09T09:17:42.531, closeTime=null} saved 
+Bill Bill{billId=1, productsMap={}, salesman=null, amountPrice=null, openTime=2017-12-09T09:17:42.532, closeTime=null} saved 
