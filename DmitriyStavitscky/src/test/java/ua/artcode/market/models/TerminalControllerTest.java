@@ -221,7 +221,7 @@ public class TerminalControllerTest {
         terminal.addSubSalesman(a4, a5);
         terminal.addSubSalesman(a6, a7);
         terminal.addSubSalesman(a7, a8);
-        terminal.addSubSalesman(a8, a2);
+        terminal.addSubSalesman(a7, a2);
     }
 
     @Test(expected = SaveBillException.class)
