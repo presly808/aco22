@@ -22,6 +22,8 @@ public class ISellerControllerImpl implements ISellerController {
 
         double salary = calculateOwnSellerSalary(seller);
 
+        int counter = 0;
+
         if (!subsellers.isEmpty()) {
             for (Seller subseller : subsellers) {
                 salary += calculateAllSellerSalary(subseller) * PERCENT_FROM_SUBSELLER;
