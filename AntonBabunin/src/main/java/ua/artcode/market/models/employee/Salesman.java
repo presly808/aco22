@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Salesman extends Employee {
 
-    private int percent;
+    private transient int percent;
 
     public Salesman(String fullName, String login, String password,
                     Money salary) {
@@ -17,6 +17,10 @@ public class Salesman extends Employee {
 
     public Salesman() {
         super();
+    }
+
+    public Salesman(String login, String password) {
+        super(login,password);
     }
 
     public int getPercent() {

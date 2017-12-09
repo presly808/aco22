@@ -1,5 +1,6 @@
 package ua.artcode.market.models.money;
 
+
 public class Money implements Comparable{
     private int moneyWholePart;
     private int moneyFraction;

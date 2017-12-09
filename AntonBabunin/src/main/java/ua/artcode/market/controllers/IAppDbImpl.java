@@ -54,7 +54,7 @@ public class IAppDbImpl implements IAppDb {
     public Bill findBillById(int id) throws BillNotFoundException {
             return this.bills.stream().
                     filter(billE -> billE.getId() == id).findFirst().
-                    orElseThrow(new BillNotFoundException());
+                    orElseThrow(BillNotFoundException::new);
     }
 
     @Override

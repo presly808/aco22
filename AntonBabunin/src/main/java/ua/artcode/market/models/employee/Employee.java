@@ -5,12 +5,12 @@ import ua.artcode.market.models.money.Money;
 import java.util.List;
 
 public abstract class Employee implements Comparable<Salesman> {
-    private String fullName;
+    private transient String fullName;
     private String login;
     private String password;
-    private boolean isConnected;
-    private Money salary;
-    private int percent;
+    private transient boolean isConnected;
+    private transient Money salary;
+    private transient int percent;
 
 
     public Employee() {
@@ -18,6 +18,11 @@ public abstract class Employee implements Comparable<Salesman> {
 
     public Employee(String fullName, String login, String password) {
         this.fullName = fullName;
+        this.login = login;
+        this.password = password;
+    }
+
+    public Employee(String login, String password) {
         this.login = login;
         this.password = password;
     }
