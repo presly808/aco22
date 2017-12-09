@@ -1,15 +1,15 @@
 package src.main.java.ua.artcode.market.appDB;
 
-import main.java.ua.artcode.market.models.Bill;
-import main.java.ua.artcode.market.models.Product;
-import main.java.ua.artcode.market.models.Salesman;
+import src.main.java.ua.artcode.market.models.Bill;
+import src.main.java.ua.artcode.market.models.Product;
+import src.main.java.ua.artcode.market.models.Salesman;
 import src.main.java.ua.artcode.market.appDB.IAppDB;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IAppDBImp implements IAppDB {
+public abstract class IAppDBImp implements IAppDB {
 
     private List<Bill> bills = new ArrayList<>();
 

@@ -1,8 +1,8 @@
 package src.main.java.ua.artcode.market.controllers;
 
-import main.java.ua.artcode.market.appDB.IAppDB;
-import main.java.ua.artcode.market.models.Bill;
-import main.java.ua.artcode.market.models.Statistics;
+import src.main.java.ua.artcode.market.appDB.IAppDB;
+import src.main.java.ua.artcode.market.models.Bill;
+import src.main.java.ua.artcode.market.models.Statistics;
 
 import java.sql.Time;
 import java.util.List;
@@ -11,9 +11,9 @@ public interface ITerminal {
 
     void signIn (String login, String password);
     void logOut();
-    void creareBill();
+    void createBill();
     void closeAndSaveBill();
-    void addProdutToBill();
+    void addProductToBill();
 
     Statistics makeStatistic();
 
@@ -22,5 +22,6 @@ public interface ITerminal {
     List<Bill> getAllBills();
 
     IAppDB getIAppDB();
+
 
 }

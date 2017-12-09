@@ -1,6 +1,6 @@
 package src.main.java.ua.artcode.market.Utils;
 
-import main.java.ua.artcode.market.models.Bill;
+import src.main.java.ua.artcode.market.models.Bill;
 
 import java.util.List;
 

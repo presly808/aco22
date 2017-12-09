@@ -1,17 +1,17 @@
 package src.main.java.ua.artcode.market.appDB;
 
-import main.java.ua.artcode.market.models.Bill;
-import main.java.ua.artcode.market.models.Product;
-import main.java.ua.artcode.market.models.Salesman;
+import src.main.java.ua.artcode.market.models.Bill;
+import src.main.java.ua.artcode.market.models.Product;
+import src.main.java.ua.artcode.market.models.Salesman;
 
 
 public interface IAppDB{
 
     int genId();
 
-    void addActionToHistory(String messege);
+    void addActionToHistory(String message);
 
-    Salesman findSalesman(String loginOrName);
+    Salesman findSalesmanByLoginOrName(String loginOrName);
 
     void addProductToDataBase(String name, double price);
 

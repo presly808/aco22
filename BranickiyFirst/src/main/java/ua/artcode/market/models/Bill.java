@@ -1,6 +1,6 @@
 package src.main.java.ua.artcode.market.models;
 
-import java.sql.Time;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -8,21 +8,20 @@ import java.util.List;
 
 public class Bill implements Comparable<Bill> {
 
-    private List<main.java.ua.artcode.market.models.Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
     private int productsCount;
     private int id;
     private double amountPrice;
 
-    private main.java.ua.artcode.market.models.Salesman salesman;
+    private Salesman salesman;
 
     private LocalDateTime openTime;
+    private LocalDateTime closeTime;
 
-    private Time closeTime;
-
-    public Bill(main.java.ua.artcode.market.models.Salesman salesman, int idOfBill) {
+    public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
         this.id = idOfBill;
-        this.openTime = LocalDateTime.now();
+        openTime = LocalDateTime.now();
     }
 
     public void calculateAmountPrice() {
@@ -98,13 +97,6 @@ public class Bill implements Comparable<Bill> {
         this.products = products;
     }
 
-    public Time getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(Time closeTime) {
-        this.closeTime = closeTime;
-    }
 
     public Salesman getSalesMan() {
         return salesman;
