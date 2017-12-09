@@ -22,10 +22,7 @@ public class AppDB implements IAppDB {
     private int countOfId;
 
     @Override
-    public int genId() {
-
-        return ++countOfId;
-    }
+    public int genId() { return ++countOfId; }
 
     @Override
     public void addActionToHistory(String message) {
@@ -45,14 +42,8 @@ public class AppDB implements IAppDB {
         }
     }
 
-    //ctrl + F6 - refactor signature
-    // ctrl + D - copy at new line
-
     @Override
-    public List<Bill> getAllBills() {
-
-        return bills;
-    }
+    public List<Bill> getAllBills() { return bills; }
 
     @Override
     public Salesman findSalesmanByLoginOrName(String loginOrName) {

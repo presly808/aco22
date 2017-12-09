@@ -18,8 +18,9 @@ public interface ITerminal {
     boolean addProduct(Product p);
     Bill findBillById(int id);
     Salesman getTopNofSalesMan();
+    Double getSalesmanSallary(Salesman salesman, Date startDate, Date endDate);
     Map<Salesman, Double> getSalesAmountBySalesman();
-    ArrayList<Bill> filter(List<Salesman> salesmen, List<Product> products,
-                           Date startDate, Date endDate, Comparator<Bill> comparator);
+    List<Bill> filter(List<Salesman> salesmen, List<Product> products,
+                      Date startDate, Date endDate, Comparator<Bill> comparator);
 
 }

@@ -80,7 +80,7 @@ public class Seller {
         this.bills = bills;
     }
 
-    public void addSubSeller(Seller subSeller){
+    public void addSubSeller(Seller subSeller) {
         subsellers.add(subSeller);
     }
 

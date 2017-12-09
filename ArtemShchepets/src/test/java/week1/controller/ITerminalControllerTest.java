@@ -2,9 +2,11 @@ package week1.controller;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import week1.comparators.CreationDateComparator;
 import week1.database.IAppDB;
+import week1.exception.AppException;
+import week1.exception.MyLoginException;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -152,6 +154,15 @@ public class ITerminalControllerTest {
         assertEquals(0, bill.getId());
     }
 
+    @Ignore
+    @Test(expected = MyLoginException.class)
+    public void createBillNotLogged() throws Exception {
+
+        terminalController.setCurrentSeller(-1);
+
+        Bill bill = terminalController.createBill();
+    }
+
     @Test
     public void addProduct() throws Exception {
 
@@ -221,7 +232,7 @@ public class ITerminalControllerTest {
         LocalDateTime startTime = LocalDateTime.parse("2014-01-01T00:00:00");
         LocalDateTime endTime = LocalDateTime.parse("2016-12-31T23:59:59");
 
-        assertEquals(expectedList, terminalController.filter(startTime, endTime, new CreationDateComparator()));
+        assertEquals(expectedList, terminalController.filter(startTime, endTime, new Bill.CreationDateComparator()));
     }
 
 

@@ -9,35 +9,35 @@ import week1.utils.InitUtils;
 
 import static org.junit.Assert.*;
 
-public class SellersControllerTest {
+public class ISellerControllerImplTest {
 
     private Seller mainSeller;
-    private SellersController sellersController;
+    private ISellerControllerImpl ISellerControllerImpl;
 
     @Before
     public void setUp() throws Exception {
 
         mainSeller = InitUtils.createDepartment();
-        sellersController = new SellersController();
+        ISellerControllerImpl = new ISellerControllerImpl();
     }
 
     @After
     public void tearDown() throws Exception {
 
         mainSeller = null;
-        sellersController = null;
+        ISellerControllerImpl = null;
     }
 
     @Test
     public void calculateAllSellerSalary() throws Exception {
 
-        assertEquals(27.65, sellersController.calculateAllSellerSalary(mainSeller),0.01);
+        assertEquals(27.65, ISellerControllerImpl.calculateAllSellerSalary(mainSeller),0.01);
     }
 
     @Test
     public void calculateDepartmentCosts() throws Exception {
 
-        assertEquals(123,sellersController.calculateDepartamentCosts(mainSeller),0.001);
+        assertEquals(123, ISellerControllerImpl.calculateDepartamentCosts(mainSeller),0.001);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class SellersControllerTest {
 
         incomeExpenses.setExpenses(123.00);
 
-        assertEquals(incomeExpenses,sellersController.calculateIncomeAndExpenses(mainSeller));
+        assertEquals(incomeExpenses, ISellerControllerImpl.calculateIncomeAndExpenses(mainSeller));
     }
 
 }
