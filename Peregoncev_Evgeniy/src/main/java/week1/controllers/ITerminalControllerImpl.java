@@ -1,7 +1,7 @@
 package week1.controllers;
 
 import week1.comparators.SalesmanSoldProductComparator;
-import week1.Exeptions.InvalidLoginException;
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.models.Bill;

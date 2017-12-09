@@ -1,6 +1,6 @@
 package week1.controllers;
 
-import week1.Exeptions.InvalidLoginException;
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.models.Bill;
@@ -31,7 +31,7 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill createBill(){
+    public Bill createBill() {
         System.out.println("Logg: create bill attempt");
         return terminalController.createBill();
     }

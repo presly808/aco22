@@ -1,6 +1,6 @@
 package week1.interfaces;
 
-import week1.Exeptions.InvalidLoginException;
+import week1.exeptions.InvalidLoginException;
 
 import week1.models.Bill;
 import week1.models.Product;
@@ -20,7 +20,7 @@ public interface ITerminalController {
 
     List<Product> getAllProducts();
 
-    boolean login(String login, String pass) throws  InvalidLoginException;
+    boolean login(String login, String pass) throws InvalidLoginException;
 
     Bill createBill();
 

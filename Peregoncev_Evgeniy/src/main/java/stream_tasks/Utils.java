@@ -83,8 +83,8 @@ public class Utils {
 
         Map<String, Double> sortByDep = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (oldValue, newValue) -> newValue, LinkedHashMap::new));
+                .collect(Collectors.toMap
+                        (Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> newValue, LinkedHashMap::new));
 
         System.out.println("\nget sum of salaries grouped by department and sorted by sum \n" + sortByDep);
         return sortByDep;

@@ -2,7 +2,7 @@ package week1.exclude;
 
 import week1.factories.ITerminalControllerFactory;
 import week1.controllers.ProxyTerminalControllerImpl;
-import week1.Exeptions.InvalidLoginException;
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.ITerminalController;
 import week1.view.View;
 

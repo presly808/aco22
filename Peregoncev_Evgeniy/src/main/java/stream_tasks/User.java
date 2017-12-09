@@ -79,30 +79,10 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id) return false;
-        if (age != user.age) return false;
-        if (Double.compare(user.salary, salary) != 0) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (sex != null ? !sex.equals(user.sex) : user.sex != null) return false;
-        if (sity != null ? !sity.equals(user.sity) : user.sity != null) return false;
-        return department != null ? department.equals(user.department) : user.department == null;
+        return id == user.id;
 
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + age;
-        temp = Double.doubleToLongBits(salary);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (sity != null ? sity.hashCode() : 0);
-        result = 31 * result + (department != null ? department.hashCode() : 0);
-        return result;
-    }
 }
 
 class ComparatorByAge implements Comparator<User> {
