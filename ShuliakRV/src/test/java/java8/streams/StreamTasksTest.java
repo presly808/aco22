@@ -10,8 +10,6 @@ import static org.junit.Assert.*;
 
 public class StreamTasksTest {
 
-    private List<User> users;
-
     private List<User> actualUsers;
     private List<User> expectedUsers;
     private StreamTasks tasks;
@@ -19,7 +17,7 @@ public class StreamTasksTest {
     @Before
     public void setUp() throws Exception {
 
-        users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         actualUsers = new ArrayList<>();
         expectedUsers = new ArrayList<>();
         tasks = new StreamTasks(new ArrayList<>());

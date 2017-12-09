@@ -29,8 +29,8 @@ public class SimpleHttpServer {
         public void handle(HttpExchange t) throws IOException {
 
             String response = terminalController.getAppDB().findByProductId(
-            (Integer.parseInt(t.getRequestURI().toString().
-                    split("//?")[1].split("=")[1]))).getName();
+                    (Integer.parseInt(t.getRequestURI().toString().
+                            split("//?")[1].split("=")[1]))).getName();
 
 
             //String response = "This is the response";
