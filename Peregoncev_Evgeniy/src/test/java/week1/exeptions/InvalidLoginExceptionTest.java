@@ -30,7 +30,7 @@ public class InvalidLoginExceptionTest {
 
     @Test(expected = InvalidLoginException.class)
 
-    public void InvalidLoginException() throws InvalidLoginException {
+    public void invalidLoginException() throws InvalidLoginException {
         testTerminal.login("", "dd");
 
     }
