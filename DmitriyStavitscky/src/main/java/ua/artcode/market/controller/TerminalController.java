@@ -1,18 +1,22 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.appdb.AppDB;
+import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
-import ua.artcode.market.models.Time;
 import ua.artcode.market.utils.TerminalStatisticsUtils;
 import ua.artcode.market.utils.TerminalUtils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TerminalController implements ITerminal {
+
+    private final static int PERCENTAGE_OF_SALES = 5;
+    private final static int PERCENTAGE_OF_SUBORDINATES_SALARY = 2;
 
     private AppDB appDB;
 
@@ -69,13 +73,13 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void closeAndSaveBill(int hours, int minutes, int seconds) {
+    public void closeAndSaveBill() throws SaveBillException {
         if (currentBill.getProducts().size() == 0) {
-            System.out.println("you did not make a single sale, the bill wil be deleted");
+            currentBill = null;
+            throw new SaveBillException("you did not make a single sale, the bill wil be deleted");
 
         } else {
             currentBill.calculateAmountPrice();
-            currentBill.setCloseTime(new Time(hours, minutes, seconds));
             appDB.getBills().add(currentBill);
             currentBill.getSalesman().addSum(currentBill.getAmountPrice());
             currentBill = null;
@@ -100,20 +104,9 @@ public class TerminalController implements ITerminal {
             return null;
 
         } else {
-            int topSalemanId = 0;
-
             if (appDB.getSalesmans().size() == 0 || appDB.getBills().size() == 0) return null;
 
-            double max = appDB.getSalesmans().get(0).getSumOfAllSales();
-            for (int i = 0; i < appDB.getSalesmans().size(); i++) {
-
-                if (appDB.getSalesmans().get(i).getSumOfAllSales() > max) {
-                    max = appDB.getSalesmans().get(i).getSumOfAllSales();
-                    topSalemanId = i;
-                }
-            }
-
-            return appDB.getSalesmans().get(topSalemanId);
+            return getSalesmans().stream().max(new Salesman.SumOfAllSalesComparator()).orElse(null);
         }
     }
 
@@ -127,11 +120,8 @@ public class TerminalController implements ITerminal {
         } else {
 
             //search average amount and sum of all sales
-            double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
 
-            for (int i = 1; i < appDB.getBills().size(); i++) {
-                sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
-            }
+            double sumOfAllSalles = appDB.getBills().stream().mapToDouble(Bill::getAmountPrice).sum();
 
             double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
 
@@ -149,32 +139,28 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
-        List<Bill> billsFilt = new ArrayList<>();
+    public List<Bill> filterByTime(LocalDateTime startTime, LocalDateTime endTime) {
 
-        for (Bill bill : bills) {
-
-            if (bill.getCloseTime().compareTo(startTime) > 0 &&
-                    bill.getCloseTime().compareTo(endTime) < 0) {
-                billsFilt.add(bill);
-            }
-        }
-
-        appDB.getBills().sort(comparator);
-        return billsFilt;
+        return getAllBills().stream()
+                .filter(b -> b.getCloseTime().compareTo(startTime) < 0 && b.getCloseTime().compareTo(endTime) > 0)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException {
         if (!loggedSalesman.isDirector()) {
             System.out.println("Only a director can add a subordinate");
 
-        } else if (!TerminalUtils.isBoss(loggedSalesman, chief, subordinate)) {
-            appDB.findSalesmanById(chief.getId()).getSubordinates().add(subordinate);
-
-        } else {
-            System.out.println("You can not make a boss subordinate");
         }
+        try {
+            TerminalUtils.isNotBoss(loggedSalesman, chief, subordinate);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+
+        appDB.findSalesmanById(chief.getId()).getSubordinates().add(subordinate);
     }
 
     @Override
@@ -183,12 +169,12 @@ public class TerminalController implements ITerminal {
             return 0;
         }
 
-        double salaryForTheirSales = salesman.getSumOfAllSales() / 20;
+        double salaryForTheirSales = (salesman.getSumOfAllSales() / 100) * PERCENTAGE_OF_SALES;
         double subordinatesSalary = 0;
 
         if (salesman.getSubordinates().size() != 0) {
             for (int i = 0; i < salesman.getSubordinates().size(); i++) {
-                subordinatesSalary += calculateSalesmanSalary(salesman.getSubordinates().get(i)) / 50;
+                subordinatesSalary += (calculateSalesmanSalary(salesman.getSubordinates().get(i)) / 100) * PERCENTAGE_OF_SUBORDINATES_SALARY;
             }
         }
 
