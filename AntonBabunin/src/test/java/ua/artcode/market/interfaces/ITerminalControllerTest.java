@@ -40,14 +40,15 @@ public class ITerminalControllerTest {
 
     @Test
     public void addProduct() throws Exception {
+        Product product = Generator.createProduct();
+        product.setId(1);
+        terminalController.getIAppDb().saveProduct(product);
         Bill bill = terminalController.createBill();
         bill = terminalController.addProduct(bill.getId(),
-                terminalController.getiAppDb().findProductById(1));
-        terminalController.getiAppDb().saveBill(bill);
-        if (bill != null) {
-            assertEquals(0, bill.getProductsMap().size());
-        }
-        assertNull(bill);
+                terminalController.getIAppDb().findProductById(product.getId()));
+
+        terminalController.getIAppDb().saveBill(bill);
+            assertEquals(1, bill.getProductsMap().size());
     }
 
     @Test
@@ -58,7 +59,7 @@ public class ITerminalControllerTest {
         terminalController.createBill();
         terminalController.createBill();
 
-        assertEquals(5, terminalController.getAllBills().size());
+        assertEquals(5, terminalController.getBills().size());
 
     }
 
@@ -71,6 +72,11 @@ public class ITerminalControllerTest {
     }
 
     @Test
+    public void calculateAmountPriceNeg() throws Exception {
+        Money amPrice = terminalController.calculateAmountPrice(null);
+        assertTrue(new Money(0,0).equals(amPrice));
+    }
+    @Test
     public void calculateAmountPrice() throws Exception {
         Bill open = terminalController.createBill();
         Product product = Generator.createProduct();
@@ -78,7 +84,7 @@ public class ITerminalControllerTest {
         open.getOpenTime();
         open.getAmountPrice();
         open.setAmountPrice(new Money(0,0));
-        terminalController.getiAppDb().getProducts().put(product, 15);
+        terminalController.getIAppDb().getProducts().put(product, 15);
         open = terminalController.addProduct(open.getId(), product);
         Money amountPrice = terminalController.calculateAmountPrice(open);
         product.getPrice();
@@ -97,7 +103,7 @@ public class ITerminalControllerTest {
         salesman.getFullName();
         salesman.getPassword();
         salesman.toString();
-        Employee salesman2 = terminalController.getiAppDb().
+        Employee salesman2 = terminalController.getIAppDb().
                 createSalesman("2", "2", "2");
         salesman2.setLogin("2");
         salesman2.setPassword("2");
@@ -119,8 +125,8 @@ public class ITerminalControllerTest {
     @Test
     public void saveAndRemoveBill() throws Exception {
         Bill expected = terminalController.createBill();
-        Bill expectedReturn = terminalController.getiAppDb().saveBill(expected);
-        Bill acttual = terminalController.getiAppDb().
+        Bill expectedReturn = terminalController.getIAppDb().saveBill(expected);
+        Bill acttual = terminalController.getIAppDb().
                 removeBill(expectedReturn.getId());
         terminalController.prinBill(expected);
         assertEquals(expectedReturn,acttual);
@@ -150,9 +156,9 @@ public class ITerminalControllerTest {
         Employee salesman3 = terminalController.
                 createSalesman("2","13","1");
 
-        terminalController.getiAppDb().getProducts().put(product1, 15);
-        terminalController.getiAppDb().getProducts().put(product2, 15);
-        terminalController.getiAppDb().getProducts().put(product3, 15);
+        terminalController.getIAppDb().getProducts().put(product1, 15);
+        terminalController.getIAppDb().getProducts().put(product2, 15);
+        terminalController.getIAppDb().getProducts().put(product3, 15);
 
 
 
@@ -190,19 +196,19 @@ public class ITerminalControllerTest {
 
 //        terminalController.logout((Salesman) salesman1);
         terminalController.prinBill(bill1);
-        terminalController.getiAppDb();
-        terminalController.getAllBills();
+        terminalController.getIAppDb();
+        terminalController.getBills();
         terminalController.calculateAmountPrice(bill1);
 
 
-        List<Bill> sorted = terminalController.getiAppDb().filter(salesman1,
+        List<Bill> sorted = terminalController.getIAppDb().filter(salesman1,
                 product1, null, null, BillComparator.
                         billComparator.thenComparing(other));
 
-        terminalController.getiAppDb().removeBill(1);
-        terminalController.getiAppDb().averageAmountPrice((Salesman) salesman1,null, null);
-        terminalController.getiAppDb().minAmountPrice((Salesman) salesman1,null, null);
-        terminalController.getiAppDb().maxAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getIAppDb().removeBill(1);
+        terminalController.getIAppDb().averageAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getIAppDb().minAmountPrice((Salesman) salesman1,null, null);
+        terminalController.getIAppDb().maxAmountPrice((Salesman) salesman1,null, null);
 
        /* LocalDateTime.MIN, LocalDateTime.MAX*/
 //        assertTrue(sorted.get(0).getAmountPrice() >=

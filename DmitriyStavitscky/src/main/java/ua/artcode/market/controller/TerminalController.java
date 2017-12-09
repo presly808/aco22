@@ -1,11 +1,11 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.appdb.AppDB;
-import ua.artcode.market.interf.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
 import ua.artcode.market.models.Time;
+import ua.artcode.market.utils.TerminalStatisticsUtils;
 import ua.artcode.market.utils.TerminalUtils;
 
 import java.util.ArrayList;
@@ -19,21 +19,37 @@ public class TerminalController implements ITerminal {
     private Salesman loggedSalesman;
     private boolean logged;
 
-    private Bill newBill;
+    private Bill currentBill;
 
     public TerminalController(AppDB appDB) {
         this.appDB = appDB;
     }
 
     @Override
-    public void addSalesman(String fullName, String login, int pass) {
-        appDB.getSalesmans().add(new Salesman(fullName, login, pass, appDB.genId()));
+    public Salesman addSalesman(String fullName, String login, int pass) {
+        if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
+            System.out.println("wrong data");
+            return null;
+
+        } else {
+            appDB.getSalesmans().add(new Salesman(fullName, login, pass, appDB.genId()));
+            return appDB.findSalesmanByLoginOrName(login);
+        }
     }
 
     @Override
-    public void signIn(boolean isLogin, String loginOrName, int password) {
-        this.loggedSalesman = appDB.findSalesman(loginOrName, isLogin);
-        logged = true;
+    public void signIn(String loginOrName, int password) {
+        if (logged) {
+            System.out.println("You already logged");
+
+        } else if (appDB.findSalesmanByLoginOrName(loginOrName) == null ||
+                appDB.findSalesmanByLoginOrName(loginOrName).getPass() != password) {
+            System.out.println("wrong data");
+
+        } else {
+            this.loggedSalesman = appDB.findSalesmanByLoginOrName(loginOrName);
+            logged = true;
+        }
     }
 
     @Override
@@ -44,22 +60,32 @@ public class TerminalController implements ITerminal {
 
     @Override
     public void createBill() {
-        newBill = new Bill(loggedSalesman, appDB.genId());
+        if (!logged) {
+            System.out.println("please log in");
+
+        } else {
+            currentBill = new Bill(loggedSalesman, appDB.genId());
+        }
     }
 
     @Override
     public void closeAndSaveBill(int hours, int minutes, int seconds) {
-        newBill.calculateAmountPrice();
-        newBill.setCloseTime(new Time(hours, minutes, seconds));
-        appDB.getBills().add(newBill);
-        newBill.getSalesman().addSum(newBill.getAmountPrice());
-        newBill = null;
+        if (currentBill.getProducts().size() == 0) {
+            System.out.println("you did not make a single sale, the bill wil be deleted");
+
+        } else {
+            currentBill.calculateAmountPrice();
+            currentBill.setCloseTime(new Time(hours, minutes, seconds));
+            appDB.getBills().add(currentBill);
+            currentBill.getSalesman().addSum(currentBill.getAmountPrice());
+            currentBill = null;
+        }
     }
 
     @Override
     public void addProductToBill(int id) {
         if (logged && appDB.findProductById(id) != null) {
-            newBill.getProducts().add(appDB.findProductById(id));
+            currentBill.getProducts().add(appDB.findProductById(id));
             System.out.println("Added product: " + appDB.findProductById(id).toString());
 
         } else {
@@ -69,44 +95,57 @@ public class TerminalController implements ITerminal {
 
     @Override
     public Salesman getTopNofSalesMan() {
-        int topSalemanId = 0;
+        if (appDB.getBills().size() == 0) {
+            System.out.println("count of bills = 0");
+            return null;
 
-        if (appDB.getSalesmans().size() == 0 || appDB.getBills().size() == 0) return null;
+        } else {
+            int topSalemanId = 0;
 
-        double max = appDB.getSalesmans().get(0).getSumOfAllSales();
-        for (int i = 0; i < appDB.getSalesmans().size(); i++) {
+            if (appDB.getSalesmans().size() == 0 || appDB.getBills().size() == 0) return null;
 
-            if (appDB.getSalesmans().get(i).getSumOfAllSales() > max) {
-                max = appDB.getSalesmans().get(i).getSumOfAllSales();
-                topSalemanId = i;
+            double max = appDB.getSalesmans().get(0).getSumOfAllSales();
+            for (int i = 0; i < appDB.getSalesmans().size(); i++) {
+
+                if (appDB.getSalesmans().get(i).getSumOfAllSales() > max) {
+                    max = appDB.getSalesmans().get(i).getSumOfAllSales();
+                    topSalemanId = i;
+                }
             }
-        }
 
-        return appDB.getSalesmans().get(topSalemanId);
+            return appDB.getSalesmans().get(topSalemanId);
+        }
     }
 
     @Override
     public Statistics makeStatistics() {
 
-        //search average amount and sum of all sales
-        double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
+        if (appDB.getBills().size() == 0) {
+            System.out.println("count of bills = 0");
+            return null;
 
-        for (int i = 1; i < appDB.getBills().size(); i++) {
-            sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
+        } else {
+
+            //search average amount and sum of all sales
+            double sumOfAllSalles = appDB.getBills().get(0).getAmountPrice();
+
+            for (int i = 1; i < appDB.getBills().size(); i++) {
+                sumOfAllSalles += appDB.getBills().get(i).getAmountPrice();
+            }
+
+            double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
+
+            // search bil with max and min amount
+            Bill billWithMaxAmount = TerminalStatisticsUtils.billWithMaxAmount(appDB.getBills());
+            Bill billWithMinAmount = TerminalStatisticsUtils.billWithMinAmount(appDB.getBills());
+
+            return new Statistics(billWithMaxAmount.getAmountPrice(),
+                    billWithMaxAmount.getSalesman(),
+                    billWithMinAmount.getAmountPrice(),
+                    billWithMinAmount.getSalesman(),
+                    averageAmountInOneChek,
+                    sumOfAllSalles);
         }
-
-        double averageAmountInOneChek = sumOfAllSalles / appDB.getBills().size();
-
-        // search bil with max and min amount
-        Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(appDB.getBills());
-        Bill billWithMinAmount = TerminalUtils.billWithMinAmount(appDB.getBills());
-
-        return new Statistics(billWithMaxAmount.getAmountPrice(),
-                billWithMaxAmount.getSalesman(),
-                billWithMinAmount.getAmountPrice(),
-                billWithMinAmount.getSalesman(),
-                averageAmountInOneChek,
-                sumOfAllSalles);
     }
 
     @Override
@@ -126,9 +165,60 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
+    public void addSubSalesman(Salesman chief, Salesman subordinate) {
+        if (!loggedSalesman.isDirector()) {
+            System.out.println("Only a director can add a subordinate");
+
+        } else if (!TerminalUtils.isBoss(loggedSalesman, chief, subordinate)) {
+            appDB.findSalesmanById(chief.getId()).getSubordinates().add(subordinate);
+
+        } else {
+            System.out.println("You can not make a boss subordinate");
+        }
+    }
+
+    @Override
+    public double calculateSalesmanSalary(Salesman salesman) {
+        if (salesman == null) {
+            return 0;
+        }
+
+        double salaryForTheirSales = salesman.getSumOfAllSales() / 20;
+        double subordinatesSalary = 0;
+
+        if (salesman.getSubordinates().size() != 0) {
+            for (int i = 0; i < salesman.getSubordinates().size(); i++) {
+                subordinatesSalary += calculateSalesmanSalary(salesman.getSubordinates().get(i)) / 50;
+            }
+        }
+
+        salesman.setSalary(salaryForTheirSales + subordinatesSalary);
+
+        return salesman.getSalary();
+    }
+
+    @Override
+    public double requiredAmountFromTheDepartment(Salesman chief) {
+        if (chief == null) return 0;
+
+        double allSalary = 0;
+        if (chief.getSubordinates().size() != 0) {
+            for (int i = 0; i < chief.getSubordinates().size(); i++) {
+                allSalary += requiredAmountFromTheDepartment(chief.getSubordinates().get(i));
+            }
+        }
+        return allSalary + chief.getSalary();
+    }
+
+    @Override
     public List<Bill> getAllBills() {
 
         return appDB.getBills();
+    }
+
+    @Override
+    public AppDB getAppDB() {
+        return appDB;
     }
 
     public int getCountOfBills() {
@@ -147,12 +237,8 @@ public class TerminalController implements ITerminal {
         return logged;
     }
 
-    public AppDB getAppDB() {
-        return appDB;
-    }
-
-    public Bill getNewBill() {
-        return newBill;
+    public Bill getCurrentBill() {
+        return currentBill;
     }
 
     public List<Salesman> getSalesmans() {

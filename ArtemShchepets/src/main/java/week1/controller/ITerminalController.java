@@ -1,6 +1,6 @@
 package week1.controller;
 
-import week1.exception.AppException;
+import week1.exceptions.*;
 import week1.model.Bill;
 import week1.model.Product;
 import week1.model.SalesStatistic;
@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface ITerminalController {
 
-    boolean login(String login, String password);
+    boolean login(String login, String password) throws UnableToLogInException;
 
-    Bill createBill() throws AppException;
+    Bill createBill();
 
-    Bill addProduct(int billId, Product product);
+    Bill addProduct(int billId, Product product) throws UnableToFindABillException, InvalidBillIdException;
 
     int getCurrentSellerId();
 
@@ -24,17 +24,17 @@ public interface ITerminalController {
 
     List<Bill> getAllBills();
 
-    Bill closeBill(int billId);
+    Bill closeBill(int billId) throws UnableToFindABillException;
 
-    Bill findBillById(int billId);
+    Bill findBillById(int billId) throws InvalidBillIdException;
 
     Seller findSellerByLoginOrFullName(String loginOrFullName);
 
-    Seller getTopOfSalesman();
+    Seller getTopOfSalesman() throws UnableToGetTopSellersException;
 
-    SalesStatistic doSomeStatisticStuff();
+    SalesStatistic doSomeStatisticStuff() throws UnableToDoStatisticException, UnableToGetTopSellersException;
 
-    List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator);
+    List<Bill> filter(LocalDateTime startTime, LocalDateTime endTime, Comparator<Bill> comparator) throws UnableToFilterException;
 
     void turnOnTerminalLogger();
 
