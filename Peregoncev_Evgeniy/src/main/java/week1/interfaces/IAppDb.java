@@ -1,4 +1,9 @@
 package week1.interfaces;
+/**
+ * @author Evgeniy P.
+ * @version 1.0
+ * @see week1.interfaces.ITerminalController
+ */
 
 import week1.models.Bill;
 import week1.models.Product;

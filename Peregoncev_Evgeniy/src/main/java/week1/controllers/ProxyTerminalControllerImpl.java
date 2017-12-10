@@ -1,5 +1,6 @@
 package week1.controllers;
 
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.models.Bill;
@@ -22,7 +23,7 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
 
     @Override
-    public boolean login(String login, String pass) {
+    public boolean login(String login, String pass) throws InvalidLoginException {
 
         System.out.println("Logg: login attempt");
         terminalController.login(login, pass);
