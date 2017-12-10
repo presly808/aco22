@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.Seller;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ public class ProxyITerminalControllerImplTest {
 
     @Before
     public void setUp() throws Exception {
-        terminalController = new ProxyITerminalControllerImpl(ITerminalControllerFactory.create());
+        terminalController = new ProxyITerminalControllerImpl(ITerminalControllerFactory.create(new Seller()));
     }
 
     @After

@@ -11,17 +11,7 @@ public class TerminalStatisticsUtils {
             return null;
         }
 
-        double maxAmount = bills.get(0).getAmountPrice();
-        int billIdWithMaxAmount = 0;
-
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() > maxAmount) {
-                maxAmount = bills.get(i).getAmountPrice();
-                billIdWithMaxAmount = i;
-            }
-        }
-
-        return bills.get(billIdWithMaxAmount);
+        return bills.stream().max(new Bill.AmountPriceComparator()).orElse(null);
     }
 
     public static Bill billWithMinAmount(List<Bill> bills) {
@@ -29,16 +19,6 @@ public class TerminalStatisticsUtils {
             return null;
         }
 
-        double minAmount = bills.get(0).getAmountPrice();
-        int billIdWithMinAmount = 0;
-
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() < minAmount) {
-                minAmount = bills.get(i).getAmountPrice();
-                billIdWithMinAmount = i;
-            }
-        }
-
-        return bills.get(billIdWithMinAmount);
+        return bills.stream().min(new Bill.AmountPriceComparator()).orElse(null);
     }
 }

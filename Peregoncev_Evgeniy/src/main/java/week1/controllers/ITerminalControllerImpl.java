@@ -1,6 +1,7 @@
 package week1.controllers;
 
 import week1.comparators.SalesmanSoldProductComparator;
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.IAppDb;
 import week1.interfaces.ITerminalController;
 import week1.models.Bill;
@@ -19,6 +20,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     private IAppDb iAppDb;
 
     private int currentSalesmanIndex = -1;
+
 
     public ITerminalControllerImpl(IAppDb iAppDb) {
         this.iAppDb = iAppDb;
@@ -53,33 +55,27 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public boolean login(String login, String pass) {
-        boolean isLoginned = false;
+    public boolean login(String login, String pass) throws InvalidLoginException {
 
         currentSalesmanIndex = -1;
 
-        do {
+        if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
+            throw new InvalidLoginException("write true login/pass");
+        } else if (iAppDb == null) {
+            System.out.println("wrong salesman database");
+        }
 
-            if (login == null || login.isEmpty() || pass == null || pass.isEmpty()) {
-                System.out.println("write true login/pass");
-            } else if (iAppDb == null) {
-                System.out.println("wrong salesman database");
-            }
-
-            for (Salesman salesman : iAppDb.getAllSalesMans()) {
-
-                if ((salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass))) {
+        iAppDb.getAllSalesMans().stream()
+                .filter(salesman -> (salesman.getLogin().equals(login)) && (salesman.getPass().equals(pass)))
+                .forEach(salesman -> {
                     setCurrentSalesmanIndex(salesman.getId());
                     System.out.println("Hello " + salesman.getName());
-                }
-            }
+                });
 
-            if (currentSalesmanIndex == -1) {
-                System.out.println("wrong login/pass");
-            } else {
-                isLoginned = true;
-            }
-        } while (!isLoginned);
+        if (currentSalesmanIndex == -1) {
+            System.out.println("bad login");
+        }
+
 
         return false;
     }
@@ -91,10 +87,9 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         bill.setSalesman(iAppDb.getAllSalesMans().get(getCurrentSalesmanIndex()));
 
-        Bill billWithId = iAppDb.saveBill(bill);
-
-        return billWithId;
+        return iAppDb.saveBill(bill);
     }
+
 
     @Override
     public Bill addProduct(int billId, Product product) {
@@ -120,6 +115,7 @@ public class ITerminalControllerImpl implements ITerminalController {
             return bill;
         }
     }
+
 
     @Override
     public Bill closeBill(int id) {

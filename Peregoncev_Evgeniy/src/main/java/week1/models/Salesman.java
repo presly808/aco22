@@ -11,7 +11,7 @@ public class Salesman {
 
     private int countSoldProduct;
 
-    private  int id;
+    private int id;
 
 
     public Salesman(String Name, String login, String pass, int id) {
@@ -58,4 +58,5 @@ public class Salesman {
     }
 
 }
+
 

@@ -9,6 +9,7 @@ import week1.controller.ITerminalController;
 import week1.controller.ITerminalControllerFactory;
 import week1.model.Bill;
 import week1.model.Product;
+import week1.model.Seller;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class ExceptionsTest {
 
     @Before
     public void setUp() {
-        terminalController = ITerminalControllerFactory.create();
+        terminalController = ITerminalControllerFactory.create(new Seller());
         sellerController = new ISellerControllerImpl();
     }
 
@@ -28,6 +29,7 @@ public class ExceptionsTest {
     public void tearDown() {
         terminalController = null;
     }
+
 
     @Test(expected = InvalidBillIdException.class)
     public void testInvalidBillIdException() throws InvalidBillIdException, UnableToFindABillException {

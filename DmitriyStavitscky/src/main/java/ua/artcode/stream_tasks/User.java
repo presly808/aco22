@@ -76,7 +76,9 @@ public class User {
         return department;
     }
 
-    public double getSalary() { return salary; }
+    public double getSalary() {
+        return salary;
+    }
 
     public void setSalary(double salary) {
         this.salary = salary;

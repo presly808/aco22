@@ -49,33 +49,21 @@ public class IAppDbImpl implements IAppDb {
     @Override
     public Salesman findSalesmanByLogin(String login) {
 
-        for (Salesman salesman : salesmanList) {
-            if (salesman.getLogin().equals(login)) {
-                return salesman;
-            }
-        }
-        return null;
+        return salesmanList.stream().filter(man -> man.getLogin().equals(login)).findFirst().get();
     }
 
     @Override
     public Product findByProductId(int productId) {
-        for (Product product : productList) {
-            if (productId == product.getId()) {
-                return product;
-            }
-        }
+
+        productList.stream().filter(product -> product.getId() == productId).findFirst();
+
         return null;
     }
 
     @Override
     public Bill findByBillId(int billId) {
 
-        for (Bill bill : billList) {
-            if (billId == bill.getId()) {
-                return bill;
-            }
-        }
-        return null;
+        return billList.stream().filter(bill -> bill.getId() == billId).findFirst().get();
     }
 
     @Override
