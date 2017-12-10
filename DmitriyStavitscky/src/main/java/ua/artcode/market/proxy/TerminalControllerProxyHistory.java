@@ -3,13 +3,13 @@ package ua.artcode.market.proxy;
 import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.controller.ITerminal;
 import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistics;
-import ua.artcode.market.models.Time;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 
 public class TerminalControllerProxyHistory implements ITerminal {
@@ -50,8 +50,8 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void closeAndSaveBill(int hours, int minutes, int seconds) {
-        terminal.closeAndSaveBill(hours, minutes, seconds);
+    public void closeAndSaveBill() throws SaveBillException {
+        terminal.closeAndSaveBill();
         action = "bill closed. " + terminal.getAllBills().
                 get(terminal.getAllBills().size() - 1).
                 toString();
@@ -79,12 +79,12 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public List<Bill> filterByTime(List<Bill> bills, Time startTime, Time endTime, Comparator<Bill> comparator) {
-        return terminal.filterByTime(bills, startTime, endTime, comparator);
+    public List<Bill> filterByTime(LocalDateTime startTime, LocalDateTime endTime) {
+        return terminal.filterByTime(startTime, endTime);
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException {
         terminal.addSubSalesman(chief, subordinate);
     }
 
@@ -133,27 +133,3 @@ public class TerminalControllerProxyHistory implements ITerminal {
         return terminal.getAppDB().getSalesmans();
     }
 }
-/*
-package ua.artcode.week3.design_patterns.social_network.common;
-
-public class SocialNetworkProxy implements SocialNetworkApi {
-
-    private SocialNetworkApi target;
-
-    public SocialNetworkProxy(SocialNetworkApi targe) {
-        this.target = target;
-    }
-
-    @Override
-    public String login(String email, String pass) {
-
-        System.out.printf("email %s, pass %s\n", email, pass);
-        return target.login(email, pass);
-    }
-
-    @Override
-    public int createGroup(String name) {
-        return 0;
-    }
-}
-*/
