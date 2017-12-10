@@ -27,6 +27,13 @@ public class Bill {
         this.openTime = LocalDateTime.now();
     }
 
+    public Bill(int id, double amountPrice, LocalDateTime closeTime, boolean isClosed) {
+        this.id = id;
+        this.amountPrice = amountPrice;
+        this.closeTime = closeTime;
+        this.isClosed = isClosed;
+    }
+
     public int getId() {
         return id;
     }

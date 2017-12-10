@@ -4,25 +4,39 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 
-import java.util.ArrayList;
 import java.util.List;
 
+// ctrl + alt + 7 - show all usages
 public class AppDB implements IAppDB {
 
-    private List<Bill> bills = new ArrayList<>();
+    private List<Bill> bills;
 
     private Salesman manager;
 
-    private List<Salesman> salesmans = new ArrayList<>();
+    private List<Salesman> salesmans;
 
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
 
-    private List<String> historyOfActions = new ArrayList<>();
+    private List<String> historyOfActions;
 
     private int countOfId;
 
+    public AppDB() {
+    }
+
+    public AppDB(List<Bill> bills, Salesman manager, List<Salesman> salesmans, List<Product> products, List<String> historyOfActions, int countOfId) {
+        this.bills = bills;
+        this.manager = manager;
+        this.salesmans = salesmans;
+        this.products = products;
+        this.historyOfActions = historyOfActions;
+        this.countOfId = countOfId;
+    }
+
     @Override
-    public int genId() { return ++countOfId; }
+    public int genId() {
+        return ++countOfId;
+    }
 
     @Override
     public void addActionToHistory(String message) {
@@ -43,22 +57,21 @@ public class AppDB implements IAppDB {
     }
 
     @Override
-    public List<Bill> getAllBills() { return bills; }
+    public List<Bill> getAllBills() {
+        return bills;
+    }
 
     @Override
     public Salesman findSalesmanByLoginOrName(String loginOrName) {
-        if (loginOrName == null || loginOrName.isEmpty()) return null;
+        if (loginOrName == null || loginOrName.isEmpty()) {
 
-        for (Salesman salesman : salesmans) {
-            if (salesman.getLogin().equals(loginOrName)) return salesman;
+            return null;
         }
 
-        for (Salesman salesman : salesmans) {
-            if (salesman.getFullName().equals(loginOrName)) return salesman;
-        }
-
-        System.out.println("salesman not found");
-        return null;
+        return salesmans.stream()
+                .filter(u -> u.getFullName().equals(loginOrName) || u.getLogin().equals(loginOrName))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -67,53 +80,37 @@ public class AppDB implements IAppDB {
             return null;
         }
 
-        for (Bill bill : bills) {
-            if (bill.getId() == id) {
-                return bill;
-            }
-        }
-
-        System.out.println("bill with this id not found");
-        return null;
+        return bills.stream()
+                .filter(b -> b.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Salesman findSalesmanById(int id) {
-
         if (id == 0) {
             return null;
         }
 
-        for (Salesman salesman : salesmans) {
-            if (salesman.getId() == id) {
-                return salesman;
-            }
-        }
-
-        System.out.println("salesman with this id not found");
-        return null;
+        return salesmans.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Product findProductById(int id) {
-        if (id == 0) {
-            return null;
-        }
+        if (id == 0) return null;
 
-        for (Product product : products) {
-            if (product.getId() == id) {
-                return product;
-            }
-        }
-
-        System.out.println("product with this id not found");
-        return null;
+        return products.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Bill removeBill(int id) {
         return bills.remove(bills.indexOf(findBillById(id)));
-
     }
 
     @Override
