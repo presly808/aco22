@@ -116,14 +116,9 @@ public class ProxyLogTerminal implements ITerminal {
     }
 
     @Override
-    public Salesman getTopSalesman() {
-        loger.event("Search Top Salesman By average");
-        Salesman salesman = realterminal.getTopSalesman();
-        if (salesman != null) {
-            loger.event("Salesman was fount");
-            return salesman;
-        }
-        loger.error("Salesman did'nt find");
-        return null;
+    public void getTopSalesman() {
+        loger.event("Show Top Salesman By average");
+        realterminal.getTopSalesman();
+
     }
 }
