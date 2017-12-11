@@ -23,8 +23,12 @@ public abstract class Employee implements Comparable<Salesman> {
     }
 
     public Employee(String login, String password) {
+        this.fullName = "";
         this.login = login;
         this.password = password;
+        this.isConnected = false;
+        this.salary = new Money(0,0);
+        this.percent = 0;
     }
 
     public void setConnected(boolean connected) {

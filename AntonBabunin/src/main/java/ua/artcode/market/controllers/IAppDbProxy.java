@@ -18,10 +18,9 @@ public class IAppDbProxy implements IAppDb, ILogging{
     private IAppDb iAppDb;
     private ILogging iLogging;
 
-
     public IAppDbProxy(IAppDb iAppDb) throws IOException {
         this.iAppDb = iAppDb;
-        this.iLogging = ILoggingImpl.getInstance();
+        this.iLogging = ILoggingImpl.getInstance(iAppDb);
     }
 
     @Override
@@ -44,10 +43,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
         return iAppDb.getEmployee();
     }
 
-    @Override
-    public List<Employee> getAllSalesmans() {
-        return iLogging.getAllSalesmans();
-    }
+
 
     @Override
     public Bill findBillById(int id) throws BillNotFoundException {
@@ -60,39 +56,44 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Employee findSalesmanByLogin(String login) {
+    public Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
         return iLogging.findSalesmanByLogin(login);
     }
 
     @Override
     public List<Bill> filter(Employee salesman, Product product,
                             LocalDateTime startDate, LocalDateTime endDate,
-                            Comparator<Bill> billComparator) {
+                            Comparator<Bill> billComparator)
+            throws NullArgumentException {
         return iAppDb.filter(salesman, product, startDate, endDate,
                 billComparator);
     }
 
     @Override
     public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                              LocalDateTime endDate) {
+                              LocalDateTime endDate)
+            throws NullArgumentException {
         return iAppDb.aggrAmtPrice(salesman, startDate,endDate);
     }
 
     @Override
     public Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                                    LocalDateTime endDate) {
+                                    LocalDateTime endDate)
+            throws NullArgumentException {
         return iAppDb.averageAmountPrice(salesman, startDate, endDate);
     }
 
     @Override
     public Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
+                               LocalDateTime endDate)
+            throws NullArgumentException {
         return iAppDb.minAmountPrice(salesman, startDate, endDate);
     }
 
     @Override
     public Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
+                               LocalDateTime endDate)
+            throws NullArgumentException {
         return iAppDb.maxAmountPrice(salesman, startDate, endDate);
     }
 

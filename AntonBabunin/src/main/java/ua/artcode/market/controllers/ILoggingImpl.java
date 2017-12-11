@@ -1,5 +1,9 @@
 package ua.artcode.market.controllers;
 
+import com.sun.org.apache.bcel.internal.generic.IADD;
+import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
+import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
+import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ILogging;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
@@ -15,23 +19,22 @@ import java.util.List;
 public class ILoggingImpl implements ILogging {
 
     private static volatile ILogging instance;
+    private IAppDb iAppDb;
 
-    private List<Employee> salesmenList;
-
-    private ILoggingImpl() throws IOException {
-        this.salesmenList = Generator.generateSalesmanList(0);
-        for (Employee salesman : salesmenList){
+    private ILoggingImpl(IAppDb iAppDb) throws IOException {
+        this.iAppDb = iAppDb;
+        /*for (Employee salesman : iAppDb.getEmployee()){
             write(String.format("Fullname: %s, Login: %s, Password: %s, \r\n",
                     salesman.getFullName(), salesman.getLogin(),
                     salesman.getPassword()));
-        }
+        }*/
     }
 
-    public static ILogging getInstance() throws IOException {
+    public static ILogging getInstance(IAppDb iAppDb) throws IOException {
         if (instance == null) {
             synchronized (ILoggingImpl.class) {
                 if (instance == null) {
-                    instance = new ILoggingImpl();
+                    instance = new ILoggingImpl(iAppDb);
                 }
             }
         }
@@ -51,27 +54,24 @@ public class ILoggingImpl implements ILogging {
         fileWriter.close();
     }
 
-    @Override
-    public List<Employee> getAllSalesmans() {
-        return salesmenList;
-    }
 
     @Override
     public Employee createSalesman(String fullName, String login,
                                    String password, Money salary) {
-        Employee salesman = null;
+/*        Employee salesman = null;
         Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
             salesman = new Salesman(fullName, login, password,
                     new Money(123,12));
-            salesmenList.add(salesman);
+            iAppDb.getEmployee().add(salesman);
         }
-        return salesman;
+        return salesman;*/
+return null;
     }
 
     @Override
-    public Employee login(String login, String password) throws IOException {
-        Employee seller = findSalesmanByLogin(login);
+    public Employee login(String login, String password) {
+/*        Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
             return null;
         }
@@ -79,22 +79,29 @@ public class ILoggingImpl implements ILogging {
             return null;
         }
         seller.setIsConnected(true);
-        return seller;
+        return seller;*/
+return null;
     }
 
     @Override
     public Salesman logout(Salesman salesman) {
-        salesman.setIsConnected(false);
-        return salesman;
+/*        salesman.setIsConnected(false);
+        return salesman;*/
+        return null;
     }
 
     @Override
-    public Employee findSalesmanByLogin(String login) {
+    public Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+        /*
+        if (salesmenList == null || salesmenList.isEmpty())
+            throw new LoginOrPasswordNotFoundException();
+
+
         for (Employee salesman : salesmenList) {
             if (login.equals(salesman.getLogin())) {
                 return salesman;
             }
-        }
-        return null;
+        }*/
+        return iAppDb.findSalesmanByLogin(login);
     }
 }

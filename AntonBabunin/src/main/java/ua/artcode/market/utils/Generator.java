@@ -42,12 +42,12 @@ public class Generator {
         return products;
     }
 
-    public static List<Employee> generateSalesmanList(int size) {
+    public static List<Employee> generateSalesmanList() {
         List<Employee> salesmanList = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+/*        for (int i = 0; i < size; i++) {
             Salesman salesman = Generator.createRandomSalesman();
             salesmanList.add(salesman);
-        }
+        }*/
         return salesmanList;
     }
 
@@ -61,7 +61,11 @@ public class Generator {
     }
 
     public static List<Employee> createSubordinateList() {
-        return new ArrayList<Employee>();
+        return new ArrayList<>();
+    }
+
+    public static String generateSalesmanHashCode(int size) {
+        return generateName(size).toLowerCase();
     }
 
     /*public static Terminal createTerminal() {

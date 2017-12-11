@@ -53,4 +53,10 @@ public class Salesman extends Employee {
                 worker.getLogin() == null;
     }
 
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + percent;
+        return result;
+    }
 }

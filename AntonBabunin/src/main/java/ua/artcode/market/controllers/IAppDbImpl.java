@@ -20,11 +20,16 @@ public class IAppDbImpl implements IAppDb {
     private int productNextId;
 
     private List<Bill> bills;
-//    private List<Employee> employeeList;
+    private List<Employee> employeeList;
     private Map<Product,Integer> products;
 
 
     public IAppDbImpl() {
+        this.employeeList = Generator.generateSalesmanList();
+        this.employeeList.add(
+                new Salesman("asd", "asd", "asd", new Money(123,12)));
+        System.out.println(this.employeeList.get(0).getLogin() + " " + this.employeeList.get(0).getPassword());
+        System.out.println(employeeList.size());
         this.bills = new ArrayList<>();
         this.products = Generator.randomProducts(0);
     }
@@ -61,12 +66,7 @@ public class IAppDbImpl implements IAppDb {
     public Product findProductById(int id) throws ProductNotFoundException {
             return this.products.keySet().stream().
                     filter(product -> product.getId() == id).findFirst().
-                    orElseThrow(new ProductNotFoundException());
-//
-//        for (Product product : products.keySet()) {
-//            if (product.getId() == id) return product;
-//        }
-//        throw new ProductNotFoundException();
+                    orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
@@ -118,14 +118,26 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Employee findSalesmanByLogin(String login) {
-        return null;
+    public Employee findSalesmanByLogin(String login)
+            throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+        if (login == null || login.isEmpty())
+            throw new LoginOrPasswordArgumentExeption();
+
+        if (employeeList == null || employeeList.isEmpty())
+            throw new LoginOrPasswordNotFoundException();
+
+        return employeeList.stream().
+                filter(employee -> employee.getLogin().
+                        equals(login)).findFirst().
+                orElseThrow(LoginOrPasswordNotFoundException::new);
     }
 
     @Override
     public List<Bill> filter(Employee salesman, Product product,
                              LocalDateTime startDate, LocalDateTime endDate,
-                             Comparator<Bill> billComparator) {
+                             Comparator<Bill> billComparator)
+            throws NullArgumentException {
+
         if (getBills() == null) return null;
 
         List<Bill> filtered = new ArrayList<>();
@@ -173,7 +185,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     private List<Bill> filterByStartDate(List<Bill> listBills,
-                                         LocalDateTime date) {
+                                         LocalDateTime date)
+            throws NullArgumentException {
         if (listBills == null) throw new NullArgumentException();
         if (date == null) return listBills;
         return listBills.stream().
@@ -182,7 +195,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     private List<Bill> filterByEndDate(List<Bill> listBills,
-                                       LocalDateTime date) {
+                                       LocalDateTime date)
+            throws NullArgumentException {
         if (listBills == null ) throw new NullArgumentException();
         if (date == null) return listBills;
         return listBills.stream().
@@ -192,12 +206,14 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                              LocalDateTime endDate) {
+                              LocalDateTime endDate)
+            throws NullArgumentException {
         if (bills == null) throw new NullArgumentException();
         return aggrAmPrice(filter(salesman,null, startDate, endDate, null));
     }
 
-    private Money aggrAmPrice(List<Bill> filteredList){
+    private Money aggrAmPrice(List<Bill> filteredList)
+            throws NullArgumentException {
         final Money summ = new Money(0,0);
         if (filteredList == null) throw new NullArgumentException();
         if(filteredList.isEmpty()) return summ;
@@ -209,16 +225,19 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                                    LocalDateTime endDate) {
-        List<Bill> filteredList = filter(salesman,null, startDate, endDate, null);
+                                    LocalDateTime endDate)
+            throws NullArgumentException {
+        List<Bill> filteredList =
+                filter(salesman,null, startDate, endDate, null);
         if (filteredList == null || filteredList.isEmpty())
             return new Money(0,0);
-        return  aggrAmPrice(filteredList).div(filteredList.size());
+        return aggrAmPrice(filteredList).div(filteredList.size());
     }
 
     @Override
     public Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
+                               LocalDateTime endDate)
+            throws NullArgumentException {
 
         List<Bill> filtered = filter(salesman, null, startDate, endDate,
                 billComparator);
@@ -229,7 +248,8 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
-                               LocalDateTime endDate) {
+                               LocalDateTime endDate)
+            throws NullArgumentException {
         List<Bill> filtered = filter(salesman, null, startDate, endDate,
                 billComparator);
         if (filtered == null || filtered.isEmpty())

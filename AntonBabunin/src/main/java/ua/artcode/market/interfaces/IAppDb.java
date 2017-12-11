@@ -32,22 +32,22 @@ public interface IAppDb {
     Employee createSalesman(String fullName, String login, String password,
                             Money salary) throws IOException;
 
-    Employee findSalesmanByLogin(String login);
+    Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 
     List<Bill> filter(Employee salesman, Product product,
                       LocalDateTime startDate, LocalDateTime endDate,
-                      Comparator<Bill> billComparator);
+                      Comparator<Bill> billComparator) throws NullArgumentException;
 
 
     Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                       LocalDateTime endDate);
+                       LocalDateTime endDate) throws NullArgumentException;
 
     Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                             LocalDateTime endDate);
+                             LocalDateTime endDate) throws NullArgumentException;
 
     Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
-                        LocalDateTime endDate);
+                        LocalDateTime endDate) throws NullArgumentException;
 
     Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
-                        LocalDateTime endDate);
+                        LocalDateTime endDate) throws NullArgumentException;
 }

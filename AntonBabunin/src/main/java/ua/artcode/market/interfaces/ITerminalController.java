@@ -30,6 +30,7 @@ public interface ITerminalController {
     Employee createSalesman(String fullName, String login, String password,
                             Money salary) throws IOException;
 
-    Employee findSalesmanByLogin(String login);
-
+    Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+    Employee login (String login, String password) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+    Employee login (Employee employee) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 }

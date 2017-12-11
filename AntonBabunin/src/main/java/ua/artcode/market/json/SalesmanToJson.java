@@ -15,7 +15,6 @@ public class SalesmanToJson
                                 JsonDeserializationContext jsonDeserializationContext)
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
-        String fullName = object.get("fullName").getAsString();
         String login = object.get("login").getAsString();
         String password = object.get("password").getAsString();
         return new Salesman(login, password);
@@ -33,7 +32,7 @@ public class SalesmanToJson
 
 /*
 
-    Employee salesman = new Salesman("asd", "asd", "asd", new Money(123, 0));
+Employee salesman = new Salesman("asd", "asd", "asd", new Money(123, 0));
     GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Salesman.class, new SalesmanToJson());
         String gson = builder.create().toJson(salesman);

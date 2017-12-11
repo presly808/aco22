@@ -6,7 +6,6 @@ import ua.artcode.market.interfaces.ITerminalController;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.market.models.money.Money;
 
 import java.io.IOException;
@@ -35,8 +34,33 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Employee findSalesmanByLogin(String login) {
+    public Employee findSalesmanByLogin(String login)
+            throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
         return iAppDb.findSalesmanByLogin(login);
+    }
+
+    @Override
+    public Employee login(String login, String password)
+            throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
+
+        if (login == null || password == null ||
+                login.isEmpty() || password.isEmpty())
+            throw new LoginOrPasswordArgumentExeption();
+
+        Employee employee = findSalesmanByLogin(login);
+
+        if (!employee.getPassword().equals(password))
+            throw new LoginOrPasswordNotFoundException();
+        return employee;
+    }
+
+    @Override
+    public Employee login(Employee employee)
+            throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
+        return login(employee.getLogin(), employee.getPassword());
     }
 
     @Override
@@ -47,7 +71,8 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException {
+    public Bill addProduct(int billId, Product product)
+            throws IOException, BillNotFoundException {
         Bill bill = iAppDb.findBillById(billId);
 
         if (bill == null || product == null) return null;
