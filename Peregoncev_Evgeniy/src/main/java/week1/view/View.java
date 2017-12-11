@@ -1,6 +1,7 @@
 package week1.view;
 
 import week1.comparators.BillComparatorForSorting;
+import week1.exeptions.InvalidLoginException;
 import week1.interfaces.ITerminalController;
 import week1.models.Bill;
 import week1.models.Salesman;
@@ -13,14 +14,19 @@ import java.util.Scanner;
  */
 public class View {
 
-    public void run(ITerminalController terminal) {
+    public void run(ITerminalController terminal) throws InvalidLoginException {
 
         System.out.println("\nHello. write login/pass to sign in");
         Scanner scanner = new Scanner(System.in);
         String login = scanner.nextLine();
         String pass = scanner.nextLine();
+        try {
+            terminal.login(login, pass);
 
-        terminal.login(login, pass);
+        } catch (InvalidLoginException e) {
+            e.getMessage();
+        }
+
 
         if (terminal.getCurrentSalesmanIndex() != -1) {
             menu();
@@ -172,7 +178,7 @@ public class View {
 
         Salesman salesman = terminal.getTopOfSalesmans();
 
-        if (salesman==null){
+        if (salesman == null) {
             return;
         }
 
@@ -189,7 +195,7 @@ public class View {
 
         List<Bill> billList = terminal.filterForBills(start, end, new BillComparatorForSorting());
 
-        if (billList == null||billList.isEmpty()){
+        if (billList == null || billList.isEmpty()) {
             System.out.println("something gone wrong. Maybe you wrote wrong input data");
             return;
         }
@@ -197,7 +203,7 @@ public class View {
         System.out.println(billList.toString());
     }
 
-    private void menuLogOut(Scanner scanner, ITerminalController terminal) {
+    private void menuLogOut(Scanner scanner, ITerminalController terminal) throws InvalidLoginException {
         terminal.setCurrentSalesmanIndex(-1);
         System.out.println("write login");
         String login1 = scanner.next();

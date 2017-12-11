@@ -2,9 +2,10 @@ package ua.artcode.market.models;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.factory.TerminalFactory;
 import ua.artcode.market.proxy.TerminalControllerProxyHistory;
-import ua.artcode.market.utils.TerminalUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class TerminalControllerTest {
     private static int pass3 = 789;
 
     @Before
-    public void before() {
+    public void before() throws Exception {
 
         terminal = TerminalFactory.create();
 
@@ -43,20 +44,20 @@ public class TerminalControllerTest {
         terminal.addProductToBill(1);
         terminal.addProductToBill(2);
         terminal.addProductToBill(3);
-        terminal.closeAndSaveBill(23, 58, 59);
+        terminal.closeAndSaveBill();
         terminal.logOut();
 
         terminal.signIn(name1, pass1);
         terminal.createBill();
         terminal.addProductToBill(1);
         terminal.addProductToBill(2);
-        terminal.closeAndSaveBill(13, 13, 13);
+        terminal.closeAndSaveBill();
         terminal.logOut();
 
         terminal.signIn(login2, pass2);
         terminal.createBill();
         terminal.addProductToBill(1);
-        terminal.closeAndSaveBill(1, 1, 1);
+        terminal.closeAndSaveBill();
         terminal.logOut();
 
         terminal.getAppDB().findSalesmanByLoginOrName(login1).setDirector(true);
@@ -75,16 +76,6 @@ public class TerminalControllerTest {
         // if salesman was sign in
         terminal.signIn(login2, pass2);
         assertTrue(terminal.getIsLogged());
-    }
-
-    @Test
-    public void closeAndSaveBill() {
-
-        terminal.signIn(name1, pass1);
-        terminal.createBill();
-        terminal.addProductToBill(1);
-        terminal.closeAndSaveBill(10, 20, 30);
-        assertEquals("10:20:30", terminal.getAllBills().get(3).getCloseTime().toString());
     }
 
     @Test
@@ -121,20 +112,9 @@ public class TerminalControllerTest {
     }
 
     @Test
-    public void filterAndSortWitIdCompar() throws Exception {
-
-        terminal.filterByTime(terminal.getAllBills(),
-                new Time(0, 0, 0),
-                new Time(23, 59, 59),
-                new BillIdComparator());
-
-        assertEquals(3, terminal.getCountOfBills());
-    }
-
-    @Test
     public void sortByAmountPrice() throws Exception {
 
-        terminal.getAllBills().sort(new BillAmountPriceComparator());
+        terminal.getAllBills().sort(new Bill.AmountPriceComparator());
 
         assertEquals(100, terminal.getAllBills().get(0).getAmountPrice(), 1);
         assertEquals(170, terminal.getAllBills().get(1).getAmountPrice(), 1);
@@ -157,7 +137,7 @@ public class TerminalControllerTest {
     @Test
     public void sortByProductsCount() throws Exception {
 
-        terminal.getAllBills().sort(new BillProductsCountComparator());
+        terminal.getAllBills().sort(new Bill.ProductsCountComparator());
 
         assertEquals(1, terminal.getAllBills().get(0).getProducts().size());
         assertEquals(2, terminal.getAllBills().get(1).getProducts().size());
@@ -167,26 +147,11 @@ public class TerminalControllerTest {
     @Test
     public void sortBySalesman() throws Exception {
 
-        terminal.getAllBills().sort(new BillSalesmanComparator());
+        terminal.getAllBills().sort(new Bill.SalesmanComparator());
 
         assertEquals(name1, terminal.getAllBills().get(0).getSalesman().getFullName());
         assertEquals(name2, terminal.getAllBills().get(1).getSalesman().getFullName());
         assertEquals(name3, terminal.getAllBills().get(2).getSalesman().getFullName());
-    }
-
-    @Test
-    public void sortByTime() throws Exception {
-
-        terminal.getAllBills().sort(new BillTimeComparator());
-
-        assertTrue(new Time(1, 1, 1).
-                compareTo(terminal.getAllBills().get(0).getCloseTime()) == 0);
-
-        assertTrue(new Time(13, 13, 13).
-                compareTo(terminal.getAllBills().get(1).getCloseTime()) == 0);
-
-        assertTrue(new Time(23, 58, 59).
-                compareTo(terminal.getAllBills().get(2).getCloseTime()) == 0);
     }
 
     @Test
@@ -234,8 +199,8 @@ public class TerminalControllerTest {
         assertEquals(61679, (int) terminal.requiredAmountFromTheDepartment(dir1));
     }
 
-    @Test
-    public void testCheck() throws Exception {
+    @Test(expected = WrongSubordinateException.class)
+    public void testCheckIfIsBoss() throws Exception {
 
         terminal.signIn(login1, pass1);
 
@@ -257,7 +222,13 @@ public class TerminalControllerTest {
         terminal.addSubSalesman(a6, a7);
         terminal.addSubSalesman(a7, a8);
         terminal.addSubSalesman(a7, a2);
+    }
 
-        assertTrue(TerminalUtils.isBoss(terminal.getLoggedSalesman(), a7, a2));
+    @Test(expected = SaveBillException.class)
+    public void testSaveBillException() throws Exception {
+
+        terminal.signIn(login1, pass1);
+        terminal.createBill();
+        terminal.closeAndSaveBill();
     }
 }

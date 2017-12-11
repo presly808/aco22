@@ -16,7 +16,7 @@ public class Bill implements Comparable<Bill> {
 
     private LocalDateTime openTime;
 
-    private Time closeTime;
+    private LocalDateTime closeTime;
 
     public Bill(Salesman salesman, int idOfBill) {
         this.salesman = salesman;
@@ -32,9 +32,9 @@ public class Bill implements Comparable<Bill> {
 
     }
 
-    public void closeBill(int hours, int minutes, int seconds) {
+    public void closeBill() {
 
-        closeTime = new Time(hours, minutes, seconds);
+        closeTime = LocalDateTime.now();
         salesman.setSumOfAllSales(salesman.getSumOfAllSales() + amountPrice);
     }
 
@@ -98,16 +98,20 @@ public class Bill implements Comparable<Bill> {
         this.products = products;
     }
 
-    public Time getCloseTime() {
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Time closeTime) {
+    public void setCloseTime(LocalDateTime closeTime) {
         this.closeTime = closeTime;
     }
 
     public Salesman getSalesman() {
         return salesman;
+    }
+
+    public LocalDateTime getOpenTime() {
+        return openTime;
     }
 
     @Override
@@ -118,54 +122,33 @@ public class Bill implements Comparable<Bill> {
                 res < 0 ? -1 : 0;
     }
 
-    public LocalDateTime getOpenTime() {
-        return openTime;
+    public static class ProductsCountComparator implements Comparator<Bill> {
+
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getProducts().size() - o2.getProducts().size();
+        }
     }
-}
 
-class BillIdComparator implements Comparator<Bill> {
+    public static class AmountPriceComparator implements Comparator<Bill> {
 
-    @Override
-    public int compare(Bill o1, Bill o2) {
+        @Override
+        public int compare(Bill o1, Bill o2) {
 
-        return o1.getId() - o2.getId();
+            double res = o1.getAmountPrice() - o2.getAmountPrice();
+
+            return res > 0 ? 1 :
+                    res < 0 ? -1 : 0;
+        }
     }
-}
 
-class BillProductsCountComparator implements Comparator<Bill> {
+    public static class SalesmanComparator implements Comparator<Bill> {
 
-    @Override
-    public int compare(Bill o1, Bill o2) {
-        return o1.getProducts().size() - o2.getProducts().size();
-    }
-}
-
-class BillAmountPriceComparator implements Comparator<Bill> {
-
-    @Override
-    public int compare(Bill o1, Bill o2) {
-
-        double res = o1.getAmountPrice() - o2.getAmountPrice();
-
-        return res > 0 ? 1 :
-                res < 0 ? -1 : 0;
-    }
-}
-
-class BillSalesmanComparator implements Comparator<Bill> {
-
-    @Override
-    public int compare(Bill o1, Bill o2) {
-        return o1.getSalesman().getFullName().compareTo
-                (o2.getSalesman().getFullName());
-    }
-}
-
-class BillTimeComparator implements Comparator<Bill> {
-
-    @Override
-    public int compare(Bill o1, Bill o2) {
-        return o1.getCloseTime().compareTo(o2.getCloseTime());
+        @Override
+        public int compare(Bill o1, Bill o2) {
+            return o1.getSalesman().getFullName().compareTo
+                    (o2.getSalesman().getFullName());
+        }
     }
 }
 

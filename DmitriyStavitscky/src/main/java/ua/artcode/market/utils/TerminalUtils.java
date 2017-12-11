@@ -1,11 +1,17 @@
 package ua.artcode.market.utils;
 
+import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Salesman;
 
 public class TerminalUtils {
 
-    public static boolean isBoss(Salesman manager, Salesman chief, Salesman subordinate) {
-        return checkBoss(manager, chief, subordinate) == 2;
+    private static final int THIS_IS_THE_BOSS = 2;
+
+    public static void isNotBoss(Salesman manager, Salesman chief, Salesman subordinate) throws WrongSubordinateException {
+
+        if (checkBoss(manager, chief, subordinate) == THIS_IS_THE_BOSS) {
+            throw new WrongSubordinateException("Your boss can not become a subordinate");
+        }
     }
 
     private static int checkBoss(Salesman manager, Salesman chief, Salesman subordinate) {
