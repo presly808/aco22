@@ -3,7 +3,6 @@ package week1.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import week1.comparators.CreationDateComparator;
 import week1.database.IAppDB;
 import week1.model.Bill;
 import week1.model.Product;
@@ -221,7 +220,7 @@ public class ITerminalControllerTest {
         LocalDateTime startTime = LocalDateTime.parse("2014-01-01T00:00:00");
         LocalDateTime endTime = LocalDateTime.parse("2016-12-31T23:59:59");
 
-        assertEquals(expectedList, terminalController.filter(startTime, endTime, new CreationDateComparator()));
+        assertEquals(expectedList, terminalController.filter(startTime, endTime, new Bill.CreationDateComparator()));
     }
 
 

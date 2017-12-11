@@ -28,7 +28,17 @@ public class Recursion2Test {
         //Assert.assertEquals(expected, res);
         assertTrue(res.containsAll(expected));
 
+    }
 
+    @Test
+    public void doubling() throws Exception {
+        List<Integer> res = Arrays.asList(0, 5, 10, -5, 99);
+        List<Integer> expected = Arrays.asList(0, 10, 20, -10, 198);
+
+        Recursion2 doubling = new Recursion2();
+
+        assertEquals(expected, doubling.doubling(res));
+        assertTrue(expected.containsAll(doubling.doubling(res)));
     }
 
     @Test

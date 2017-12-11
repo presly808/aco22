@@ -1,44 +1,60 @@
 package ua.artcode.market.utils;
 
-import ua.artcode.market.models.Bill;
-
-import java.util.List;
+import ua.artcode.market.exceptions.WrongSubordinateException;
+import ua.artcode.market.models.Salesman;
 
 public class TerminalUtils {
 
-    public static Bill billWithMaxAmount(List<Bill> bills) {
-        if (bills == null) {
-            return null;
+    private static final int THIS_IS_THE_BOSS = 2;
+
+    public static void isNotBoss(Salesman manager, Salesman chief, Salesman subordinate) throws WrongSubordinateException {
+
+        if (checkBoss(manager, chief, subordinate) == THIS_IS_THE_BOSS) {
+            throw new WrongSubordinateException("Your boss can not become a subordinate");
         }
-
-        double maxAmount = bills.get(0).getAmountPrice();
-        int billIdWithMaxAmount = 0;
-
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() > maxAmount) {
-                maxAmount = bills.get(i).getAmountPrice();
-                billIdWithMaxAmount = i;
-            }
-        }
-
-        return bills.get(billIdWithMaxAmount);
     }
 
-    public static Bill billWithMinAmount(List<Bill> bills) {
-        if (bills == null) {
-            return null;
+    private static int checkBoss(Salesman manager, Salesman chief, Salesman subordinate) {
+        // search chief
+        if (manager.equals(chief)) {
+            return 1;
         }
 
-        double minAmount = bills.get(0).getAmountPrice();
-        int billIdWithMinAmount = 0;
+        int res = 0;
+        if (manager.getSubordinates().size() != 0) {
+            for (int i = 0; i < manager.getSubordinates().size(); i++) {
+                res = checkBoss(manager.getSubordinates().get(i), chief, subordinate);
 
-        for (int i = 1; i < bills.size(); i++) {
-            if (bills.get(i) != null && bills.get(i).getAmountPrice() < minAmount) {
-                minAmount = bills.get(i).getAmountPrice();
-                billIdWithMinAmount = i;
+                // if we find our boss - we check whether his subordinate boss is not
+                if (res == 2 || res == 1 && manager.equals(subordinate)) {
+                    return 2;
+                }
             }
         }
 
-        return bills.get(billIdWithMinAmount);
+        return res;
     }
 }
+
+    /*public static boolean isNotBoss(Salesman manager, Salesman chief, Salesman subordinate) {
+        // search chief
+        if (manager.equals(chief)) {
+            return false;
+        }
+
+        boolean res = false;
+        if (manager.getSubordinates().size() != 0) {
+            for (int i = 0; i < manager.getSubordinates().size(); i++) {
+                if (!isNotBoss(manager.getSubordinates().get(i), chief, subordinate) &&
+                        manager.equals(subordinate)) {
+                    return true;
+
+                } else if (isNotBoss(manager.getSubordinates().get(i), chief, subordinate)) {
+                    res = true;
+                }
+            }
+        }
+
+        return res;
+    }
+}*/
