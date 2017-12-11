@@ -10,6 +10,8 @@ import week1.models.Salesman;
 import java.util.Comparator;
 import java.util.List;
 
+import static week1.utils.VerificationToken.loginToken;
+
 /**
  * Created by ENIAC on 24.11.2017.
  */
@@ -23,11 +25,11 @@ public class ProxyTerminalControllerImpl implements ITerminalController {
 
 
     @Override
-    public boolean login(String login, String pass) throws InvalidLoginException {
+    public String login(String login, String pass) throws InvalidLoginException {
 
         System.out.println("Logg: login attempt");
         terminalController.login(login, pass);
-        return false;
+        return loginToken();
     }
 
     @Override

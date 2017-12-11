@@ -20,7 +20,7 @@ public interface ITerminalController {
 
     List<Product> getAllProducts();
 
-    boolean login(String login, String pass) throws InvalidLoginException;
+    String login(String login, String pass) throws InvalidLoginException;
 
     Bill createBill();
 
@@ -39,5 +39,6 @@ public interface ITerminalController {
     int getCurrentSalesmanIndex();
 
     void setCurrentSalesmanIndex(int i);
+
 }
 
