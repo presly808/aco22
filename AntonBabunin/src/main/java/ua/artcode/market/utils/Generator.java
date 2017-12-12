@@ -64,7 +64,7 @@ public class Generator {
         return new ArrayList<>();
     }
 
-    public static String generateSalesmanHashCode(int size) {
+    public static String generateToken(int size) {
         return generateName(size).toLowerCase();
     }
 

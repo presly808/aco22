@@ -1,6 +1,7 @@
 package ua.artcode.market.models.employee;
 
 import ua.artcode.market.models.money.Money;
+import ua.artcode.market.utils.Generator;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public abstract class Employee implements Comparable<Salesman> {
     private transient String fullName;
     private String login;
     private String password;
-    private transient boolean isConnected;
+    private String token;
     private transient Money salary;
     private transient int percent;
 
@@ -26,21 +27,17 @@ public abstract class Employee implements Comparable<Salesman> {
         this.fullName = "";
         this.login = login;
         this.password = password;
-        this.isConnected = false;
+        this.token = null;
         this.salary = new Money(0,0);
         this.percent = 0;
     }
 
-    public void setConnected(boolean connected) {
-        isConnected = connected;
+    public void setConnected() {
+        token = Generator.generateToken(15);
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    public void setIsConnected(boolean isConnected) {
-        this.isConnected = isConnected;
+    public String getToken() {
+        return token;
     }
 
     public Money getSalary() {
@@ -104,5 +101,9 @@ public abstract class Employee implements Comparable<Salesman> {
     @Override
     public int compareTo(Salesman o) {
         return this.getLogin().compareTo(o.getLogin());
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

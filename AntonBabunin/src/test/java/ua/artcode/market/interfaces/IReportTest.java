@@ -53,7 +53,7 @@ public class IReportTest {
         headOfSalesmen1.getFullName();
         headOfSalesmen1.getPercent();
         headOfSalesmen1.setSalary(new Money(100,0));
-        headOfSalesmen1.isConnected();
+        headOfSalesmen1.getToken();
 
         headOfSalesmen1.getSubordinateList().add(headOfSalesmen2);
         headOfSalesmen2.getSubordinateList().add(saller1);

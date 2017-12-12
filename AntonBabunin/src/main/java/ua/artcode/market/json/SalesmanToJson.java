@@ -3,15 +3,14 @@ package ua.artcode.market.json;
 import com.google.gson.*;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
-import ua.artcode.market.models.money.Money;
 
 import java.lang.reflect.Type;
 
 
 public class SalesmanToJson
-        implements JsonSerializer<Salesman>, JsonDeserializer<Salesman> {
+        implements JsonSerializer<Employee>, JsonDeserializer<Employee> {
     @Override
-    public Salesman deserialize(JsonElement jsonElement, Type type,
+    public Employee deserialize(JsonElement jsonElement, Type type,
                                 JsonDeserializationContext jsonDeserializationContext)
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
@@ -21,11 +20,14 @@ public class SalesmanToJson
     }
 
     @Override
-    public JsonElement serialize(Salesman salesman, Type type,
+    public JsonElement serialize(Employee salesman, Type type,
                                  JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
-        object.addProperty("login", salesman.getLogin());
-        object.addProperty("password", salesman.getPassword());
+//        object.addProperty("fullName", salesman.getFullName());
+//        object.addProperty("login", salesman.getLogin());
+//        object.addProperty("password", salesman.getPassword());
+        object.addProperty("token", salesman.getToken());
+
         return object;
     }
 }
