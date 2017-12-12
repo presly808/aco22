@@ -5,15 +5,14 @@ import week3.model.Product;
 import week3.model.Salesman;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class IappDBimpl implements IappDB {
 
-    private List<Salesman> salesmen = new ArrayList<>();
-    private List<Bill> bills = new ArrayList<>();
-    private List<Product> products = new ArrayList<>();
+    private List<Salesman> salesmen;
+    private List<Bill> bills; //= new ArrayList<>();
+    private List<Product> products; //= new ArrayList<>();
 
     public IappDBimpl(List<Salesman> salesmen, List<Bill> bills, List<Product> products) {
         this.salesmen = salesmen;
@@ -22,6 +21,9 @@ public class IappDBimpl implements IappDB {
     }
 
     public IappDBimpl() {
+        this.salesmen = new ArrayList<>();
+        this.bills = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 
     @Override
@@ -68,7 +70,9 @@ public class IappDBimpl implements IappDB {
 
     @Override
     public boolean saveSaleman(Salesman salesman) {
-            return salesmen.add(salesman);
+
+        salesmen.add(salesman);
+        return true;
     }
 
     @Override

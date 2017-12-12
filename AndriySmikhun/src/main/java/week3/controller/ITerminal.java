@@ -13,8 +13,10 @@ public interface ITerminal {
     boolean addProduct(int id,Product product);
     boolean deleteProduct(int idBill, Product product);
 
-    Bill[] filterBill();
+    boolean newBill();
     boolean closeBill(Bill bill);
+    Bill[] filterBill();
+
 
     boolean createSalesMan(String login, String password, String fullName);
     void getTopSalesman();

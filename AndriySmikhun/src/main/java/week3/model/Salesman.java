@@ -8,14 +8,14 @@ public class Salesman {
     private String login;
     private String password;
     private String fullName;
-    public List <Salesman> slaves = new ArrayList <Salesman>() ;
+    public List <Salesman> slaves;
 
-    public Salesman(int id, String login, String password, String fullName, List slaves) {
+    public Salesman(int id, String login, String password, String fullName) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.fullName = fullName;
-        this.slaves = slaves;
+        this.slaves = new ArrayList<Salesman>();
     }
 
     public Salesman() {

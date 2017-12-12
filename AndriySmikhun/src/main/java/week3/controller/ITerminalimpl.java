@@ -57,6 +57,11 @@ public class ITerminalimpl implements ITerminal {
         return bill.getProducts().remove(product);
     }
 
+    @Override
+    public boolean newBill(){
+        Bill tmpBill = new Bill();
+        return appDB.saveBill(tmpBill);
+    }
 
     @Override
     public Bill[] filterBill() {
@@ -75,8 +80,8 @@ public class ITerminalimpl implements ITerminal {
     public boolean createSalesMan(String login, String password, String fullName) {
         if (login == null || password == null || fullName == null)
             return false;
-        int id = (int) Math.random() * 100;
-        Salesman salesman = new Salesman(id, login, password, fullName,null);
+        int id = (int) (Math.random() * 100);
+        Salesman salesman = new Salesman(id, login, password, fullName);
         return appDB.saveSaleman(salesman);
     }
 

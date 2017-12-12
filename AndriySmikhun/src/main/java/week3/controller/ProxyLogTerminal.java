@@ -78,6 +78,15 @@ public class ProxyLogTerminal implements ITerminal {
         loger.error("Bill did'nt find");
         return null;
     }*/
+   @Override
+   public boolean newBill(){
+       loger.event("Create Bill");
+       if (realterminal.newBill()){
+           loger.event("Bill was created");
+           return true;}
+       loger.error("Bill dad'nt create");
+       return false;
+   }
 
     @Override
     public Bill[] filterBill() {

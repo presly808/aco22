@@ -14,7 +14,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class StatisticTest {
-    IappDB db = new IappDBimpl();
+  /*  IappDB db = new IappDBimpl();
     Bill b1, b2, b3;
     Product p1, p2, p3;
     Salesman s1, s2, s3, s4, m1, m2, d;
@@ -73,6 +73,6 @@ public class StatisticTest {
 
     @Test
     public void sumAllBillBySalesman() throws Exception {
-    }
+    }*/
 
 }

@@ -2,16 +2,24 @@ package week3.controller;
 
 import org.junit.Before;
 import org.junit.Test;
+import week1.controller.Terminal;
+import week3.appDB.IappDB;
+import week3.appDB.IappDBimpl;
+import week3.model.Bill;
+import week3.model.Product;
+import week3.model.Salesman;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 public class ProxyLogTerminalTest {
-    @Before
-    public void setUp() throws Exception {
-    }
+
+
 
     @Test
-    public void login() throws Exception {
+    public void login() {
+
     }
 
     @Test
