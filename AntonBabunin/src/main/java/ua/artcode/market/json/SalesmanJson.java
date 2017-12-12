@@ -11,7 +11,7 @@ public class SalesmanJson
         implements JsonSerializer<Employee>, JsonDeserializer<Employee> {
     @Override
     public Employee deserialize(JsonElement jsonElement, Type type,
-                                JsonDeserializationContext jsonDeserializationContext)
+                                JsonDeserializationContext jsonDeserialContext)
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
         String login = object.get("login").getAsString();
@@ -21,7 +21,7 @@ public class SalesmanJson
 
     @Override
     public JsonElement serialize(Employee salesman, Type type,
-                                 JsonSerializationContext jsonSerializationContext) {
+                                 JsonSerializationContext jsonSerialContext) {
         JsonObject object = new JsonObject();
 //        object.addProperty("fullName", salesman.getFullName());
 //        object.addProperty("login", salesman.getLogin());
@@ -32,11 +32,6 @@ public class SalesmanJson
     }
 }
 
-/*
 
-Employee salesman = new Salesman("asd", "asd", "asd", new Money(123, 0));
-    GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Salesman.class, new SalesmanJson());
-        String gson = builder.create().toJson(salesman);
 
-        System.out.println(gson);*/
+

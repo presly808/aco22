@@ -1,11 +1,8 @@
 package ua.artcode.simplehttpserver.hoslders.employee;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
-import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.json.ProductJson;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Product;
@@ -14,7 +11,6 @@ import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 public class HandlerAddProduct implements HttpHandler {
     public HandlerAddProduct() throws IOException {
@@ -25,12 +21,6 @@ public class HandlerAddProduct implements HttpHandler {
 
         String request = httpExchange.getRequestURI().toString();
         System.out.println(request);
-//
-//        BufferedReader reader = new BufferedReader(
-//                new InputStreamReader(httpExchange.getRequestBody()));
-//        String line = reader.readLine();
-//
-//        System.out.println(line);
 
         if (httpExchange.getRequestMethod().equals("POST") &&
                 request.startsWith("/employee/addproduct")) {
@@ -45,7 +35,8 @@ public class HandlerAddProduct implements HttpHandler {
 
     }
 
-    private boolean postAddProduct(HttpExchange httpExchange, String request) throws IOException {
+    private void postAddProduct(HttpExchange httpExchange, String request)
+            throws IOException {
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(httpExchange.getRequestBody()));
@@ -59,7 +50,8 @@ public class HandlerAddProduct implements HttpHandler {
 
     //ПРОБЛЕМА С ДЖЕСОНОМ, как точнее???
 
-        AbstractProduct product1 = HandlerHolder.getiTerminalController().getIAppDb().saveProduct(product);
+        AbstractProduct product1 = HandlerHolder.getiTerminalController().
+                getIAppDb().saveProduct(product);
         System.out.println(product1.getId());
 
         /*
@@ -68,7 +60,8 @@ public class HandlerAddProduct implements HttpHandler {
             product = getiTerminalController().login(seller);
 
             Gson gson = new Gson();
-            response = String.format("{\"token\":%s}", gson.toJson(seller.getToken()));
+            response = String.format("{\"token\":%s}",
+            gson.toJson(seller.getToken()));
             System.out.println(response);
             httpExchange.sendResponseHeaders(200, response.length());
 
@@ -86,6 +79,5 @@ public class HandlerAddProduct implements HttpHandler {
         outputStream.flush();
         outputStream.close();
 */
-        return true;
     }
 }

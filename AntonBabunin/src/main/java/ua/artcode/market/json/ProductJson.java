@@ -4,15 +4,15 @@ import com.google.gson.*;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.money.Money;
-import ua.artcode.market.utils.Generator;
 
 import java.lang.reflect.Type;
 
 public class ProductJson
-        implements JsonSerializer<AbstractProduct>, JsonDeserializer<AbstractProduct> {
+        implements JsonSerializer<AbstractProduct>,
+        JsonDeserializer<AbstractProduct> {
     @Override
     public AbstractProduct deserialize(JsonElement jsonElement, Type type,
-                                JsonDeserializationContext jsonDeserializationContext)
+                                JsonDeserializationContext jsonDeserialContext)
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
         String name = object.get("name").getAsString();
@@ -20,18 +20,21 @@ public class ProductJson
         int moneyFraction = object.get("moneyFraction").getAsInt();
         Money price = new Money(moneyWholePart, moneyFraction);
         AbstractProduct product = new Product(name, price);
-        System.out.printf("%d, %s, %s", product.getId(), product.getName(), product.getPrice().toString());
+        System.out.printf("%d, %s, %s", product.getId(), product.getName(),
+                product.getPrice().toString());
         return product;
     }
 
     @Override
     public JsonElement serialize(AbstractProduct product, Type type,
-                                 JsonSerializationContext jsonSerializationContext) {
+                                 JsonSerializationContext jsonSerialContext) {
         JsonObject object = new JsonObject();
         object.addProperty("id", product.getId());
         object.addProperty("name", product.getName());
-        object.addProperty("moneyWholePart", product.getPrice().getMoneyWholePart());
-        object.addProperty("moneyFraction", product.getPrice().getMoneyFraction());
+        object.addProperty("moneyWholePart",
+                product.getPrice().getMoneyWholePart());
+        object.addProperty("moneyFraction",
+                product.getPrice().getMoneyFraction());
 
         return object;
     }

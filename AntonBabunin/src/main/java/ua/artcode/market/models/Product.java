@@ -1,7 +1,6 @@
 package ua.artcode.market.models;
 
 import ua.artcode.market.models.money.Money;
-import ua.artcode.market.utils.Generator;
 
 public class Product extends AbstractProduct {
 

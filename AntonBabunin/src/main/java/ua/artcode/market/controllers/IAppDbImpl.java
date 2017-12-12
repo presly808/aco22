@@ -28,10 +28,8 @@ public class IAppDbImpl implements IAppDb {
         this.employeeList = Generator.generateSalesmanList();
         this.employeeList.add(
                 new Salesman("asd", "asd", "asd", new Money(123,12)));
-        System.out.println(this.employeeList.get(0).getLogin() + " " + this.employeeList.get(0).getPassword());
-        System.out.println(employeeList.size());
         this.bills = new ArrayList<>();
-        this.products = new HashMap<AbstractProduct, Integer>();
+        this.products = new HashMap<>();
     }
 
 //    public List<Employee> getEmployeeList() {
@@ -63,7 +61,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public AbstractProduct findProductById(int id) throws ProductNotFoundException {
+    public AbstractProduct findProductById(int id)
+            throws ProductNotFoundException {
             return this.products.keySet().stream().
                     filter(product -> product.getId() == id).findFirst().
                     orElseThrow(ProductNotFoundException::new);
@@ -77,7 +76,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public AbstractProduct removeProduct(int id) throws ProductNotFoundException {
+    public AbstractProduct removeProduct(int id)
+            throws ProductNotFoundException {
         AbstractProduct product = findProductById(id);
         products.replace(product, products.get(product) - 1);
         return product;
@@ -119,7 +119,8 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Employee findSalesmanByLogin(String login)
-            throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+            throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
         if (login == null || login.isEmpty())
             throw new LoginOrPasswordArgumentExeption();
 
