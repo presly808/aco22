@@ -54,7 +54,6 @@ public class Money implements Comparable{
         this.setMoneyFraction(this.moneyFraction * value);
 
         return this;
-
     }
 
     @Override

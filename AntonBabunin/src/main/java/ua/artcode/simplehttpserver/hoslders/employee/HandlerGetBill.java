@@ -2,6 +2,7 @@ package ua.artcode.simplehttpserver.hoslders.employee;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.market.exclude.exception.BillNotFoundException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
@@ -9,7 +10,7 @@ import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class HandlerGetBill extends HandlerHolder {
+public class HandlerGetBill implements HttpHandler {
 
     public HandlerGetBill() throws IOException {
     }
@@ -44,7 +45,7 @@ public class HandlerGetBill extends HandlerHolder {
         String response = "";
         try {
 
-            bill = getiTerminalController().getIAppDb().findBillById(id);
+            bill = HandlerHolder.getiTerminalController().getIAppDb().findBillById(id);
         } catch (BillNotFoundException e) {
             e.printStackTrace();
             response = e.toString();

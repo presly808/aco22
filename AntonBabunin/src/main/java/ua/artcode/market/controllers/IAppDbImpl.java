@@ -21,7 +21,7 @@ public class IAppDbImpl implements IAppDb {
 
     private List<Bill> bills;
     private List<Employee> employeeList;
-    private Map<Product,Integer> products;
+    private Map<AbstractProduct,Integer> products;
 
 
     public IAppDbImpl() {
@@ -31,7 +31,7 @@ public class IAppDbImpl implements IAppDb {
         System.out.println(this.employeeList.get(0).getLogin() + " " + this.employeeList.get(0).getPassword());
         System.out.println(employeeList.size());
         this.bills = new ArrayList<>();
-        this.products = Generator.randomProducts(0);
+        this.products = new HashMap<AbstractProduct, Integer>();
     }
 
 //    public List<Employee> getEmployeeList() {
@@ -41,7 +41,7 @@ public class IAppDbImpl implements IAppDb {
 
 
     @Override
-    public Map<Product, Integer> getProducts() {
+    public Map<AbstractProduct, Integer> getProducts() {
         return products;
     }
 
@@ -52,7 +52,7 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public List<Employee> getEmployee() {
-        return null;
+        return employeeList;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product findProductById(int id) throws ProductNotFoundException {
+    public AbstractProduct findProductById(int id) throws ProductNotFoundException {
             return this.products.keySet().stream().
                     filter(product -> product.getId() == id).findFirst().
                     orElseThrow(ProductNotFoundException::new);
@@ -77,8 +77,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product removeProduct(int id) throws ProductNotFoundException {
-        Product product = findProductById(id);
+    public AbstractProduct removeProduct(int id) throws ProductNotFoundException {
+        AbstractProduct product = findProductById(id);
         products.replace(product, products.get(product) - 1);
         return product;
     }
@@ -92,7 +92,7 @@ public class IAppDbImpl implements IAppDb {
     }
 
     @Override
-    public Product saveProduct(Product product)
+    public AbstractProduct saveProduct(AbstractProduct product)
             throws IllegalArgumentException {
         if (product == null) throw new IllegalArgumentException();
         product.setId(++productNextId);

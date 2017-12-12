@@ -7,6 +7,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.money.Money;
+import ua.artcode.market.utils.Generator;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -51,8 +52,12 @@ public class ITerminalControllerImpl implements ITerminalController {
 
         Employee employee = findSalesmanByLogin(login);
 
-        if (!employee.getPassword().equals(password))
+        if (!employee.getPassword().equals(password)) {
             throw new LoginOrPasswordNotFoundException();
+        }
+        employee.setToken(Generator.generateToken(15));
+        iAppDb.getEmployee().remove(employee);
+        iAppDb.getEmployee().add(employee);
         return employee;
     }
 

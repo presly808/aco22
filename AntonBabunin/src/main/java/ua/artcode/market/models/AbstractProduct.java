@@ -1,11 +1,23 @@
 package ua.artcode.market.models;
 
 import ua.artcode.market.models.money.Money;
+import ua.artcode.market.utils.Generator;
 
 public abstract class AbstractProduct {
-    private int id;
+    private transient int id;
     private String name;
     private Money price;
+
+    public AbstractProduct (String name, Money price) {
+        this.setName(name);
+        this.setPrice(price);
+    }
+
+    public AbstractProduct (int id, String name, Money price) {
+        this.setId(Generator.createProductId());
+        this.setName(name);
+        this.setPrice(price);
+    }
 
     public int getId() {
         return id;

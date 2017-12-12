@@ -1,6 +1,17 @@
 package ua.artcode.market.models;
 
+import ua.artcode.market.models.money.Money;
+import ua.artcode.market.utils.Generator;
+
 public class Product extends AbstractProduct {
+
+    public Product (String name, Money price) {
+        super(name,price);
+    }
+
+    public Product (int id, String name, Money price) {
+        super(id,name,price);
+    }
 
     @Override
     public boolean equals(Object object) {

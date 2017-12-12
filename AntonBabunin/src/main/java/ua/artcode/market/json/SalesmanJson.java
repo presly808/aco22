@@ -7,7 +7,7 @@ import ua.artcode.market.models.employee.Salesman;
 import java.lang.reflect.Type;
 
 
-public class SalesmanToJson
+public class SalesmanJson
         implements JsonSerializer<Employee>, JsonDeserializer<Employee> {
     @Override
     public Employee deserialize(JsonElement jsonElement, Type type,
@@ -36,7 +36,7 @@ public class SalesmanToJson
 
 Employee salesman = new Salesman("asd", "asd", "asd", new Money(123, 0));
     GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Salesman.class, new SalesmanToJson());
+        builder.registerTypeAdapter(Salesman.class, new SalesmanJson());
         String gson = builder.create().toJson(salesman);
 
         System.out.println(gson);*/

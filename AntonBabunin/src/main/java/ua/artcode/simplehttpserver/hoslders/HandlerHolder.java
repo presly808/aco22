@@ -9,9 +9,9 @@ import java.io.*;
 
 public class HandlerHolder implements HttpHandler {
 
-    private ITerminalController iTerminalController;
+    private static ITerminalController iTerminalController;
 
-    public ITerminalController getiTerminalController() {
+    public static ITerminalController getiTerminalController() {
         return iTerminalController;
     }
 

@@ -3,6 +3,7 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ILogging;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
@@ -29,7 +30,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Map<Product, Integer> getProducts() {
+    public Map<AbstractProduct, Integer> getProducts() {
         return iAppDb.getProducts();
     }
 
@@ -51,7 +52,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Product findProductById(int id) throws ProductNotFoundException {
+    public AbstractProduct findProductById(int id) throws ProductNotFoundException {
         return iAppDb.findProductById(id);
     }
 
@@ -115,9 +116,9 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Product removeProduct(int id) throws IOException, ProductNotFoundException {
+    public AbstractProduct removeProduct(int id) throws IOException, ProductNotFoundException {
         String message = null;
-        Product product1;
+        AbstractProduct product1;
         try {
             product1 = iAppDb.removeProduct(id);
         } catch (ProductNotFoundException e) {
@@ -145,8 +146,8 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
-    public Product saveProduct(Product product) throws IOException {
-        Product product1 = iAppDb.saveProduct(product);
+    public AbstractProduct saveProduct(AbstractProduct product) throws IOException {
+        AbstractProduct product1 = iAppDb.saveProduct(product);
         String message = null;
         if (product1 == null) {
             message = String.format("Product %s wasn't saved \r\n", product1);

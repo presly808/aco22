@@ -1,6 +1,7 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.exclude.exception.*;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
@@ -13,20 +14,20 @@ import java.util.*;
 
 public interface IAppDb {
 
-    Map<Product, Integer> getProducts();
+    Map<AbstractProduct, Integer> getProducts();
 
     List<Bill> getBills();
     List<Employee> getEmployee();
     Bill findBillById(int id) throws BillNotFoundException;
 
-    Product findProductById(int id) throws ProductNotFoundException;
+    AbstractProduct findProductById(int id) throws ProductNotFoundException;
 
     Bill removeBill(int id) throws IOException, BillNotFoundException;
 
-    Product removeProduct(int id) throws ProductNotFoundException, IOException;
+    AbstractProduct removeProduct(int id) throws ProductNotFoundException, IOException;
     Bill saveBill(Bill bill) throws IOException;
 
-    Product saveProduct(Product product) throws IOException;
+    AbstractProduct saveProduct(AbstractProduct product) throws IOException;
     Bill update(Bill bill) throws IOException, BillNotFoundException;
 
     Employee createSalesman(String fullName, String login, String password,
