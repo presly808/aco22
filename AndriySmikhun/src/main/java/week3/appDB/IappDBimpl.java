@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class IappDBimpl implements IappDB{
+public class IappDBimpl implements IappDB {
 
     private List<Salesman> salesmen = new ArrayList<>();
     private List<Bill> bills = new ArrayList<>();
@@ -23,6 +23,7 @@ public class IappDBimpl implements IappDB{
 
     public IappDBimpl() {
     }
+
     @Override
     public List<Salesman> getSalesmen() {
         return salesmen;
@@ -36,25 +37,17 @@ public class IappDBimpl implements IappDB{
 
     @Override
     public boolean updateBill(Bill newBill, Bill oldBill) {
-        for (Bill b : bills) {
-            if (b.equals(oldBill))
-                b = newBill;
-
+        int index = bills.indexOf(oldBill);
+        Bill oldValue = bills.set(index, newBill);
+        if (oldValue.equals(oldBill)) {
+            return true;
         }
-
         return false;
     }
 
     @Override
-    public boolean removeBill(int id) {
-        for (Bill b : bills
-                ) {
-            if (b.getId() == id) {
-                b = null;
-                return true;
-            }
-        }
-        return true;
+    public boolean removeBill(Bill bill) {
+        return bills.remove(bill);
     }
 
     @Override
@@ -65,53 +58,40 @@ public class IappDBimpl implements IappDB{
     @Override
     public boolean saveBill(Bill bill) {
         bill.setOpenTime("13:00 07/12/17");
-     return bills.add(bill);
+        return bills.add(bill);
     }
-        @Override
-        public Salesman findSalemanById ( int id){
-            return salesmen.stream().filter(s -> s.getId() == id).findFirst().get();
-        }
 
-        @Override
-        public boolean saveSaleman (Salesman salesman) {
-            if(salesman == null) return false;
-            boolean check = salesmen.stream()
-                    .anyMatch(s -> s.getId() == salesman.getId());
-            if (!check) { return salesmen.add(salesman);}
-            return true;
-        }
-
-        @Override
-        public Salesman findSalemanByName (String fullName){
-            return salesmen.stream().filter(s -> s.getFullName().equals(fullName)).findFirst().get();
-        }
-
-        @Override
-        public boolean removeSaleman (Salesman salesman){
-            for (Salesman s : salesmen
-                    ) {
-                s = null;
-                return true;
-
-            }
-            return false;
-        }
-
-        @Override
-        public boolean updateSalemen (Salesman newSalesman, Salesman oldSalesman){
-            for (Salesman s : salesmen
-                    ) {
-                if (s.equals(oldSalesman)) {
-                    s = newSalesman;
-                    return true;
-                }
-
-            }
-            return false;
-        }
-        @Override
-        public List findBillBySalesman (Salesman salesman) {
-            return bills.stream().filter(s -> s.getSalesman().equals(salesman))
-                    .collect(Collectors.toList());
-        }
+    @Override
+    public Salesman findSalemanById(int id) {
+        return salesmen.stream().filter(s -> s.getId() == id).findFirst().get();
     }
+
+    @Override
+    public boolean saveSaleman(Salesman salesman) {
+            return salesmen.add(salesman);
+    }
+
+    @Override
+    public Salesman findSalemanByName(String fullName) {
+        return salesmen.stream().filter(s -> s.getFullName().equals(fullName)).findFirst().get();
+    }
+
+    @Override
+    public boolean removeSaleman(Salesman salesman) {
+        return salesmen.remove(salesman);
+    }
+
+    @Override
+    public boolean updateSalemen(Salesman newSalesman, Salesman oldSalesman) {
+       int index = salesmen.indexOf(oldSalesman);
+        Salesman oldValue = salesmen.set(index,newSalesman);
+        if (oldValue.equals(oldSalesman)){return true;}
+        return false;
+    }
+
+    @Override
+    public List findBillBySalesman(Salesman salesman) {
+        return bills.stream().filter(s -> s.getSalesman().equals(salesman))
+                .collect(Collectors.toList());
+    }
+}

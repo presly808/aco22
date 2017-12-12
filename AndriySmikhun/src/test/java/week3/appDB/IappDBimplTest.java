@@ -1,5 +1,6 @@
 package week3.appDB;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,34 +35,47 @@ public class IappDBimplTest {
         p1 = new Product(1, "Grecha", 25.0);
         p2 = new Product(2,"Sampo",45.0);
         p3 = new Product(3,"Banana" , 22.0);
-
-
-
-
-
-
+        b1 = new Bill();
 
         IappDBimpl db = new IappDBimpl(Arrays.asList(),Arrays.asList(),Arrays.asList());
+        b1 = new Bill();
+        b2 = new Bill();
+        b3 = new Bill();
+    }
+
+    @After
+    public void afterData()throws Exception{
 
     }
 
     @Test
-    public void getBills() {
-        List<Bill> bills = db.getBills();
-        Assert.assertNotNull(bills);
-    }
-
-    @Test
-    public void updateBill(){
+    public void getBills() throws Exception{
 
     }
 
     @Test
-    public void removeBill1() throws Exception {
+    public void updateBill() {
+        db.saveBill(b1);
+        Bill b5 = new Bill();
+        Assert.assertTrue(db.updateBill(b5,b1));
+
+
     }
 
     @Test
-    public void findeBillByID1() throws Exception {
+    public void removeBill1() {
+        db.saveBill(b1);
+        Bill b5 = new Bill();
+        Assert.assertTrue(db.removeBill(b1));
+        Assert.assertFalse(db.removeBill(b3));
+    }
+
+    @Test
+    public void findeBillByID1() {
+        db.saveBill(b1);
+        b1.setId(1);
+        Assert.assertEquals(b1,db.findeBillByID(1));
+        Assert.assertNotEquals(b2,db.findeBillByID(1));
     }
 
     @Test
@@ -72,79 +86,35 @@ public class IappDBimplTest {
     }
 
     @Test
-    public void findSalemanById() throws Exception {
+    public void findSalemanById() {
+        db.saveSaleman(s1);
+        s1.setId(5);
+        Assert.assertEquals(s1,db.findSalemanById(5));
     }
 
     @Test
-    public void saveSaleman1() throws Exception {
+    public void saveSaleman1() {
+        Assert.assertTrue(db.saveSaleman(s1));
     }
 
     @Test
-    public void findSalemanByName() throws Exception {
+    public void findSalemanByName() {
+        s1.setFullName("Andrii");
+        db.saveSaleman(s1);
+        Assert.assertEquals(s1,db.findSalemanByName("Andrii"));
     }
 
     @Test
-    public void removeSaleman1() throws Exception {
+    public void removeSaleman1() {
+        db.saveSaleman(s3);
+        Assert.assertTrue(db.removeSaleman(s3));
+
     }
 
     @Test
-    public void updateSalemen1() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @Test
-    public void getAllBill() throws Exception {
-    }
-
-    @Test
-    public void getAllSalesman() throws Exception {
-    }
-
-    @Test
-    public void getAllSaleman() throws Exception {
-    }
-
-    @Test
-    public void getBill() throws Exception {
-    }
-
-    @Test
-    public void updateDill() throws Exception {
-    }
-
-    @Test
-    public void removeBill() throws Exception {
-    }
-
-    @Test
-    public void findeBillByID() throws Exception {
-    }
-
-    @Test
-    public void saveBill() throws Exception {
-    }
-
-    @Test
-    public void getSaleman() throws Exception {
-    }
-
-    @Test
-    public void saveSaleman() throws Exception {
-    }
-
-    @Test
-    public void findSaleman() throws Exception {
-    }
-
-    @Test
-    public void removeSaleman() throws Exception {
-    }
-
-    @Test
-    public void updateSalemen() throws Exception {
+    public void updateSalemen1() {
+        db.saveSaleman(s3);
+        Assert.assertTrue(db.updateSalemen(s1,s3));
     }
 
 }

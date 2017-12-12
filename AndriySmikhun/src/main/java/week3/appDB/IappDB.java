@@ -12,7 +12,7 @@ public interface IappDB {
 
 
     boolean updateBill(Bill newBill, Bill oldBill);
-    boolean removeBill(int id);
+    boolean removeBill(Bill bill);
     Bill findeBillByID(int id);
     boolean saveBill(Bill bill); //return bill in array with id
 
