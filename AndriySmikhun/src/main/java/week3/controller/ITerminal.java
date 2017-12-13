@@ -8,12 +8,12 @@ public interface ITerminal {
 
 
     boolean login(String login, String password);
-    //boolean logOut(Salesman salesman);
+    boolean logOut();
 
     boolean addProduct(int id,Product product);
     boolean deleteProduct(int idBill, Product product);
 
-    boolean newBill();
+    boolean openBill(Bill bill);
     boolean closeBill(Bill bill);
     Bill[] filterBill();
 

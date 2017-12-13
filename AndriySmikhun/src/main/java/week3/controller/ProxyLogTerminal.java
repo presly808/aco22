@@ -29,10 +29,12 @@ public class ProxyLogTerminal implements ITerminal {
         return false;
     }
 
-    //  @Override
-    // public boolean logOut() {
-    //    return false;
-    //}
+      @Override
+     public boolean logOut() {
+        loger.event("User logout");
+        realterminal.logOut();
+        return true;
+    }
 
     @Override
     public boolean addProduct(int id, Product product) {
@@ -79,12 +81,12 @@ public class ProxyLogTerminal implements ITerminal {
         return null;
     }*/
    @Override
-   public boolean newBill(){
-       loger.event("Create Bill");
-       if (realterminal.newBill()){
-           loger.event("Bill was created");
+   public boolean openBill(Bill bill){
+       loger.event("Open Bill");
+       if (realterminal.openBill(bill)){
+           loger.event("Bill was opened");
            return true;}
-       loger.error("Bill dad'nt create");
+       loger.error("Bill dad'nt open");
        return false;
    }
 

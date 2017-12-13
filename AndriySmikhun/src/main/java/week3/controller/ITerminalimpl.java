@@ -16,9 +16,9 @@ public class ITerminalimpl implements ITerminal {
     private IappDB appDB;
     private String user;
 
-    public ITerminalimpl() {
+    /*public ITerminalimpl() {
         appDB = new IappDBimpl();
-    }
+    }*/
 
     public ITerminalimpl(IappDB appDB) {
         this.appDB = appDB;
@@ -36,10 +36,11 @@ public class ITerminalimpl implements ITerminal {
         return false;
     }
 
-    //@Override
-    //public boolean logOut(Salesman salesman) {
-    //  return false;
-    //}
+    @Override
+    public boolean logOut() {
+        user = null;
+        return true;
+    }
 
     @Override
     public boolean addProduct(int id, Product product) {
@@ -58,9 +59,8 @@ public class ITerminalimpl implements ITerminal {
     }
 
     @Override
-    public boolean newBill(){
-        Bill tmpBill = new Bill();
-        return appDB.saveBill(tmpBill);
+    public boolean openBill(Bill bill) {
+        return appDB.saveBill(bill);
     }
 
     @Override
@@ -87,15 +87,15 @@ public class ITerminalimpl implements ITerminal {
 
     @Override
     public void getTopSalesman() {
-        Map<Salesman, List<Bill>> groupBill =  appDB.getBills()
+        Map<Salesman, List<Bill>> groupBill = appDB.getBills()
                 .stream()
                 .collect(Collectors.groupingBy(Bill::getSalesman));
 
-        for (Map.Entry <Salesman ,List<Bill>> item: groupBill.entrySet()){
+        for (Map.Entry<Salesman, List<Bill>> item : groupBill.entrySet()) {
             System.out.println(item.getKey().getFullName());
             item.getValue().stream()
                     .forEach(s -> System.out.println("ID Bill " + s.getId()
-                            + " Avarage"  + s.getEverageBill()));
+                            + " Avarage" + s.getEverageBill()));
 
 
             System.out.println(" ");

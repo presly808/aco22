@@ -50,25 +50,34 @@ public class ITerminalimplTest {
         t1.createSalesMan("andrii","304FF76v","Andrii Smikhun");
         Assert.assertTrue(t1.login("andrii","304FF76v"));
         Assert.assertFalse(t1.login("andrii","304FF76"));
+    }
 
-
+    @Test
+    public void logOut()  {
+        t1.login("andrii","304FF76v");
+        Assert.assertTrue(t1.logOut());
     }
 
     @Test
     public void addProduct() {
         b1.setId(1);
-
+        t1.openBill(b1);
         Assert.assertTrue(t1.addProduct(1,p1));
 
     }
 
     @Test
-    public void deleteProduct() throws Exception {
+    public void deleteProduct() {
+        b1.setId(1);
+        t1.openBill(b1);
+        t1.addProduct(1,p1);
+        Assert.assertTrue(t1.deleteProduct(1,p1));
+        Assert.assertFalse(t1.deleteProduct(1,p2));
     }
 
     @Test
-    public void newBill()throws Exception{
-        Assert.assertTrue(t1.newBill());
+    public void openBill(){
+        Assert.assertTrue(t1.openBill(b1));
     }
 
     @Test
@@ -76,7 +85,9 @@ public class ITerminalimplTest {
     }
 
     @Test
-    public void closeBill() throws Exception {
+    public void closeBill(){
+        t1.openBill(b1);
+        Assert.assertTrue(t1.closeBill(b1));
     }
 
     @Test
