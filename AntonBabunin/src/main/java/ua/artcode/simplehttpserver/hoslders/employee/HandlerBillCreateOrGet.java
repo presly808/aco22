@@ -9,12 +9,9 @@ import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.json.BillJson;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -114,9 +111,7 @@ public class HandlerBillCreateOrGet implements HttpHandler {
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Bill.class, new BillJson());
-        Employee salesman = HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
-
-        System.out.println("asd");
+        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
 
         int  id = Integer.parseInt(request.split("\\?")[1].
                 split("=")[1]);

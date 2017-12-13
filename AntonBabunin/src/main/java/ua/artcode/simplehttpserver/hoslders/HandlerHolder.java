@@ -1,11 +1,20 @@
 package ua.artcode.simplehttpserver.hoslders;
 
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.market.controllers.TerminalControllerFactory;
+import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
+import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.interfaces.ITerminalController;
+import ua.artcode.market.json.BillJson;
+import ua.artcode.market.json.ProductJson;
+import ua.artcode.market.models.AbstractProduct;
+import ua.artcode.market.models.Bill;
+import ua.artcode.market.models.Product;
 
 import java.io.*;
+import java.util.List;
 
 public class HandlerHolder implements HttpHandler {
 
@@ -37,6 +46,32 @@ public class HandlerHolder implements HttpHandler {
             fis.close();
             os.close();
         }
+    }
 
+    public static void token(HttpExchange httpExchange) throws LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption {
+        if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
+        List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
+
+        if (tokenList == null || tokenList.isEmpty()) throw new LoginOrPasswordNotFoundException();
+        String userToken = tokenList.get(tokenList.size()-1);
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Bill.class, new BillJson());
+        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
+    }
+
+    public static AbstractProduct productFromJson(HttpExchange httpExchange) {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(httpExchange.getRequestBody()));
+        String stringBody = null;
+        try {
+            stringBody = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(AbstractProduct.class, new ProductJson());
+        return builder.create().fromJson(stringBody, Product.class);
     }
 }
