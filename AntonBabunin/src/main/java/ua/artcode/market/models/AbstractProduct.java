@@ -3,8 +3,10 @@ package ua.artcode.market.models;
 import ua.artcode.market.models.money.Money;
 import ua.artcode.market.utils.Generator;
 
-public abstract class AbstractProduct {
-    private transient int id;
+import java.io.Serializable;
+
+public abstract class AbstractProduct implements Serializable {
+    private int id;
     private String name;
     private Money price;
 

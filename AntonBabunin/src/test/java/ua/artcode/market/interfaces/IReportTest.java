@@ -63,12 +63,12 @@ public class IReportTest {
         department.getEmployeeList().add(saller1);
         Bill bill1 = new Bill();
         bill1.setAmountPrice(new Money(1000,0));
-        bill1.setSalesman(headOfSalesmen1);
+        bill1.setEmployee(headOfSalesmen1);
         iAppDb.saveBill(bill1);
 
         Bill bill2 = new Bill();
         bill2.setAmountPrice(new Money(1000,0));
-        bill2.setSalesman(saller1);
+        bill2.setEmployee(saller1);
         iAppDb.saveBill(bill2);
 
         IReport iReport = new IReportImpl(iAppDb);

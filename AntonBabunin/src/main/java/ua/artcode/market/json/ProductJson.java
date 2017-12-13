@@ -20,8 +20,7 @@ public class ProductJson
         int moneyFraction = object.get("moneyFraction").getAsInt();
         Money price = new Money(moneyWholePart, moneyFraction);
         AbstractProduct product = new Product(name, price);
-        System.out.printf("%d, %s, %s", product.getId(), product.getName(),
-                product.getPrice().toString());
+
         return product;
     }
 

@@ -104,4 +104,9 @@ return null;
         }*/
         return iAppDb.findSalesmanByLogin(login);
     }
+
+    @Override
+    public Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+        return iAppDb.findSalesmanByToken(userToken);
+    }
 }

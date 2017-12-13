@@ -62,6 +62,11 @@ public class IAppDbProxy implements IAppDb, ILogging{
     }
 
     @Override
+    public Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+        return iLogging.findSalesmanByToken(userToken);
+    }
+
+    @Override
     public List<Bill> filter(Employee salesman, Product product,
                             LocalDateTime startDate, LocalDateTime endDate,
                             Comparator<Bill> billComparator)

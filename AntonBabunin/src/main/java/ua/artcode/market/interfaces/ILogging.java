@@ -18,4 +18,6 @@ public interface ILogging {
     Employee login(String login, String password) throws IOException;
     Salesman logout(Salesman salesman) throws IOException;
     Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+
+    Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 }

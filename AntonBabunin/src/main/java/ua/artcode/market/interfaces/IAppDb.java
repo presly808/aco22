@@ -34,7 +34,7 @@ public interface IAppDb {
                             Money salary) throws IOException;
 
     Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
-
+    Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
     List<Bill> filter(Employee salesman, Product product,
                       LocalDateTime startDate, LocalDateTime endDate,
                       Comparator<Bill> billComparator) throws NullArgumentException;

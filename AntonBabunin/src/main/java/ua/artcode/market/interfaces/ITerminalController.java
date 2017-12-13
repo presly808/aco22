@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ITerminalController {
 
-    Bill createBill() throws IOException;
+    Bill createBill(Employee employee) throws IOException;
 
     Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException;
 
@@ -33,4 +33,6 @@ public interface ITerminalController {
     Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
     Employee login (String login, String password) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
     Employee login (Employee employee) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+
+    Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 }

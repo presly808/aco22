@@ -181,10 +181,10 @@ public class ITerminalControllerTest {
         terminalController.addProduct(bill4.getId(), product3);
         terminalController.addProduct(bill4.getId(), product1);
 
-        bill3.setSalesman(salesman3);
-        bill2.setSalesman(salesman2);
-        bill1.setSalesman(salesman1);
-        bill4.setSalesman(salesman1);
+        bill3.setEmployee(salesman3);
+        bill2.setEmployee(salesman2);
+        bill1.setEmployee(salesman1);
+        bill4.setEmployee(salesman1);
 
 
 

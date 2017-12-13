@@ -69,8 +69,15 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill createBill() throws IOException {
-        Bill bill = new Bill();
+    public Employee findSalesmanByToken(String userToken)
+            throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
+        return iAppDb.findSalesmanByToken(userToken);
+    }
+
+    @Override
+    public Bill createBill(Employee employee) throws IOException {
+        Bill bill = new Bill(employee);
         bill.setOpenTime(LocalDateTime.now());
         return iAppDb.saveBill(bill);
     }

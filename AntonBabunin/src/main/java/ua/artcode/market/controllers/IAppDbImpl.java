@@ -86,7 +86,8 @@ public class IAppDbImpl implements IAppDb {
     @Override
     public Bill saveBill(Bill bill) throws IllegalArgumentException {
         if (bill == null) throw new IllegalArgumentException();
-            bill.setId(++billNextId);
+        bill.setId(++billNextId);
+
             bills.add(bill);
             return bill;
     }
@@ -96,7 +97,7 @@ public class IAppDbImpl implements IAppDb {
             throws IllegalArgumentException {
         if (product == null) throw new IllegalArgumentException();
         product.setId(++productNextId);
-        products.putIfAbsent(product, 0);
+        products.putIfAbsent(product, 1);
         return product;
     }
 
@@ -130,6 +131,21 @@ public class IAppDbImpl implements IAppDb {
         return employeeList.stream().
                 filter(employee -> employee.getLogin().
                         equals(login)).findFirst().
+                orElseThrow(LoginOrPasswordNotFoundException::new);
+    }
+
+    @Override
+    public Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption,
+            LoginOrPasswordNotFoundException {
+        if (userToken == null || userToken.isEmpty())
+            throw new LoginOrPasswordArgumentExeption();
+
+        if (employeeList == null || employeeList.isEmpty())
+            throw new LoginOrPasswordNotFoundException();
+
+        return employeeList.stream().
+                filter(employee -> userToken.
+                        equals(employee.getToken())).findFirst().
                 orElseThrow(LoginOrPasswordNotFoundException::new);
     }
 
@@ -181,7 +197,7 @@ public class IAppDbImpl implements IAppDb {
         if (salesman == null) throw new NullArgumentException();
 
         return listBills.stream().filter(bill ->
-                bill.getSalesman().equals(salesman)).
+                bill.getEmployee().equals(salesman)).
                 collect(Collectors.toList());
     }
 

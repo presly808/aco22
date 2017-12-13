@@ -33,13 +33,13 @@ public class HandlerLoginPost implements HttpHandler {
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(Employee.class, new SalesmanJson());
             Employee seller = builder.create().fromJson(line, Salesman.class);
-
             String response = "";
             try {
                 seller = HandlerHolder.getiTerminalController().login(seller);
 
                 Gson gson = new Gson();
-                response = String.format("{\"token\":%s}", gson.toJson(seller.getToken()));
+                response = String.format("{\"token\":%s}",
+                        gson.toJson(seller.getToken()));
                 System.out.println(response);
                 httpExchange.sendResponseHeaders(200, response.length());
 
