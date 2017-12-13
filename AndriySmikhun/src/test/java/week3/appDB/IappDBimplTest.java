@@ -1,9 +1,6 @@
 package week3.appDB;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import week3.model.Bill;
 import week3.model.Product;
 import week3.model.Salesman;

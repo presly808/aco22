@@ -1,14 +1,16 @@
 package httpServer;
 
-import com.sun.deploy.net.HttpRequest;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-
+import com.google.gson.Gson;
+import week3.model.Product;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+
 
 
 
@@ -20,7 +22,7 @@ public class http {
         server.setExecutor(null);
         server.start();
         System.out.println("Server is runing");
-        server.createContext("/hello", new myHello());
+        //server.createContext("/hello", new myHello());
     }
 
     static class MyHandler implements HttpHandler {
@@ -29,9 +31,13 @@ public class http {
 
             if(t.getRequestMethod().equals("GET")){
                 String response = "Hello Get";
-                t.sendResponseHeaders(200, response.length());
+                Gson gson = new Gson();
+                Product pr = new Product(1,"jsdvhjsdvdj",25.0);
+                String json = gson.toJson(pr);
+
+                t.sendResponseHeaders(200, json.length());
                 OutputStream os = t.getResponseBody();
-                os.write(response.getBytes());
+                os.write(json.getBytes());
                 os.close();
             } else {
 
