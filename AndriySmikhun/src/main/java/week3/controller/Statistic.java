@@ -9,8 +9,8 @@ import java.util.List;
 public class Statistic {
 
 
-    public static double treeMan(IappDB db,Salesman root) throws Exception{
-        if (root == null) throw new Exception(" Root is null");
+    public static double treeMan(IappDB db,Salesman root) {
+        //if (root == null) throw new Exception(" Root is null");
         double sum = 0;
         List<Salesman> slaves = root.slaves;
         if (slaves == null) {

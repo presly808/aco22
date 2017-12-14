@@ -14,10 +14,6 @@ public class Worker {
 
     }
 
-    public void showByName(List<Worker> users) {
-        users.stream()
-                .forEach(s -> System.out.println(s));
-    }
 
     public void filterByCityAndAge() {
         users.stream().filter(s -> s.getSity().equals("Kyiv") && (s.getAge() >= 25 || s.getAge() >= 30))
@@ -84,12 +80,5 @@ class CompareUserBySalery implements Comparator<User> {
             return 0;
         }
         return salery;
-    }
-}
-
-class CompareUserByName implements Comparator<User> {
-    @Override
-    public int compare(User o1, User o2) {
-        return o1.getName().compareTo(o2.getName());
     }
 }

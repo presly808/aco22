@@ -14,14 +14,15 @@ public class ITerminalimpl implements ITerminal {
 
 
     private IappDB appDB;
-    private String user;
+    private Salesman user;
 
     /*public ITerminalimpl() {
         appDB = new IappDBimpl();
     }*/
 
-    public ITerminalimpl(IappDB appDB) {
+    public ITerminalimpl(IappDB appDB, Salesman salesman) {
         this.appDB = appDB;
+        this.user = salesman;
     }
 
     @Override
@@ -30,7 +31,6 @@ public class ITerminalimpl implements ITerminal {
                 .stream()
                 .anyMatch(s -> s.getLogin().equals(login) && s.getPassword().equals(password));
         if (status) {
-            user = login;
             return true;
         }
         return false;
@@ -60,6 +60,7 @@ public class ITerminalimpl implements ITerminal {
 
     @Override
     public boolean openBill(Bill bill) {
+        bill.setSalesman(user);
         return appDB.saveBill(bill);
     }
 

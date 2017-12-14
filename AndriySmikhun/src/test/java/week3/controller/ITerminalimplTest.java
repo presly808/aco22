@@ -28,7 +28,7 @@ public class ITerminalimplTest {
         s3 = new Salesman(9,"sss3","ddd4", "Fullname3");
         s4 = new Salesman(4,"sss4","ddd5", "Fullname4");
 
-        //m1  = new Salesman( 1, "Manager", "30FF76v", "Manager1", Arrays.asList(s1,s2) );
+       // m1  = new Salesman( 1, "Manager", "30FF76v", "Manager1", Arrays.asList(s1,s2) );
        // m2 = new Salesman(2,"Man2", "1234567", "Manager2",Arrays.asList(s3,s4));
        // d = new Salesman(5,"Director", "dir123", "Starshoy", Arrays.asList(m1,m2));
 
@@ -41,8 +41,10 @@ public class ITerminalimplTest {
         b1 = new Bill();
         b2 = new Bill();
         b3 = new Bill();
+        ITerminal tr = new ITerminalimpl(db,s1);
+        t1 = new ProxyLogTerminal(tr) {
+        };
 
-        t1 = new ITerminalimpl(db);
     }
 
     @Test
@@ -71,7 +73,7 @@ public class ITerminalimplTest {
         b1.setId(1);
         t1.openBill(b1);
         t1.addProduct(1,p1);
-        Assert.assertTrue(t1.deleteProduct(1,p1));
+        //Assert.assertTrue(t1.deleteProduct(1,p1));
         Assert.assertFalse(t1.deleteProduct(1,p2));
     }
 

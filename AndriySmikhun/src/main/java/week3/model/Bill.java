@@ -59,6 +59,10 @@ public class Bill {
         this.openTime = openTime;
     }
 
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

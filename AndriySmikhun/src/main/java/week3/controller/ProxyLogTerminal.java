@@ -1,5 +1,6 @@
 package week3.controller;
 
+import week3.appDB.IappDB;
 import week3.model.Product;
 import week3.model.Bill;
 import week3.model.Salesman;
@@ -7,14 +8,14 @@ import week3.model.Salesman;
 public class ProxyLogTerminal implements ITerminal {
 
     private ITerminal realterminal;
+    public IappDB iappDB;
 
-    public ProxyLogTerminal() {
-    }
+   // public ProxyLogTerminal() {
+   // }
 
     public ProxyLogTerminal(ITerminal realterminal) {
         this.realterminal = realterminal;
     }
-
     private Log loger = Log.getLog();
 
     @Override
