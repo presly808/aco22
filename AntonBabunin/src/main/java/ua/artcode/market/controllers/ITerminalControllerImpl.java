@@ -3,6 +3,7 @@ package ua.artcode.market.controllers;
 import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ITerminalController;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
@@ -83,7 +84,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product)
+    public Bill addProduct(int billId, AbstractProduct product)
             throws IOException, BillNotFoundException {
         Bill bill = iAppDb.findBillById(billId);
 

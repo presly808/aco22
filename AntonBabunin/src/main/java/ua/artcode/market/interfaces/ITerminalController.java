@@ -1,6 +1,7 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.exclude.exception.*;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -13,7 +14,7 @@ public interface ITerminalController {
 
     Bill createBill(Employee employee) throws IOException;
 
-    Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException;
+    Bill addProduct(int billId, AbstractProduct product) throws IOException, BillNotFoundException;
 
     List<Bill> getBills();
 

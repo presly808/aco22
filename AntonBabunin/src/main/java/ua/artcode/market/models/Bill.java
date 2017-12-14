@@ -11,7 +11,7 @@ public class Bill implements Comparable<Bill> {
 
 
     private transient int id;
-    private transient Map<Product, Integer> productsMap;
+    private transient Map<AbstractProduct, Integer> productsMap;
     private Employee employee;
     private transient Money amountPrice;
 
@@ -33,7 +33,7 @@ public class Bill implements Comparable<Bill> {
         this.id = id;
     }
 
-    public Map<Product, Integer> getProductsMap() {
+    public Map<AbstractProduct, Integer> getProductsMap() {
         return productsMap;
     }
 
