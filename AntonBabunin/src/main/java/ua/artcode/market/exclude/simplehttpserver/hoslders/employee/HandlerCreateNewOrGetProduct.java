@@ -25,7 +25,7 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
         String response = "";
 
         if (httpExchange.getRequestMethod().equals("POST") &&
-                request.equals("/employee/product")) {
+                "/employee/product".equals(request)) {
             try {
                 response = postAddProduct(httpExchange);
                 httpExchange.sendResponseHeaders(200, response.length());

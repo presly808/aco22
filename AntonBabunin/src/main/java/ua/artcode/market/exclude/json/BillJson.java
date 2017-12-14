@@ -18,7 +18,7 @@ public class BillJson
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
 //        int id = object.get("id").getAsInt();
-        JsonObject productsMap = object.get("productsMap").getAsJsonObject();
+//        JsonObject productsMap = object.get("productsMap").getAsJsonObject();
 //        Product product = productsMap.get("product").getAsJsonObject();
         JsonObject employeeObj = object.get("employee").getAsJsonObject();
 //        JsonObject money = object.getAsJsonObject("amountPrice").getAsJsonObject();
@@ -35,7 +35,7 @@ public class BillJson
         } catch (LoginOrPasswordNotFoundException e) {
             e.printStackTrace();
         }
-        Bill bill = new Bill(employee);
+        return new Bill(employee);
 
 
 /*        String name = object.get("name").getAsString();
@@ -44,7 +44,6 @@ public class BillJson
         Money price = new Money(moneyWholePart, moneyFraction);
         AbstractProduct product = new Product(name, price);*/
 
-        return bill;
     }
 
     @Override

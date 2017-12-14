@@ -7,7 +7,6 @@ import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.exclude.exception.ProductNotFoundException;
 import ua.artcode.market.models.AbstractProduct;
-import ua.artcode.market.models.Bill;
 import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.BufferedReader;
@@ -23,7 +22,7 @@ public class HandlerAddProductToBill implements HttpHandler {
         String request = httpExchange.getRequestURI().toString();
         String response = "";
 
-        if (request.equals("/employee/bill/addproduct") &&
+        if ("/employee/bill/addproduct".equals(request) &&
                 httpExchange.getRequestMethod().equals("POST")) {
             try {
                 response = postAddProductToBill(httpExchange);

@@ -32,7 +32,7 @@ public class HandlerHolder implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String request = httpExchange.getRequestURI().toString();
-        if (request.equals("/") &&
+        if ("/".equals(request) &&
                 httpExchange.getRequestMethod().equals("GET")) {
             File file = new File("\\Projects\\Java\\Gesserok\\aco22\\" +
                     "AntonBabunin\\html\\index.html");
