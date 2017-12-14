@@ -1,6 +1,6 @@
-package ua.artcode.market.view;
+package ua.artcode.market.exclude;
 
-import ua.artcode.simplehttpserver.SimpleHttpServer;
+import ua.artcode.market.exclude.simplehttpserver.SimpleHttpServer;
 
 public class ServerStart {
 

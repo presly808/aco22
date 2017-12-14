@@ -187,7 +187,7 @@ public class IAppDbProxy implements IAppDb, ILogging{
     @Override
     public Employee createSalesman(String fullName, String login,
                                    String password, Money salary)
-            throws IOException {
+            throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
         boolean result = false;
         Employee salesman = iLogging.createSalesman(fullName, login, password, salary);
         if (salesman != null) {

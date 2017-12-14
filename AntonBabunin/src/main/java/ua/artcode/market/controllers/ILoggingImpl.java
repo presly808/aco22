@@ -57,16 +57,15 @@ public class ILoggingImpl implements ILogging {
 
     @Override
     public Employee createSalesman(String fullName, String login,
-                                   String password, Money salary) {
-/*        Employee salesman = null;
+                                   String password, Money salary) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
+        Employee salesman = null;
         Employee seller = findSalesmanByLogin(login);
         if (seller == null) {
             salesman = new Salesman(fullName, login, password,
                     new Money(123,12));
             iAppDb.getEmployee().add(salesman);
         }
-        return salesman;*/
-return null;
+        return salesman;
     }
 
     @Override

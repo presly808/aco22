@@ -1,4 +1,4 @@
-package ua.artcode.market.json;
+package ua.artcode.market.exclude.json;
 
 import com.google.gson.*;
 import ua.artcode.market.models.AbstractProduct;

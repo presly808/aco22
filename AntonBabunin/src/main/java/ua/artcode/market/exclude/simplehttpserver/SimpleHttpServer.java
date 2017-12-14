@@ -1,8 +1,8 @@
-package ua.artcode.simplehttpserver;
+package ua.artcode.market.exclude.simplehttpserver;
 
 import com.sun.net.httpserver.HttpServer;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
-import ua.artcode.simplehttpserver.hoslders.employee.*;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.employee.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

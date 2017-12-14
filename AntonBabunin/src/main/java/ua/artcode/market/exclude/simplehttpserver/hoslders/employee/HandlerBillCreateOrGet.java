@@ -1,4 +1,4 @@
-package ua.artcode.simplehttpserver.hoslders.employee;
+package ua.artcode.market.exclude.simplehttpserver.hoslders.employee;
 
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
@@ -6,15 +6,14 @@ import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.market.exclude.exception.BillNotFoundException;
 import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
-import ua.artcode.market.json.BillJson;
+import ua.artcode.market.exclude.json.BillJson;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 public class HandlerBillCreateOrGet implements HttpHandler {
     public HandlerBillCreateOrGet() throws IOException {

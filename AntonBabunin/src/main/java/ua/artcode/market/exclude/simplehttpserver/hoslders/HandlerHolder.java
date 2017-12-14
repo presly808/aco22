@@ -1,4 +1,4 @@
-package ua.artcode.simplehttpserver.hoslders;
+package ua.artcode.market.exclude.simplehttpserver.hoslders;
 
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
@@ -7,13 +7,12 @@ import ua.artcode.market.controllers.TerminalControllerFactory;
 import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.interfaces.ITerminalController;
-import ua.artcode.market.json.BillJson;
-import ua.artcode.market.json.ProductJson;
+import ua.artcode.market.exclude.json.BillJson;
+import ua.artcode.market.exclude.json.ProductJson;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
 
 import java.io.*;
 import java.util.List;

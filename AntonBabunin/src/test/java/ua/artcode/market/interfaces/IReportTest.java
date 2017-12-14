@@ -41,7 +41,6 @@ public class IReportTest {
 
         Employee saller1 = new Salesman("1", "1", "1", new Money(1,1));
 
-        headOfSalesmen1.setConnected(true);
         headOfSalesmen1.setSubordinateList(new ArrayList<>());
         headOfSalesmen1.getSubordinateList();
         headOfSalesmen1.getSalary();
@@ -61,12 +60,12 @@ public class IReportTest {
         department.getEmployeeList().add(headOfSalesmen1);
         department.getEmployeeList().add(headOfSalesmen2);
         department.getEmployeeList().add(saller1);
-        Bill bill1 = new Bill();
+        Bill bill1 = new Bill(headOfSalesmen1);
         bill1.setAmountPrice(new Money(1000,0));
         bill1.setEmployee(headOfSalesmen1);
         iAppDb.saveBill(bill1);
 
-        Bill bill2 = new Bill();
+        Bill bill2 = new Bill(saller1);
         bill2.setAmountPrice(new Money(1000,0));
         bill2.setEmployee(saller1);
         iAppDb.saveBill(bill2);

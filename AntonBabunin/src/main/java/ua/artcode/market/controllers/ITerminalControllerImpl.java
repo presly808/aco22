@@ -31,7 +31,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     @Override
     public Employee createSalesman(String fullName, String login,
                                    String password, Money salary)
-            throws IOException {
+            throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
         return iAppDb.createSalesman(fullName, login, password, salary);
     }
 

@@ -1,4 +1,4 @@
-package ua.artcode.simplehttpserver.hoslders.employee;
+package ua.artcode.market.exclude.simplehttpserver.hoslders.employee;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -8,7 +8,7 @@ import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.exclude.exception.ProductNotFoundException;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package ua.artcode.simplehttpserver.hoslders.employee;
+package ua.artcode.market.exclude.simplehttpserver.hoslders.employee;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,10 +6,10 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
-import ua.artcode.market.json.SalesmanJson;
+import ua.artcode.market.exclude.json.SalesmanJson;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -31,7 +31,7 @@ public interface IAppDb {
     Bill update(Bill bill) throws IOException, BillNotFoundException;
 
     Employee createSalesman(String fullName, String login, String password,
-                            Money salary) throws IOException;
+                            Money salary) throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 
     Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
     Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;

@@ -1,19 +1,13 @@
-package ua.artcode.market.json;
+package ua.artcode.market.exclude.json;
 
 import com.google.gson.*;
 import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
-import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Employee;
-import ua.artcode.market.models.employee.Salesman;
-import ua.artcode.market.models.money.Money;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BillJson
         implements JsonSerializer<Bill>,

@@ -1,22 +1,18 @@
-package ua.artcode.simplehttpserver.hoslders.employee;
+package ua.artcode.market.exclude.simplehttpserver.hoslders.employee;
 
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ua.artcode.market.exclude.exception.*;
-import ua.artcode.market.json.BillJson;
-import ua.artcode.market.json.ProductJson;
+import ua.artcode.market.exclude.json.ProductJson;
 import ua.artcode.market.models.AbstractProduct;
-import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
-import ua.artcode.market.models.employee.Employee;
-import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
+import ua.artcode.market.exclude.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.List;
 
 public class HandlerCreateNewOrGetProduct implements HttpHandler {
     public HandlerCreateNewOrGetProduct() throws IOException {
