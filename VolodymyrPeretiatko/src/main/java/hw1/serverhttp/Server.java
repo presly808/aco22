@@ -1,60 +1,83 @@
 package hw1.serverhttp;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import com.sun.net.httpserver.HttpExchange;
 import hw1.controller.ITerminal;
+import hw1.controller.ProxyLoggerTerminal;
+import hw1.model.Bill;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 public class Server {
 
     private static ITerminal mainController;
 
+    private static Gson gson = new Gson();
+
     public static void main(String[] args) throws Exception {
 
-        //mainController = new ;
+        //Controller
+        mainController = new ProxyLoggerTerminal();
 
+        //Server
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/", new MyHandler());
+
+        server.createContext("/login",   new LoginHandler());
+        server.createContext("/getBill", new GetBillHandler());
+
         server.setExecutor(null); // creates a default executor
         server.start();
     }
 
-    static class MyHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange t) throws IOException {
-            String response = "Hello my dear shitcoder!";
-            //try {
-            //    response = new String(Files.readAllBytes(Paths.get("/index.html")));
-            //} catch (Exception e){
-            //    System.out.println("Something go wrong");
-            //    e.printStackTrace();
-            //}
+    static private void sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
 
-            try {
-                Files.walk(Paths.get("/"))
-                        .filter(Files::isRegularFile)
-                        .map(Path::toFile)
-                        .forEach(System.out::println);
-            } catch (Exception e){
-               System.out.println("Something go wrong");
-                e.printStackTrace();
+        http.sendResponseHeaders(responseCode, response.length());
+
+        OutputStream os = http.getResponseBody();
+        os.write(response.getBytes());
+
+        os.flush();
+        os.close();
+    }
+
+    static class GetBillHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange http) throws IOException {
+
+            if (!"GET".equals(http.getRequestMethod())) {
+                sendResponse(http, 400, "Boris: -fuck you!");
             }
 
+            String request  = http.getRequestURI().getQuery();
+            int itemId = Integer.parseInt(request.replaceAll("id=", ""));
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            Bill bill = mainController.findBillById(itemId);
+            sendResponse(http, 200, gson.toJson(bill));
+        }
+    }
+
+    static class LoginHandler implements HttpHandler {
+
+        @Override
+        public void handle(HttpExchange http) throws IOException {
+
+            if (!"POST".equals(http.getRequestMethod())) {
+                sendResponse(http, 400, "Boris: -fuck you!");
+            }
+
+            String result = new BufferedReader(new InputStreamReader(http.getRequestBody()))
+                                                   .lines()
+                                                   .collect(Collectors.joining("\n"));
+            System.out.println(result);
+
         }
     }
 
