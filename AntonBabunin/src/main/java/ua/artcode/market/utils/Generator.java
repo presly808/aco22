@@ -46,15 +46,6 @@ public class Generator {
         List<Employee> salesmanList = new ArrayList<>();
         return salesmanList;
     }
-/*
-    private static Salesman createRandomSalesman() {
-        Salesman salesman = new Salesman();
-        salesman.setFullName(generateName(10));
-        salesman.setLogin(generateName(5));
-        salesman.setPassword(generateName(6));
-        salesman.setSalary(new Money((int)(Math.random()*1000), (int)(Math.random()*99)));
-        return salesman;
-    }*/
 
     public static List<Employee> createSubordinateList() {
         return new ArrayList<>();
