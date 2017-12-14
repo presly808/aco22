@@ -44,8 +44,8 @@ public class HandlerBillCreateOrGet implements HttpHandler {
                 outputStream.close();
             }
         }
-        if (httpExchange.getRequestMethod().equals("GET") &&
-                request.startsWith("/employee/bill")) {
+        if (request.startsWith("/employee/bill") &&
+                httpExchange.getRequestMethod().equals("GET")) {
             try {
                 response = getGetBill(httpExchange, request);
                 System.out.println(response);
@@ -73,8 +73,8 @@ public class HandlerBillCreateOrGet implements HttpHandler {
             throws IOException, LoginOrPasswordArgumentExeption,
             LoginOrPasswordNotFoundException {
 
-//        Employee salesman = HandlerHolder.token(httpExchange);
-        Employee salesman = new Salesman("asd","asd");
+        Employee salesman = HandlerHolder.token(httpExchange);
+//        Employee salesman = new Salesman("asd","asd");
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Bill.class, new BillJson());
         Bill bill = HandlerHolder.getiTerminalController().createBill(salesman);

@@ -23,10 +23,10 @@ public class HandlerAddProductToBill implements HttpHandler {
         String request = httpExchange.getRequestURI().toString();
         String response = "";
 
-        if (httpExchange.getRequestMethod().equals("POST") &&
-                request.equals("/employee/bill/addproduct")) {
+        if (request.equals("/employee/bill/addproduct") &&
+                httpExchange.getRequestMethod().equals("POST")) {
             try {
-                response = postAddProductToBill(httpExchange, request);
+                response = postAddProductToBill(httpExchange);
                 httpExchange.sendResponseHeaders(200,response.length());
             } catch (LoginOrPasswordArgumentExeption e) {
                 e.printStackTrace();
@@ -55,21 +55,29 @@ public class HandlerAddProductToBill implements HttpHandler {
 
     }
 
-    private String postAddProductToBill(HttpExchange httpExchange, String request) throws IOException, LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption, ProductNotFoundException, BillNotFoundException {//
+    private String postAddProductToBill(HttpExchange httpExchange)
+            throws IOException, LoginOrPasswordNotFoundException,
+            LoginOrPasswordArgumentExeption, ProductNotFoundException,
+            BillNotFoundException {//
 //        HandlerHolder.token(httpExchange);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(httpExchange.getRequestBody()));
         String line = reader.readLine();
-        System.out.println(line);
+
         int billId = Integer.parseInt(line.split(",")[0].
                 split(":")[1].replaceAll("\"", ""));
         int productId = Integer.parseInt(line.split(",")[1].split(":")[1].
                 replaceAll("\"", "").replaceAll("}", ""));
-        AbstractProduct productJson = HandlerHolder.getiTerminalController().getIAppDb().findProductById(productId);
-//        Bill bill = HandlerHolder.getiTerminalController().getIAppDb().findBillById(billId);
-        Bill addedProduct = HandlerHolder.getiTerminalController().addProduct(billId, productJson);
 
-        return productJson.toString().concat(" added");
+        AbstractProduct productJson =
+                HandlerHolder.getiTerminalController().
+                        getIAppDb().findProductById(productId);
+
+//        Bill bill = HandlerHolder.getiTerminalController().
+// getIAppDb().findBillById(billId);
+        return  HandlerHolder.getiTerminalController().
+                addProduct(billId, productJson).toString();
     }
 
 }

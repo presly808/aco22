@@ -17,13 +17,13 @@ public class BillJson
                                        JsonDeserializationContext jsonDeserialContext)
             throws JsonParseException {
         JsonObject object = jsonElement.getAsJsonObject();
-        int id = object.get("id").getAsInt();
+//        int id = object.get("id").getAsInt();
         JsonObject productsMap = object.get("productsMap").getAsJsonObject();
 //        Product product = productsMap.get("product").getAsJsonObject();
         JsonObject employeeObj = object.get("employee").getAsJsonObject();
-        JsonObject money = object.getAsJsonObject("amountPrice").getAsJsonObject();
-        JsonObject openTime = object.getAsJsonObject("openTime").getAsJsonObject();
-        JsonObject closeTime = object.getAsJsonObject("closeTime").getAsJsonObject();
+//        JsonObject money = object.getAsJsonObject("amountPrice").getAsJsonObject();
+//        JsonObject openTime = object.getAsJsonObject("openTime").getAsJsonObject();
+//        JsonObject closeTime = object.getAsJsonObject("closeTime").getAsJsonObject();
 
 
         String employeeStr = employeeObj.get("login").getAsString();

@@ -8,9 +8,7 @@ import ua.artcode.market.controllers.ITerminalControllerImpl;
 import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
-import ua.artcode.market.models.Product;
 import ua.artcode.market.models.employee.Salesman;
-import ua.artcode.market.utils.Generator;
 
 import static org.junit.Assert.*;
 
@@ -32,10 +30,10 @@ public class IAppDbTest {
 
     @Test
     public void findBillById() throws Exception {
-        Bill bill1 = iTerminalController.createBill(new Salesman());
-        Bill bill2 = iTerminalController.createBill(new Salesman());
+        iTerminalController.createBill(new Salesman());
+        iTerminalController.createBill(new Salesman());
         Bill bill3 = iTerminalController.createBill(new Salesman());
-        Bill bill4 = iTerminalController.createBill(new Salesman());
+        iTerminalController.createBill(new Salesman());
 //        System.out.println(bill1.toString() + bill2.toString() +
 //                bill4.toString());
         Bill bill = iAppDb.findBillById(3);

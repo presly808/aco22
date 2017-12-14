@@ -8,10 +8,6 @@ public class Product extends AbstractProduct {
         super(name,price);
     }
 
-    public Product (int id, String name, Money price) {
-        super(id,name,price);
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

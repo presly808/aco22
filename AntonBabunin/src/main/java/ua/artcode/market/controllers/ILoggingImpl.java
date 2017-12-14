@@ -1,20 +1,16 @@
 package ua.artcode.market.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.IADD;
 import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
 import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.ILogging;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.employee.Salesman;
-//import ua.artcode.market.models.money.Salary;
 import ua.artcode.market.models.money.Money;
-import ua.artcode.market.utils.Generator;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 public class ILoggingImpl implements ILogging {
 
@@ -79,7 +75,7 @@ public class ILoggingImpl implements ILogging {
         }
         seller.setIsConnected(true);
         return seller;*/
-return null;
+        return null;
     }
 
     @Override

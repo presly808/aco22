@@ -45,8 +45,8 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
             }
         }
 
-        if (httpExchange.getRequestMethod().equals("GET") &&
-                request.startsWith("/employee/product")) {
+        if (request.startsWith("/employee/product") &&
+                httpExchange.getRequestMethod().equals("GET")) {
             try {
                 response = getProduct(httpExchange, request);
                 httpExchange.sendResponseHeaders(200, response.length());

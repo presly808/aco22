@@ -11,11 +11,6 @@ public abstract class AbstractProduct implements Serializable {
     private Money price;
 
     public AbstractProduct (String name, Money price) {
-        this.setName(name);
-        this.setPrice(price);
-    }
-
-    public AbstractProduct (int id, String name, Money price) {
         this.setId(Generator.createProductId());
         this.setName(name);
         this.setPrice(price);

@@ -55,17 +55,16 @@ public class IAppDbImpl implements IAppDb {
 
     @Override
     public Bill findBillById(int id) throws BillNotFoundException {
-            return this.bills.stream().
-                    filter(billE -> billE.getId() == id).findFirst().
-                    orElseThrow(BillNotFoundException::new);
+        return this.bills.stream().filter(billE -> billE.getId() == id).
+                findFirst().orElseThrow(BillNotFoundException::new);
     }
 
     @Override
     public AbstractProduct findProductById(int id)
             throws ProductNotFoundException {
-            return this.products.keySet().stream().
-                    filter(product -> product.getId() == id).findFirst().
-                    orElseThrow(ProductNotFoundException::new);
+        return this.products.keySet().stream().
+                filter(product -> product.getId() == id).findFirst().
+                orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
@@ -128,9 +127,8 @@ public class IAppDbImpl implements IAppDb {
         if (employeeList == null || employeeList.isEmpty())
             throw new LoginOrPasswordNotFoundException();
 
-        return employeeList.stream().
-                filter(employee -> employee.getLogin().
-                        equals(login)).findFirst().
+        return employeeList.stream().filter(employee -> employee.getLogin().
+                equals(login)).findFirst().
                 orElseThrow(LoginOrPasswordNotFoundException::new);
     }
 
