@@ -9,6 +9,7 @@ import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
 import ua.artcode.market.json.BillJson;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
 import ua.artcode.simplehttpserver.hoslders.HandlerHolder;
 
 import java.io.IOException;
@@ -73,56 +74,32 @@ public class HandlerBillCreateOrGet implements HttpHandler {
             throws IOException, LoginOrPasswordArgumentExeption,
             LoginOrPasswordNotFoundException {
 
-        System.out.println(httpExchange.getRequestHeaders().entrySet());
-        if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
-        List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
-
-        if (tokenList == null || tokenList.isEmpty()) throw new LoginOrPasswordNotFoundException();
-        String userToken = tokenList.get(tokenList.size()-1);
-
-
+//        Employee salesman = HandlerHolder.token(httpExchange);
+        Employee salesman = new Salesman("asd","asd");
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Bill.class, new BillJson());
-        Employee salesman = HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
         Bill bill = HandlerHolder.getiTerminalController().createBill(salesman);
 
-
         String response = "";
-//        try {
-//            bill = HandlerHolder.getiTerminalController().
-//                    getIAppDb().saveBill(bill);
-            response = builder.create().toJson(bill);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            response = e.toString();
-//            httpExchange.sendResponseHeaders(404, response.length());
-//        }
+
+        response = builder.create().toJson(bill);
+
         return response;
     }
 
     private String getGetBill(HttpExchange httpExchange, String request)
             throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException {
 
-        System.out.println(httpExchange.getRequestHeaders().entrySet());
-        if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
-        List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
-        String userToken = tokenList.get(tokenList.size()-1);
+//        HandlerHolder.token(httpExchange);
 
+        String response = "";
 
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Bill.class, new BillJson());
-        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
-
-        int  id = Integer.parseInt(request.split("\\?")[1].
-                split("=")[1]);
-
+        int  id = Integer.parseInt(request.split("\\?")[1].split("=")[1]);
 
         Bill bill = null;
-        String response = "";
-//        GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Bill.class, new BillJson());
         try {
-
             bill = HandlerHolder.getiTerminalController().getIAppDb().findBillById(id);
         } catch (BillNotFoundException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ public class SimpleHttpServer implements Runnable {
             server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/", new HandlerHolder());
             server.createContext("/login", new HandlerLoginPost());
-            server.createContext("/employee", new HandlerAddProductToBill());
+//            server.createContext("/employee", new HandlerAddProductToBill());
             server.createContext("/employee/bill", new HandlerBillCreateOrGet());
             server.createContext("/employee/bill/addproduct", new HandlerAddProductToBill());
             server.createContext("/employee/product", new HandlerCreateNewOrGetProduct());

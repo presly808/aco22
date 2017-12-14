@@ -56,7 +56,7 @@ public class HandlerAddProductToBill implements HttpHandler {
     }
 
     private String postAddProductToBill(HttpExchange httpExchange, String request) throws IOException, LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption, ProductNotFoundException, BillNotFoundException {//
-        HandlerHolder.token(httpExchange);
+//        HandlerHolder.token(httpExchange);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
         String line = reader.readLine();

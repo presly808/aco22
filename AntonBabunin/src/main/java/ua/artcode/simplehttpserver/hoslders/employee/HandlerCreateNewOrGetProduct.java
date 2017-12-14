@@ -3,10 +3,7 @@ package ua.artcode.simplehttpserver.hoslders.employee;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ua.artcode.market.exclude.exception.BillNotFoundException;
-import ua.artcode.market.exclude.exception.LoginOrPasswordArgumentExeption;
-import ua.artcode.market.exclude.exception.LoginOrPasswordNotFoundException;
-import ua.artcode.market.exclude.exception.ProductNotFoundException;
+import ua.artcode.market.exclude.exception.*;
 import ua.artcode.market.json.BillJson;
 import ua.artcode.market.json.ProductJson;
 import ua.artcode.market.models.AbstractProduct;
@@ -30,8 +27,6 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
 
         String request = httpExchange.getRequestURI().toString();
         String response = "";
-
-
 
         if (httpExchange.getRequestMethod().equals("POST") &&
                 request.equals("/employee/product")) {
@@ -67,6 +62,10 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
                 e.printStackTrace();
                 response = e.toString();
                 httpExchange.sendResponseHeaders(404, response.length());
+            } catch (ProductNotFoundException e) {
+                e.printStackTrace();
+                response = e.toString();
+                httpExchange.sendResponseHeaders(405, response.length());
             } finally {
                 OutputStream outputStream = httpExchange.getResponseBody();
                 outputStream.write(response.getBytes());
@@ -76,17 +75,16 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
         }
     }
 
-    private String getProduct(HttpExchange httpExchange, String request) throws LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption {
-        if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
-        List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
+    private String getProduct(HttpExchange httpExchange, String request) throws LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption, ProductNotFoundException {
 
-        if (tokenList == null || tokenList.isEmpty()) throw new LoginOrPasswordNotFoundException();
-        String userToken = tokenList.get(tokenList.size()-1);
+//        HandlerHolder.token(httpExchange);
 
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Bill.class, new BillJson());
-        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
-
+        BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
+        try {
+            System.out.println("request body - " + reader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         int  id = Integer.parseInt(request.split("\\?")[1].
                 split("=")[1]);
@@ -94,13 +92,11 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
 
         AbstractProduct product = null;
         String response = "";
-//        GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(AbstractProduct.class, new ProductJson());
-        try {
-            product = HandlerHolder.getiTerminalController().getIAppDb().findProductById(id);
-        } catch (ProductNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        product = HandlerHolder.getiTerminalController().getIAppDb().findProductById(id);
+
         if (product != null) {
             response = builder.create().toJson(product);
         }
@@ -114,15 +110,8 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
 
     private String postAddProduct(HttpExchange httpExchange)
             throws IOException, LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption {
-        if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
-        List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
 
-        if (tokenList == null || tokenList.isEmpty()) throw new LoginOrPasswordNotFoundException();
-        String userToken = tokenList.get(tokenList.size()-1);
-
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Bill.class, new BillJson());
-        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
+//        HandlerHolder.token(httpExchange);
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(httpExchange.getRequestBody()));
@@ -132,7 +121,7 @@ public class HandlerCreateNewOrGetProduct implements HttpHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(AbstractProduct.class, new ProductJson());
         AbstractProduct product =
                 builder.create().fromJson(stringBody, Product.class);

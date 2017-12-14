@@ -12,6 +12,8 @@ import ua.artcode.market.json.ProductJson;
 import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
+import ua.artcode.market.models.employee.Employee;
+import ua.artcode.market.models.employee.Salesman;
 
 import java.io.*;
 import java.util.List;
@@ -48,7 +50,7 @@ public class HandlerHolder implements HttpHandler {
         }
     }
 
-    public static void token(HttpExchange httpExchange) throws LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption {
+    public static Employee token(HttpExchange httpExchange) throws LoginOrPasswordNotFoundException, LoginOrPasswordArgumentExeption {
         if (!httpExchange.getRequestHeaders().containsKey("Token")) throw new LoginOrPasswordNotFoundException();
         List<String> tokenList = httpExchange.getRequestHeaders().get("Token");
 
@@ -57,7 +59,7 @@ public class HandlerHolder implements HttpHandler {
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Bill.class, new BillJson());
-        HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
+        return HandlerHolder.getiTerminalController().findSalesmanByToken(userToken);
     }
 
     public static AbstractProduct productFromJson(HttpExchange httpExchange) {
