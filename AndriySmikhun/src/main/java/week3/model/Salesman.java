@@ -8,7 +8,7 @@ public class Salesman {
     private String login;
     private String password;
     private String fullName;
-    public List <Salesman> slaves;
+    public List<Salesman> slaves;
 
     public Salesman(int id, String login, String password, String fullName) {
         this.id = id;

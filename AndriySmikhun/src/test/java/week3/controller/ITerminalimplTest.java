@@ -3,15 +3,11 @@ package week3.controller;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import week3.appDB.IappDB;
-import week3.appDB.IappDBimpl;
+import week3.appdb.IappDB;
+import week3.appdb.IappDBimpl;
 import week3.model.Bill;
 import week3.model.Product;
 import week3.model.Salesman;
-
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class ITerminalimplTest {
     ITerminal t1;

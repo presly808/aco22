@@ -1,17 +1,15 @@
-package classWork;
+package classwork;
 
-import java.util.Comparator;
+public class User {
+    private int id;
+    private String name;
+    private String sex;
+    private int age;
+    private int salary;
+    private String sity;
+    private String department;
 
-public class User{
-    int id;
-    String name;
-    String sex;
-    int age;
-    int salary;
-    String sity;
-    String department;
-
-    public User(int id, String name,String sex,int age, int salary, String sity, String department) {
+    public User(int id, String name, String sex, int age, int salary, String sity, String department) {
         this.id = id;
         this.name = name;
         this.sex = sex;

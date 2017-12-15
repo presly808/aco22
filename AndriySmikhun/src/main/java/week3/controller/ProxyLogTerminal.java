@@ -1,21 +1,18 @@
 package week3.controller;
 
-import week3.appDB.IappDB;
+import week3.appdb.IappDB;
 import week3.model.Product;
 import week3.model.Bill;
-import week3.model.Salesman;
 
 public class ProxyLogTerminal implements ITerminal {
 
     private ITerminal realterminal;
     public IappDB iappDB;
 
-   // public ProxyLogTerminal() {
-   // }
-
     public ProxyLogTerminal(ITerminal realterminal) {
         this.realterminal = realterminal;
     }
+
     private Log loger = Log.getLog();
 
     @Override
@@ -30,8 +27,8 @@ public class ProxyLogTerminal implements ITerminal {
         return false;
     }
 
-      @Override
-     public boolean logOut() {
+    @Override
+    public boolean logOut() {
         loger.event("User logout");
         realterminal.logOut();
         return true;
@@ -58,38 +55,39 @@ public class ProxyLogTerminal implements ITerminal {
         return false;
     }
 
-   /* @Override
-    public Bill maxBill() {
-        loger.event("Find Max Bill");
-        Bill bill = realterminal.maxBill();
-        if (bill != null){
-            loger.event("Bill was find");
-            return bill;
-        }
-        loger.error("Bill did'nt find");
-        return null;
-    }
+    /* @Override
+     public Bill maxBill() {
+         loger.event("Find Max Bill");
+         Bill bill = realterminal.maxBill();
+         if (bill != null){
+             loger.event("Bill was find");
+             return bill;
+         }
+         loger.error("Bill did'nt find");
+         return null;
+     }
 
+     @Override
+     public Bill minBill() {
+         loger.event("Find Min Bill");
+         Bill bill = realterminal.minBill();
+         if (bill != null){
+             loger.event("Bill was find");
+             return bill;
+         }
+         loger.error("Bill did'nt find");
+         return null;
+     }*/
     @Override
-    public Bill minBill() {
-        loger.event("Find Min Bill");
-        Bill bill = realterminal.minBill();
-        if (bill != null){
-            loger.event("Bill was find");
-            return bill;
+    public boolean openBill(Bill bill) {
+        loger.event("Open Bill");
+        if (realterminal.openBill(bill)) {
+            loger.event("Bill was opened");
+            return true;
         }
-        loger.error("Bill did'nt find");
-        return null;
-    }*/
-   @Override
-   public boolean openBill(Bill bill){
-       loger.event("Open Bill");
-       if (realterminal.openBill(bill)){
-           loger.event("Bill was opened");
-           return true;}
-       loger.error("Bill dad'nt open");
-       return false;
-   }
+        loger.error("Bill dad'nt open");
+        return false;
+    }
 
     @Override
     public Bill[] filterBill() {
@@ -118,7 +116,7 @@ public class ProxyLogTerminal implements ITerminal {
     public boolean createSalesMan(String login, String password, String fullName) {
         loger.event("Create user in system");
 
-        if (realterminal.createSalesMan(login,password,fullName)) {
+        if (realterminal.createSalesMan(login, password, fullName)) {
             loger.event("User was created");
             return true;
 

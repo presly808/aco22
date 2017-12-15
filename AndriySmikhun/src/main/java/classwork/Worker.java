@@ -1,4 +1,4 @@
-package classWork;
+package classwork;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,11 +9,6 @@ public class Worker {
     public Worker(List<User> users) {
         this.users = users;
     }
-
-    public Worker() {
-
-    }
-
 
     public void filterByCityAndAge() {
         users.stream().filter(s -> s.getSity().equals("Kyiv") && (s.getAge() >= 25 || s.getAge() >= 30))

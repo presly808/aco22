@@ -1,12 +1,9 @@
-package week3.appDB;
+package week3.appdb;
 
 import org.junit.*;
 import week3.model.Bill;
 import week3.model.Product;
 import week3.model.Salesman;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class IappDBimplTest {
 

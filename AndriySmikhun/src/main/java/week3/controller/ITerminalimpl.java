@@ -1,8 +1,7 @@
 package week3.controller;
 
-import week3.appDB.IappDB;
+import week3.appdb.IappDB;
 import week3.model.Product;
-import week3.appDB.IappDBimpl;
 import week3.model.Bill;
 import week3.model.Salesman;
 
@@ -16,10 +15,6 @@ public class ITerminalimpl implements ITerminal {
     private IappDB appDB;
     private Salesman user;
 
-    /*public ITerminalimpl() {
-        appDB = new IappDBimpl();
-    }*/
-
     public ITerminalimpl(IappDB appDB, Salesman salesman) {
         this.appDB = appDB;
         this.user = salesman;
@@ -30,10 +25,7 @@ public class ITerminalimpl implements ITerminal {
         boolean status = appDB.getSalesmen()
                 .stream()
                 .anyMatch(s -> s.getLogin().equals(login) && s.getPassword().equals(password));
-        if (status) {
-            return true;
-        }
-        return false;
+            return status;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package week3.appDB;
+package week3.appdb;
 
 import week3.model.Bill;
 import week3.model.Product;
@@ -11,14 +11,8 @@ import java.util.stream.Collectors;
 public class IappDBimpl implements IappDB {
 
     private List<Salesman> salesmen;
-    private List<Bill> bills; //= new ArrayList<>();
-    private List<Product> products; //= new ArrayList<>();
-
-    public IappDBimpl(List<Salesman> salesmen, List<Bill> bills, List<Product> products) {
-        this.salesmen = salesmen;
-        this.bills = bills;
-        this.products = products;
-    }
+    private List<Bill> bills;
+    private List<Product> products;
 
     public IappDBimpl() {
         this.salesmen = new ArrayList<>();
@@ -41,10 +35,7 @@ public class IappDBimpl implements IappDB {
     public boolean updateBill(Bill newBill, Bill oldBill) {
         int index = bills.indexOf(oldBill);
         Bill oldValue = bills.set(index, newBill);
-        if (oldValue.equals(oldBill)) {
-            return true;
-        }
-        return false;
+        return oldValue.equals(oldBill);
     }
 
     @Override
@@ -87,10 +78,9 @@ public class IappDBimpl implements IappDB {
 
     @Override
     public boolean updateSalemen(Salesman newSalesman, Salesman oldSalesman) {
-       int index = salesmen.indexOf(oldSalesman);
-        Salesman oldValue = salesmen.set(index,newSalesman);
-        if (oldValue.equals(oldSalesman)){return true;}
-        return false;
+        int index = salesmen.indexOf(oldSalesman);
+        Salesman oldValue = salesmen.set(index, newSalesman);
+        return oldValue.equals(oldSalesman);
     }
 
     @Override

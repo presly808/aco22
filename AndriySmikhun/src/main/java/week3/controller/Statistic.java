@@ -1,7 +1,6 @@
 package week3.controller;
 
-import javafx.scene.effect.Effect;
-import week3.appDB.IappDB;
+import week3.appdb.IappDB;
 import week3.model.*;
 
 import java.util.List;
@@ -10,7 +9,6 @@ public class Statistic {
 
 
     public static double treeMan(IappDB db,Salesman root) {
-        //if (root == null) throw new Exception(" Root is null");
         double sum = 0;
         List<Salesman> slaves = root.slaves;
         if (slaves == null) {

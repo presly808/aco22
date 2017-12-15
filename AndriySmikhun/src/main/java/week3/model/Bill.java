@@ -1,6 +1,5 @@
 package week3.model;
 
-import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +32,6 @@ public class Bill {
 
     public double getEverageBill() {
         return everageBill;
-    }
-
-    public String getOpenTime() {
-        return openTime;
-    }
-
-    public String getCloseTime() {
-        return closeTime;
     }
 
     public Salesman getSalesman() {
@@ -79,9 +70,9 @@ public class Bill {
     }
 
 
-    public void everageBill(){
+    public void everageBill() {
         double sum = 0.0;
-        for (Product product: products) {
+        for (Product product : products) {
             sum += product.getPrice();
         }
         everageBill = sum;

@@ -1,4 +1,4 @@
-package week3.appDB;
+package week3.appdb;
 
 import week3.model.Bill;
 import week3.model.Salesman;

@@ -1,4 +1,4 @@
-package classWork;
+package classwork;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,8 +6,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class WorkerTest {
     User user1,user2,user3,user4,user5,user6,user7;
