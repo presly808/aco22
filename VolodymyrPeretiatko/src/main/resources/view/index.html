@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>VP MEGA Project</title>
+
+</head>
+
+<body>
+<!--<script src='js/login.js'></script>-->
+
+<div class="login">
+    <input id="login" type="text" placeholder="username" name="user"><br>
+    <input id="password" type="password" placeholder="password" name="password"><br>
+    <button onclick="sendLoginForm()">Login</button>
+</div>
+
+<script>
+    function sendLoginForm(){
+
+        var nameValue = document.getElementById("login").value;
+        var passwordValue = document.getElementById("password").value;
+
+        var obj = {name : nameValue, password: passwordValue};
+
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/login", true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        // send the collected data as JSON
+        xhr.send(JSON.stringify(obj));
+
+        xhr.onloadend = function (resp) {
+            // get access token and put in cookies
+            console.log("req has been sucessful\n" + resp);
+            //window.location.replace("/view/html/user-page.html");
+        }
+    };
+</script>
+
+</body>
+
+</html>

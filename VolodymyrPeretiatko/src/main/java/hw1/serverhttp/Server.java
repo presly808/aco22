@@ -8,12 +8,14 @@ import com.sun.net.httpserver.HttpExchange;
 import hw1.controller.ITerminal;
 import hw1.controller.ProxyLoggerTerminal;
 import hw1.model.Bill;
+import hw1.model.Salesman;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Server {
@@ -76,7 +78,13 @@ public class Server {
             String result = new BufferedReader(new InputStreamReader(http.getRequestBody()))
                                                    .lines()
                                                    .collect(Collectors.joining("\n"));
-            System.out.println(result);
+
+            HashMap<String, String> logParam = gson.fromJson(result, HashMap.class);
+
+            boolean logged = mainController.login(logParam.get("name"),
+                                                  logParam.get("password"));
+
+
 
         }
     }
