@@ -1,4 +1,4 @@
-package hw1.serverhttp;
+package hw1.serverhttpexclude;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpHandler;
@@ -8,7 +8,6 @@ import com.sun.net.httpserver.HttpExchange;
 import hw1.controller.ITerminal;
 import hw1.controller.ProxyLoggerTerminal;
 import hw1.model.Bill;
-import hw1.model.Salesman;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class Server {
         server.start();
     }
 
-    static protected boolean sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
+    static private boolean sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
 
         if (http == null){
             return false;
