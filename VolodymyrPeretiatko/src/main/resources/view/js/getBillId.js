@@ -11,8 +11,14 @@ function getBillById() {
     // response
     xhr.onloadend = function (resp) {
         var res = xhr.responseText;
-        var billView = document.getElementById("billView");
-        billView.innerHTML = res;
+
+        var p = document.createElement("p");
+        var node = document.createTextNode("" + res);
+        p.appendChild(node);
+
+        var div = document.getElementById("bill");
+        div.appendChild(p);
+
         console.log(resp + res);
     };
 }
