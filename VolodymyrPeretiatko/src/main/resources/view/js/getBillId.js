@@ -12,7 +12,6 @@ function getBillById() {
     xhr.onloadend = function (resp) {
 
         var res = xhr.responseText;
-        console.log(res)
-
+        console.log(res);
     };
 }

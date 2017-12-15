@@ -39,7 +39,11 @@ public class Server {
         server.start();
     }
 
-    static private void sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
+    static protected boolean sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
+
+        if (http == null){
+            return false;
+        }
 
         http.sendResponseHeaders(responseCode, response.length());
 
@@ -48,6 +52,8 @@ public class Server {
 
         os.flush();
         os.close();
+
+        return true;
     }
 
     static class GetBillHandler implements HttpHandler {
