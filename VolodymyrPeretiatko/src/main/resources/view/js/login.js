@@ -1,22 +1,29 @@
+function sendLoginForm() {
 
-    function sendLoginForm() {
+    // construct an HTTP request
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8000/login", true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-        var nameValue = document.getElementById("login").value;
-        var passwordValue = document.getElementById("password").value;
+    var nameVal = document.getElementById("login").value;
+    var passVal = document.getElementById("password").value;
 
-        var keyValueObj = {name: nameValue, password: passwordValue};
+    var keyValueObj = {name: nameVal, password: passVal};
 
-        // construct an HTTP request
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8000/login", true);
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    // send the collected data as JSON
+    xhr.send(JSON.stringify(keyValueObj));
 
-        // send the collected data as JSON
-        xhr.send(JSON.stringify(keyValueObj));
+    // response
+    xhr.onloadend = function (resp) {
 
-        xhr.onloadend = function (resp) {
-            // get access token and put in cookies
-            console.log("req has been sucessful\n" + resp)
-        };
-        //window.location.replace("/view/html/user-page.html");
-    }
+        var res = xhr.responseText;
+        console.log(nameVal + " is logged - " + res)
+
+
+        if (res == "false") {
+            var element = document.getElementById("result");
+            element.src = "pics/faild.jpg";
+        }
+
+    };
+}

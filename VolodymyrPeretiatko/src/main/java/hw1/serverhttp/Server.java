@@ -81,10 +81,10 @@ public class Server {
 
             HashMap<String, String> logParam = gson.fromJson(result, HashMap.class);
 
-            boolean logged = mainController.login(logParam.get("name"),
+            Boolean logged = mainController.login(logParam.get("name"),
                                                   logParam.get("password"));
 
-
+            sendResponse(http, 200, logged.toString());
 
         }
     }
