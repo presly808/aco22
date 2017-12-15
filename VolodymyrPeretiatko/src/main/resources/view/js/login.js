@@ -8,7 +8,7 @@ function sendLoginForm() {
     // construct an HTTP request
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:8000/login", true);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
     // send the collected data as JSON
     xhr.send(JSON.stringify(keyValueObj));

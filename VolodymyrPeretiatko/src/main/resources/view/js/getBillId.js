@@ -19,6 +19,6 @@ function getBillById() {
         var div = document.getElementById("bill");
         div.appendChild(p);
 
-        console.log(resp + res);
+        //console.log(resp + res);
     };
 }
