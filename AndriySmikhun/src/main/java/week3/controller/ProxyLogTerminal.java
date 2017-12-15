@@ -8,13 +8,11 @@ public class ProxyLogTerminal implements ITerminal {
 
     private ITerminal realterminal;
     public IappDB iappDB;
-
+    private Log loger = Log.getLog();
     public ProxyLogTerminal(ITerminal realterminal) {
         this.realterminal = realterminal;
     }
-
-    private Log loger = Log.getLog();
-
+    
     @Override
     public boolean login(String login, String password) {
         loger.event("Log in system user " + login);

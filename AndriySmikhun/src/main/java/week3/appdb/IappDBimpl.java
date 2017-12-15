@@ -12,12 +12,12 @@ public class IappDBimpl implements IappDB {
 
     private List<Salesman> salesmen;
     private List<Bill> bills;
-    private List<Product> products;
+    //private List<Product> products;
 
     public IappDBimpl() {
         this.salesmen = new ArrayList<>();
         this.bills = new ArrayList<>();
-        this.products = new ArrayList<>();
+        //this.products = new ArrayList<>();
     }
 
     @Override

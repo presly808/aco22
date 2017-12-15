@@ -25,7 +25,7 @@ public class ITerminalimpl implements ITerminal {
         boolean status = appDB.getSalesmen()
                 .stream()
                 .anyMatch(s -> s.getLogin().equals(login) && s.getPassword().equals(password));
-            return status;
+        return status;
     }
 
     @Override
@@ -52,6 +52,7 @@ public class ITerminalimpl implements ITerminal {
 
     @Override
     public boolean openBill(Bill bill) {
+        bill.setOpenTime("09:00 15/12/17");
         bill.setSalesman(user);
         return appDB.saveBill(bill);
     }

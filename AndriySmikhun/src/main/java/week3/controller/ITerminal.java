@@ -2,7 +2,6 @@ package week3.controller;
 
 import week3.model.Product;
 import week3.model.Bill;
-import week3.model.Salesman;
 
 public interface ITerminal {
 
@@ -20,6 +19,5 @@ public interface ITerminal {
 
     boolean createSalesMan(String login, String password, String fullName);
     void getTopSalesman();
-
 
 }

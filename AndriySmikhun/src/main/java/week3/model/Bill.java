@@ -38,6 +38,14 @@ public class Bill {
         return salesman;
     }
 
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
