@@ -1,7 +1,6 @@
 package week3.appdb;
 
 import week3.model.Bill;
-import week3.model.Product;
 import week3.model.Salesman;
 
 import java.util.ArrayList;
