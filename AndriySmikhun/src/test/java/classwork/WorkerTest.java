@@ -1,5 +1,6 @@
 package classwork;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,38 +27,38 @@ public class WorkerTest {
 
     @Test
     public void filterByCityAndAge(){
-        worker.filterByCityAndAge();
+        Assert.assertTrue(worker.filterByCityAndAge());
     }
 
     @Test
     public void topThree() {
-        worker.topThree();
+        Assert.assertTrue(worker.topThree());
 
     }
 
     @Test
     public void filterByOdessa() {
-        worker.filterByOdessa();
+        Assert.assertTrue(worker.filterByOdessa());
     }
 
     @Test
     public void plus5Percent() {
-        worker.plus5Percent();
+        Assert.assertTrue(worker.plus5Percent());
     }
 
     @Test
     public void liveInKiev(){
-        worker.liveInKiev();
+        Assert.assertTrue(worker.liveInKiev());
     }
 
     @Test
     public void avarageSalary(){
-        worker.avarageSalary();
+        Assert.assertTrue(worker.avarageSalary());
     }
 
     @Test
     public void byGroup() {
-        worker.byGroup();
+        Assert.assertTrue(worker.byGroup());
     }
 
 }

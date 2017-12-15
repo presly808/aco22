@@ -86,5 +86,6 @@ public class IappDBimpl implements IappDB {
     public List findBillBySalesman(Salesman salesman) {
         return bills.stream().filter(s -> s.getSalesman().equals(salesman))
                 .collect(Collectors.toList());
+
     }
 }

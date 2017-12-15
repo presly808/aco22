@@ -10,23 +10,26 @@ public class Worker {
         this.users = users;
     }
 
-    public void filterByCityAndAge() {
+    public boolean filterByCityAndAge() {
         users.stream().filter(s -> s.getSity().equals("Kyiv") && (s.getAge() >= 25 || s.getAge() >= 30))
                 .forEach(s -> System.out.println(s.getName()));
+        return true;
     }
 
-    public void topThree() {
+    public boolean topThree() {
         users.stream().sorted(new CompareUserBySalery()).limit(3)
                 .forEach(s -> System.out.println(s.getName()));
+        return true;
     }
 
-    public void filterByOdessa() {
+    public boolean filterByOdessa() {
         users.stream().filter(s -> s.getSity().equals("Odessa")).filter(s -> s.getName().contains("A"))
                 .forEach(s -> System.out.println(s.getName()));
+        return true;
 
     }
 
-    public void plus5Percent() {
+    public boolean plus5Percent() {
         List<User> tmp = users.stream()
                 .peek((p) -> p.setSalary(p.getSalary() + (int) (p.getSalary() * 0.02)))
                 .collect(Collectors.toList());
@@ -36,26 +39,29 @@ public class Worker {
                         "id = " + s.getId() +
                                 " Name = " + s.getName() +
                                 " Salery = " + s.getSalary()));
+        return true;
     }
 
-    public void liveInKiev(){
+    public boolean liveInKiev() {
         long i = users.stream()
-                .filter( s -> s.getSity()
+                .filter(s -> s.getSity()
                         .equals("Kyiv")).count();
         System.out.println("Count users live in Kyiv " + i);
+        return true;
     }
 
-    public void avarageSalary(){
+    public boolean avarageSalary() {
         OptionalDouble avagage = users.stream()
                 .filter(s -> s.getSity().equals("Kyiv") && s.getSex().equals("men"))
                 .mapToInt(s -> s.getSalary()).average();
         System.out.println(avagage);
+        return true;
     }
 
-    public void byGroup(){
-        Map <String ,List<User>> tmp = users.stream().collect(Collectors.groupingBy(User ::getDepartment ));
+    public boolean byGroup() {
+        Map<String, List<User>> tmp = users.stream().collect(Collectors.groupingBy(User::getDepartment));
 
-        for (Map.Entry <String ,List<User>> item: tmp.entrySet()){
+        for (Map.Entry<String, List<User>> item : tmp.entrySet()) {
             System.out.println(item.getKey());
             item.getValue().stream().sorted(new CompareUserBySalery())
                     .forEach(s -> System.out.println(s.getName() + " Salery " + s.getSalary()));
@@ -63,6 +69,7 @@ public class Worker {
 
             System.out.println(" ");
         }
+        return true;
     }
 
 }
