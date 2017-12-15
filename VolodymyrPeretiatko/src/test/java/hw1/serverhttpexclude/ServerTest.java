@@ -6,7 +6,7 @@ import org.junit.Test;
 public class ServerTest {
 
     @Test
-    public void LoginHandlerTest(){
+    public void loginHandlerTest(){
 
         Server.LoginHandler lh = new Server.LoginHandler();
 
@@ -15,7 +15,7 @@ public class ServerTest {
     }
 
     @Test
-    public void GetBillHandlerTest(){
+    public void getBillHandlerTest(){
 
         Server.GetBillHandler bh = new Server.GetBillHandler();
 

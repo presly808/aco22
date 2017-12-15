@@ -10,8 +10,9 @@ function getBillById() {
 
     // response
     xhr.onloadend = function (resp) {
-
         var res = xhr.responseText;
-        console.log(res);
+        var billView = document.getElementById("billView");
+        billView.innerHTML = res;
+        console.log(resp + res);
     };
 }

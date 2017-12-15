@@ -38,11 +38,7 @@ public class Server {
         server.start();
     }
 
-    static private boolean sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
-
-        if (http == null){
-            return false;
-        }
+    private static void sendResponse(HttpExchange http, int responseCode, String response) throws IOException {
 
         http.sendResponseHeaders(responseCode, response.length());
 
@@ -52,7 +48,6 @@ public class Server {
         os.flush();
         os.close();
 
-        return true;
     }
 
     static class GetBillHandler implements HttpHandler {
@@ -78,6 +73,7 @@ public class Server {
 
             if (!"POST".equals(http.getRequestMethod())) {
                 sendResponse(http, 400, "Boris: -fuck you!");
+                return;
             }
 
             String result = new BufferedReader(new InputStreamReader(http.getRequestBody()))
