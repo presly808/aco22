@@ -1,10 +1,11 @@
-package ua.artcode.market.exclude.simpleHttpServer;
+package ua.artcode.market.exclude.simple_http_server;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.market.controller.ITerminal;
 import ua.artcode.market.exceptions.TerminalException;
-import ua.artcode.market.exclude.simpleHttpServer.Utils.ServerUtils;
+import ua.artcode.market.exclude.simple_http_server.utils.InitializationData;
+import ua.artcode.market.exclude.simple_http_server.utils.ServerUtils;
 import ua.artcode.market.factory.TerminalFactory;
 
 import java.io.OutputStream;
@@ -14,51 +15,7 @@ import java.util.List;
 public class Server {
     public static void main(String[] args) throws Exception {
 
-        ITerminal terminal = TerminalFactory.create();
-
-        String name1 = "Dima Stavitscky";
-        String name2 = "Ivan Raskolnikov";
-        String name3 = "Kolia Ivanov";
-
-        String login1 = "lDima";
-        String login2 = "lIvan";
-        String login3 = "lKolia";
-
-        int pass1 = 123;
-        int pass2 = 456;
-        int pass3 = 789;
-
-        terminal.getAppDB().addProductToDataBase("Milk", 100);
-        terminal.getAppDB().addProductToDataBase("Apple", 70);
-        terminal.getAppDB().addProductToDataBase("Meat", 10);
-
-        terminal.addSalesman(name1, login1, pass1);
-        terminal.addSalesman(name2, login2, pass2);
-        terminal.addSalesman(name3, login3, pass3);
-
-        terminal.signIn(login3, pass3);
-        terminal.createBill();
-        terminal.addProductToBill(1);
-        terminal.addProductToBill(2);
-        terminal.addProductToBill(3);
-        terminal.closeAndSaveBill();
-        terminal.logOut();
-
-        terminal.signIn(name1, pass1);
-        terminal.createBill();
-        terminal.addProductToBill(1);
-        terminal.addProductToBill(2);
-        terminal.closeAndSaveBill();
-        terminal.logOut();
-
-        terminal.signIn(login2, pass2);
-        terminal.createBill();
-        terminal.addProductToBill(1);
-        terminal.closeAndSaveBill();
-        terminal.logOut();
-
-        terminal.getAppDB().findSalesmanByLoginOrName(login1).setDirector(true);
-
+        ITerminal terminal = InitializationData.Init(TerminalFactory.create());
         Gson gson = new Gson();
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8009), 0);
@@ -187,7 +144,6 @@ public class Server {
         System.out.println("Server started. Connect to localhost:8009");
     }
 }
-
 /*
 public class Server {
     public static void main(String[] args) throws IOException {
