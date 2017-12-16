@@ -1,6 +1,6 @@
 package ua.artcode.market.appdb;
 
-import ua.artcode.market.exceptions.AppDBExceptions;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -63,7 +63,7 @@ public class AppDB implements IAppDB {
     }
 
     @Override
-    public Salesman findSalesmanByLoginOrName(String loginOrName) throws AppDBExceptions {
+    public Salesman findSalesmanByLoginOrName(String loginOrName) throws AppDBException {
         if (loginOrName == null || loginOrName.isEmpty()) {
 
             return null;
@@ -72,11 +72,11 @@ public class AppDB implements IAppDB {
         return salesmans.stream()
                 .filter(u -> u.getFullName().equals(loginOrName) || u.getLogin().equals(loginOrName))
                 .findFirst()
-                .orElseThrow(() -> new AppDBExceptions("Salesman with this login or name not found"));
+                .orElseThrow(() -> new AppDBException("Salesman with this login or name not found"));
     }
 
     @Override
-    public Bill findBillById(int id) throws AppDBExceptions {
+    public Bill findBillById(int id) throws AppDBException {
         if (id == 0) {
             return null;
         }
@@ -84,11 +84,11 @@ public class AppDB implements IAppDB {
         return bills.stream()
                 .filter(b -> b.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AppDBExceptions("Bill with this id not found"));
+                .orElseThrow(() -> new AppDBException("Bill with this id not found"));
     }
 
     @Override
-    public Salesman findSalesmanById(int id) throws AppDBExceptions {
+    public Salesman findSalesmanById(int id) throws AppDBException {
         if (id == 0) {
             return null;
         }
@@ -96,38 +96,38 @@ public class AppDB implements IAppDB {
         return salesmans.stream()
                 .filter(s -> s.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AppDBExceptions("Salesman with this id not found"));
+                .orElseThrow(() -> new AppDBException("Salesman with this id not found"));
     }
 
     @Override
-    public Product findProductById(int id) throws AppDBExceptions {
+    public Product findProductById(int id) throws AppDBException {
 
         if (id == 0) return null;
 
         return products.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AppDBExceptions("Product with this id not found"));
+                .orElseThrow(() -> new AppDBException("Product with this id not found"));
     }
 
     @Override
-    public Bill removeBill(int id) throws AppDBExceptions {
+    public Bill removeBill(int id) throws AppDBException {
         return bills.remove(bills.indexOf(findBillById(id)));
     }
 
     @Override
-    public Product removeProduct(int id) throws AppDBExceptions {
+    public Product removeProduct(int id) throws AppDBException {
         return products.remove(products.indexOf(findProductById(id)));
     }
 
     @Override
-    public Salesman removeSalesman(int id) throws AppDBExceptions {
+    public Salesman removeSalesman(int id) throws AppDBException {
         return salesmans.remove(salesmans.indexOf(findSalesmanById(id)));
     }
 
 
     @Override
-    public Bill update(Bill bill) throws AppDBExceptions {
+    public Bill update(Bill bill) throws AppDBException {
 
         return bills.set(bills.indexOf(findBillById(bill.getId())), bill);
     }

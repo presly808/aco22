@@ -1,9 +1,9 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.appdb.AppDB;
-import ua.artcode.market.exceptions.AppDBExceptions;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.exceptions.SaveBillException;
-import ua.artcode.market.exceptions.TerminalExceptions;
+import ua.artcode.market.exceptions.TerminalException;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -32,7 +32,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBExceptions {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException {
         if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
             System.out.println("wrong data");
             return null;
@@ -44,7 +44,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void signIn(String loginOrName, int password) throws AppDBExceptions {
+    public void signIn(String loginOrName, int password) throws AppDBException {
         if (logged) {
             System.out.println("You already logged");
 
@@ -65,9 +65,9 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void createBill() throws TerminalExceptions {
+    public void createBill() throws TerminalException {
         if (!logged) {
-            throw new TerminalExceptions("You are not logged in");
+            throw new TerminalException("You are not logged in");
 
         } else {
             currentBill = new Bill(loggedSalesman, appDB.genId());
@@ -89,7 +89,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void addProductToBill(int id) throws AppDBExceptions {
+    public void addProductToBill(int id) throws AppDBException {
         if (logged) {
             currentBill.getProducts().add(appDB.findProductById(id));
             System.out.println("Added product: " + appDB.findProductById(id).toString());
@@ -147,7 +147,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBExceptions {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBException {
         if (!loggedSalesman.isDirector()) {
             System.out.println("Only a director can add a subordinate");
 

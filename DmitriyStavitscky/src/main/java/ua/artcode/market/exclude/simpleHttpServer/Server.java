@@ -1,23 +1,18 @@
-package ua.artcode.market.exclude;
+package ua.artcode.market.exclude.simpleHttpServer;
 
 import com.google.gson.Gson;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.market.controller.ITerminal;
-import ua.artcode.market.exceptions.AppDBExceptions;
-import ua.artcode.market.exceptions.SaveBillException;
-import ua.artcode.market.exceptions.TerminalExceptions;
-import ua.artcode.market.exclude.Utils.ServerUtils;
+import ua.artcode.market.exceptions.TerminalException;
+import ua.artcode.market.exclude.simpleHttpServer.Utils.ServerUtils;
 import ua.artcode.market.factory.TerminalFactory;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.List;
 
-public class SimpleHttpServer {
-    public static void main(String[] args) throws IOException, SaveBillException, AppDBExceptions, TerminalExceptions {
+public class Server {
+    public static void main(String[] args) throws Exception {
 
         ITerminal terminal = TerminalFactory.create();
 
@@ -134,7 +129,7 @@ public class SimpleHttpServer {
                 httpExchange.sendResponseHeaders(200, outputMessage.length());
                 outputStream.write(outputMessage.getBytes());
 
-            } catch (TerminalExceptions exc) {
+            } catch (TerminalException exc) {
                 httpExchange.sendResponseHeaders(998, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
@@ -194,7 +189,7 @@ public class SimpleHttpServer {
 }
 
 /*
-public class SimpleHttpServer {
+public class Server {
     public static void main(String[] args) throws IOException {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8009), 0);
@@ -239,205 +234,5 @@ public class SimpleHttpServer {
         server.setExecutor(null);
         server.start();
         System.out.println("Server started. Connect to localhost:8000/test");
-    }
-}
-*/
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Title</title>
-
-<style>
-        .data-container {
-                border-style: solid;
-                }
-
-</style>
-</head>
-<body>
-
-<div id="dataContainer1" class="data-container"></div>
-
-<div id="dataContainer2" class="data-container"></div>
-
-<script>
-
-    window.setInterval(function(){
-            document.getElementById("dataContainer1").innerHTML = new Date().getSeconds() + " seconds";
-            }, 1000);
-
-
-            window.setInterval(function(){
-            document.getElementById("dataContainer2").innerHTML = new Date().getMinutes() + " minutes";
-            }, 1000);
-
-
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Terminal</title>
-</head>
-<body>
-
-<script>
-    var xhr = new XMLHttpRequest();
-            xhr.open("POST", yourUrl, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-            value: value
-            }));
-            xhr.onreadystatechange = function () {
-            if (this.readyState != 4) return;
-
-            if (this.status == 200) {
-            var data = JSON.parse(this.responseText);
-
-            // we get the returned data
-            }
-
-            // end of state change: it can be after some time (async)
-            };
-
-            xhr.open('GET', yourUrl, true);
-            xhr.send();
-
-</script>
-
-</body>
-</html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Sign In</title>
-</head>
-<body>
-
-
-<form action="/signIn" method="get">
-<label>Input login or name</label>
-<input login="loginOrName" type="text"/>
-<label>Input password</label>
-<input name="pass" type="text"/>
-<input type="submit">
-
-</form>
-
-</body>
-</htm
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>HeadName</title>
-<head>
-<body>
-<h1>Hello</h1>
-<div id="container"></div>
-<button id="getDataButton"onclick="sendData()">Get Data</button>
-</body>
-<h1>Second body</h1>
-<div id="dataContainer" ></div>
-<!--
-<button onclick="inputData()">Click Me</button>
-        -->
-<button id="clickId">Click Me</button>
-
-<script>
-    function sendData(){
-            console.log(new Date());
-            document.getElementById('container').innerHTML = "Button was pressed";
-
-            document.getElementById("clickId").onclick = function () {
-            inputData();
-            }
-
-            function inputData(){
-            var elementDC = document.getElementById("dataContainer")
-            elementDC.inerHTML = "<h1>Some title</h1>"
-            document.getElementById("dataContainer").innerHTML = "<h1>Some Title</h1>"
-            }
-
-            }
-
-</script>
-
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Ajax</title>
-</head>
-<body>
-
-<button id="showBill" onclick="showBillById()">Show Bill</button>
-<h1>Bill info</h1>
-<div id="billDiv"></div>
-<script>
-
-    function showBillById() {
-
-            var xhr = new XMLHttpRquest();
-
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("billDiv").innerHTML = xhr.responseText;
-            }
-            };
-
-            xhr.open("GET", "localhost:8009/showBill?id=7", true);
-
-            xhr.send();
-
-
-            }
-
-
-</script>
-
-</body>
-</html>
-
-        package ua.artcode.market.exceptions;
-
-public class ServerException extends Exception {
-    public ServerException(String message) {
-        super(message);
-    }
-}
-
-
-
-package ua.artcode.market.exclude.Utils;
-
-        import com.sun.net.httpserver.HttpExchange;
-        import ua.artcode.market.exceptions.ServerException;
-
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.List;
-
-public class ServerUtils {
-    public static List<String> getParams(HttpExchange httpExchange) throws ServerException {
-        String requestUrl = httpExchange.getRequestURI().toString();
-
-        if (!requestUrl.contains("?")) {
-            throw new ServerException("url does not have any params");
-        }
-
-        String[] params = requestUrl.split("\\?")[1].split("&");
-        List<String> res = new ArrayList<>();
-
-        Arrays.stream(params).forEach(s -> res.add(s.split("=")[1]));
-
-        return res;
     }
 }*/

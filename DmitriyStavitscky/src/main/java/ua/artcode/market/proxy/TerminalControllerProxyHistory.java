@@ -3,9 +3,9 @@ package ua.artcode.market.proxy;
 import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.controller.ITerminal;
 import ua.artcode.market.controller.TerminalController;
-import ua.artcode.market.exceptions.AppDBExceptions;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.exceptions.SaveBillException;
-import ua.artcode.market.exceptions.TerminalExceptions;
+import ua.artcode.market.exceptions.TerminalException;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -25,12 +25,12 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBExceptions {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException {
         return terminal.addSalesman(fullName, login, pass);
     }
 
     @Override
-    public void signIn(String loginOrName, int password) throws AppDBExceptions {
+    public void signIn(String loginOrName, int password) throws AppDBException {
         terminal.signIn(loginOrName, password);
         action = "Saleman " + terminal.getLoggedSalesman().getFullName() + " logged.";
         rememberActionAndPrint();
@@ -44,7 +44,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void createBill() throws TerminalExceptions {
+    public void createBill() throws TerminalException {
         terminal.createBill();
         action = String.format("Salesman %s created a new bill at %s ", terminal.getLoggedSalesman().getFullName(),
                 terminal.getCurrentBill().getOpenTime().toString());
@@ -61,7 +61,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void addProductToBill(int id) throws AppDBExceptions {
+    public void addProductToBill(int id) throws AppDBException {
         terminal.addProductToBill(id);
     }
 
@@ -86,7 +86,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBExceptions {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBException {
         terminal.addSubSalesman(chief, subordinate);
     }
 

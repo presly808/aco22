@@ -1,7 +1,7 @@
-package ua.artcode.market.exclude.Utils;
+package ua.artcode.market.exclude.simpleHttpServer.Utils;
 
 import com.sun.net.httpserver.HttpExchange;
-import ua.artcode.market.exceptions.ServerException;
+import ua.artcode.market.exclude.simpleHttpServer.exceptions.ServerException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package ua.artcode.market.exceptions;
+package ua.artcode.market.exclude.simpleHttpServer.exceptions;
 
 public class ServerException extends Exception {
     public ServerException(String message) {
