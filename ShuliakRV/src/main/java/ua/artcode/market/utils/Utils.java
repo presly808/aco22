@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ua.artcode.market.databases.AppDB.*;
 
@@ -47,6 +48,11 @@ public class Utils {
 
         if (appDB.getAllBills().size() == 0) return 0;
 
+        return appDB.getAllBills().stream().
+                mapToDouble(b -> b.getAmountPrice()).
+                max().getAsDouble();
+
+        /*
         double max = appDB.getAllBills().get(0).getAmountPrice();
 
         for (int i = 1; i < appDB.getAllBills().size(); i++) {
@@ -56,6 +62,7 @@ public class Utils {
         }
 
         return max;
+        */
 
     }
 
@@ -63,8 +70,12 @@ public class Utils {
 
         if (appDB.getAllBills().size() == 0) return 0;
 
-        double min = appDB.getAllBills().get(0).getAmountPrice();
+        return appDB.getAllBills().stream().
+                mapToDouble(b -> b.getAmountPrice()).
+                min().getAsDouble();
 
+        /*
+        double min = appDB.getAllBills().get(0).getAmountPrice();
 
         for (int i = 1; i < appDB.getAllBills().size(); i++) {
             if (min > appDB.getAllBills().get(i).getAmountPrice()) {
@@ -73,25 +84,38 @@ public class Utils {
         }
 
         return min;
+        */
     }
 
     public static double getAverage(AppDB appDB) {
 
         if (appDB.getAllBills().size() == 0) return 0;
 
-        double result = appDB.getAllBills().get(0).getAmountPrice();
+        return appDB.getAllBills().stream().
+                mapToDouble(b -> b.getAmountPrice()).
+                average().getAsDouble();
 
-        for (int i = 1; i < appDB.getAllBills().size(); i++) {
+        /*
+        double result = 0;
+
+        for (int i = 0; i < appDB.getAllBills().size(); i++) {
             result += appDB.getAllBills().get(i).getAmountPrice();
         }
 
         result /= appDB.getAllBills().size();
 
         return result;
+        */
     }
 
     public static int countSoldProducts(AppDB appDB) {
 
+        if (appDB.getAllBills().size() == 0) return 0;
+
+        return appDB.getAllBills().stream().
+                mapToInt(b -> b.getProducts().size()).sum();
+
+        /*
         int result = 0;
 
         for (int i = 0; i < appDB.getAllBills().size(); i++) {
@@ -100,6 +124,7 @@ public class Utils {
         }
 
         return result;
+        */
     }
 
     public static List<Bill> staticFilter(AppDB appDB,
@@ -113,15 +138,25 @@ public class Utils {
 
         List<Bill> bills = appDB.getAllBills();
 
+        return
+                bills.stream().filter(b -> b.isClosed()).
+                        filter(b -> b.hasSalesman(salesmen)).
+                        filter(b -> b.hasProducts(products)).
+                        filter(b -> startTime == null || b.getCloseTime().
+                                compareTo(startTime) >= 0).
+                        filter(b -> endTime == null ||
+                                b.getCloseTime().compareTo(endTime) <= 0).
+                        sorted(comparator).collect(Collectors.toList());
+        /*
         for (int i = 0; i < bills.size(); i++) {
 
             if (!bills.get(i).isClosed()) continue;
 
-            if (salesmen != null && !bills.get(i).hasSalesman(salesmen)) {
+            if (!bills.get(i).hasSalesman(salesmen)) {
                 continue;
             }
 
-            if (products != null && !bills.get(i).hasProducts(products)) {
+            if (!bills.get(i).hasProducts(products)) {
                 continue;
             }
 
@@ -141,6 +176,7 @@ public class Utils {
         }
 
         return resBill;
+        */
     }
 
     public static void createBinaryTree(AppDB appDB) {

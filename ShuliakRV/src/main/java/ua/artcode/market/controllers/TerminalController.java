@@ -123,7 +123,7 @@ public class TerminalController implements ITerminal {
                 (s2.getSoldProducts() - s1.getSoldProducts())).
                         collect(Collectors.toList());
 
-/*
+        /*
         for (Salesman salesman : salesmen) {
             salesman.setSoldProducts(0);
             salesman.setAmountSales(0);
@@ -147,7 +147,8 @@ public class TerminalController implements ITerminal {
 
         salesmen.sort(new SalesmenSoldProductsComparator());
 
-        return salesmen.subList(0, n); */
+        return salesmen.subList(0, n);
+        */
     }
 
     public Statistic doSomeStatisticStuff() {
