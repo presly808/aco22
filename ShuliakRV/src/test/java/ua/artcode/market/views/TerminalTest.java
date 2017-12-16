@@ -46,6 +46,4 @@ public class TerminalTest {
         assertEquals(0, terminal.runChoice(0));
     }
 
-
-
 }
