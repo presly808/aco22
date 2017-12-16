@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class WorkerTest {
-    User user1, user2, user3, user4, user5, user6, user7;
-    Worker worker;
+    public User user1, user2, user3, user4, user5, user6, user7;
+    public Worker worker;
 
     @Before
     public void initData() {

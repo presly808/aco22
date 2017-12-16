@@ -7,10 +7,10 @@ import week3.model.Salesman;
 
 public class IappDBimplTest {
 
-    IappDB db = new IappDBimpl();
-    Salesman s1, s2, s3, s4;
-    Product p1,p2,p3;
-    Bill b1, b2, b3;
+    public IappDB db = new IappDBimpl();
+    public Salesman s1, s2, s3, s4;
+    public Product p1,p2,p3;
+    public Bill b1, b2, b3;
 
     @Before
     public void initData(){

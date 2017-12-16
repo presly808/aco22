@@ -11,11 +11,11 @@ import week3.model.Salesman;
 
 public class StatisticTest {
 
-    IappDB db;
-    Bill b1, b2, b3;
-    Product p1, p2, p3;
-    Salesman s1, s2, s3, s4, m1, m2, d;
-    ITerminal t1;
+    public IappDB db;
+    public Bill b1, b2, b3;
+    public Product p1, p2, p3;
+    public Salesman s1, s2, s3, s4, m1, m2, d;
+    public ITerminal t1;
 
     @Before
     public void setUp() {
