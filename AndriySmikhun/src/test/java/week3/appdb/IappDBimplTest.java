@@ -8,8 +8,8 @@ import week3.model.Salesman;
 public class IappDBimplTest {
 
     IappDB db = new IappDBimpl();
-    Salesman s1, s2, s3, s4, m1, m2, d;
-    Product p1,p2,p3,p4,p5;
+    Salesman s1, s2, s3, s4;
+    Product p1,p2,p3;
     Bill b1, b2, b3;
 
     @Before
@@ -28,20 +28,8 @@ public class IappDBimplTest {
         p2 = new Product(2,"Sampo",45.0);
         p3 = new Product(3,"Banana" , 22.0);
         b1 = new Bill();
-
-        IappDBimpl db = new IappDBimpl();
         b1 = new Bill();
         b2 = new Bill();
-        b3 = new Bill();
-    }
-
-    @After
-    public void afterData()throws Exception{
-
-    }
-
-    @Test
-    public void getBills() throws Exception{
 
     }
 
@@ -57,7 +45,6 @@ public class IappDBimplTest {
     @Test
     public void removeBill1() {
         db.saveBill(b1);
-        Bill b5 = new Bill();
         Assert.assertTrue(db.removeBill(b1));
         Assert.assertFalse(db.removeBill(b3));
     }
