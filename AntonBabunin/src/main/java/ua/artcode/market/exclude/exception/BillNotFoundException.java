@@ -1,4 +1,5 @@
 package ua.artcode.market.exclude.exception;
 
-public class BillNotFoundException extends Exception {
-}
+
+public class BillNotFoundException extends MarketAppException {}
+

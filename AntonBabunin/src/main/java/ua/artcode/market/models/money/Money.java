@@ -1,5 +1,6 @@
 package ua.artcode.market.models.money;
 
+
 public class Money implements Comparable{
     private int moneyWholePart;
     private int moneyFraction;
@@ -53,7 +54,6 @@ public class Money implements Comparable{
         this.setMoneyFraction(this.moneyFraction * value);
 
         return this;
-
     }
 
     @Override

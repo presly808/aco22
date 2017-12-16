@@ -32,20 +32,25 @@ public class ITerminalControllerTest {
 
     @Test
     public void createBill() throws Exception {
-        Bill expected = terminalController.createBill();
+        Employee employee = terminalController.
+                createSalesman("asd","asd","asd", new Money(123,3));
+        Bill expected = terminalController.createBill(employee);
         assertEquals(0, expected.getProductsMap().size());
         assertNotNull(expected);
         assertEquals(1, expected.getId());
     }
 
     @Test
-    public void addProduct() throws Exception {
+    public void addProduct() throws Throwable {
         Product product = Generator.createProduct();
         product.setId(1);
+        Employee employee = terminalController.
+                createSalesman("asd","asd","asd", new Money(123,3));
         terminalController.getIAppDb().saveProduct(product);
-        Bill bill = terminalController.createBill();
+        Bill bill = terminalController.createBill(employee);
         bill = terminalController.addProduct(bill.getId(),
-                terminalController.getIAppDb().findProductById(product.getId()));
+                terminalController.getIAppDb().
+                        findProductById(product.getId()));
 
         terminalController.getIAppDb().saveBill(bill);
             assertEquals(1, bill.getProductsMap().size());
@@ -53,19 +58,21 @@ public class ITerminalControllerTest {
 
     @Test
     public void getAllBills() throws Exception {
-        terminalController.createBill();
-        terminalController.createBill();
-        terminalController.createBill();
-        terminalController.createBill();
-        terminalController.createBill();
-
+        Employee employee = terminalController.
+                createSalesman("asd","asd","asd", new Money(123,3));
+        terminalController.createBill(employee);
+        terminalController.createBill(employee);
+        terminalController.createBill(employee);
+        terminalController.createBill(employee);
+        terminalController.createBill(employee);
         assertEquals(5, terminalController.getBills().size());
-
     }
 
     @Test
     public void closeBill() throws Exception {
-        Bill open = terminalController.createBill();
+        Employee employee = terminalController.
+                createSalesman("asd","asd","asd", new Money(123,3));
+        Bill open = terminalController.createBill(employee);
         Bill close = terminalController.closeBill(open.getId());
         assertEquals(open, close);
         assertNotNull(close.getCloseTime());
@@ -78,7 +85,13 @@ public class ITerminalControllerTest {
     }
     @Test
     public void calculateAmountPrice() throws Exception {
-        Bill open = terminalController.createBill();
+        Employee employee = null;
+        try {
+            employee = terminalController.createSalesman("ghjj","jhk","ghk", new Money(45,4));
+        } catch (Exception e) {
+            employee = new Salesman("ghjj","jhk","ghk", new Money(45,4));
+        }
+        Bill open = terminalController.createBill(employee);
         Product product = Generator.createProduct();
         open.toString();
         open.getOpenTime();
@@ -97,21 +110,27 @@ public class ITerminalControllerTest {
 
     @Test
     public void createSalesman() throws Exception {
-        Employee salesman = terminalController.
-                createSalesman("1", "1", "1");
-        salesman.getLogin();
-        salesman.getFullName();
-        salesman.getPassword();
-        salesman.toString();
-        Employee salesman2 = terminalController.getIAppDb().
-                createSalesman("2", "2", "2");
-        salesman2.setLogin("2");
-        salesman2.setPassword("2");
-        salesman2.setFullName("2");
-        salesman2.setIsConnected(false);
+        Employee salesman = null;
+        try {
+            salesman = terminalController.
+                    createSalesman("asdf", "1sdfg", "sdfsas", new Money(0, 0));
+            System.out.println(salesman);
+            salesman.getLogin();
+            salesman.getFullName();
+            salesman.getPassword();
+            salesman.toString();
+            Employee salesman2 = terminalController.
+                    createSalesman("2", "2", "2", new Money(10, 0));
+            salesman2.setLogin("2");
+            salesman2.setPassword("2");
+            salesman2.setFullName("2");
 
-        assertFalse(salesman.equals(salesman2));
-        assertNotEquals(null, salesman);
+            assertFalse(salesman.equals(salesman2));
+            assertNotEquals(null, salesman);
+        } catch (Exception e) {
+            assertNull(salesman);
+        }
+
     }
 
 //    @Test
@@ -124,7 +143,15 @@ public class ITerminalControllerTest {
 
     @Test
     public void saveAndRemoveBill() throws Exception {
-        Bill expected = terminalController.createBill();
+        Employee salesman = null;
+        try {
+            salesman = terminalController.
+                    createSalesman("1", "1", "1", new Money(0, 0));
+        } catch (Exception e) {
+            salesman = new Salesman("1", "1", "1", new Money(0, 0));
+        }
+        salesman.getLogin();
+        Bill expected = terminalController.createBill(salesman);
         Bill expectedReturn = terminalController.getIAppDb().saveBill(expected);
         Bill acttual = terminalController.getIAppDb().
                 removeBill(expectedReturn.getId());
@@ -134,9 +161,9 @@ public class ITerminalControllerTest {
 
     @Test
     public void filter() throws Exception {
-        Product product1 = new Product();
-        Product product2 = new Product();
-        Product product3 = new Product();
+        Product product1 = new Product("asd", new Money(10, 0));
+        Product product2 = new Product("asd1", new Money(20, 0));
+        Product product3 = new Product("asd2", new Money(3, 0));
 
         product1.setName("1");
         product1.setId(1);
@@ -149,43 +176,51 @@ public class ITerminalControllerTest {
         product2.setPrice(new Money(123, 0));
         product3.setPrice(new Money(12313, 42));
 
-        Employee salesman1 = terminalController.
-                createSalesman("1123","123","1");
-        Employee salesman2 = terminalController.
-                createSalesman("2","12","1");
-        Employee salesman3 = terminalController.
-                createSalesman("2","13","1");
-
+        Employee salesman1 = null;
+        Employee salesman2 = null;
+        Employee salesman3 = null;
+        try {
+            salesman1 = terminalController.
+                    createSalesman("1123", "123", "1", new Money(0, 0));
+            salesman2 = terminalController.
+                    createSalesman("2", "12", "1", new Money(0, 0));
+            salesman3 = terminalController.
+                    createSalesman("2", "13", "1", new Money(0, 0));
+        } catch (Exception e) {
+            salesman1 = new Salesman("d","we","re",new Money(1,1));
+            salesman2 = new Salesman("ad","wse","rse",new Money(1,1));
+            salesman3 = new Salesman("ad","wsd","res",new Money(1,1));
+        }
         terminalController.getIAppDb().getProducts().put(product1, 15);
         terminalController.getIAppDb().getProducts().put(product2, 15);
         terminalController.getIAppDb().getProducts().put(product3, 15);
 
 
 
-        Bill bill1 = terminalController.createBill();
+        Bill bill1 = terminalController.createBill(salesman1);
         terminalController.addProduct(bill1.getId(), product1);
         terminalController.addProduct(bill1.getId(), product1);
         terminalController.addProduct(bill1.getId(), product1);
 
-        Bill bill2 = terminalController.createBill();
+        Bill bill2 = terminalController.createBill(salesman2);
         terminalController.addProduct(bill2.getId(), product1);
         terminalController.addProduct(bill2.getId(), product2);
         terminalController.addProduct(bill2.getId(), product2);
 
-        Bill bill3 = terminalController.createBill();
+        Bill bill3 = terminalController.createBill(salesman3);
         terminalController.addProduct(bill3.getId(), product3);
         terminalController.addProduct(bill3.getId(), product2);
         terminalController.addProduct(bill3.getId(), product2);
 
-        Bill bill4 = terminalController.createBill();
+        Bill bill4 = terminalController.createBill(salesman3);
         terminalController.addProduct(bill4.getId(), product3);
         terminalController.addProduct(bill4.getId(), product3);
         terminalController.addProduct(bill4.getId(), product1);
 
-        bill3.setSalesman(salesman3);
-        bill2.setSalesman(salesman2);
-        bill1.setSalesman(salesman1);
-        bill4.setSalesman(salesman1);
+        bill3.setEmployee(salesman3);
+        bill2.setEmployee(salesman2);
+        bill1.setEmployee(salesman1);
+        bill4.setEmployee(salesman1);
 
 
 

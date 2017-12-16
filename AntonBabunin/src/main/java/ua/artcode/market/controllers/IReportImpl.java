@@ -1,5 +1,6 @@
 package ua.artcode.market.controllers;
 
+import ua.artcode.market.exclude.exception.NullArgumentException;
 import ua.artcode.market.interfaces.IAppDb;
 import ua.artcode.market.interfaces.IReport;
 import ua.artcode.market.models.Bill;
@@ -21,13 +22,15 @@ public class IReportImpl implements IReport {
 
     @Override
     public Money doDepartmentReport(Department department, LocalDateTime start,
-                                    LocalDateTime end) {
+                                    LocalDateTime end)
+            throws NullArgumentException {
         return doDepartmentReport(department.getEmployeeList(), 0, start, end);
     }
 
     @Override
     public Money calculateSalary(Employee employee, LocalDateTime start,
-                                 LocalDateTime end) {
+                                 LocalDateTime end)
+            throws NullArgumentException {
         if (employee instanceof HeadOfSalesmen) {
             List<Employee> employeeList = employee.getSubordinateList();
 
@@ -39,13 +42,13 @@ public class IReportImpl implements IReport {
 
             return employee.getSalary().doSum(empPercent.doSum(subPercent));
         }
-
         return employee.getSalary().doSum(salesPercent(employee, start, end));
 
     }
 
     private Money doDepartmentReport(List<Employee> employeeList, int i,
-                                     LocalDateTime start, LocalDateTime end) {
+                                     LocalDateTime start, LocalDateTime end)
+            throws NullArgumentException {
         Money amountSalary = new Money(0,0);
 
         if (employeeList == null || employeeList.isEmpty() ||
@@ -56,23 +59,22 @@ public class IReportImpl implements IReport {
     }
 
     private Money salesPercent(Employee employee, LocalDateTime start,
-                               LocalDateTime end) {
+                               LocalDateTime end)
+            throws NullArgumentException {
         List<Bill> bills = iAppDb.filter(employee, null, start, end, null);
-        Money m = billsSumm(bills, 0).takePercent(employee.getPercent());
-        System.out.println("m = " + m);
-        return m;
+        return billsSumm(bills, 0).takePercent(employee.getPercent());
     }
 
     private Money billsSumm(List<Bill> bills, int i) {
         Money summ = new Money(0,0);
         if (bills == null || bills.isEmpty() || i >= bills.size()) return summ;
-
         return bills.get(i).getAmountPrice().doSum(billsSumm(bills, i + 1));
     }
 
 
     private Money doSubordinateReport(int i, List<Employee> employeeList,
-                                      LocalDateTime start, LocalDateTime end) {
+                                      LocalDateTime start, LocalDateTime end)
+            throws NullArgumentException {
         Money summ = new Money(0,0);
 
         if (employeeList == null || employeeList.isEmpty() ||

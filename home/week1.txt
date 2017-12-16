@@ -22,7 +22,7 @@
             fields:
                 billId
                 products[]
-                salesman
+                employee
                 amountPrice
                 closeTime
             methods:
