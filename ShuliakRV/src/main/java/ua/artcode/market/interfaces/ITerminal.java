@@ -1,6 +1,7 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.databases.AppDB;
+import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -14,17 +15,17 @@ public interface ITerminal {
 
     AppDB getAppDB();
 
-    Salesman logIn(String login, String password);
+    Salesman logIn(String login, String password) throws AppException;
 
     void logOut(Salesman salesman);
 
-    Bill createBill(Salesman salesman);
+    Bill createBill(Salesman salesman) throws AppException;
 
-    Bill addProduct(int billId, Product product);
+    Bill addProduct(int billId, Product product) throws AppException;
 
-    Bill closeAndSaveBill(int billId);
+    Bill closeAndSaveBill(int billId) throws AppException;
 
-    List<Salesman> getTopNOfSalesMen(int n);
+    List<Salesman> getTopNOfSalesMen(int n) throws AppException;
 
     Statistic doSomeStatisticStuff();
 

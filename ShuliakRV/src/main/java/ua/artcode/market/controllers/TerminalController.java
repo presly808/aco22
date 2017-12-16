@@ -2,6 +2,7 @@ package ua.artcode.market.controllers;
 
 import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.comparators.SalesmenSoldProductsComparator;
+import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -27,17 +28,20 @@ public class TerminalController implements ITerminal {
         return appDB;
     }
 
-    public Salesman logIn(String login, String password) {
+    public Salesman logIn(String login, String password) throws AppException {
 
         if (appDB.getAllSalesman().isEmpty() || login == null ||
                 login.isEmpty() || password == null || password.isEmpty())
-            return null;
+
+            throw new AppException("Incorrect login or password");
 
         Salesman salesman =
                 appDB.findSalesmanByLoginOAndPassword(login, password);
 
         if (salesman != null) {
             salesman.setLogged(true);
+        } else {
+            throw new AppException("Invalid login or password");
         }
 
         return salesman;
@@ -48,10 +52,10 @@ public class TerminalController implements ITerminal {
     }
 
 
-    public Bill createBill(Salesman salesman) {
+    public Bill createBill(Salesman salesman) throws AppException {
 
         if (salesman == null || !salesman.isLogged())
-            return null;
+            throw new AppException("Salesman isn't logged or defined");
 
         Bill bill = new Bill(salesman);
 
@@ -61,11 +65,12 @@ public class TerminalController implements ITerminal {
 
     }
 
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product) throws AppException {
 
         Bill bill = appDB.findByBillId(billId);
 
-        if (bill == null) return null;
+        if (bill == null)
+            throw new AppException("Bill isn't found");
 
         bill.getProducts().add(product);
 
@@ -75,11 +80,11 @@ public class TerminalController implements ITerminal {
 
     }
 
-    public Bill closeAndSaveBill(int billId) {
+    public Bill closeAndSaveBill(int billId) throws AppException {
 
         Bill bill = appDB.findByBillId(billId);
 
-        if (bill == null) return null;
+        if (bill == null) throw new AppException("Bill isn't found");
 
         if (!bill.isClosed()) {
 
@@ -90,13 +95,15 @@ public class TerminalController implements ITerminal {
             appDB.updateBill(bill);
 
         }
+        else throw new AppException("Bill is closed");
 
         return bill;
     }
 
-    public List<Salesman> getTopNOfSalesMen(int n) {
+    public List<Salesman> getTopNOfSalesMen(int n) throws AppException {
 
-        if (appDB.getAllSalesman().isEmpty() || n <= 0) return null;
+        if (appDB.getAllSalesman().isEmpty() || n <= 0)
+            throw new AppException("N is negative");
 
         List<Salesman> salesmen = (ArrayList)
                 ((ArrayList) appDB.getAllSalesman()).clone();

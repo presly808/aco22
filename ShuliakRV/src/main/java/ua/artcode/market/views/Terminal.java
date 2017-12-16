@@ -1,6 +1,7 @@
 package ua.artcode.market.views;
 
 import ua.artcode.market.comparators.BillIdComparator;
+import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.*;
 import ua.artcode.market.singletons.Logger;
@@ -72,20 +73,22 @@ public class Terminal {
                         getAllSalesman().get((int) (Math.random() *
                         terminalController.getAppDB().
                                 getAllSalesman().size()));
-                loggedSalesman = terminalController.logIn(salesman.getLogin(),
-                        salesman.getPassword());
-                if (loggedSalesman != null) {
+                try {
+                    loggedSalesman = terminalController.logIn(salesman.getLogin(),
+                            salesman.getPassword());
                     System.out.println("User is logged");
-                } else {
+                } catch (AppException e) {
+                    e.printStackTrace();
                     System.out.println("Login or password are not avalible");
                 }
                 break;
             case 2:
-                bill = terminalController.createBill(loggedSalesman);
-                if (bill == null) {
-                    System.out.println("Bill isn't created");
-                } else {
+                try {
+                    bill = terminalController.createBill(loggedSalesman);
                     System.out.println("Bill is created");
+                } catch (AppException e) {
+                    e.printStackTrace();
+                    System.out.println("Bill isn't created");
                 }
                 break;
             case 3:
@@ -93,16 +96,17 @@ public class Terminal {
                     System.out.println("Bill isn't exists");
                     break;
                 }
-                bill = terminalController.addProduct(bill.getId(),
-                        terminalController.getAppDB().getAllProducts().
-                                get(((int) (Math.random() *
-                                        terminalController.
-                                                getAppDB().getAllProducts().
-                                                size()))));
-                if (bill == null) {
-                    System.out.println("Bill isn't found");
-                } else {
+                try {
+                    bill = terminalController.addProduct(bill.getId(),
+                            terminalController.getAppDB().getAllProducts().
+                                    get(((int) (Math.random() *
+                                            terminalController.
+                                                    getAppDB().getAllProducts().
+                                                    size()))));
                     System.out.println("Product is added");
+                } catch (AppException e) {
+                    e.printStackTrace();
+                    System.out.println("Bill isn't found");
                 }
                 break;
             case 4:
@@ -110,21 +114,27 @@ public class Terminal {
                     System.out.println("Bill isn't exists");
                     break;
                 }
-                bill = terminalController.closeAndSaveBill(bill.getId());
-                if (bill == null) {
-                    System.out.println("Bill wasn't found");
-                } else {
+                try {
+                    bill = terminalController.closeAndSaveBill(bill.getId());
                     System.out.println("Bill was saved and closed");
+                }
+                catch (AppException e) {
+                    e.printStackTrace();
+                    System.out.println("Bill wasn't found");
                 }
                 bill = null;
                 break;
             case 5:
-                List<Salesman> salesmen = terminalController.
-                        getTopNOfSalesMen((int) (Math.random() *
-                                terminalController.getAppDB().
-                                        getAllSalesman().size()) + 1);
-
-                System.out.println(salesmen);
+                try {
+                    List<Salesman> salesmen = terminalController.
+                            getTopNOfSalesMen((int) (Math.random() *
+                                    terminalController.getAppDB().
+                                            getAllSalesman().size()) + 1);
+                    System.out.println(salesmen);
+                }
+                catch (AppException e) {
+                   e.printStackTrace();
+                }
                 break;
             case 6:
                 Statistic statistic = terminalController.

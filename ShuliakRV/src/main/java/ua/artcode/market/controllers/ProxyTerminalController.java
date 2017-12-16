@@ -1,6 +1,7 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.databases.AppDB;
+import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -29,7 +30,7 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public Salesman logIn(String login, String password) {
+    public Salesman logIn(String login, String password) throws AppException {
 
         Logger.getInstance(terminalController.getAppDB()).log(
                 String.format("Time : %s  User is logging " +
@@ -69,7 +70,7 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public Bill createBill(Salesman salesmen) {
+    public Bill createBill(Salesman salesmen) throws AppException {
         Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to create a bill",
                         LocalDateTime.now().toString(),
@@ -80,7 +81,7 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public Bill addProduct(int billId, Product product) {
+    public Bill addProduct(int billId, Product product) throws AppException {
         Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to add a product",
                         LocalDateTime.now().toString(),
@@ -90,7 +91,7 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public Bill closeAndSaveBill(int billId) {
+    public Bill closeAndSaveBill(int billId) throws AppException {
 
         Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to close and save bill",
@@ -101,7 +102,7 @@ public class ProxyTerminalController implements ITerminal {
     }
 
     @Override
-    public List<Salesman> getTopNOfSalesMen(int n) {
+    public List<Salesman> getTopNOfSalesMen(int n) throws AppException {
         Logger.getInstance(terminalController.getAppDB()).log(String.
                 format("Time : %s  User %s is trying to get top N of salesmen",
                         LocalDateTime.now().toString(),
