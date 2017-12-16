@@ -30,7 +30,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void kievWomenSortedByAge() throws Exception {
+    public void SortedByAgeSexCity() throws Exception {
 
         List<User> expected = new ArrayList<>();
 
@@ -39,40 +39,40 @@ public class UtilsTest {
         expected.add(userArrayList().get(7));
         expected.add(userArrayList().get(0));
 
-        List<User> actual = Utils.kievWomenSortedByAge(testUsers);
+        List<User> actual = Utils.SortedByAgeSexCity(testUsers,"female","Kiev",25,30);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void threeTopBySalary() throws Exception {
+    public void TopBySalary() throws Exception {
         List<User> expected = new ArrayList<>();
 
         expected.add(userArrayList().get(3));
         expected.add(userArrayList().get(7));
         expected.add(userArrayList().get(5));
 
-        List<User> actual = Utils.threeTopBySalary(testUsers);
+        List<User> actual = Utils.TopBySalary(testUsers,3);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void odessaSalaries() throws Exception {
-        assertEquals(625.0, Utils.odessaSalaries(testUsers), 0.01);
+    public void citySalaries() throws Exception {
+        assertEquals(625.0, Utils.citySalaries(testUsers,"Odessa",'A'), 0.01);
     }
 
     @Test
-    public void howManyInKiev() throws Exception {
-        assertEquals(6, Utils.howManyInKiev(testUsers));
+    public void howManyInCity() throws Exception {
+        assertEquals(6, Utils.howManyInCity(testUsers,"Kiev"));
     }
 
     @Test
-    public void salaryInKiev() throws Exception {
-        assertEquals(217.5, Utils.salaryInKiev(testUsers), 0.01);
+    public void salaryInCityBySex() throws Exception {
+        assertEquals(217.5, Utils.salaryInCityBySex(testUsers,"Kiev","male"), 0.01);
     }
 
     @Test
     public void bonus() throws Exception {
-        assertEquals(126.0, Utils.bonus(testUsers).get(0).getSalary(), 0.01);
+        assertEquals(126.0, Utils.bonus(testUsers,0.05).get(0).getSalary(), 0.01);
 
     }
 

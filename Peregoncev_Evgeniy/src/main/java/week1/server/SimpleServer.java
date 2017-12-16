@@ -29,6 +29,7 @@ public class SimpleServer {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/login", new  LoginHandler(terminal));
         server.createContext("/bill", new  BillHandler(terminal));
+        server.createContext("/button", new  ButtonHandler(terminal));
         server.setExecutor(null); // creates a default executor
         server.start();
     }

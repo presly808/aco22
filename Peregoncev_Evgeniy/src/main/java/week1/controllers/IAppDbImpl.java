@@ -3,6 +3,7 @@ package week1.controllers;
 import week1.interfaces.IAppDb;
 import week1.models.Bill;
 
+import week1.models.Department;
 import week1.models.Product;
 import week1.models.Salesman;
 
@@ -21,7 +22,6 @@ public class IAppDbImpl implements IAppDb {
     private List<Product> productList;
 
     public IAppDbImpl() {
-
         this.billList = new ArrayList<>();
         this.salesmanList = new ArrayList<>();
         this.productList = new ArrayList<>();
@@ -29,6 +29,8 @@ public class IAppDbImpl implements IAppDb {
     }
 
     //Methods
+
+
 
 
     @Override

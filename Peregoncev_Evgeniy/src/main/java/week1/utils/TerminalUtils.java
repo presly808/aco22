@@ -21,4 +21,20 @@ public class TerminalUtils {
         iAppDb.getAllProducts().add(new Product("apple", 8.5, 4));
 
     }
+
+    public static void makeSalesmansAndSubSalesmans(IAppDb iAppDb) {
+
+        Salesman main = new Salesman(0, 0.00, 1300);
+
+        main.addSubSalesman(new Salesman(1, 0.00, 1200));
+        main.addSubSalesman(new Salesman(2, 0.00, 1100));
+
+        main.getSubsalesmans().get(0).addSubSalesman((new Salesman(3, 0.00, 1000)));
+        main.getSubsalesmans().get(0).addSubSalesman((new Salesman(4, 0.00, 900)));
+
+        main.getSubsalesmans().get(1).addSubSalesman((new Salesman(5, 0.00, 800)));
+        main.getSubsalesmans().get(1).addSubSalesman((new Salesman(6, 0.00, 700)));
+
+        iAppDb.getAllSalesMans().add(main);
+    }
 }
