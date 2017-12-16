@@ -52,16 +52,19 @@ public class SimpleHttpServer {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(io));
             String jsonText = reader.readLine();
-            //System.out.println(jsonText);
+            System.out.println(jsonText);
 
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             Salesman salesman = gson.fromJson(jsonText, Salesman.class);
 
+            System.out.println(salesman);
+
             terminalController.getAppDB().getAllSalesman().add(salesman);
             try {
                 salesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
+                System.out.println(salesman);
             } catch (AppException e) {
                 e.printStackTrace();
             }
@@ -83,6 +86,7 @@ public class SimpleHttpServer {
 
                 response = new Gson().toJson(new Token(
                         "token", (long) (Long.MAX_VALUE * Math.random())));
+
 
             } else {
                 response = "Not found";
