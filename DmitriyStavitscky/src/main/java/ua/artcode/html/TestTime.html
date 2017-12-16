@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .data-container {
+            border-style: solid;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="dataContainer1" class="data-container"></div>
+
+<div id="dataContainer2" class="data-container"></div>
+
+<script>
+
+    window.setInterval(function(){
+        document.getElementById("dataContainer1").innerHTML = new Date().getSeconds() + " seconds";
+    }, 1000);
+
+
+    window.setInterval(function(){
+        document.getElementById("dataContainer2").innerHTML = new Date().getMinutes() + " minutes";
+    }, 1000);
+
+
+</script>
+</body>
+</html>

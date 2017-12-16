@@ -3,7 +3,9 @@ package ua.artcode.market.proxy;
 import ua.artcode.market.appdb.AppDB;
 import ua.artcode.market.controller.ITerminal;
 import ua.artcode.market.controller.TerminalController;
+import ua.artcode.market.exceptions.AppDBExceptions;
 import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.TerminalExceptions;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -23,12 +25,12 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBExceptions {
         return terminal.addSalesman(fullName, login, pass);
     }
 
     @Override
-    public void signIn(String loginOrName, int password) {
+    public void signIn(String loginOrName, int password) throws AppDBExceptions {
         terminal.signIn(loginOrName, password);
         action = "Saleman " + terminal.getLoggedSalesman().getFullName() + " logged.";
         rememberActionAndPrint();
@@ -42,7 +44,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void createBill() {
+    public void createBill() throws TerminalExceptions {
         terminal.createBill();
         action = String.format("Salesman %s created a new bill at %s ", terminal.getLoggedSalesman().getFullName(),
                 terminal.getCurrentBill().getOpenTime().toString());
@@ -59,7 +61,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void addProductToBill(int id) {
+    public void addProductToBill(int id) throws AppDBExceptions {
         terminal.addProductToBill(id);
     }
 
@@ -84,7 +86,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBExceptions {
         terminal.addSubSalesman(chief, subordinate);
     }
 

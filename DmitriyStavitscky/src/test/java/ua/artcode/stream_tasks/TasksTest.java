@@ -85,7 +85,7 @@ public class TasksTest {
     @Test
     public void addSalaryAndPrint() throws Exception {
 
-        System.out.println("Test: add 5% salary");
+        System.out.println("Http: add 5% salary");
         task.addSalaryAndPrint(5);
 
         assertEquals(task.getUsers().get(0).getSalary(), 1050, 1);
