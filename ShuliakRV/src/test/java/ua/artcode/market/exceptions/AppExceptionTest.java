@@ -1,5 +1,6 @@
 package ua.artcode.market.exceptions;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.ProxyTerminalController;
@@ -12,19 +13,19 @@ import static org.junit.Assert.*;
 public class AppExceptionTest {
 
     private ProxyTerminalController terminalController;
-    private Salesman salesman;
 
     @Before
     public void setUp() throws Exception {
         terminalController = (ProxyTerminalController)
                 FactoryITerminal.createITerminalController();
-        salesman = terminalController.getAppDB().getAllSalesman().get(0);
+        Salesman salesman = terminalController.getAppDB().getAllSalesman().get(0);
         salesman = terminalController.logIn(salesman.getLogin(), salesman.getPassword());
     }
 
     @Test(expected = AppException.class)
     public void createBill() throws Exception {
         Bill bill = terminalController.createBill(null);
+        assertNull(bill);
     }
 }
 

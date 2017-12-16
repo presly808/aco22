@@ -1,7 +1,6 @@
 package ua.artcode.market.controllers;
 
 import ua.artcode.market.databases.AppDB;
-import ua.artcode.market.comparators.SalesmenSoldProductsComparator;
 import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Bill;
@@ -10,10 +9,8 @@ import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static ua.artcode.market.utils.Utils.*;

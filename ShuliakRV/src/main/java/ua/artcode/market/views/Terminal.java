@@ -42,7 +42,7 @@ public class Terminal {
             System.out.println();
             System.out.println("Your choice: ");
 
-            if (run == false) return;
+            if (!run) return;
 
             int choice = scan.nextInt();
 

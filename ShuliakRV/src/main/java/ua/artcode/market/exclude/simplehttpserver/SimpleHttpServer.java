@@ -69,8 +69,8 @@ public class SimpleHttpServer {
 
             class Token {
 
-                String name;
-                Long token;
+                private String name;
+                private Long token;
 
                 public Token(String name, Long token) {
                     this.name = name;
