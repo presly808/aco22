@@ -10,6 +10,13 @@ public class Worker {
         this.users = users;
     }
 
+    public Worker() {
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
     public boolean filterByCityAndAge() {
         users.stream().filter(s -> s.getSity().equals("Kyiv") && (s.getAge() >= 25 || s.getAge() >= 30))
                 .forEach(s -> System.out.println(s.getName()));
