@@ -1,4 +1,4 @@
 package ua.artcode.market.exclude.exception;
 
-public class NullArgumentException extends IllegalArgumentException {
+public class NullArgumentException extends MarketAppException {
 }

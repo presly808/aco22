@@ -41,7 +41,6 @@ public class IReportTest {
 
         Employee saller1 = new Salesman("1", "1", "1", new Money(1,1));
 
-        headOfSalesmen1.setConnected(true);
         headOfSalesmen1.setSubordinateList(new ArrayList<>());
         headOfSalesmen1.getSubordinateList();
         headOfSalesmen1.getSalary();
@@ -53,7 +52,7 @@ public class IReportTest {
         headOfSalesmen1.getFullName();
         headOfSalesmen1.getPercent();
         headOfSalesmen1.setSalary(new Money(100,0));
-        headOfSalesmen1.isConnected();
+        headOfSalesmen1.getToken();
 
         headOfSalesmen1.getSubordinateList().add(headOfSalesmen2);
         headOfSalesmen2.getSubordinateList().add(saller1);
@@ -61,22 +60,20 @@ public class IReportTest {
         department.getEmployeeList().add(headOfSalesmen1);
         department.getEmployeeList().add(headOfSalesmen2);
         department.getEmployeeList().add(saller1);
-        Bill bill1 = new Bill();
+        Bill bill1 = new Bill(headOfSalesmen1);
         bill1.setAmountPrice(new Money(1000,0));
-        bill1.setSalesman(headOfSalesmen1);
+        bill1.setEmployee(headOfSalesmen1);
         iAppDb.saveBill(bill1);
 
-        Bill bill2 = new Bill();
+        Bill bill2 = new Bill(saller1);
         bill2.setAmountPrice(new Money(1000,0));
-        bill2.setSalesman(saller1);
+        bill2.setEmployee(saller1);
         iAppDb.saveBill(bill2);
 
         IReport iReport = new IReportImpl(iAppDb);
 
-        System.out.println("Bill size - " + iAppDb.getBills().size());
 
         Money money = iReport.calculateSalary(headOfSalesmen1, null, null);
-        System.out.println(money);
 
         assertEquals(new Money(170,0),  money);
         Money all = iReport.doDepartmentReport(department,null, null);

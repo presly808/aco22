@@ -1,6 +1,7 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.exclude.exception.*;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Product;
@@ -13,43 +14,41 @@ import java.util.*;
 
 public interface IAppDb {
 
-    Map<Product, Integer> getProducts();
+    Map<AbstractProduct, Integer> getProducts();
 
     List<Bill> getBills();
     List<Employee> getEmployee();
     Bill findBillById(int id) throws BillNotFoundException;
 
-    Product findProductById(int id) throws ProductNotFoundException;
+    AbstractProduct findProductById(int id) throws ProductNotFoundException;
 
     Bill removeBill(int id) throws IOException, BillNotFoundException;
 
-    Product removeProduct(int id) throws IOException, ProductNotFoundException;
+    AbstractProduct removeProduct(int id) throws ProductNotFoundException, IOException;
     Bill saveBill(Bill bill) throws IOException;
 
-    Product saveProduct(Product product) throws IOException;
+    AbstractProduct saveProduct(AbstractProduct product) throws IOException;
     Bill update(Bill bill) throws IOException, BillNotFoundException;
 
-    Employee createSalesman(String fullName, String login, String password) throws IOException;
-//            throws IOException;
+    Employee createSalesman(String fullName, String login, String password,
+                            Money salary) throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 
-//    Employee login(String login, String password) throws IOException;
-//    Employee logout(Employee salesman) throws IOException;
-//    Employee findSalesmanByLogin(String login);
-
+    Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+    Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
     List<Bill> filter(Employee salesman, Product product,
                       LocalDateTime startDate, LocalDateTime endDate,
-                      Comparator<Bill> billComparator);
+                      Comparator<Bill> billComparator) throws NullArgumentException;
 
 
     Money aggrAmtPrice(Salesman salesman, LocalDateTime startDate,
-                       LocalDateTime endDate);
+                       LocalDateTime endDate) throws NullArgumentException;
 
     Money averageAmountPrice(Salesman salesman, LocalDateTime startDate,
-                             LocalDateTime endDate);
+                             LocalDateTime endDate) throws NullArgumentException;
 
     Bill minAmountPrice(Salesman salesman, LocalDateTime startDate,
-                        LocalDateTime endDate);
+                        LocalDateTime endDate) throws NullArgumentException;
 
     Bill maxAmountPrice(Salesman salesman, LocalDateTime startDate,
-                        LocalDateTime endDate);
+                        LocalDateTime endDate) throws NullArgumentException;
 }
