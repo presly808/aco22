@@ -16,7 +16,7 @@ import java.net.InetSocketAddress;
 import java.util.stream.Collectors;
 
 
-public class http {
+public class Http {
 
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8800), 0);
@@ -42,7 +42,7 @@ public class http {
                 String password = parameters[3];
 
                 Gson gson = new Gson();
-                Salesman user = new Salesman(1,"Andrii", "304FF76v", "Andrii Smikhun");
+                Salesman user = new Salesman(1,login, password, "Andrii Smikhun");
 
                 String json = gson.toJson(user);
                 t.sendResponseHeaders(200, json.length());
