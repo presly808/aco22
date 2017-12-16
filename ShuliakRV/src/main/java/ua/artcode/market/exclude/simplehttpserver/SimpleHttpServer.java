@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import ua.artcode.market.exceptions.AppException;
 import ua.artcode.market.factories.FactoryITerminal;
 import ua.artcode.market.interfaces.ITerminal;
 import ua.artcode.market.models.Salesman;
@@ -59,8 +60,12 @@ public class SimpleHttpServer {
             Salesman salesman = gson.fromJson(jsonText, Salesman.class);
 
             terminalController.getAppDB().getAllSalesman().add(salesman);
-            salesman = terminalController.logIn(salesman.getLogin(),
-                    salesman.getPassword());
+            try {
+                salesman = terminalController.logIn(salesman.getLogin(),
+                        salesman.getPassword());
+            } catch (AppException e) {
+                e.printStackTrace();
+            }
 
             class Token {
 
@@ -78,11 +83,9 @@ public class SimpleHttpServer {
             if (salesman != null) {
 
                 response = new Gson().toJson(new Token(
-                        "token",(long) (Long.MAX_VALUE*Math.random())));
+                        "token", (long) (Long.MAX_VALUE * Math.random())));
 
-            }
-            else
-            {
+            } else {
                 response = "Not found";
             }
 

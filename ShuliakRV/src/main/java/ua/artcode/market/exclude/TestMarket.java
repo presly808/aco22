@@ -14,7 +14,7 @@ public class TestMarket {
 
         Terminal terminal = new Terminal(terminalController);
 
-        terminal.mainMenu();
+        terminal.mainMenu(true);
 
         for (Salesman salesman : terminalController.getAppDB().
                 getAllSalesman()) {

@@ -21,7 +21,7 @@ public class Terminal {
         this.terminalController = terminalController;
     }
 
-    public void mainMenu() {
+    public void mainMenu(boolean run) {
 
         Scanner scan = new Scanner(System.in);
 
@@ -41,6 +41,8 @@ public class Terminal {
             System.out.println("10. Exit");
             System.out.println();
             System.out.println("Your choice: ");
+
+            if (run == false) return;
 
             int choice = scan.nextInt();
 
@@ -117,8 +119,7 @@ public class Terminal {
                 try {
                     bill = terminalController.closeAndSaveBill(bill.getId());
                     System.out.println("Bill was saved and closed");
-                }
-                catch (AppException e) {
+                } catch (AppException e) {
                     e.printStackTrace();
                     System.out.println("Bill wasn't found");
                 }
@@ -131,9 +132,8 @@ public class Terminal {
                                     terminalController.getAppDB().
                                             getAllSalesman().size()) + 1);
                     System.out.println(salesmen);
-                }
-                catch (AppException e) {
-                   e.printStackTrace();
+                } catch (AppException e) {
+                    e.printStackTrace();
                 }
                 break;
             case 6:

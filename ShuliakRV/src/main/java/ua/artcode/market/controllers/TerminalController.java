@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static ua.artcode.market.utils.Utils.*;
 
@@ -94,8 +96,7 @@ public class TerminalController implements ITerminal {
 
             appDB.updateBill(bill);
 
-        }
-        else throw new AppException("Bill is closed");
+        } else throw new AppException("Bill is closed");
 
         return bill;
     }
@@ -105,11 +106,27 @@ public class TerminalController implements ITerminal {
         if (appDB.getAllSalesman().isEmpty() || n <= 0)
             throw new AppException("N is negative");
 
-        List<Salesman> salesmen = (ArrayList)
-                ((ArrayList) appDB.getAllSalesman()).clone();
+        List<Salesman> salesmen = appDB.getAllSalesman();
 
         List<Bill> bills = appDB.getAllBills();
 
+        salesmen.stream().forEach(s -> s.setSoldProducts(0));
+        salesmen.stream().forEach(s -> s.setAmountSales(0));
+
+        bills.stream().filter(b -> b.isClosed()).
+                peek(b -> b.getSalesMan().setSoldProducts(b.getSalesMan().
+                        getSoldProducts() + b.getProducts().size())).
+                forEach(b -> b.getSalesMan().
+                        setAmountSales(b.getSalesMan().getAmountSales() +
+                                b.getAmountPrice()));
+
+        return salesmen.stream().sorted((s1, s2) ->
+                (s1.getSoldProducts() - s2.getSoldProducts())).
+                 skip(salesmen.size() - n).sorted((s1, s2) ->
+                (s2.getSoldProducts() - s1.getSoldProducts())).
+                        collect(Collectors.toList());
+
+/*
         for (Salesman salesman : salesmen) {
             salesman.setSoldProducts(0);
             salesman.setAmountSales(0);
@@ -133,7 +150,7 @@ public class TerminalController implements ITerminal {
 
         salesmen.sort(new SalesmenSoldProductsComparator());
 
-        return salesmen.subList(0, n);
+        return salesmen.subList(0, n); */
     }
 
     public Statistic doSomeStatisticStuff() {
