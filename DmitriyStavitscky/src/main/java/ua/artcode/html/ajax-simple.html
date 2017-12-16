@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax</title>
+</head>
+<body>
+
+<button id="showBill" onclick="showBillById()">Show Bill</button>
+<h1>Bill info</h1>
+<div id="billDiv"></div>
+<script>
+
+    function showBillById() {
+
+        var xhr = new XMLHttpRquest();
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("billDiv").innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.open("GET", "localhost:8009/showBill?id=7", true);
+
+        xhr.send();
+
+
+    }
+
+
+</script>
+
+</body>
+</html>

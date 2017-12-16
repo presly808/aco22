@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HeadName</title>
+  <head>
+  <body>
+    <h1>Hello</h1>
+    <div id="container"></div>
+    <button id="getDataButton"onclick="sendData()">Get Data</button>
+    </body>
+    <h1>Second body</h1>
+    <div id="dataContainer" ></div>
+<!--
+    <button onclick="inputData()">Click Me</button>
+-->
+    <button id="clickId">Click Me</button>
+
+    <script>
+    function sendData(){
+      console.log(new Date());
+      document.getElementById('container').innerHTML = "Button was pressed";
+
+      document.getElementById("clickId").onclick = function () {
+          inputData();
+      }
+
+      function inputData(){
+          var elementDC = document.getElementById("dataContainer")
+          elementDC.inerHTML = "<h1>Some title</h1>"
+          document.getElementById("dataContainer").innerHTML = "<h1>Some Title</h1>"
+      }
+
+    }
+
+    </script>
+
+  </html>
