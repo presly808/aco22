@@ -48,7 +48,6 @@ public class SimpleHttpServer {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
-
             InputStream io = t.getRequestBody();
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(io));

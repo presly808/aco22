@@ -1,6 +1,5 @@
 package ua.artcode.market.exceptions;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ua.artcode.market.controllers.ProxyTerminalController;
