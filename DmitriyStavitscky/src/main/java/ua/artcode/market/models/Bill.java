@@ -45,7 +45,7 @@ public class Bill implements Comparable<Bill> {
                 ", productsCount=" + productsCount +
                 ", id=" + id +
                 ", amountPrice=" + amountPrice +
-                ", salesman=" + salesman +
+                ", salesman=" + salesman.getFullName() +
                 ", closeTime=" + closeTime +
                 '}';
     }
@@ -108,6 +108,10 @@ public class Bill implements Comparable<Bill> {
 
     public Salesman getSalesman() {
         return salesman;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
     }
 
     public LocalDateTime getOpenTime() {

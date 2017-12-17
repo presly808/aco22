@@ -1,5 +1,6 @@
 package ua.artcode.market.appdb;
 
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
@@ -12,23 +13,23 @@ public interface IAppDB {
 
     void addActionToHistory(String message);
 
-    Salesman findSalesmanByLoginOrName(String loginOrName);
+    Salesman findSalesmanByLoginOrName(String loginOrName) throws AppDBException;
 
     void addProductToDataBase(String name, double price);
 
     List<Bill> getAllBills();
 
-    Bill findBillById(int id);
+    Bill findBillById(int id) throws AppDBException;
 
-    Salesman findSalesmanById(int id);
+    Salesman findSalesmanById(int id) throws AppDBException;
 
-    Product findProductById(int id);
+    Product findProductById(int id) throws AppDBException;
 
-    Bill removeBill(int id);
+    Bill removeBill(int id) throws AppDBException;
 
-    Product removeProduct(int id);
+    Product removeProduct(int id) throws AppDBException;
 
-    Salesman removeSalesman(int id);
+    Salesman removeSalesman(int id) throws AppDBException;
 
-    Bill update(Bill bill);
+    Bill update(Bill bill) throws AppDBException;
 }

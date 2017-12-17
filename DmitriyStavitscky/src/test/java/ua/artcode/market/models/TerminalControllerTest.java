@@ -2,7 +2,9 @@ package ua.artcode.market.models;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.TerminalException;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.factory.TerminalFactory;
 import ua.artcode.market.proxy.TerminalControllerProxyHistory;
@@ -230,5 +232,19 @@ public class TerminalControllerTest {
         terminal.signIn(login1, pass1);
         terminal.createBill();
         terminal.closeAndSaveBill();
+    }
+
+    @Test(expected = AppDBException.class)
+    public void testAppDBException() throws Exception {
+
+        terminal.signIn(login1, pass1);
+        terminal.createBill();
+        terminal.addProductToBill(798);
+    }
+
+    @Test(expected = TerminalException.class)
+    public void testTerminalException() throws Exception {
+
+        terminal.createBill();
     }
 }

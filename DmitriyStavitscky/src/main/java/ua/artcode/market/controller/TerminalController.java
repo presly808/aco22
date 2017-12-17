@@ -1,7 +1,9 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.appdb.AppDB;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.TerminalException;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -30,7 +32,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException {
         if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
             System.out.println("wrong data");
             return null;
@@ -42,7 +44,7 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void signIn(String loginOrName, int password) {
+    public void signIn(String loginOrName, int password) throws AppDBException {
         if (logged) {
             System.out.println("You already logged");
 
@@ -63,9 +65,9 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void createBill() {
+    public void createBill() throws TerminalException {
         if (!logged) {
-            System.out.println("please log in");
+            throw new TerminalException("You are not logged in");
 
         } else {
             currentBill = new Bill(loggedSalesman, appDB.genId());
@@ -87,8 +89,8 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public void addProductToBill(int id) {
-        if (logged && appDB.findProductById(id) != null) {
+    public void addProductToBill(int id) throws AppDBException {
+        if (logged) {
             currentBill.getProducts().add(appDB.findProductById(id));
             System.out.println("Added product: " + appDB.findProductById(id).toString());
 
@@ -112,7 +114,6 @@ public class TerminalController implements ITerminal {
 
     @Override
     public Statistics makeStatistics() {
-
         if (appDB.getBills().size() == 0) {
             System.out.println("count of bills = 0");
             return null;
@@ -140,14 +141,13 @@ public class TerminalController implements ITerminal {
 
     @Override
     public List<Bill> filterByTime(LocalDateTime startTime, LocalDateTime endTime) {
-
         return getAllBills().stream()
                 .filter(b -> b.getCloseTime().compareTo(startTime) < 0 && b.getCloseTime().compareTo(endTime) > 0)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException {
+    public void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBException {
         if (!loggedSalesman.isDirector()) {
             System.out.println("Only a director can add a subordinate");
 
@@ -173,9 +173,9 @@ public class TerminalController implements ITerminal {
         double subordinatesSalary = 0;
 
         if (salesman.getSubordinates().size() != 0) {
-            for (int i = 0; i < salesman.getSubordinates().size(); i++) {
-                subordinatesSalary += (calculateSalesmanSalary(salesman.getSubordinates().get(i)) / 100) * PERCENTAGE_OF_SUBORDINATES_SALARY;
-            }
+            subordinatesSalary = salesman.getSubordinates().stream()
+                    .mapToDouble(s -> (calculateSalesmanSalary(s) / 100) * PERCENTAGE_OF_SUBORDINATES_SALARY)
+                    .sum();
         }
 
         salesman.setSalary(salaryForTheirSales + subordinatesSalary);
@@ -189,9 +189,10 @@ public class TerminalController implements ITerminal {
 
         double allSalary = 0;
         if (chief.getSubordinates().size() != 0) {
-            for (int i = 0; i < chief.getSubordinates().size(); i++) {
-                allSalary += requiredAmountFromTheDepartment(chief.getSubordinates().get(i));
-            }
+
+            allSalary = chief.getSubordinates().stream()
+                    .mapToDouble(this::requiredAmountFromTheDepartment)
+                    .sum();
         }
         return allSalary + chief.getSalary();
     }
@@ -207,16 +208,17 @@ public class TerminalController implements ITerminal {
         return appDB;
     }
 
+    @Override
+    public Salesman getLoggedSalesman() {
+        return loggedSalesman;
+    }
+
     public int getCountOfBills() {
         return appDB.getBills().size();
     }
 
     public int getCountOfSalesman() {
         return appDB.getSalesmans().size();
-    }
-
-    public Salesman getLoggedSalesman() {
-        return loggedSalesman;
     }
 
     public boolean getIsLogged() {
