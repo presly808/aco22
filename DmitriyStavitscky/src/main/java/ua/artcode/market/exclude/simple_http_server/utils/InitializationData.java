@@ -3,7 +3,7 @@ package ua.artcode.market.exclude.simple_http_server.utils;
 import ua.artcode.market.controller.ITerminal;
 
 public class InitializationData {
-    public static ITerminal Init(ITerminal terminal) throws Exception {
+    public static ITerminal init(ITerminal terminal) throws Exception {
         String name1 = "Dima Stavitscky";
         String name2 = "Ivan Raskolnikov";
         String name3 = "Kolia Ivanov";

@@ -15,7 +15,7 @@ import java.util.List;
 public class Server {
     public static void main(String[] args) throws Exception {
 
-        ITerminal terminal = InitializationData.Init(TerminalFactory.create());
+        ITerminal terminal = InitializationData.init(TerminalFactory.create());
         Gson gson = new Gson();
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8009), 0);
