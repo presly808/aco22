@@ -17,13 +17,13 @@ public interface IAppDB{
 
     Bill findBillById(int id);
 
-    Product findProductById();
+    Product findProductById(int id);
 
     Bill removeBill(int id);
 
     Salesman removeSalesman(int id);
 
-    Product removeproduct(int id);
+    Product removeProduct(int id);
 
     Bill update(Bill bill);
 

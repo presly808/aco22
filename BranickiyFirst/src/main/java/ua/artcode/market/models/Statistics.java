@@ -9,7 +9,7 @@ public class Statistics {
     private Salesman salesmanWithMinAmount;
     private double minAmount;
     private double averageAmountInOneCheck;
-    private double sumOfAllSalles;
+    private double sumOfAllSales;
 
     public Statistics(Salesman salesmanWithMaxAmount, double maxAmount,
                       Salesman salesmanWithMinAmount, double minAmount,
@@ -19,7 +19,7 @@ public class Statistics {
         this.salesmanWithMinAmount = salesmanWithMinAmount;
         this.minAmount = minAmount;
         this.averageAmountInOneCheck = averageAmountInOneCheck;
-        this.sumOfAllSalles = sumOfAllSalles;
+        this.sumOfAllSales = sumOfAllSalles;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Statistics {
                 "Min Amount =" + minAmount +
                 "Average amount in one check =" +
                 averageAmountInOneCheck +
-                "Sum of all sales" + sumOfAllSalles + " } ";
+                "Sum of all sales" + sumOfAllSales + " } ";
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Statistics {
                 salesmanWithMinAmount != null &&
                 salesmanWithMinAmount.equals(other.salesmanWithMinAmount) &&
                 averageAmountInOneCheck == other.averageAmountInOneCheck &&
-                sumOfAllSalles == other.sumOfAllSalles);
+                sumOfAllSales == other.sumOfAllSales);
 
 
     }

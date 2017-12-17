@@ -1,7 +1,5 @@
 package src.main.java.ua.artcode.market.models;
 
-import src.main.java.ua.artcode.market.models.Product;
-
 public class Salesman {
 
    private String fullName, login, password;
@@ -14,14 +12,10 @@ public class Salesman {
         this.login = login;
         this.password = password;
         this.id = id;
-
-
     }
     public Salesman(String name) {
         this.fullName = name;
     }
-
-
     public void addSum(double sum) {
         this.sumOfAllSales += sum;
     }
@@ -29,6 +23,19 @@ public class Salesman {
     @Override
     public String toString() {
         return String.format("name: %s, sum of all sales: %.2f", fullName, sumOfAllSales);
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class Salesman {
 
         return (fullName != null && fullName.equals(other.fullName)) &&
                 (login != null && login.equals(other.login)) &&
-                password == other.password &&
+                password != null && password.equals(other.password) &&
                 sumOfAllSales == other.sumOfAllSales ;
     }
 
@@ -61,11 +68,11 @@ public class Salesman {
         return fullName;
     }
 
-    public double getSumOfAllSales() {
+    private double getSumOfAllSales() {
         return sumOfAllSales;
     }
 
-    public void setSumOfAllSales(double sumOfAllSales) {
+    private void setSumOfAllSales(double sumOfAllSales) {
         this.sumOfAllSales = sumOfAllSales;
     }
 

@@ -1,23 +1,24 @@
-package src.test.main.java.ua.artcode.market.models;
+package main.java.ua.artcode.market.models;
 
 import org.junit.Test;
+import src.main.java.ua.artcode.market.models.Product;
 
 import static org.junit.Assert.*;
 
 public class ProductTest {
     @Test
-    public void equals() throws Exception {
-            Product product1 = new Product("Ice", 15, 7);
-            Product product2 = new Product("Ice", 15, 7);
-
-            assertTrue(product1.equals(product2));
+    public void convertToStringFullInfo() throws Exception {
+        Product product = new Product("Milk", 5.50, 10);
+        String expected = "name: Milk, id: 10, price: 5,50";
+        assertTrue(product.toString().contains("Milk"));
     }
 
     @Test
-    public void toString() throws Exception {
-        Product product = new Product("Potato", 12.12, 8);
-        String expected = "name: Potato, id: 8, price: 12.12";
-        assertTrue(product.toString().contains("Potato"));
+    public void productEquals() throws Exception {
+        Product product1 = new Product("Meat", 15, 7);
+        Product product2 = new Product("Meat", 15, 7);
+
+        assertTrue(product1.equals(product2));
     }
 
 }

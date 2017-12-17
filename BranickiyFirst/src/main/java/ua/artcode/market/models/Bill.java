@@ -1,6 +1,5 @@
 package src.main.java.ua.artcode.market.models;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,6 +15,31 @@ public class Bill implements Comparable<Bill> {
     private Salesman salesman;
 
     private LocalDateTime openTime;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAmountPrice(double amountPrice) {
+        this.amountPrice = amountPrice;
+    }
+
+    public Salesman getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
+
+    public void setOpenTime(LocalDateTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public void setCloseTime(LocalDateTime closeTime) {
+        this.closeTime = closeTime;
+    }
+
     private LocalDateTime closeTime;
 
     public Bill(Salesman salesman, int idOfBill) {
@@ -33,8 +57,8 @@ public class Bill implements Comparable<Bill> {
 
     public void closeBill() {
 
-        closeTime = new LocalDateTime();
-        salesman.setAmountOfAllSales(salesman.getAmountOfAllSales() + amountPrice);
+        //closeTime = new LocalDateTime();
+        salesman.setSumOfAllSales(salesman.getSumOfAllSales() + amountPrice);
     }
 
     @Override
@@ -112,6 +136,10 @@ public class Bill implements Comparable<Bill> {
 
     public LocalDateTime getOpenTime() {
         return openTime;
+    }
+
+    public LocalDateTime getCloseTime() {
+        return closeTime;
     }
 }
 

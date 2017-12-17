@@ -6,19 +6,14 @@ import src.main.java.ua.artcode.market.appDB.IAppDBImp;
 import src.main.java.ua.artcode.market.models.Bill;
 import src.main.java.ua.artcode.market.models.Salesman;
 import src.main.java.ua.artcode.market.models.Statistics;
-import src.main.java.ua.artcode.market.controllers.ITerminal;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import static com.sun.xml.internal.xsom.impl.UName.comparator;
 
 public abstract class ITerminalControllerImpl implements ITerminal {
 
     private IAppDBImp iAppDB;
-    private Bill newBill;
+    private Bill currentBill;
     private Salesman loggedSalesman;
     private boolean logged;
 
@@ -28,7 +23,7 @@ public abstract class ITerminalControllerImpl implements ITerminal {
 
 
     @Override
-    public void addSalesman(String fullName, String login, String password) {
+    public Salesman addSalesman(String fullName, String login, String password) {
         if (fullName.isEmpty() || login.isEmpty() || password.isEmpty()) {
             System.out.println("wrong data");
             return null;
@@ -45,12 +40,12 @@ public abstract class ITerminalControllerImpl implements ITerminal {
         if (logged) {
             System.out.println("You already logged");
 
-        } else if (iAppDB.findSalesmanByLoginOrName(loginOrName) == null ||
-                iAppDB.findSalesmanByLoginOrName(loginOrName).getPass().equals(password)) {
+        } else if (iAppDB.findSalesmanByLoginOrName(login) == null ||
+                iAppDB.findSalesmanByLoginOrName(login).getPass().equals(password)) {
             System.out.println("wrong data");
 
         } else {
-            this.loggedSalesman = iAppDB.findSalesmanByLoginOrName(loginOrName);
+            this.loggedSalesman = iAppDB.findSalesmanByLoginOrName(login);
             logged = true;
 
         }
@@ -84,16 +79,14 @@ public abstract class ITerminalControllerImpl implements ITerminal {
 
             } else {
                 currentBill.calculateAmountPrice();
-                currentBill.setCloseTime(new Time());
-                iAppDB.getBills().add(currentBill);
+                iAppDB.getAllBills().add(currentBill);
                 currentBill.getSalesman().addSum(currentBill.getAmountPrice());
                 currentBill = null;
-
             }
         }
 
             @Override
-            public void addProductToBill () {
+            public void addProductToBill (int id) {
 
                 if (logged && iAppDB.findProductById(id) != null) {
                     currentBill.getProducts().add(iAppDB.findProductById(id));
@@ -102,12 +95,11 @@ public abstract class ITerminalControllerImpl implements ITerminal {
                 } else {
                     System.out.println("please log in");
                 }
-
             }
 
             @Override
             public Statistics makeStatistic () {
-                if (iAppDB.getBills().size() == 0) {
+                if (iAppDB.getAllBills().size() == 0) {
                     System.out.println("count of bills = 0");
                     return null;
 
@@ -115,29 +107,30 @@ public abstract class ITerminalControllerImpl implements ITerminal {
 
 
                     //search average amount and sum of all sales
-                    double sumOfAllSalles = iAppDB.getBills().get(0).getAmountPrice();
+                    double sumOfAllSales = iAppDB.getAllBills().get(0).getAmountPrice();
 
-                    for (int i = 1; i < iAppDB.getBills().size(); i++) {
-                        sumOfAllSalles += iAppDB.getBills().get(i).getAmountPrice();
+                    for (int i = 1; i < iAppDB.getAllBills().size(); i++) {
+                        sumOfAllSales += iAppDB.getAllBills().get(i).getAmountPrice();
                     }
 
-                    double averageAmountInOneChek = sumOfAllSalles / iAppDB.getBills().size();
+                    double averageAmountInOneChek = sumOfAllSales / iAppDB.getAllBills().size();
 
                     // search bil with max and min amount
-                    Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(iAppDB.getBills());
-                    Bill billWithMinAmount = TerminalUtils.billWithMinAmount(iAppDB.getBills());
+                    Bill billWithMaxAmount = TerminalUtils.billWithMaxAmount(iAppDB.getAllBills());
+                    Bill billWithMinAmount = TerminalUtils.billWithMinAmount(iAppDB.getAllBills());
 
-                    return new Statistics(billWithMaxAmount.getAmountPrice(),
-                            billWithMaxAmount.getSalesMan(),
+                    //поменять последовательность
+                    return new Statistics(billWithMaxAmount.getSalesMan(),
                             billWithMinAmount.getAmountPrice(),
                             billWithMinAmount.getSalesMan(),
+                            billWithMinAmount.getAmountPrice(),
                             averageAmountInOneChek,
-                            amountOfAllSales);
+                            sumOfAllSales);
 
                 }
             }
 
-            @Override
+           /* @Override
             public List<Bill> filterByTime (List < Bill > bills, Time startTime, Time
             endTime, Comparator < Bill > comparator){
                 List<Bill> billsFilter = new ArrayList<>();
@@ -153,28 +146,23 @@ public abstract class ITerminalControllerImpl implements ITerminal {
                 iAppDB.getBills().sort(comparator);
                 return billsFilter;
             }
-
+*/
 
             @Override
             public List<Bill> getAllBills () {
-                return iAppDB.getBills();
+                return iAppDB.getAllBills();
             }
 
-            @Override
-
-            public IAppDB getiAppDB () {
+            public IAppDB getIAppDB () {
                 return iAppDB;
             }
-
-        public Bill getNewBill () {
-            return newBill;
+            public Bill getCurrentBill () {
+            return currentBill;
         }
-
-        public Salesman getLoggedSalesman () {
+            public Salesman getLoggedSalesman () {
             return loggedSalesman;
         }
-
-        public boolean isLogged () {
+            public boolean isLogged () {
             return logged;
         }
 
