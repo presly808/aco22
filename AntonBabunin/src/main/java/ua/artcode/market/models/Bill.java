@@ -10,18 +10,19 @@ import java.util.Map;
 public class Bill implements Comparable<Bill> {
 
 
-    private int id;
-//    private int terminalId;
-    private Map<Product, Integer> productsMap;
-    private Employee salesman;
-    private Money amountPrice;
+    private transient int id;
+    private transient Map<AbstractProduct, Integer> productsMap;
+    private Employee employee;
+    private transient Money amountPrice;
 
-    private LocalDateTime openTime;
-    private LocalDateTime closeTime;
+    private transient LocalDateTime openTime;
+    private transient LocalDateTime closeTime;
 
-    public Bill() {
+    public Bill(Employee employee) {
+        this.setEmployee(employee);
         this.productsMap = new HashMap<>();
         this.openTime = LocalDateTime.now();
+        this.setAmountPrice(new Money(0,0));
     }
 
     public int getId() {
@@ -32,28 +33,16 @@ public class Bill implements Comparable<Bill> {
         this.id = id;
     }
 
-//    public int getTerminalId() {
-//        return terminalId;
-//    }
-//
-//    public void setTerminalId(int terminalId) {
-//        this.terminalId = terminalId;
-//    }
-
-    public Map<Product, Integer> getProductsMap() {
+    public Map<AbstractProduct, Integer> getProductsMap() {
         return productsMap;
     }
 
-//    public void setProductsMap(Map<Product, Integer> productsMap) {
-//        this.productsMap = productsMap;
-//    }
-
-    public Employee getSalesman() {
-        return salesman;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setSalesman(Employee salesman) {
-        this.salesman = salesman;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Money getAmountPrice() {
@@ -99,9 +88,8 @@ public class Bill implements Comparable<Bill> {
     public String toString() {
         return "Bill{" +
                 "billId=" + id +
-//                ", terminalId=" + terminalId +
                 ", productsMap=" + productsMap +
-                ", salesman=" + salesman +
+                ", employee=" + employee +
                 ", amountPrice=" + amountPrice +
                 ", openTime=" + openTime +
                 ", closeTime=" + closeTime +

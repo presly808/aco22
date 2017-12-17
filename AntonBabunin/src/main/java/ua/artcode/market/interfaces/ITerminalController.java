@@ -1,6 +1,7 @@
 package ua.artcode.market.interfaces;
 
 import ua.artcode.market.exclude.exception.*;
+import ua.artcode.market.models.AbstractProduct;
 import ua.artcode.market.models.employee.Employee;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public interface ITerminalController {
 
-    Bill createBill() throws IOException;
+    Bill createBill(Employee employee) throws IOException;
 
-    Bill addProduct(int billId, Product product) throws IOException, BillNotFoundException;
+    Bill addProduct(int billId, AbstractProduct product) throws IOException, BillNotFoundException;
 
     List<Bill> getBills();
 
@@ -27,9 +28,12 @@ public interface ITerminalController {
 
 
 
-    Employee createSalesman(String fullName, String login, String password) throws IOException;
-//    Employee login(String login, String password) throws IOException;
-//    Employee logout(Salesman salesman) throws IOException;
-    Employee findSalesmanByLogin(String login);
+    Employee createSalesman(String fullName, String login, String password,
+                            Money salary) throws IOException, LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 
+    Employee findSalesmanByLogin(String login) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+    Employee login (String login, String password) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+    Employee login (Employee employee) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
+
+    Employee findSalesmanByToken(String userToken) throws LoginOrPasswordArgumentExeption, LoginOrPasswordNotFoundException;
 }

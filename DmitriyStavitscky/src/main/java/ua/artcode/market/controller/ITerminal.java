@@ -1,7 +1,9 @@
 package ua.artcode.market.controller;
 
 import ua.artcode.market.appdb.AppDB;
+import ua.artcode.market.exceptions.AppDBException;
 import ua.artcode.market.exceptions.SaveBillException;
+import ua.artcode.market.exceptions.TerminalException;
 import ua.artcode.market.exceptions.WrongSubordinateException;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
@@ -12,17 +14,17 @@ import java.util.List;
 
 public interface ITerminal {
 
-    Salesman addSalesman(String fullName, String login, int pass);
+    Salesman addSalesman(String fullName, String login, int pass) throws AppDBException;
 
-    void signIn(String loginOrName, int password);
+    void signIn(String loginOrName, int password) throws AppDBException;
 
     void logOut();
 
-    void createBill();
+    void createBill() throws TerminalException;
 
     void closeAndSaveBill() throws SaveBillException;
 
-    void addProductToBill(int id);
+    void addProductToBill(int id) throws AppDBException;
 
     Salesman getTopNofSalesMan();
 
@@ -34,9 +36,11 @@ public interface ITerminal {
 
     AppDB getAppDB();
 
-    void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException;
+    void addSubSalesman(Salesman chief, Salesman subordinate) throws WrongSubordinateException, AppDBException;
 
     double calculateSalesmanSalary(Salesman chief);
 
     double requiredAmountFromTheDepartment(Salesman chief);
+
+    Salesman getLoggedSalesman();
 }

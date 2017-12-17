@@ -1,11 +1,20 @@
 package ua.artcode.market.models;
 
 import ua.artcode.market.models.money.Money;
+import ua.artcode.market.utils.Generator;
 
-public abstract class AbstractProduct {
+import java.io.Serializable;
+
+public abstract class AbstractProduct implements Serializable {
     private int id;
     private String name;
     private Money price;
+
+    public AbstractProduct (String name, Money price) {
+        this.setId(Generator.createProductId());
+        this.setName(name);
+        this.setPrice(price);
+    }
 
     public int getId() {
         return id;
