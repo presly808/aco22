@@ -1,4 +1,4 @@
-package ua.artcode.market.controllers;
+package ua.artcode.market.proxies;
 
 import ua.artcode.market.databases.AppDB;
 import ua.artcode.market.exceptions.AppException;

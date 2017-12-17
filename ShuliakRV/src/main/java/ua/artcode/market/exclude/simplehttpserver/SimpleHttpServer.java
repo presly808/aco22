@@ -19,32 +19,42 @@ public class SimpleHttpServer {
     private static ITerminal terminalController = FactoryITerminal.
             createITerminalController();
 
+    private static Gson gson = new Gson();
+
     public static void main(String[] args) throws Exception {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/product", new MyHandlerProduct());
-        server.createContext("/login", new MyHandlerLogin());
+        server.createContext("/product", new HandlerProduct());
+        server.createContext("/login", new HandlerLogin());
         server.setExecutor(null); // creates a default executor
         server.start();
+
     }
 
-    static class MyHandlerProduct implements HttpHandler {
+    public static void sendResponse(HttpExchange t, String response)
+            throws IOException {
+
+        t.sendResponseHeaders(200, response.length());
+        OutputStream os = t.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+
+    }
+
+    static class HandlerProduct implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
-            String response = new Gson().toJson(
+            String response = gson.toJson(
                     terminalController.getAppDB().findByProductId(
                             (Integer.parseInt(t.getRequestURI().toString().
                                     split("//?")[1].split("=")[1]))));
-            //String response = "This is the response";
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+
+            sendResponse(t,response);
         }
     }
 
-    static class MyHandlerLogin implements HttpHandler {
+    static class HandlerLogin implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
@@ -52,51 +62,51 @@ public class SimpleHttpServer {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(io));
             String jsonText = reader.readLine();
-            System.out.println(jsonText);
 
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
             Salesman salesman = gson.fromJson(jsonText, Salesman.class);
-
-            System.out.println(salesman);
 
             terminalController.getAppDB().getAllSalesman().add(salesman);
             try {
                 salesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
-                System.out.println(salesman);
             } catch (AppException e) {
                 e.printStackTrace();
-            }
-
-            class Token {
-
-                private String name;
-                private Long token;
-
-                public Token(String name, Long token) {
-                    this.name = name;
-                    this.token = token;
-                }
             }
 
             String response;
 
             if (salesman != null) {
 
-                response = new Gson().toJson(new Token(
-                        "token", (long) (Long.MAX_VALUE * Math.random())));
+                Token token = new Token("TOKEN",
+                        (long) (Long.MAX_VALUE * Math.random()));
 
+                response = gson.toJson(token);
 
             } else {
                 response = "Not found";
             }
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendResponse(t,response);
 
+        }
+
+        class Token {
+
+            private String name;
+            private Long token;
+
+            public Token(String name, Long token) {
+                this.name = name;
+                this.token = token;
+            }
+
+            @Override
+            public String toString() {
+                return "Token{" +
+                        "name='" + name + '\'' +
+                        ", token=" + token +
+                        '}';
+            }
         }
     }
 

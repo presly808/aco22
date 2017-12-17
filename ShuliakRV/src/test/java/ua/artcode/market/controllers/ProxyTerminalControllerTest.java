@@ -8,6 +8,7 @@ import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Product;
 import ua.artcode.market.models.Salesman;
 import ua.artcode.market.models.Statistic;
+import ua.artcode.market.proxies.ProxyTerminalController;
 
 import java.util.ArrayList;
 import java.util.List;

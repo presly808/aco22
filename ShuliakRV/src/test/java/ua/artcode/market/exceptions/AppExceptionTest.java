@@ -2,7 +2,7 @@ package ua.artcode.market.exceptions;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.artcode.market.controllers.ProxyTerminalController;
+import ua.artcode.market.proxies.ProxyTerminalController;
 import ua.artcode.market.factories.FactoryITerminal;
 import ua.artcode.market.models.Bill;
 import ua.artcode.market.models.Salesman;
