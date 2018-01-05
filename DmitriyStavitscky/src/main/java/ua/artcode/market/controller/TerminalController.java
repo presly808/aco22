@@ -32,10 +32,9 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException, TerminalException {
         if (fullName.isEmpty() || login.isEmpty() || pass <= 0) {
-            System.out.println("wrong data");
-            return null;
+            throw new TerminalException("can not add salesman, wrong data");
 
         } else {
             appDB.getSalesmans().add(new Salesman(fullName, login, pass, appDB.genId()));
@@ -100,23 +99,23 @@ public class TerminalController implements ITerminal {
     }
 
     @Override
-    public Salesman getTopNofSalesMan() {
+    public Salesman getTopNofSalesMan() throws TerminalException {
         if (appDB.getBills().size() == 0) {
-            System.out.println("count of bills = 0");
-            return null;
+            throw new TerminalException("can not find a better salesman, count of bills = 0");
+
+        } else if (appDB.getSalesmans().size() == 0) {
+            throw new TerminalException("can not find a better salesman, count of salesman = 0");
 
         } else {
-            if (appDB.getSalesmans().size() == 0 || appDB.getBills().size() == 0) return null;
-
             return getSalesmans().stream().max(new Salesman.SumOfAllSalesComparator()).orElse(null);
         }
     }
 
     @Override
-    public Statistics makeStatistics() {
+    public Statistics makeStatistics() throws TerminalException {
         if (appDB.getBills().size() == 0) {
             System.out.println("count of bills = 0");
-            return null;
+            throw new TerminalException("can not make statistics, count of bills = 0");
 
         } else {
 

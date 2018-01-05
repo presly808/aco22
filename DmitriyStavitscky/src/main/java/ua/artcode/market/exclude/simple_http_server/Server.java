@@ -3,7 +3,10 @@ package ua.artcode.market.exclude.simple_http_server;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 import ua.artcode.market.controller.ITerminal;
+import ua.artcode.market.exceptions.AppDBException;
+import ua.artcode.market.exceptions.SaveBillException;
 import ua.artcode.market.exceptions.TerminalException;
+import ua.artcode.market.exclude.simple_http_server.exceptions.ServerException;
 import ua.artcode.market.exclude.simple_http_server.utils.InitializationData;
 import ua.artcode.market.exclude.simple_http_server.utils.ServerUtils;
 import ua.artcode.market.factory.TerminalFactory;
@@ -19,7 +22,12 @@ public class Server {
         Gson gson = new Gson();
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8009), 0);
+
         server.createContext("/showBill", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
             OutputStream outputStream = httpExchange.getResponseBody();
 
             try {
@@ -29,19 +37,29 @@ public class Server {
                 httpExchange.sendResponseHeaders(200, foundBill.length());
                 outputStream.write(foundBill.getBytes());
 
-            } catch (Exception exc) {
-                httpExchange.sendResponseHeaders(999, exc.getMessage().length());
+            } catch (AppDBException exc) {
+                httpExchange.sendResponseHeaders(404, exc.getMessage().length());
+                outputStream.write(exc.getMessage().getBytes());
+
+            } catch (ServerException exc) {
+                httpExchange.sendResponseHeaders(400, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
             } finally {
                 outputStream.flush();
                 outputStream.close();
             }
+            System.out.println("Received a request to show a check");
 
         });
 
         server.createContext("/signIn", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
             OutputStream outputStream = httpExchange.getResponseBody();
+
 
             try {
                 List<String> params = ServerUtils.getParams(httpExchange);
@@ -55,8 +73,12 @@ public class Server {
                 httpExchange.sendResponseHeaders(200, outputMessage.length());
                 outputStream.write(outputMessage.getBytes());
 
-            } catch (Exception exc) {
-                httpExchange.sendResponseHeaders(999, exc.getMessage().length());
+            } catch (AppDBException exc) {
+                httpExchange.sendResponseHeaders(404, exc.getMessage().length());
+                outputStream.write(exc.getMessage().getBytes());
+
+            } catch (ServerException exc) {
+                httpExchange.sendResponseHeaders(400, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
             } finally {
@@ -65,7 +87,7 @@ public class Server {
             }
         });
 
-        server.createContext("/logOut", httpExchange -> {
+        server.createContext(   "/logOut", httpExchange -> {
 
             try (OutputStream outputStream = httpExchange.getResponseBody()) {
                 terminal.logOut();
@@ -87,7 +109,7 @@ public class Server {
                 outputStream.write(outputMessage.getBytes());
 
             } catch (TerminalException exc) {
-                httpExchange.sendResponseHeaders(998, exc.getMessage().length());
+                httpExchange.sendResponseHeaders(401, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
             } finally {
@@ -107,8 +129,12 @@ public class Server {
                 httpExchange.sendResponseHeaders(200, outputMessage.length());
                 outputStream.write(outputMessage.getBytes());
 
-            } catch (Exception exc) {
-                httpExchange.sendResponseHeaders(997, exc.getMessage().length());
+            } catch (AppDBException exc) {
+                httpExchange.sendResponseHeaders(404, exc.getMessage().length());
+                outputStream.write(exc.getMessage().getBytes());
+
+            } catch (ServerException exc) {
+                httpExchange.sendResponseHeaders(400, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
             } finally {
@@ -129,8 +155,8 @@ public class Server {
                 httpExchange.sendResponseHeaders(200, outputMessage.length());
                 outputStream.write(outputMessage.getBytes());
 
-            } catch (Exception exc) {
-                httpExchange.sendResponseHeaders(996, exc.getMessage().length());
+            } catch (SaveBillException exc) {
+                httpExchange.sendResponseHeaders(422, exc.getMessage().length());
                 outputStream.write(exc.getMessage().getBytes());
 
             } finally {

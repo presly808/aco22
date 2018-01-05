@@ -25,7 +25,7 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException {
+    public Salesman addSalesman(String fullName, String login, int pass) throws AppDBException, TerminalException {
         return terminal.addSalesman(fullName, login, pass);
     }
 
@@ -71,12 +71,12 @@ public class TerminalControllerProxyHistory implements ITerminal {
     }
 
     @Override
-    public Salesman getTopNofSalesMan() {
+    public Salesman getTopNofSalesMan() throws TerminalException {
         return terminal.getTopNofSalesMan();
     }
 
     @Override
-    public Statistics makeStatistics() {
+    public Statistics makeStatistics() throws TerminalException {
         return terminal.makeStatistics();
     }
 
