@@ -25,8 +25,9 @@ public class Server {
 
         server.createContext("/showBill", httpExchange -> {
             httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONAL");
             httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
 
             OutputStream outputStream = httpExchange.getResponseBody();
 
@@ -55,7 +56,7 @@ public class Server {
 
         server.createContext("/signIn", httpExchange -> {
             httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST");
             httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
 
             OutputStream outputStream = httpExchange.getResponseBody();
@@ -88,6 +89,8 @@ public class Server {
         });
 
         server.createContext(   "/logOut", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET");
 
             try (OutputStream outputStream = httpExchange.getResponseBody()) {
                 terminal.logOut();
@@ -99,6 +102,9 @@ public class Server {
         });
 
         server.createContext("/createBill", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST");
+
             OutputStream outputStream = httpExchange.getResponseBody();
 
             try {
@@ -119,6 +125,9 @@ public class Server {
         });
 
         server.createContext("/addProductToBill", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST");
+
             OutputStream outputStream = httpExchange.getResponseBody();
 
             try {
@@ -144,13 +153,17 @@ public class Server {
         });
 
         server.createContext("/closeAndSaveBill", httpExchange -> {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONAL");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
             OutputStream outputStream = httpExchange.getResponseBody();
 
             try {
                 terminal.closeAndSaveBill();
 
                 String gsonBill = gson.toJson(terminal.getAllBills().get(terminal.getAllBills().size() - 1));
-                String outputMessage = gsonBill + "\n Bill closed";
+                String outputMessage = gsonBill /*+ "\n Bill closed"*/;
 
                 httpExchange.sendResponseHeaders(200, outputMessage.length());
                 outputStream.write(outputMessage.getBytes());
