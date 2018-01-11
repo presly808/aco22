@@ -24,7 +24,7 @@ public class SimpleHttpServer {
     public static void main(String[] args) throws Exception {
 
         String SERVER_PORT = System.getenv("PORT");
-        if(SERVER_PORT == null){
+        if (SERVER_PORT == null) {
             SERVER_PORT = "8000";
         }
         HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(SERVER_PORT)), 0);
@@ -36,13 +36,32 @@ public class SimpleHttpServer {
 
     }
 
-    public static void sendResponse(HttpExchange t, String response)
+    public static void sendResponse(HttpExchange t, String response, int code)
             throws IOException {
         Headers headers = t.getResponseHeaders();
         headers.add("Content-Type", "text/html");
-        t.sendResponseHeaders(200, response.length());
+        t.sendResponseHeaders(code, response.length());
         OutputStream os = t.getResponseBody();
         os.write(response.getBytes());
+        os.close();
+
+    }
+
+    public static void sendResponseFromFile(HttpExchange t, String filename, int code)
+            throws IOException {
+
+        File f = new File(SimpleHttpServer.class.getClassLoader().getResource(filename).getFile());
+        InputStream in = new FileInputStream(f);
+        Headers headers = t.getResponseHeaders();
+        headers.add("Content-Type", "text/html");
+        t.sendResponseHeaders(code, f.length());
+        OutputStream os = t.getResponseBody();
+
+        while (in.available() > 0) {
+            os.write(in.read());
+        }
+        in.close();
+        os.flush();
         os.close();
 
     }
@@ -51,19 +70,8 @@ public class SimpleHttpServer {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
-            File f = new File(getClass().getClassLoader().getResource("login.html").getFile());
-            InputStream in = new FileInputStream(f);
-            Headers headers = t.getResponseHeaders();
-            headers.add("Content-Type", "text/html");
-            t.sendResponseHeaders(200, f.length());
-            OutputStream os = t.getResponseBody();
+            sendResponseFromFile(t,"login.html",200);
 
-            while (in.available() > 0) {
-                os.write(in.read());
-            }
-            in.close();
-            os.flush();
-            os.close();
         }
     }
 
@@ -76,7 +84,7 @@ public class SimpleHttpServer {
                             (Integer.parseInt(t.getRequestURI().toString().
                                     split("//?")[1].split("=")[1]))));
 
-            sendResponse(t, response);
+            sendResponse(t, response, 200);
         }
     }
 
@@ -91,23 +99,14 @@ public class SimpleHttpServer {
 
             Salesman salesman = gson.fromJson(jsonText, Salesman.class);
 
-            terminalController.getAppDB().getAllSalesman().add(salesman);
             try {
                 salesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
+                sendResponse(t, salesman.toString(), 200);
             } catch (AppException e) {
                 e.printStackTrace();
+                sendResponse(t, e.toString(), 200);
             }
-
-            String response;
-
-            if (salesman != null) {
-                response = salesman.toString();
-            } else {
-                response = "";
-            }
-
-            sendResponse(t, response);
 
         }
     }

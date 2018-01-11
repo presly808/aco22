@@ -38,6 +38,8 @@ public class AppDB implements IAppDb {
             saveSalesman(generateSalesman());
         }
 
+        saveSalesman(new Salesman("Admin","admin", "admin"));
+
         bills = new ArrayList<>();
 
         logs = new ArrayList<>();
