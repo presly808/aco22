@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.InetSocketAddress;
 
 import com.google.gson.Gson;
+import com.sun.corba.se.spi.orbutil.fsm.Input;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -37,7 +39,8 @@ public class SimpleHttpServer {
 
     public static void sendResponse(HttpExchange t, String response)
             throws IOException {
-
+        Headers headers = t.getResponseHeaders();
+        headers.add("Content-Type", "text/html");
         t.sendResponseHeaders(200, response.length());
         OutputStream os = t.getResponseBody();
         os.write(response.getBytes());
@@ -49,14 +52,18 @@ public class SimpleHttpServer {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
+            File f = new File(getClass().getClassLoader().getResource("login.html").getFile());
+            InputStream in = new FileInputStream(f);
+            Headers headers = t.getResponseHeaders();
+            headers.add("Content-Type", "text/html");
+            t.sendResponseHeaders(200, f.length());
             OutputStream os = t.getResponseBody();
-            InputStream input = new FileInputStream("\\Users\\Роман\\IdeaProjects\\aco22\\ShuliakRV\\resources\\logim.html");
 
-            while (input.available() > 0) {
-                os.write(input.read());
+            while (in.available() > 0) {
+                os.write(in.read());
             }
-
-            input.close();
+            in.close();
+            os.flush();
             os.close();
         }
     }
