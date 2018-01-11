@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+    <script src=https://code.jquery.com/jquery-3.1.1.js></script>
+</head>
+<body>
+
+<div>
+    <h1>Sign In</h1>
+    <label for="login">Login:</label>
+    <input id="login" type="text"/>
+    <br/>
+    <br/>
+    <label for="password">Password:</label>
+    <INPUT id="password" type="password"/>
+    <br/>
+    <br/>
+    <button id="signIn">Sign In</button>
+</div>
+
+<script>
+
+    $(function () {
+
+        var url = 'http://localhost:8000';
+
+        function addListenerToSignInButton() {
+            $('#signIn').click(function () {
+                $.ajax(url + '/login', {
+                    method: 'POST',
+                    data: JSON.stringify({login : $('#login').val(),
+                                          password : $('#password').val()})
+                })
+                    .then(function success(data) {
+                            if (data) {
+                                console.log('Todo has been added with id ' + data);
+                                alert(data);
+                            } else {
+                                alert("Некоректный логин или пароль");
+                            }
+                        }, function fail(data, status) {
+                            console.log('Request failed.  Returned status of ' + status);
+                        }
+                    );
+            });
+        }
+
+        addListenerToSignInButton();
+
+    });
+
+</script>
+
+</body>
+</html>
