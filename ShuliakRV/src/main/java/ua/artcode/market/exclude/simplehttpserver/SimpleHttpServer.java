@@ -22,9 +22,14 @@ public class SimpleHttpServer {
 
     public static void main(String[] args) throws Exception {
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        String SERVER_PORT = System.getenv("PORT");
+        if(SERVER_PORT == null){
+            SERVER_PORT = "8000";
+        }
+        HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(SERVER_PORT)), 0);
         server.createContext("/product", new HandlerProduct());
         server.createContext("/login", new HandlerLogin());
+        server.createContext("/login.html", new HandlerLoginHtml());
         server.setExecutor(null); // creates a default executor
         server.start();
 
@@ -40,6 +45,22 @@ public class SimpleHttpServer {
 
     }
 
+    static class HandlerLoginHtml implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+
+            OutputStream os = t.getResponseBody();
+            InputStream input = new FileInputStream("\\Users\\Роман\\IdeaProjects\\aco22\\ShuliakRV\\resources\\logim.html");
+
+            while (input.available() > 0) {
+                os.write(input.read());
+            }
+
+            input.close();
+            os.close();
+        }
+    }
+
     static class HandlerProduct implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
@@ -49,7 +70,7 @@ public class SimpleHttpServer {
                             (Integer.parseInt(t.getRequestURI().toString().
                                     split("//?")[1].split("=")[1]))));
 
-            sendResponse(t,response);
+            sendResponse(t, response);
         }
     }
 
@@ -75,37 +96,13 @@ public class SimpleHttpServer {
             String response;
 
             if (salesman != null) {
-
-                Token token = new Token("TOKEN",
-                        (long) (Long.MAX_VALUE * Math.random()));
-
-                response = gson.toJson(token);
-
+                response = salesman.toString();
             } else {
-                response = "Not found";
+                response = "";
             }
 
-            sendResponse(t,response);
+            sendResponse(t, response);
 
-        }
-
-        class Token {
-
-            private String name;
-            private Long token;
-
-            public Token(String name, Long token) {
-                this.name = name;
-                this.token = token;
-            }
-
-            @Override
-            public String toString() {
-                return "Token{" +
-                        "name='" + name + '\'' +
-                        ", token=" + token +
-                        '}';
-            }
         }
     }
 
