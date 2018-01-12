@@ -30,15 +30,19 @@
             $('#signIn').click(function () {
                 $.ajax(url + '/login', {
                     method: 'POST',
-                    data: JSON.stringify({login : $('#login').val(),
-                                          password : $('#password').val()})
+                    data: JSON.stringify({
+                        login: $('#login').val(),
+                        password: $('#password').val()
+                    })
                 })
                     .then(function success(data) {
                             if (data) {
                                 var obj = JSON.parse(data);
-                                if (obj.isLogged === true) {
-                                    window.location.href = url+'/menu.html'
-                                } else {alert(obj.response);}
+                                if (obj.isLogged == true) {
+                                    window.location.href = url + '/menu.html';
+                                } else {
+                                    alert(obj.response);
+                                }
                             } else {
                                 alert("No response");
                             }

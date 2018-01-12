@@ -15,6 +15,7 @@ public class Terminal {
     private ITerminal terminalController;
 
     private Salesman loggedSalesman;
+    private Bill bill;
 
     public Terminal(ITerminal terminalController) {
 
@@ -66,8 +67,6 @@ public class Terminal {
     }
 
     public int runChoice(int choice) {
-
-        Bill bill = null;
 
         switch (choice) {
             case 1:
