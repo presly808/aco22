@@ -31,6 +31,7 @@ public class SimpleHttpServer {
         server.createContext("/product", new HandlerProduct());
         server.createContext("/login", new HandlerLogin());
         server.createContext("/login.html", new HandlerLoginHtml());
+        server.createContext("/menu.html", new HandlerMenuHtml());
         server.setExecutor(null); // creates a default executor
         server.start();
 
@@ -57,8 +58,9 @@ public class SimpleHttpServer {
         t.sendResponseHeaders(code, f.length());
         OutputStream os = t.getResponseBody();
 
-        while (in.available() > 0) {
-            os.write(in.read());
+        int ch;
+        while ((ch = in.read()) != -1) {
+            os.write(ch);
         }
         in.close();
         os.flush();
@@ -70,7 +72,16 @@ public class SimpleHttpServer {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
-            sendResponseFromFile(t,"login.html",200);
+            sendResponseFromFile(t, "login.html", 200);
+
+        }
+    }
+
+    static class HandlerMenuHtml implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+
+            sendResponseFromFile(t, "menu.html", 200);
 
         }
     }
@@ -102,13 +113,24 @@ public class SimpleHttpServer {
             try {
                 salesman = terminalController.logIn(salesman.getLogin(),
                         salesman.getPassword());
-                sendResponse(t, salesman.toString(), 200);
+                sendResponse(t, gson.toJson(new ResponseLogin(true, salesman.getLogin())), 200);
             } catch (AppException e) {
                 e.printStackTrace();
-                sendResponse(t, e.toString(), 200);
+                sendResponse(t, gson.toJson(new ResponseLogin(false, e.toString())), 200);
             }
 
         }
+    }
+
+    static class ResponseLogin {
+        boolean isLogged;
+        String response;
+
+        public ResponseLogin(boolean isLogged, String response) {
+            this.isLogged = isLogged;
+            this.response = response;
+        }
+
     }
 
 }

@@ -35,14 +35,15 @@
                 })
                     .then(function success(data) {
                             if (data) {
-                                console.log('Todo has been added with id ' + data);
-                                alert(data);
+                                var obj = JSON.parse(data);
+                                if (obj.isLogged === true) {
+                                    window.location.href = url+'/menu.html'
+                                } else {alert(obj.response);}
                             } else {
-                                alert("Некоректный логин или пароль");
+                                alert("No response");
                             }
                         }, function fail(data, status) {
-                            alert("ERROR!!!");
-                            console.log('Request failed.  Returned status of ' + status);
+                            alert('Request failed.  Returned status of ' + status);
                         }
                     );
             });
