@@ -1,4 +1,5 @@
 allprojects {
+
     apply plugin: 'java'
     apply plugin: 'jacoco'
 
@@ -29,7 +30,7 @@ allprojects {
     jacocoTestCoverageVerification {
         violationRules {
             rule {
-                excludes = ['*view.*','*exclude.*']
+                excludes = ['*view.*', '*exclude.*']
                 element = "CLASS"
                 limit {
                     counter = "LINE"
@@ -42,5 +43,25 @@ allprojects {
     check.dependsOn jacocoTestCoverageVerification
     check.dependsOn jacocoTestReport
 
+}
 
+// ./gradlew -PmyModule=SerhiiBilobrov -Pweek=week1 copyTask
+task copyTask(type: Copy) {
+
+        if (project.hasProperty("week") && project.hasProperty("myModule")) {
+            from "functional-tests/src/test/java/$week"
+            into "$myModule/src/test/java/$week"
+            println "The Common Tests of $week1 have been copied"
+        } else {
+            println "The Common Tests were not copied"
+        }
+}
+
+task testGitC {
+    doLast {
+        println "CHECK GIT"
+        exec {
+            commandLine 'git', 'log', '-n', '1'
+        }
+    }
 }
