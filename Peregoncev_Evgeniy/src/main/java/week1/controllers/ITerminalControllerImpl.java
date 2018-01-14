@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static week1.utils.VerificationToken.loginToken;
+
 /**
  * Created by ENIAC on 10.11.2017.
  */
@@ -36,6 +38,8 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
 
+
+
     //Methods
 
 
@@ -55,7 +59,7 @@ public class ITerminalControllerImpl implements ITerminalController {
     }
 
     @Override
-    public boolean login(String login, String pass) throws InvalidLoginException {
+    public String login(String login, String pass) throws InvalidLoginException {
 
         currentSalesmanIndex = -1;
 
@@ -77,7 +81,7 @@ public class ITerminalControllerImpl implements ITerminalController {
         }
 
 
-        return false;
+        return loginToken();
     }
 
     @Override

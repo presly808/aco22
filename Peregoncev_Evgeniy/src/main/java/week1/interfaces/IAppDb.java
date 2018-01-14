@@ -6,6 +6,7 @@ package week1.interfaces;
  */
 
 import week1.models.Bill;
+import week1.models.Department;
 import week1.models.Product;
 import week1.models.Salesman;
 
