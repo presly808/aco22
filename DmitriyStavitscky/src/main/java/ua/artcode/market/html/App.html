@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <style>
+    #showBillDiv {
+      padding: 15px;
+      background-color: #ead9a1;
+    }
+
+    #signInDiv {
+      padding: 15px;
+      background-color: #e6eaa1
+    }
+
+    #logOutDiv {
+      padding: 15px;
+      background-color: #c5eaa1
+    }
+
+    #createBillDiv {
+      padding: 15px;
+      background-color: #a1c1ea
+    }
+
+    #addProductToBillDiv {
+      padding: 15px;
+      background-color: #8c8ef2
+    }
+
+    #closeBillDiv {
+      padding: 15px;
+      background-color: #eaa1bc
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>SHOP APPLICATION</title>
+  </head>
+  <body>
+    <div id="showBillDiv">Show bill
+      <label for="billId"></label><input id="billId" type="number"/>
+      <button type="button" id="buttShowBil">show bill</button>
+      <h1 id="bills"></h1>
+    </div>
+
+    <div id="signInDiv">Sign in<br/>
+      <input id="login" />Login or name<br/>
+      <input id="password" />password<br/>
+      <button id="buttSignIn">Sign in</button>
+      <h1 id="loggedSalesmans"></h1>
+    </div>
+
+    <div id="logOutDiv">
+    <button id="buttLogOut">Log out</button>
+    </div>
+
+    <div id="createBillDiv">
+      <button id="buttCreateBill">Create bill</button>
+    </div>
+
+    <div id="addProductToBillDiv">Add product to bill<br/>
+      <input id="addProductId" type="number"><br/>
+      <button id="buttAddProduct">add</button>
+      <ul id="addedProducts">Added products:
+      </ul>
+    </div>
+
+    <div id="closeBillDiv">
+      <button id="buttCloseBill">Close and save bill</button>
+    </div>
+
+  <script>
+
+      $(document).ready(function() {
+
+          function showBillById(id) {
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://localhost:8009/showBill?id=" + id, true);
+              xhr.setRequestHeader('Content-Type', 'application/json');
+
+              xhr.onreadystatechange = function () {
+                      $("#bills").append(this.response);
+              };
+
+              xhr.send();
+          }
+
+          function signIn(loginOrName, pass){
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "http://localhost:8009/signIn?log=" + loginOrName + "&pass=" + pass, true);
+              xhr.setRequestHeader('Content-Type', 'application/json');
+
+              xhr.onreadystatechange = function(){
+                  if (this.readyState !== 4) return;
+
+                  if (this.status === 200) {
+                      $("#loggedSalesmans").append(this.response);
+                  }
+              };
+              xhr.send()
+          }
+
+          function logOut(){
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://localhost:8009/logOut", true);
+              xhr.onreadystatechange = function(){
+                  if (this.readyState !== 4) return;
+
+                  if (this.status === 200) {
+                      $("#logOutDiv").append(this.response);
+                  }
+              };
+
+              xhr.send();
+          }
+
+          function createBill(){
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "http://localhost:8009/createBill", true);
+              xhr.onreadystatechange = function(){
+                  if (this.readyState !== 4) return;
+
+                  if (this.status === 200) {
+                      $("#createBillDiv").append(this.response);
+                  }
+              };
+
+              xhr.send();
+          }
+
+          function addProductToBill(id){
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "http://localhost:8009/addProductToBill?id=" + id, true);
+              xhr.onreadystatechange = function(){
+                  if (this.readyState !== 4) return;
+
+                  if (this.status === 200) {
+                      $("#addedProducts").append(this.response);
+                  }
+              };
+
+              xhr.send();
+          }
+
+          function closeBill() {
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", "http://localhost:8009/closeAndSaveBill", true);
+              xhr.setRequestHeader('Content-Type', 'application/json');
+
+              xhr.onreadystatechange = function(){
+                      $("#closeBillDiv").append(this.response);
+              };
+
+              xhr.send();
+          }
+
+          function addListenerToShowBillButton() {
+              $("#buttShowBil").click(function(){
+                  var id = $('#billId').val()
+                  showBillById(id);
+              })
+          }
+
+          function addListenerToSignInButton() {
+              $('#buttSignIn').click(function(){
+                  var loginOrName = $('#login').val();
+                  var pass = $('#password').val();
+                  signIn(loginOrName, pass);
+              });
+          }
+
+          function addListenerToLogOutButton(){
+              $('#buttLogOut').click(function(){
+                  logOut()
+              });
+          }
+
+          function addListenerToCreateBillButton() {
+              $('#buttCreateBill').click(function(){
+                  createBill()
+              });
+          }
+
+          function addListenerToAddProductButton() {
+              $('#buttAddProduct').click(function(){
+                  addProductToBill($('#addProductId').val())
+              });
+          }
+
+          function addListenerToCloseBillButton() {
+              $('#buttCloseBill').click(function(){
+                  closeBill()
+              });
+          }
+
+          addListenerToShowBillButton();
+          addListenerToSignInButton();
+          addListenerToLogOutButton();
+          addListenerToCreateBillButton();
+          addListenerToAddProductButton();
+          addListenerToCloseBillButton();
+      })
+  </script>
+
+
+  </body>
+</html>
+
+<!--var xhr = new XMLHttpRequest();
+xhr.open("POST", yourUrl, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify({
+value: value
+}));
+xhr.onreadystatechange = function () {
+if (this.readyState != 4) return;
+
+if (this.status == 200) {
+var data = JSON.parse(this.responseText);
+
+// we get the returned data
+}
+
+// end of state change: it can be after some time (async)
+};-->
+<!--
+</head>
+<body>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">My To Do List</h2>
+  <input type="text" id="myInput" placeholder="Title...">
+  <span id="addButtonId" class="addBtn">Add</span>
+</div>
+
+<ul id="myUL">
+  <li>Hit the gym</li>
+  <li class="checked">Pay bills</li>
+  <li>Meet George</li>
+  <li class="checked">Buy eggs</li>
+  <li>Read a book</li>
+  <li>Organize office</li>
+</ul>
+
+<script>
+
+
+    $(document).ready(function(){
+
+        function addCloseButtonToListElements(){
+            var myNodelist = $("LI");
+            for (var i = 0; i < myNodelist.length; i++) {
+                myNodelist.append($("<SPAN></SPAN>").text("\u00D7").addClass("close"));
+            }
+        }
+
+        function addListenerToAllCloseButton(close){
+            for (var i = 0; i < close.length; i++) {
+                addListenerToOneCloseButton(close[i]);
+            }
+        }
+
+        function addListenerToOneCloseButton(el){
+            $(el).click(function(event) {
+                /*var div = */$(event.target).parent().hide();
+
+            })
+        }
+
+        function addCheckedEventToList(){
+            var list = $('ul');
+            list.children().each(function(index) {
+                $(this).click( function(event){
+                    if (event.target.tagName === 'LI') {
+                        event.target.classList.toggle('checked');
+                    }
+                });
+
+            });
+        }
+
+        function newElement() {
+            var inputValue = $("#myInput").val();
+
+            if (inputValue === '') {
+                alert("You must write something!");
+                return;
+            }
+
+            addTodoAjax(inputValue);
+
+        }
+
+        function createNewElement(inputValue){
+            var li = $("<li></li>").text(inputValue);
+            $("#myUL").append(li);
+
+            li.append($("<SPAN></SPAN>").text("\u00D7").addClass("close"));
+            addListenerToOneCloseButton(li);
+            $("#myInput").val("");
+        }
+
+        function addTodoAjax(body){ // купи дрова
+
+            $.ajax('/add-todo', {
+                method: 'POST',
+                data: JSON.stringify({
+                    body: body
+                })
+            })
+                .then(function success(data) {
+                        if (data) {
+                            console.log('Todo has been added with id ' + data.id);
+                            createNewElement(data.body);
+                        }
+                    },function fail(data, status) {
+                        console.log('Request failed.  Returned status of ' + status);
+                    }
+                );
+        }
+
+        function getAllToDoes(body){
+            $.ajax('/get-all-todo', {
+                method: 'POST',
+                data: body
+
+            })
+                .then(function (data) {
+                    var allTodo = data;
+                    for (var i = 0; i < allTodo.length; i++){
+                        createNewElement(allTodo[i].body);
+                    }
+                })
+        }
+
+        getAllToDoes();
+
+        $("#addButtonId").click(newElement);
+
+        addCloseButtonToListElements();
+        var close = $(".close");
+        addListenerToAllCloseButton(close);
+
+        addCheckedEventToList();
+
+    });
+    // Create a "close" button and append it to each list item
+
+</script>
+
+</body>
+</html>
+-->

@@ -65,8 +65,7 @@ public class AppDB implements IAppDB {
     @Override
     public Salesman findSalesmanByLoginOrName(String loginOrName) throws AppDBException {
         if (loginOrName == null || loginOrName.isEmpty()) {
-
-            return null;
+            throw new AppDBException("can not find salesman, login or name is empty or null");
         }
 
         return salesmans.stream()
@@ -77,8 +76,8 @@ public class AppDB implements IAppDB {
 
     @Override
     public Bill findBillById(int id) throws AppDBException {
-        if (id == 0) {
-            return null;
+        if (id <= 0) {
+            throw new AppDBException("id can not be <= 0");
         }
 
         return bills.stream()
@@ -90,7 +89,7 @@ public class AppDB implements IAppDB {
     @Override
     public Salesman findSalesmanById(int id) throws AppDBException {
         if (id == 0) {
-            return null;
+            throw new AppDBException("id can not be <= 0");
         }
 
         return salesmans.stream()
@@ -102,7 +101,9 @@ public class AppDB implements IAppDB {
     @Override
     public Product findProductById(int id) throws AppDBException {
 
-        if (id == 0) return null;
+        if (id == 0) {
+            throw new AppDBException("id can not be <= 0");
+        }
 
         return products.stream()
                 .filter(p -> p.getId() == id)

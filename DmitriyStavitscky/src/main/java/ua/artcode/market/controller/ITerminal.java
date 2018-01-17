@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface ITerminal {
 
-    Salesman addSalesman(String fullName, String login, int pass) throws AppDBException;
+    Salesman addSalesman(String fullName, String login, int pass) throws AppDBException, TerminalException;
 
     void signIn(String loginOrName, int password) throws AppDBException;
 
@@ -26,9 +26,9 @@ public interface ITerminal {
 
     void addProductToBill(int id) throws AppDBException;
 
-    Salesman getTopNofSalesMan();
+    Salesman getTopNofSalesMan() throws TerminalException;
 
-    Statistics makeStatistics();
+    Statistics makeStatistics() throws TerminalException;
 
     List<Bill> filterByTime(LocalDateTime startTime, LocalDateTime endTime);
 
